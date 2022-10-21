@@ -7,10 +7,18 @@ import java.awt.image.BufferedImage;
 
 class ChargesItem {
     public final int id;
-    @Nonnull public final BufferedImage image;
-    @Nonnull public final String tooltip;
-    @Nullable public final Color color;
-    @Nonnull public final String text;
+
+    @Nonnull
+    public final BufferedImage image;
+
+    @Nonnull
+    public final String tooltip;
+
+    @Nullable
+    public final Color color;
+
+    @Nonnull
+    public final String text;
 
     public ChargesItem(final int id, @Nonnull final String tooltip, @Nonnull final BufferedImage image, final int count, final boolean percentage) {
         this.id = id;
