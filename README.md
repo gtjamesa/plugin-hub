@@ -5,14 +5,16 @@ Show charges of various items that are in inventory or equipped
 If some item is missing, and you would like to see it added, create an issue here in github.
 
 ## Implemented jewelry
-[x] - Ring of Dueling
-[x] - Amulet of Glory
+- [x] Ring of Dueling
+- [x] Slayer ring
+- [x] Amulet of Glory
+- [x] Skills Necklace
 
 ## Implemented armor
-[x] - Barrows gear
-    [x] - Guthan
-    [x] - Verac
-    [x] - Dharok
-    [x] - Ahrim
-    [x] - Karil
-    [x] - Torag
+- [x] Barrows gear
+    - [x] Guthan
+    - [x] Verac
+    - [x] Dharok
+    - [x] Ahrim
+    - [x] Karil
+    - [x] Torag

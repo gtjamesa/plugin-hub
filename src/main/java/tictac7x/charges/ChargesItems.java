@@ -78,6 +78,17 @@ public class ChargesItems {
             case ItemID.AMULET_OF_GLORY6:
                 return getAmuletOfGlory(inventory, equipment);
 
+            case ItemID.ENCHANTED_GEM:
+            case ItemID.SLAYER_RING_1:
+            case ItemID.SLAYER_RING_2:
+            case ItemID.SLAYER_RING_3:
+            case ItemID.SLAYER_RING_4:
+            case ItemID.SLAYER_RING_5:
+            case ItemID.SLAYER_RING_6:
+            case ItemID.SLAYER_RING_7:
+            case ItemID.SLAYER_RING_8:
+                return getSlayerRing(inventory, equipment);
+
             case ItemID.SKILLS_NECKLACE:
             case ItemID.SKILLS_NECKLACE1:
             case ItemID.SKILLS_NECKLACE2:
@@ -336,6 +347,31 @@ public class ChargesItems {
             equipment.count(ItemID.AMULET_OF_GLORY4) * 4 +
             equipment.count(ItemID.AMULET_OF_GLORY5) * 5 +
             equipment.count(ItemID.AMULET_OF_GLORY6) * 6,
+            false
+        );
+    }
+
+    private ChargesItem getSlayerRing(final ItemContainer inventory, final ItemContainer equipment) {
+        return new ChargesItem(
+            ItemID.SLAYER_RING_1,
+            items.getItemComposition(ItemID.SLAYER_RING_1).getName(),
+            items.getImage(ItemID.SLAYER_RING_1),
+            inventory.count(ItemID.SLAYER_RING_1) +
+            inventory.count(ItemID.SLAYER_RING_2) * 2 +
+            inventory.count(ItemID.SLAYER_RING_3) * 3 +
+            inventory.count(ItemID.SLAYER_RING_4) * 4 +
+            inventory.count(ItemID.SLAYER_RING_5) * 5 +
+            inventory.count(ItemID.SLAYER_RING_6) * 6 +
+            inventory.count(ItemID.SLAYER_RING_7) * 7 +
+            inventory.count(ItemID.SLAYER_RING_8) * 8 +
+            equipment.count(ItemID.SLAYER_RING_1) +
+            equipment.count(ItemID.SLAYER_RING_2) * 2 +
+            equipment.count(ItemID.SLAYER_RING_3) * 3 +
+            equipment.count(ItemID.SLAYER_RING_4) * 4 +
+            equipment.count(ItemID.SLAYER_RING_5) * 5 +
+            equipment.count(ItemID.SLAYER_RING_6) * 6 +
+            equipment.count(ItemID.SLAYER_RING_7) * 7 +
+            equipment.count(ItemID.SLAYER_RING_8) * 8,
             false
         );
     }
