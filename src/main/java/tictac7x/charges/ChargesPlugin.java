@@ -16,7 +16,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 
 @Slf4j
 @PluginDescriptor(
-	name = "Item charges improved",
+	name = "Item Charges Improved",
 	description = "Show charges of various items",
 	tags = { "charges" }
 )
@@ -89,12 +89,14 @@ public class ChargesPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
-		charges_items.updateInfoboxes(
-			client.getItemContainer(InventoryID.INVENTORY),
-			client.getItemContainer(InventoryID.EQUIPMENT),
-			infoboxes_inventory,
-			infoboxes_equipment
-		);
+		if (event.getContainerId() == InventoryID.INVENTORY.getId() || event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
+			charges_items.updateInfoboxes(
+					client.getItemContainer(InventoryID.INVENTORY),
+					client.getItemContainer(InventoryID.EQUIPMENT),
+					infoboxes_inventory,
+					infoboxes_equipment
+			);
+		}
 	}
 }
 
