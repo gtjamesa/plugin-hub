@@ -29,7 +29,7 @@ public class ChargesInfoBox extends net.runelite.client.ui.overlay.infobox.InfoB
 
     @Override
     public String getTooltip() {
-        return super.getTooltip() + "_" + id;
+        return super.getTooltip();
     }
 
     @Override
