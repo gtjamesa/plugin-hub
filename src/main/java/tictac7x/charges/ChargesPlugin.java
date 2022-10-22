@@ -42,13 +42,10 @@ public class ChargesPlugin extends Plugin {
 	}
 
 	private ChargesItems charges_items;
-	private ChargesInfoBox[] infoboxes_inventory;
-	private ChargesInfoBox[] infoboxes_equipment;
+	private ChargesInfoBox[] infoboxes_inventory, infoboxes_equipment;
 
 	@Override
 	protected void startUp() {
-		charges_items = new ChargesItems(items, infoboxes);
-
 		// Prepare infoboxes arrays.
 		infoboxes_inventory = new ChargesInfoBox[SLOTS_INVENTORY];
 		infoboxes_equipment = new ChargesInfoBox[SLOTS_EQUIPMENT];
@@ -77,6 +74,9 @@ public class ChargesPlugin extends Plugin {
 		// Add all infoboxes to overlay.
 		for (final InfoBox infobox : infoboxes_inventory) infoboxes.addInfoBox(infobox);
 		for (final InfoBox infobox : infoboxes_equipment) infoboxes.addInfoBox(infobox);
+
+		// Create charges items manager after infoboxes have been created.
+		charges_items = new ChargesItems(items, infoboxes, infoboxes_inventory, infoboxes_equipment);
 	}
 
 	@Override
@@ -84,18 +84,20 @@ public class ChargesPlugin extends Plugin {
 		// Remove all infoboxes from overlay.
 		for (final InfoBox infobox : infoboxes_inventory) infoboxes.removeInfoBox(infobox);
 		for (final InfoBox infobox : infoboxes_equipment) infoboxes.removeInfoBox(infobox);
-
 	}
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
-		if (event.getContainerId() == InventoryID.INVENTORY.getId() || event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
-			charges_items.updateInfoboxes(
-					client.getItemContainer(InventoryID.INVENTORY),
-					client.getItemContainer(InventoryID.EQUIPMENT),
-					infoboxes_inventory,
-					infoboxes_equipment
-			);
+		if (
+			event.getContainerId() == InventoryID.INVENTORY.getId() ||
+			event.getContainerId() == InventoryID.EQUIPMENT.getId()
+		) {
+			final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
+			final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
+
+			if (inventory != null && equipment != null) {
+				charges_items.updateInfoboxes(inventory, equipment);
+			}
 		}
 	}
 }

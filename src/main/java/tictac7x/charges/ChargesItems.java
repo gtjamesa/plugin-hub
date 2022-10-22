@@ -1,8 +1,10 @@
 package tictac7x.charges;
 
+import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.ItemID;
+import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 
@@ -12,36 +14,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChargesItems {
-    @Nonnull
+    private final ChargesInfoBox[] infoboxes_inventory, infoboxes_equipment;
+
     private final ItemManager items;
 
-    @Nonnull
     private final InfoBoxManager infoboxes;
 
-    public ChargesItems(final @Nonnull ItemManager items, final @Nonnull InfoBoxManager infoboxes) {
+    private List<Integer> used_items;
+    private Item[] inventory = {};
+    private Item[] equipment = {};
+
+    public ChargesItems(final ItemManager items, final InfoBoxManager infoboxes, final ChargesInfoBox[] infoboxes_inventory, final ChargesInfoBox[] infoboxes_equipment) {
         this.items = items;
         this.infoboxes = infoboxes;
+        this.infoboxes_inventory = infoboxes_inventory;
+        this.infoboxes_equipment = infoboxes_equipment;
     }
 
-    public void updateInfoboxes(@Nullable final ItemContainer inventory, @Nullable final ItemContainer equipment, final ChargesInfoBox[] infoboxes_inventory, final ChargesInfoBox[] infoboxes_equipment) {
-        final List<Integer> used_items = new ArrayList<>();
+    public void updateInfoboxes(final ItemContainer inventory, final ItemContainer equipment) {
+        used_items = new ArrayList<>();
 
-        // Equipment items.
-        if (equipment != null) {
-            for (int i = 0; i < equipment.size(); i++) {
-                updateInfoBoxItem(equipment.getItems()[i], inventory, equipment, infoboxes_equipment[i], used_items);
-            }
-        }
+        // Check inventory and equipment for differences.
+        checkItemContainer(this.equipment, equipment.getItems(), infoboxes_equipment, inventory, equipment);
+        checkItemContainer(this.inventory, inventory.getItems(), infoboxes_inventory, inventory, equipment);
 
-        // Inventory items.
-        if (inventory != null) {
-            for (int i = 0; i < inventory.size(); i++) {
-                updateInfoBoxItem(inventory.getItems()[i], inventory, equipment, infoboxes_inventory[i], used_items);
+        // Save inventory and equipment items for later difference checks.
+        this.inventory = inventory.getItems();
+        this.equipment = equipment.getItems();
+    }
+
+    private void checkItemContainer(final Item[] items_before, final Item[] items_after, final ChargesInfoBox[] infoboxes, final ItemContainer inventory, final ItemContainer equipment) {
+        for (int i = 0; i < items_after.length; i++) {
+            final @Nonnull Item item_after = items_after[i];
+            final @Nullable Item item_before = items_before.length > i ? items_before[i] : null;
+
+            if (
+                item_before == null ||
+                item_before.getId() != item_after.getId() ||
+                item_before.getQuantity() != item_after.getQuantity()
+            ) {
+                updateInfoBoxItem(item_after, inventory, equipment, infoboxes[i]);
             }
         }
     }
 
-    private void updateInfoBoxItem(final Item item, final ItemContainer inventory, final ItemContainer equipment, final ChargesInfoBox infobox, final  List<Integer> used_items) {
+    private void updateInfoBoxItem(final Item item, final ItemContainer inventory, final ItemContainer equipment, final ChargesInfoBox infobox) {
         // No item or item already shown.
         if (item.getId() == -1 || used_items.contains(item.getId())) {
             infobox.setRender(false);
