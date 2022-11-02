@@ -1,12 +1,18 @@
 package tictac7x.charges;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import net.runelite.api.*;
 import lombok.extern.slf4j.Slf4j;
 import com.google.inject.Provides;
+import net.runelite.api.events.AnimationChanged;
+import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.WidgetLoaded;
+import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.config.ConfigManager;
@@ -28,7 +34,13 @@ public class ChargesPlugin extends Plugin {
 	private Client client;
 
 	@Inject
+	private ClientThread client_thread;
+
+	@Inject
 	private ItemManager items;
+
+	@Inject
+	private ConfigManager configs;
 
 	@Inject
 	private InfoBoxManager infoboxes;
@@ -41,8 +53,15 @@ public class ChargesPlugin extends Plugin {
 		return configManager.getConfig(ChargesConfig.class);
 	}
 
+	private ChargesConfigManager charges_config_manager;
+	private ChargesChatManager charges_chat_manager;
+	private ChargesAnimationManager charges_animation_manager;
+	private ChargesWidgetManager charges_widget_manager;
 	private ChargesItems charges_items;
 	private ChargesInfoBox[] infoboxes_inventory, infoboxes_equipment;
+
+	@Nullable
+	public static ChargesInfoBox INFOBOX_TRIDENT_OF_THE_SEAS;
 
 	@Override
 	protected void startUp() {
@@ -76,7 +95,11 @@ public class ChargesPlugin extends Plugin {
 		for (final InfoBox infobox : infoboxes_equipment) infoboxes.addInfoBox(infobox);
 
 		// Create charges items manager after infoboxes have been created.
-		charges_items = new ChargesItems(items, infoboxes, infoboxes_inventory, infoboxes_equipment);
+		charges_items = new ChargesItems(client, configs, items, infoboxes, config, infoboxes_inventory, infoboxes_equipment);
+		charges_config_manager = new ChargesConfigManager();
+		charges_chat_manager = new ChargesChatManager(configs);
+		charges_animation_manager = new ChargesAnimationManager(client, configs, config);
+		charges_widget_manager = new ChargesWidgetManager(client, configs);
 	}
 
 	@Override
@@ -99,6 +122,28 @@ public class ChargesPlugin extends Plugin {
 				charges_items.updateInfoboxes(inventory, equipment);
 			}
 		}
+	}
+
+	@Subscribe
+	public void onChatMessage(final ChatMessage event) {
+		charges_chat_manager.onChatMessage(event);
+	}
+
+	@Subscribe
+	public void onAnimationChanged(final AnimationChanged event) {
+		charges_animation_manager.onAnimationChanged(event);
+	}
+
+	@Subscribe
+	public void onConfigChanged(final ConfigChanged event) {
+		charges_config_manager.onConfigChanged(event);
+	}
+
+	@Subscribe
+	public void onWidgetLoaded(final WidgetLoaded event) {
+		client_thread.invokeLater(() -> {
+			charges_widget_manager.onWidgetLoaded(event);
+		});
 	}
 }
 

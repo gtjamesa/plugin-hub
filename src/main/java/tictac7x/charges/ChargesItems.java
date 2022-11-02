@@ -1,39 +1,47 @@
 package tictac7x.charges;
 
-import net.runelite.api.InventoryID;
-import net.runelite.api.Item;
-import net.runelite.api.ItemContainer;
-import net.runelite.api.ItemID;
-import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.*;
+import net.runelite.api.events.AnimationChanged;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChargesItems {
-    private final ChargesInfoBox[] infoboxes_inventory, infoboxes_equipment;
-
+    private final Client client;
+    private final ConfigManager configs;
     private final ItemManager items;
-
     private final InfoBoxManager infoboxes;
 
+    private final ChargesConfig config;
+    private final ChargesInfoBox[] infoboxes_inventory, infoboxes_equipment;
     private List<Integer> used_items;
+
     private Item[] inventory = {};
     private Item[] equipment = {};
 
-    public ChargesItems(final ItemManager items, final InfoBoxManager infoboxes, final ChargesInfoBox[] infoboxes_inventory, final ChargesInfoBox[] infoboxes_equipment) {
+    private static final Pattern regex_trident_of_the_seas = Pattern.compile("Your Trident of the seas has (.*) charges");
+    private static final int trident_of_the_seas_animation = 1167;
+
+    public ChargesItems(final Client client, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesConfig config, final ChargesInfoBox[] infoboxes_inventory, final ChargesInfoBox[] infoboxes_equipment) {
+        this.client = client;
+        this.configs = configs;
         this.items = items;
         this.infoboxes = infoboxes;
+        this.config = config;
         this.infoboxes_inventory = infoboxes_inventory;
         this.infoboxes_equipment = infoboxes_equipment;
     }
 
     public void updateInfoboxes(final ItemContainer inventory, final ItemContainer equipment) {
-        used_items = new ArrayList<>();
-
         // Check inventory and equipment for differences.
         checkItemContainer(this.equipment, equipment.getItems(), infoboxes_equipment, inventory, equipment);
         checkItemContainer(this.inventory, inventory.getItems(), infoboxes_inventory, inventory, equipment);
@@ -44,6 +52,8 @@ public class ChargesItems {
     }
 
     private void checkItemContainer(final Item[] items_before, final Item[] items_after, final ChargesInfoBox[] infoboxes, final ItemContainer inventory, final ItemContainer equipment) {
+        used_items = new ArrayList<>();
+
         for (int i = 0; i < items_after.length; i++) {
             final @Nonnull Item item_after = items_after[i];
             final @Nullable Item item_before = items_before.length > i ? items_before[i] : null;
@@ -62,6 +72,7 @@ public class ChargesItems {
         // No item or item already shown.
         if (item.getId() == -1 || used_items.contains(item.getId())) {
             infobox.setRender(false);
+            infobox.setItemId(-1);
             return;
         }
 
@@ -76,12 +87,22 @@ public class ChargesItems {
 
         // Correct new item found.
         used_items.add(item.getId());
+        infobox.setItemId(item.getId());
         infobox.setImage(charges_item.image);
         infobox.setTooltip(charges_item.tooltip);
         infobox.setText(charges_item.text);
         infobox.setColor(charges_item.color);
         infobox.setRender(true);
         infoboxes.updateInfoBoxImage(infobox);
+
+        // Special infoboxes assignments.
+        checkSpecialInfoBox(infobox);
+    }
+
+    private void checkSpecialInfoBox(final ChargesInfoBox infobox) {
+        if (infobox.getItemId() == ItemID.TRIDENT_OF_THE_SEAS) {
+            ChargesPlugin.INFOBOX_TRIDENT_OF_THE_SEAS = infobox;
+        }
     }
 
     private ChargesItem getInfoBoxItem(Item item, final ItemContainer inventory, final ItemContainer equipment) {
@@ -125,6 +146,11 @@ public class ChargesItems {
             case ItemID.RING_OF_DUELING7:
             case ItemID.RING_OF_DUELING8:
                 return getRingOfDueling(inventory, equipment);
+
+            case ItemID.TRIDENT_OF_THE_SEAS:
+            case ItemID.TRIDENT_OF_THE_SEAS_E:
+            case ItemID.TRIDENT_OF_THE_SEAS_FULL:
+                return getTridentOfTheSeas();
 
             case ItemID.KARILS_COIF:
             case ItemID.KARILS_COIF_0:
@@ -410,6 +436,16 @@ public class ChargesItems {
             equipment.count(ItemID.SKILLS_NECKLACE4) * 4 +
             equipment.count(ItemID.SKILLS_NECKLACE5) * 5 +
             equipment.count(ItemID.SKILLS_NECKLACE6) * 6,
+            false
+        );
+    }
+
+    private ChargesItem getTridentOfTheSeas() {
+        return new ChargesItem(
+            ItemID.TRIDENT_OF_THE_SEAS,
+            items.getItemComposition(ItemID.TRIDENT_OF_THE_SEAS).getName(),
+            items.getImage(ItemID.TRIDENT_OF_THE_SEAS),
+            config.getTridentOfTheSeasCharges(),
             false
         );
     }

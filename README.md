@@ -18,3 +18,6 @@ If some item is missing, and you would like to see it added, create an issue her
     - [x] Ahrim
     - [x] Karil
     - [x] Torag
+
+## Implemented weapons
+- [x] Trident of the seas

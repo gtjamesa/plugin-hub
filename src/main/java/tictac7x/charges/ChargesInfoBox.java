@@ -11,6 +11,7 @@ public class ChargesInfoBox extends net.runelite.client.ui.overlay.infobox.InfoB
     private String text;
     private Color color;
     private boolean render;
+    private int item_id;
 
     public ChargesInfoBox(final String id, final Plugin plugin) {
         super(null, plugin);
@@ -37,6 +38,10 @@ public class ChargesInfoBox extends net.runelite.client.ui.overlay.infobox.InfoB
         return color;
     }
 
+    public int getItemId() {
+        return item_id;
+    }
+
     @Override
     public boolean render() {
         return render;
@@ -52,6 +57,10 @@ public class ChargesInfoBox extends net.runelite.client.ui.overlay.infobox.InfoB
 
     public void setRender(final boolean render) {
         this.render = render;
+    }
+
+    public void setItemId(final int item_id) {
+        this.item_id = item_id;
     }
 }
 
