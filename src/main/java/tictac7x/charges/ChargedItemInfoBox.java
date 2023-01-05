@@ -119,7 +119,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public void onHitsplatApplied(final HitsplatApplied event) {
         for (final TriggerHitsplat hitsplat : hitsplats) {
-            if (event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id) {
+            if (hitsplat.self && event.getActor() == client.getLocalPlayer() && event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id) {
                 decreaseCharges(hitsplat.discharges);
             }
         }
