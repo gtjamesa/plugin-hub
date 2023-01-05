@@ -101,19 +101,26 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onChatMessage(final ChatMessage event) {
-        if (event.getType() == ChatMessageType.GAMEMESSAGE && this.config_key != null) {
+        if ((event.getType() == ChatMessageType.GAMEMESSAGE || event.getType() == ChatMessageType.SPAM) && this.config_key != null) {
             final String message = event.getMessage();
 
             for (final TriggerChatMessage chat_message : triggers_chat_messages) {
                 final Pattern regex = Pattern.compile(chat_message.message);
                 final Matcher matcher = regex.matcher(message);
+
                 if (matcher.find()) {
-                    configs.setConfiguration(ChargesImprovedConfig.group, config_key, Integer.parseInt(matcher.group(chat_message.group).replaceAll(",", "")));
+                    // Charges amount is fixed.
+                    if (matcher.groupCount() == 0) {
+                        setCharges(chat_message.group_or_charges);
+
+                    // Charges amount is dynamic and extracted from the message.
+                    } else {
+                        setCharges(Integer.parseInt(matcher.group(chat_message.group_or_charges).replaceAll(",", "")));
+                    }
                 }
             }
         }
     }
-
     public void onConfigChanged(final ConfigChanged event) {
         if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
             this.charges = Integer.parseInt(event.getNewValue());

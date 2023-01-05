@@ -64,6 +64,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
 			new Arclight(client, client_thread, configs, items, this),
 			new CrystalShield(client, client_thread, configs, items, this),
+			new TridentOfTheSeas(client, client_thread, configs, items, this),
+			new ExpeditiousBracelet(client, client_thread, configs, items, this),
 
 			new AhrimHood(client, client_thread, configs, items, this),
 			new AhrimRobetop(  client, client_thread, configs, items, this),
@@ -128,6 +130,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
+		System.out.println("M " + event.getType() + " " + event.getMessage());
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
 	}
 

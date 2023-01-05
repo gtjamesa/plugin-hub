@@ -13,6 +13,7 @@ public interface ChargesImprovedConfig extends Config {
     String trident_of_the_seas = "trident_of_the_seas";
     String arclight = "arclight";
     String crystal_shield = "crystal_shield";
+    String expeditious_bracelet = "expeditious_bracelet";
 
     @ConfigItem(
         keyName = trident_of_the_seas,
@@ -34,4 +35,11 @@ public interface ChargesImprovedConfig extends Config {
         description = "Crystal shield charges",
         position = 3
     ) default String getCrystalShieldCharges() { return ""; }
+
+    @ConfigItem(
+            keyName = expeditious_bracelet,
+            name = "Expeditious bracelet",
+            description = "Expeditious bracelet charges",
+            position = 4
+    ) default String getExpeditiousBraceletCharges() { return ""; }
 }
