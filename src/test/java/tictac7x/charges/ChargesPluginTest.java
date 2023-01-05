@@ -5,7 +5,7 @@ import net.runelite.client.externalplugins.ExternalPluginManager;
 
 public class ChargesPluginTest {
 	public static void main(String[] args) throws Exception {
-		ExternalPluginManager.loadBuiltin(ChargesPlugin.class);
+		ExternalPluginManager.loadBuiltin(ChargesImprovedPlugin.class);
 		RuneLite.main(args);
 	}
 }
