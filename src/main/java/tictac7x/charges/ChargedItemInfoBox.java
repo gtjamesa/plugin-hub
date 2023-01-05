@@ -35,6 +35,9 @@ public class ChargedItemInfoBox extends InfoBox {
     protected TriggerAnimation[] animations;
     protected TriggerHitsplat[] hitsplats;
 
+    protected ItemContainer inventory;
+    protected ItemContainer equipment;
+
     private @Nullable Integer charges = null;
     private boolean render = false;
 
@@ -76,6 +79,9 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onItemContainersChanged(final ItemContainer inventory, final ItemContainer equipment) {
+        this.inventory = inventory;
+        this.equipment = equipment;
+
         for (final int item_id : item_ids_to_render) {
             if (inventory.contains(item_id) || equipment.contains(item_id)) {
                 this.render = true;
@@ -119,7 +125,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public void onHitsplatApplied(final HitsplatApplied event) {
         for (final TriggerHitsplat hitsplat : hitsplats) {
-            if (hitsplat.self && event.getActor() == client.getLocalPlayer() && event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id) {
+            if (hitsplat.self && event.getActor() == client.getLocalPlayer() && event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id && hitsplat.equipped && equipment.contains(item_id)) {
                 decreaseCharges(hitsplat.discharges);
             }
         }
