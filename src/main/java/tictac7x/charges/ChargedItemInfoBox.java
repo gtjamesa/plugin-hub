@@ -2,7 +2,6 @@ package tictac7x.charges;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.HitsplatID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
@@ -16,6 +15,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBox;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
+import tictac7x.charges.triggers.TriggerItem;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -31,9 +31,10 @@ public class ChargedItemInfoBox extends InfoBox {
 
     protected int[] item_ids_to_render;
     protected String config_key;
-    protected TriggerChatMessage[] chat_messages;
-    protected TriggerAnimation[] animations;
-    protected TriggerHitsplat[] hitsplats;
+    protected TriggerChatMessage[] triggers_chat_messages;
+    protected TriggerAnimation[] triggers_animations;
+    protected TriggerHitsplat[] triggers_hitsplats;
+    protected TriggerItem[] triggers_items;
 
     protected ItemContainer inventory;
     protected ItemContainer equipment;
@@ -51,9 +52,10 @@ public class ChargedItemInfoBox extends InfoBox {
 
         this.item_ids_to_render = new int[]{};
         this.config_key = null;
-        this.chat_messages = new TriggerChatMessage[]{};
-        this.animations = new TriggerAnimation[]{};
-        this.hitsplats = new TriggerHitsplat[]{};
+        this.triggers_chat_messages = new TriggerChatMessage[]{};
+        this.triggers_animations = new TriggerAnimation[]{};
+        this.triggers_hitsplats = new TriggerHitsplat[]{};
+        this.triggers_items = new TriggerItem[]{};
 
         loadChargesFromConfig();
     }
@@ -82,21 +84,27 @@ public class ChargedItemInfoBox extends InfoBox {
         this.inventory = inventory;
         this.equipment = equipment;
 
+        this.render = false;
         for (final int item_id : item_ids_to_render) {
             if (inventory.contains(item_id) || equipment.contains(item_id)) {
                 this.render = true;
-                return;
+                break;
             }
         }
 
-        this.render = false;
+        int charges = 0;
+        for (final TriggerItem trigger_item : triggers_items) {
+            charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
+            charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
+        }
+        if (triggers_items.length > 0) this.charges = charges;
     }
 
     public void onChatMessage(final ChatMessage event) {
         if (event.getType() == ChatMessageType.GAMEMESSAGE && this.config_key != null) {
             final String message = event.getMessage();
 
-            for (final TriggerChatMessage chat_message : chat_messages) {
+            for (final TriggerChatMessage chat_message : triggers_chat_messages) {
                 final Pattern regex = Pattern.compile(chat_message.message);
                 final Matcher matcher = regex.matcher(message);
                 if (matcher.find()) {
@@ -115,7 +123,7 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onAnimationChanged(final AnimationChanged event) {
         if (event.getActor() == client.getLocalPlayer()) {
 
-            for (final TriggerAnimation animation : animations) {
+            for (final TriggerAnimation animation : triggers_animations) {
                 if (animation.animation_id == event.getActor().getAnimation() && this.charges != null) {
                     decreaseCharges(animation.discharges);
                 }
@@ -124,7 +132,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
-        for (final TriggerHitsplat hitsplat : hitsplats) {
+        for (final TriggerHitsplat hitsplat : triggers_hitsplats) {
             if (hitsplat.self && event.getActor() == client.getLocalPlayer() && event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id && hitsplat.equipped && equipment.contains(item_id)) {
                 decreaseCharges(hitsplat.discharges);
             }

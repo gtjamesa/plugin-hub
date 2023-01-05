@@ -1,14 +1,8 @@
-# Item Charges Improved - v0.1
+# Item Charges Improved - v0.2
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
 If some item is missing, and you would like to see it added, create an issue here in github.
-
-## Implemented jewelry
-- [x] Ring of Dueling
-- [x] Slayer ring
-- [x] Amulet of Glory
-- [x] Skills Necklace
 
 ## Implemented armor
 - [x] Barrows gear
@@ -20,4 +14,7 @@ If some item is missing, and you would like to see it added, create an issue her
     - [x] Torag
 
 ## Implemented weapons
-- [x] Trident of the seas
+- [x] Arclight
+
+## Implemented shields
+- [x] Crystal shield

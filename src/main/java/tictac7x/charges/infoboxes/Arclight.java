@@ -16,10 +16,10 @@ public class Arclight extends ChargedItemInfoBox {
         super(ItemID.ARCLIGHT, client, client_thread, configs, items, plugin);
         this.item_ids_to_render = new int[]{ItemID.ARCLIGHT};
         this.config_key = ChargesImprovedConfig.arclight;
-        this.chat_messages = new TriggerChatMessage[]{
+        this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your arclight has (\\d+) charges left.", 1)
         };
-        this.animations = new TriggerAnimation[]{
+        this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(390, 1)
         };
     }

@@ -17,10 +17,10 @@ public class CrystalShield extends ChargedItemInfoBox {
         super(ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, plugin);
         this.item_ids_to_render = new int[]{ItemID.CRYSTAL_SHIELD};
         this.config_key = ChargesImprovedConfig.crystal_shield;
-        this.chat_messages = new TriggerChatMessage[]{
+        this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal shield has (.+) charges remaining.", 1)
         };
-        this.hitsplats = new TriggerHitsplat[]{
+        this.triggers_hitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(true, true, HitsplatID.DAMAGE_ME,1)
         };
     }

@@ -19,7 +19,15 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
         for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-            if (infobox.item_id == item_id) {
+            boolean matches = false;
+            for (final int item_id_to_render : infobox.item_ids_to_render) {
+                if (item_id_to_render == item_id) {
+                    matches = true;
+                    break;
+                }
+            }
+
+            if (matches) {
                 graphics.setFont(FontManager.getRunescapeSmallFont());
 
                 final Rectangle bounds = item_widget.getCanvasBounds();

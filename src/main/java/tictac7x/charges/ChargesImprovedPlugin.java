@@ -18,12 +18,9 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.infoboxes.Arclight;
-import tictac7x.charges.infoboxes.CrystalShield;
+import tictac7x.charges.infoboxes.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 @PluginDescriptor(
@@ -66,7 +63,37 @@ public class ChargesImprovedPlugin extends Plugin {
 	protected void startUp() {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
 			new Arclight(client, client_thread, configs, items, this),
-			new CrystalShield(client, client_thread, configs, items, this)
+			new CrystalShield(client, client_thread, configs, items, this),
+
+			new AhrimHood(client, client_thread, configs, items, this),
+			new AhrimRobetop(  client, client_thread, configs, items, this),
+			new AhrimRobeskirt(client, client_thread, configs, items, this),
+			new AhrimStaff(client, client_thread, configs, items, this),
+
+			new DharokHelm(client, client_thread, configs, items, this),
+			new DharokPlatebody(  client, client_thread, configs, items, this),
+			new DharokPlatelegs(client, client_thread, configs, items, this),
+			new DharokGreataxe(client, client_thread, configs, items, this),
+
+			new GuthanHelm(client, client_thread, configs, items, this),
+			new GuthanPlatebody(  client, client_thread, configs, items, this),
+			new GuthanChainskirt(client, client_thread, configs, items, this),
+			new GuthanWarspear(client, client_thread, configs, items, this),
+
+			new KarilCoif(client, client_thread, configs, items, this),
+			new KarilLeathertop(  client, client_thread, configs, items, this),
+			new KarilLeatherskirt(client, client_thread, configs, items, this),
+			new KarilCrossbow(client, client_thread, configs, items, this),
+
+			new ToragHelm(client, client_thread, configs, items, this),
+			new ToragPlatebody(  client, client_thread, configs, items, this),
+			new ToragPlatelegs(client, client_thread, configs, items, this),
+			new ToragHammers(client, client_thread, configs, items, this),
+
+			new VeracHelm(client, client_thread, configs, items, this),
+			new VeracBrassard(  client, client_thread, configs, items, this),
+			new VeracPlateskirt(client, client_thread, configs, items, this),
+			new VeracFlail(client, client_thread, configs, items, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(infoboxes_charged_items);
 
