@@ -9,8 +9,8 @@ import net.runelite.client.plugins.Plugin;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class AhrimHood extends ChargedItemInfoBox {
-    public AhrimHood(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+public class BarrowsAhrimHood extends ChargedItemInfoBox {
+    public BarrowsAhrimHood(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.AHRIMS_HOOD, client, client_thread, configs, items, plugin);
         this.item_ids_to_render = new int[]{
                 ItemID.AHRIMS_HOOD,

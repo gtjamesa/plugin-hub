@@ -9,8 +9,8 @@ import net.runelite.client.plugins.Plugin;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class VeracPlateskirt extends ChargedItemInfoBox {
-    public VeracPlateskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+public class BarrowsVeracPlateskirt extends ChargedItemInfoBox {
+    public BarrowsVeracPlateskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.VERACS_PLATESKIRT, client, client_thread, configs, items, plugin);
         this.item_ids_to_render = new int[]{
                 ItemID.VERACS_PLATESKIRT,

@@ -5,10 +5,7 @@ import javax.inject.Inject;
 import net.runelite.api.*;
 import lombok.extern.slf4j.Slf4j;
 import com.google.inject.Provides;
-import net.runelite.api.events.AnimationChanged;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.*;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -65,37 +62,38 @@ public class ChargesImprovedPlugin extends Plugin {
 			new Arclight(client, client_thread, configs, items, this),
 			new CrystalShield(client, client_thread, configs, items, this),
 			new TridentOfTheSeas(client, client_thread, configs, items, this),
-			new ExpeditiousBracelet(client, client_thread, configs, items, this),
+			new BraceletOfExpeditious(client, client_thread, configs, items, this),
+			new BraceletOfSlaughter(client, client_thread, configs, items, this),
 
-			new AhrimHood(client, client_thread, configs, items, this),
-			new AhrimRobetop(  client, client_thread, configs, items, this),
-			new AhrimRobeskirt(client, client_thread, configs, items, this),
-			new AhrimStaff(client, client_thread, configs, items, this),
+			new BarrowsAhrimHood(client, client_thread, configs, items, this),
+			new BarrowsAhrimRobetop(  client, client_thread, configs, items, this),
+			new BarrowsAhrimRobeskirt(client, client_thread, configs, items, this),
+			new BarrowsAhrimStaff(client, client_thread, configs, items, this),
 
-			new DharokHelm(client, client_thread, configs, items, this),
-			new DharokPlatebody(  client, client_thread, configs, items, this),
-			new DharokPlatelegs(client, client_thread, configs, items, this),
-			new DharokGreataxe(client, client_thread, configs, items, this),
+			new BarrowsDharokHelm(client, client_thread, configs, items, this),
+			new BarrowsDharokPlatebody(  client, client_thread, configs, items, this),
+			new BarrowsDharokPlatelegs(client, client_thread, configs, items, this),
+			new BarrowsDharokGreataxe(client, client_thread, configs, items, this),
 
-			new GuthanHelm(client, client_thread, configs, items, this),
-			new GuthanPlatebody(  client, client_thread, configs, items, this),
-			new GuthanChainskirt(client, client_thread, configs, items, this),
-			new GuthanWarspear(client, client_thread, configs, items, this),
+			new BarrowsGuthanHelm(client, client_thread, configs, items, this),
+			new BarrowsGuthanPlatebody(  client, client_thread, configs, items, this),
+			new BarrowsGuthanChainskirt(client, client_thread, configs, items, this),
+			new BarrowsGuthanWarspear(client, client_thread, configs, items, this),
 
-			new KarilCoif(client, client_thread, configs, items, this),
-			new KarilLeathertop(  client, client_thread, configs, items, this),
-			new KarilLeatherskirt(client, client_thread, configs, items, this),
-			new KarilCrossbow(client, client_thread, configs, items, this),
+			new BarrowsKarilCoif(client, client_thread, configs, items, this),
+			new BarrowsKarilLeathertop(  client, client_thread, configs, items, this),
+			new BarrowsKarilLeatherskirt(client, client_thread, configs, items, this),
+			new Barrows(client, client_thread, configs, items, this),
 
-			new ToragHelm(client, client_thread, configs, items, this),
-			new ToragPlatebody(  client, client_thread, configs, items, this),
-			new ToragPlatelegs(client, client_thread, configs, items, this),
-			new ToragHammers(client, client_thread, configs, items, this),
+			new BarrowsToragHelm(client, client_thread, configs, items, this),
+			new BarrowsToragPlatebody(  client, client_thread, configs, items, this),
+			new BarrowsToragPlatelegs(client, client_thread, configs, items, this),
+			new BarrowsToragHammers(client, client_thread, configs, items, this),
 
-			new VeracHelm(client, client_thread, configs, items, this),
-			new VeracBrassard(  client, client_thread, configs, items, this),
-			new VeracPlateskirt(client, client_thread, configs, items, this),
-			new VeracFlail(client, client_thread, configs, items, this),
+			new BarrowsVeracHelm(client, client_thread, configs, items, this),
+			new BarrowsVeracBrassard(  client, client_thread, configs, items, this),
+			new BarrowsVeracPlateskirt(client, client_thread, configs, items, this),
+			new BarrowsVeracFlail(client, client_thread, configs, items, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(infoboxes_charged_items);
 
@@ -130,7 +128,6 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-		System.out.println("M " + event.getType() + " " + event.getMessage());
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
 	}
 
@@ -147,6 +144,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onHitsplatApplied(event));
+	}
+
+	@Subscribe
+	public void onWidgetLoaded(final WidgetLoaded event) {
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onWidgetLoaded(event));
 	}
 }
 

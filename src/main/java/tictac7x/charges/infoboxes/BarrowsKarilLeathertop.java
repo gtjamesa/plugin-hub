@@ -9,8 +9,8 @@ import net.runelite.client.plugins.Plugin;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class KarilLeathertop extends ChargedItemInfoBox {
-    public KarilLeathertop(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+public class BarrowsKarilLeathertop extends ChargedItemInfoBox {
+    public BarrowsKarilLeathertop(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.KARILS_LEATHERTOP, client, client_thread, configs, items, plugin);
         this.item_ids_to_render = new int[]{
                 ItemID.KARILS_LEATHERTOP,

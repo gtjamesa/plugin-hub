@@ -9,8 +9,8 @@ import net.runelite.client.plugins.Plugin;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class VeracFlail extends ChargedItemInfoBox {
-    public VeracFlail(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+public class BarrowsVeracFlail extends ChargedItemInfoBox {
+    public BarrowsVeracFlail(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.VERACS_FLAIL, client, client_thread, configs, items, plugin);
         this.item_ids_to_render = new int[]{
                 ItemID.VERACS_FLAIL,

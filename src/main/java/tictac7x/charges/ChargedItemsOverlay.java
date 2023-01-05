@@ -13,7 +13,6 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
         this.infoboxes_charged_items = infoboxes_charged_items;
         showOnInventory();
         showOnEquipment();
-        showOnBank();
     }
 
     @Override

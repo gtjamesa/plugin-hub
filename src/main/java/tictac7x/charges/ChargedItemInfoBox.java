@@ -6,17 +6,17 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.HitsplatApplied;
+import net.runelite.api.events.WidgetLoaded;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerHitsplat;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.triggers.*;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.regex.Matcher;
@@ -29,17 +29,34 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ItemManager items;
     protected final ConfigManager configs;
 
-    protected int[] item_ids_to_render;
-    protected String config_key;
-    protected TriggerChatMessage[] triggers_chat_messages;
-    protected TriggerAnimation[] triggers_animations;
-    protected TriggerHitsplat[] triggers_hitsplats;
-    protected TriggerItem[] triggers_items;
-
+    @Nullable
     protected ItemContainer inventory;
+
+    @Nullable
     protected ItemContainer equipment;
 
-    private @Nullable Integer charges = null;
+    @Nullable
+    protected int[] item_ids_to_render;
+
+    @Nullable
+    protected String config_key;
+
+    @Nullable
+    protected TriggerChatMessage[] triggers_chat_messages;
+
+    @Nullable
+    protected TriggerAnimation[] triggers_animations;
+
+    @Nullable
+    protected TriggerHitsplat[] triggers_hitsplats;
+
+    @Nullable
+    protected TriggerItem[] triggers_items;
+
+    @Nullable
+    protected TriggerWidget[] triggers_widgets;
+
+    private int charges = -1;
     private boolean render = false;
 
     public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
@@ -49,14 +66,6 @@ public class ChargedItemInfoBox extends InfoBox {
         this.client_thread = client_thread;
         this.configs = configs;
         this.items = items;
-
-        this.item_ids_to_render = new int[]{};
-        this.config_key = null;
-        this.triggers_chat_messages = new TriggerChatMessage[]{};
-        this.triggers_animations = new TriggerAnimation[]{};
-        this.triggers_hitsplats = new TriggerHitsplat[]{};
-        this.triggers_items = new TriggerItem[]{};
-
         loadChargesFromConfig();
     }
 
@@ -67,12 +76,12 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getText() {
-        return charges != null ? String.valueOf(charges) : "?";
+        return charges >= 0 ? String.valueOf(charges) : "?";
     }
 
     @Override
     public Color getTextColor() {
-        return charges != null && charges == 0 ? Color.red : null;
+        return charges == 0 ? Color.red : null;
     }
 
     @Override
@@ -80,45 +89,52 @@ public class ChargedItemInfoBox extends InfoBox {
         return render;
     }
 
-    public void onItemContainersChanged(final ItemContainer inventory, final ItemContainer equipment) {
+    public void onItemContainersChanged(@Nonnull final ItemContainer inventory, @Nonnull final ItemContainer equipment) {
         this.inventory = inventory;
         this.equipment = equipment;
 
         this.render = false;
-        for (final int item_id : item_ids_to_render) {
-            if (inventory.contains(item_id) || equipment.contains(item_id)) {
-                this.render = true;
-                break;
+        if (item_ids_to_render != null) {
+            for (final int item_id : item_ids_to_render) {
+                if (inventory.contains(item_id) || equipment.contains(item_id)) {
+                    this.render = true;
+                    break;
+                }
             }
         }
 
-        int charges = 0;
-        for (final TriggerItem trigger_item : triggers_items) {
-            charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
-            charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
+        if (triggers_items != null) {
+            int charges = 0;
+
+            for (final TriggerItem trigger_item : triggers_items) {
+                charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
+                charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
+            }
+
+            this.charges = charges;
         }
-        if (triggers_items.length > 0) this.charges = charges;
     }
 
     public void onChatMessage(final ChatMessage event) {
-        if ((event.getType() == ChatMessageType.GAMEMESSAGE || event.getType() == ChatMessageType.SPAM) && this.config_key != null) {
-            final String message = event.getMessage();
+        if (
+            event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM ||
+            this.config_key == null ||
+            triggers_chat_messages == null
+        ) return;
 
-            for (final TriggerChatMessage chat_message : triggers_chat_messages) {
-                final Pattern regex = Pattern.compile(chat_message.message);
-                final Matcher matcher = regex.matcher(message);
+        final String message = event.getMessage();
 
-                if (matcher.find()) {
-                    // Charges amount is fixed.
-                    if (matcher.groupCount() == 0) {
-                        setCharges(chat_message.group_or_charges);
+        for (final TriggerChatMessage chat_message : triggers_chat_messages) {
+            final Pattern regex = Pattern.compile(chat_message.message);
+            final Matcher matcher = regex.matcher(message);
+            if (!matcher.find()) continue;
 
-                    // Charges amount is dynamic and extracted from the message.
-                    } else {
-                        setCharges(Integer.parseInt(matcher.group(chat_message.group_or_charges).replaceAll(",", "")));
-                    }
-                }
-            }
+            setCharges(chat_message.charges != null
+                // Charges amount is fixed.
+                ? chat_message.charges
+                // Charges amount is dynamic and extracted from the message.
+                : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
+            );
         }
     }
     public void onConfigChanged(final ConfigChanged event) {
@@ -128,40 +144,67 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        if (event.getActor() == client.getLocalPlayer()) {
+        if (triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges < 0) return;
 
-            for (final TriggerAnimation animation : triggers_animations) {
-                if (animation.animation_id == event.getActor().getAnimation() && this.charges != null) {
-                    decreaseCharges(animation.discharges);
-                }
+        for (final TriggerAnimation animation : triggers_animations) {
+            if (animation.animation_id == event.getActor().getAnimation()) {
+                decreaseCharges(animation.discharges);
             }
         }
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
+        if (triggers_hitsplats == null) return;
+
         for (final TriggerHitsplat hitsplat : triggers_hitsplats) {
-            if (hitsplat.self && event.getActor() == client.getLocalPlayer() && event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id && hitsplat.equipped && equipment.contains(item_id)) {
+            if (
+                hitsplat.self && event.getActor() == client.getLocalPlayer() &&
+                event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id &&
+                equipment != null && hitsplat.equipped && equipment.contains(item_id)
+            ) {
                 decreaseCharges(hitsplat.discharges);
             }
         }
     }
 
-    private void loadChargesFromConfig() {
+
+    public void onWidgetLoaded(final WidgetLoaded event) {
+        if (triggers_widgets == null || config_key == null) return;
+
         client_thread.invokeLater(() -> {
-            if (config_key != null) {
-                this.charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
+            for (final TriggerWidget trigger_widget : triggers_widgets) {
+                final Widget widget = client.getWidget(trigger_widget.widget_group, trigger_widget.widget_child);
+                if (widget == null) continue;
+
+                final Pattern regex = Pattern.compile(trigger_widget.message);
+                final Matcher matcher = regex.matcher(widget.getText().replaceAll("<br>", ""));
+                if (!matcher.find()) continue;
+
+                setCharges(trigger_widget.charges != null
+                    // Charges amount is fixed.
+                    ? trigger_widget.charges
+                    // Charges amount is dynamic and extracted from the message.
+                    : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
+                );
             }
         });
     }
 
+    private void loadChargesFromConfig() {
+        client_thread.invokeLater(() -> {
+            if (config_key == null) return;
+            this.charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
+        });
+    }
+
     private void setCharges(final int charges) {
+        if (config_key == null) return;
         configs.setConfiguration(ChargesImprovedConfig.group, config_key, charges);
     }
 
     private void decreaseCharges(final int charges) {
-        if (this.charges != null) {
-            setCharges(this.charges - charges);
-        }
+        if (this.charges < 0) return;
+        setCharges(this.charges - charges);
     }
 }
 
