@@ -9,8 +9,8 @@ import net.runelite.client.plugins.Plugin;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class Barrows extends ChargedItemInfoBox {
-    public Barrows(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+public class BarrowsKarilCrossbow extends ChargedItemInfoBox {
+    public BarrowsKarilCrossbow(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.KARILS_CROSSBOW, client, client_thread, configs, items, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_CROSSBOW, 100),

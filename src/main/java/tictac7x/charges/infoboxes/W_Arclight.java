@@ -12,8 +12,8 @@ import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class Arclight extends ChargedItemInfoBox {
-    public Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+public class W_Arclight extends ChargedItemInfoBox {
+    public W_Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.ARCLIGHT, client, client_thread, configs, items, plugin);
         this.config_key = ChargesImprovedConfig.arclight;
         this.triggers_items = new TriggerItem[]{

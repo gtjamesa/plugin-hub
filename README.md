@@ -14,7 +14,12 @@ If some item is missing, and you would like to see it added, create an issue her
     - [x] Torag
 
 ## Implemented weapons
+- [x] Trident of the sea
 - [x] Arclight
 
 ## Implemented shields
 - [x] Crystal shield
+
+## Implemented jewelery
+- [x] Bracelet of slaughter
+- [x] Expeditious bracelet

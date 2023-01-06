@@ -59,11 +59,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Override
 	protected void startUp() {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
-			new Arclight(client, client_thread, configs, items, this),
-			new CrystalShield(client, client_thread, configs, items, this),
-			new TridentOfTheSeas(client, client_thread, configs, items, this),
-			new BraceletOfExpeditious(client, client_thread, configs, items, this),
-			new BraceletOfSlaughter(client, client_thread, configs, items, this),
+			new W_Arclight(client, client_thread, configs, items, this),
+			new S_CrystalShield(client, client_thread, configs, items, this),
+			new W_TridentOfTheSeas(client, client_thread, configs, items, this),
+			new B_ExpeditiousBracelet(client, client_thread, configs, items, this),
+			new B_BraceletOfSlaughter(client, client_thread, configs, items, this),
 
 			new BarrowsAhrimHood(client, client_thread, configs, items, this),
 			new BarrowsAhrimRobetop(  client, client_thread, configs, items, this),
@@ -83,7 +83,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new BarrowsKarilCoif(client, client_thread, configs, items, this),
 			new BarrowsKarilLeathertop(  client, client_thread, configs, items, this),
 			new BarrowsKarilLeatherskirt(client, client_thread, configs, items, this),
-			new Barrows(client, client_thread, configs, items, this),
+			new BarrowsKarilCrossbow(client, client_thread, configs, items, this),
 
 			new BarrowsToragHelm(client, client_thread, configs, items, this),
 			new BarrowsToragPlatebody(  client, client_thread, configs, items, this),
