@@ -5,6 +5,7 @@ import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
+import tictac7x.charges.triggers.TriggerItem;
 
 public class ChargedItemsOverlay extends WidgetItemOverlay {
     private final ChargedItemInfoBox[] infoboxes_charged_items;
@@ -18,9 +19,11 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
         for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
+            if (infobox.triggers_items == null) continue;
             boolean matches = false;
-            for (final int item_id_to_render : infobox.item_ids_to_render) {
-                if (item_id_to_render == item_id) {
+
+            for (final TriggerItem trigger_item : infobox.triggers_items) {
+                if (trigger_item.item_id == item_id) {
                     matches = true;
                     break;
                 }
@@ -34,7 +37,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
 
                 charges.setPosition(new Point(bounds.x, bounds.y + 10));
                 charges.setColor(Color.white);
-                charges.setText(infobox.getText());
+                charges.setText(String.valueOf(infobox.charges));
                 charges.render(graphics);
 
                 return;

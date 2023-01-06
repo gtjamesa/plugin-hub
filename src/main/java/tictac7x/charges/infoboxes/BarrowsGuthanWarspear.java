@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsGuthanWarspear extends ChargedItemInfoBox {
     public BarrowsGuthanWarspear(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.GUTHANS_WARSPEAR,
-                ItemID.GUTHANS_WARSPEAR_100,
-                ItemID.GUTHANS_WARSPEAR_75,
-                ItemID.GUTHANS_WARSPEAR_50,
-                ItemID.GUTHANS_WARSPEAR_25,
-                ItemID.GUTHANS_WARSPEAR_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_WARSPEAR, 100),
             new TriggerItem(ItemID.GUTHANS_WARSPEAR_100, 100),

@@ -10,13 +10,18 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
+import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class TridentOfTheSeas extends ChargedItemInfoBox {
     public TridentOfTheSeas(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{ItemID.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS_E, ItemID.TRIDENT_OF_THE_SEAS_FULL};
         this.config_key = ChargesImprovedConfig.trident_of_the_seas;
+        this.triggers_items = new TriggerItem[]{
+            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS),
+            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_E),
+            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL)
+        };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Trident of the seas( \\(full\\))? has (?<charges>.+) charges( left)?.")
         };

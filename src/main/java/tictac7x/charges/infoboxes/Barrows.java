@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class Barrows extends ChargedItemInfoBox {
     public Barrows(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.KARILS_CROSSBOW, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.KARILS_CROSSBOW,
-                ItemID.KARILS_CROSSBOW_100,
-                ItemID.KARILS_CROSSBOW_75,
-                ItemID.KARILS_CROSSBOW_50,
-                ItemID.KARILS_CROSSBOW_25,
-                ItemID.KARILS_CROSSBOW_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_CROSSBOW, 100),
             new TriggerItem(ItemID.KARILS_CROSSBOW_100, 100),

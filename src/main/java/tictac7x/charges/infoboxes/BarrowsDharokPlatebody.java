@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsDharokPlatebody extends ChargedItemInfoBox {
     public BarrowsDharokPlatebody(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.DHAROKS_PLATEBODY, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.DHAROKS_PLATEBODY,
-                ItemID.DHAROKS_PLATEBODY_100,
-                ItemID.DHAROKS_PLATEBODY_75,
-                ItemID.DHAROKS_PLATEBODY_50,
-                ItemID.DHAROKS_PLATEBODY_25,
-                ItemID.DHAROKS_PLATEBODY_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.DHAROKS_PLATEBODY, 100),
             new TriggerItem(ItemID.DHAROKS_PLATEBODY_100, 100),

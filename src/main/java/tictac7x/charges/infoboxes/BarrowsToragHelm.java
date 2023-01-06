@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsToragHelm extends ChargedItemInfoBox {
     public BarrowsToragHelm(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.TORAGS_HELM, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.TORAGS_HELM,
-                ItemID.TORAGS_HELM_100,
-                ItemID.TORAGS_HELM_75,
-                ItemID.TORAGS_HELM_50,
-                ItemID.TORAGS_HELM_25,
-                ItemID.TORAGS_HELM_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_HELM, 100),
             new TriggerItem(ItemID.TORAGS_HELM_100, 100),

@@ -11,12 +11,15 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
+import tictac7x.charges.triggers.TriggerItem;
 
 public class CrystalShield extends ChargedItemInfoBox {
     public CrystalShield(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{ItemID.CRYSTAL_SHIELD};
         this.config_key = ChargesImprovedConfig.crystal_shield;
+        this.triggers_items = new TriggerItem[]{
+            new TriggerItem(ItemID.CRYSTAL_SHIELD),
+        };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal shield has (?<charges>.+) charges remaining.")
         };

@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsGuthanPlatebody extends ChargedItemInfoBox {
     public BarrowsGuthanPlatebody(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.GUTHANS_PLATEBODY, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.GUTHANS_PLATEBODY,
-                ItemID.GUTHANS_PLATEBODY_100,
-                ItemID.GUTHANS_PLATEBODY_75,
-                ItemID.GUTHANS_PLATEBODY_50,
-                ItemID.GUTHANS_PLATEBODY_25,
-                ItemID.GUTHANS_PLATEBODY_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_PLATEBODY, 100),
             new TriggerItem(ItemID.GUTHANS_PLATEBODY_100, 100),

@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsToragPlatelegs extends ChargedItemInfoBox {
     public BarrowsToragPlatelegs(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.TORAGS_PLATELEGS, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.TORAGS_PLATELEGS,
-                ItemID.TORAGS_PLATELEGS_100,
-                ItemID.TORAGS_PLATELEGS_75,
-                ItemID.TORAGS_PLATELEGS_50,
-                ItemID.TORAGS_PLATELEGS_25,
-                ItemID.TORAGS_PLATELEGS_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_PLATELEGS, 100),
             new TriggerItem(ItemID.TORAGS_PLATELEGS_100, 100),

@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsKarilCoif extends ChargedItemInfoBox {
     public BarrowsKarilCoif(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.KARILS_COIF, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.KARILS_COIF,
-                ItemID.KARILS_COIF_100,
-                ItemID.KARILS_COIF_75,
-                ItemID.KARILS_COIF_50,
-                ItemID.KARILS_COIF_25,
-                ItemID.KARILS_COIF_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_COIF, 100),
             new TriggerItem(ItemID.KARILS_COIF_100, 100),

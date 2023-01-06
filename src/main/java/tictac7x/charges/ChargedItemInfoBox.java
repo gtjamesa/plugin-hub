@@ -35,8 +35,8 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable
     protected ItemContainer equipment;
 
-    @Nullable
-    protected int[] item_ids_to_render;
+    protected boolean needs_to_be_equipped;
+    protected boolean equipped;
 
     @Nullable
     protected String config_key;
@@ -56,7 +56,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable
     protected TriggerWidget[] triggers_widgets;
 
-    private int charges = -1;
+    protected int charges = -1;
     private boolean render = false;
 
     public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
@@ -76,12 +76,17 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getText() {
-        return charges >= 0 ? String.valueOf(charges) : "?";
+        return charges >= 0 ? needs_to_be_equipped && !equipped ? "0" : String.valueOf(charges) : "?";
+    }
+
+    @Override
+    public String getTooltip() {
+        return items.getItemComposition(item_id).getName() + (needs_to_be_equipped && !equipped ? " - Needs to be equipped" : "");
     }
 
     @Override
     public Color getTextColor() {
-        return charges == 0 ? Color.red : null;
+        return getText().equals("0") ? Color.red : null;
     }
 
     @Override
@@ -92,27 +97,34 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onItemContainersChanged(@Nonnull final ItemContainer inventory, @Nonnull final ItemContainer equipment) {
         this.inventory = inventory;
         this.equipment = equipment;
+        if (triggers_items == null) return;
 
-        this.render = false;
-        if (item_ids_to_render != null) {
-            for (final int item_id : item_ids_to_render) {
-                if (inventory.contains(item_id) || equipment.contains(item_id)) {
-                    this.render = true;
-                    break;
-                }
+        @Nullable
+        Integer charges = null;
+        boolean equipped = false;
+
+        for (final TriggerItem trigger_item : triggers_items) {
+            // Find out if infobox should be rendered.
+            if (inventory.contains(trigger_item.item_id) || equipment.contains(trigger_item.item_id)) {
+                this.render = true;
             }
-        }
 
-        if (triggers_items != null) {
-            int charges = 0;
-
-            for (final TriggerItem trigger_item : triggers_items) {
+            // Find out charges for the item.
+            if (trigger_item.charges != null) {
+                if (charges == null) charges = 0;
                 charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
                 charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
             }
 
-            this.charges = charges;
+            // Find out if item is equipped.
+            if (needs_to_be_equipped && equipment.contains(trigger_item.item_id)) {
+                equipped = true;
+            }
         }
+
+        if (charges != null) this.charges = charges;
+        this.equipped = equipped;
+
     }
 
     public void onChatMessage(final ChatMessage event) {

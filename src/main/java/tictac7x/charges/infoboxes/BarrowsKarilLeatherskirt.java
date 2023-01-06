@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsKarilLeatherskirt extends ChargedItemInfoBox {
     public BarrowsKarilLeatherskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.KARILS_LEATHERSKIRT, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.KARILS_LEATHERSKIRT,
-                ItemID.KARILS_LEATHERSKIRT_100,
-                ItemID.KARILS_LEATHERSKIRT_75,
-                ItemID.KARILS_LEATHERSKIRT_50,
-                ItemID.KARILS_LEATHERSKIRT_25,
-                ItemID.KARILS_LEATHERSKIRT_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT, 100),
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT_100, 100),

@@ -12,14 +12,6 @@ import tictac7x.charges.triggers.TriggerItem;
 public class BarrowsAhrimRobetop extends ChargedItemInfoBox {
     public BarrowsAhrimRobetop(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.AHRIMS_ROBETOP, client, client_thread, configs, items, plugin);
-        this.item_ids_to_render = new int[]{
-                ItemID.AHRIMS_ROBETOP,
-                ItemID.AHRIMS_ROBETOP_100,
-                ItemID.AHRIMS_ROBETOP_75,
-                ItemID.AHRIMS_ROBETOP_50,
-                ItemID.AHRIMS_ROBETOP_25,
-                ItemID.AHRIMS_ROBETOP_0
-        };
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBETOP, 100),
             new TriggerItem(ItemID.AHRIMS_ROBETOP_100, 100),
