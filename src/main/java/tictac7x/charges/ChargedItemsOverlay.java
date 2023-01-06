@@ -33,12 +33,13 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
                 graphics.setFont(FontManager.getRunescapeSmallFont());
 
                 final Rectangle bounds = item_widget.getCanvasBounds();
-                final TextComponent charges = new TextComponent();
+                final TextComponent charges_component = new TextComponent();
+                final String charges = infobox.getText();
 
-                charges.setPosition(new Point(bounds.x, bounds.y + 10));
-                charges.setColor(Color.white);
-                charges.setText(String.valueOf(infobox.charges));
-                charges.render(graphics);
+                charges_component.setPosition(new Point(bounds.x, bounds.y + 10));
+                charges_component.setColor(charges.equals("?") ? Color.orange : charges.equals("0") ? Color.red : Color.white);
+                charges_component.setText(String.valueOf(infobox.getText()));
+                charges_component.render(graphics);
 
                 return;
             }

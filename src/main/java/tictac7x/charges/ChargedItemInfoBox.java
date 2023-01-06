@@ -76,7 +76,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getText() {
-        return charges >= 0 ? needs_to_be_equipped && !equipped ? "0" : String.valueOf(charges) : "?";
+        return this.charges == -1 ? "?" : needs_to_be_equipped && !equipped ? "0" : String.valueOf(charges);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        return getText().equals("0") ? Color.red : null;
+        return getText().equals("?") ? Color.orange : getText().equals("0") ? Color.red : Color.white;
     }
 
     @Override
@@ -99,31 +99,32 @@ public class ChargedItemInfoBox extends InfoBox {
         this.equipment = equipment;
         if (triggers_items == null) return;
 
-        @Nullable
-        Integer charges = null;
+        int charges = -1;
         boolean equipped = false;
+        boolean render = false;
 
         for (final TriggerItem trigger_item : triggers_items) {
             // Find out if infobox should be rendered.
             if (inventory.contains(trigger_item.item_id) || equipment.contains(trigger_item.item_id)) {
-                this.render = true;
+                render = true;
             }
 
             // Find out charges for the item.
             if (trigger_item.charges != null) {
-                if (charges == null) charges = 0;
+                if (charges == -1) charges = 0;
                 charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
                 charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
             }
 
             // Find out if item is equipped.
-            if (needs_to_be_equipped && equipment.contains(trigger_item.item_id)) {
+            if (equipment.contains(trigger_item.item_id)) {
                 equipped = true;
             }
         }
 
-        if (charges != null) this.charges = charges;
+        if (charges != -1) this.charges = charges;
         this.equipped = equipped;
+        this.render = render;
 
     }
 
@@ -134,7 +135,7 @@ public class ChargedItemInfoBox extends InfoBox {
             triggers_chat_messages == null
         ) return;
 
-        final String message = event.getMessage();
+        final String message = event.getMessage().replaceAll("</?col.*?>", "");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
             final Pattern regex = Pattern.compile(chat_message.message);
@@ -147,6 +148,7 @@ public class ChargedItemInfoBox extends InfoBox {
                 // Charges amount is dynamic and extracted from the message.
                 : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
             );
+            return;
         }
     }
     public void onConfigChanged(final ConfigChanged event) {
@@ -156,7 +158,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        if (triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges < 0) return;
+        if (triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1) return;
 
         for (final TriggerAnimation animation : triggers_animations) {
             if (animation.animation_id == event.getActor().getAnimation()) {
@@ -215,7 +217,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     private void decreaseCharges(final int charges) {
-        if (this.charges < 0) return;
+        if (this.charges - charges < 0) return;
         setCharges(this.charges - charges);
     }
 }

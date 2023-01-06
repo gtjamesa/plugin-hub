@@ -128,6 +128,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
+		log.debug(event.getType() + " - " + event.getMessage().replaceAll("</?col.*?>", ""));
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
 	}
 
