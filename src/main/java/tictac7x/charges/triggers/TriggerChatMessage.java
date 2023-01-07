@@ -10,12 +10,12 @@ public class TriggerChatMessage {
     @Nullable
     public final Integer charges;
 
-    public TriggerChatMessage(final String message, @Nullable final Integer charges) {
+    public TriggerChatMessage(@Nonnull final String message, final int charges) {
         this.message = message;
         this.charges = charges;
     }
 
-    public TriggerChatMessage(final String message) {
+    public TriggerChatMessage(@Nonnull final String message) {
         this.message = message;
         this.charges = null;
     }

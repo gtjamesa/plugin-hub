@@ -56,6 +56,9 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable
     protected TriggerWidget[] triggers_widgets;
 
+    @Nullable
+    protected String[] extra_groups;
+
     protected int charges = -1;
     private boolean render = false;
 
@@ -142,12 +145,24 @@ public class ChargedItemInfoBox extends InfoBox {
             final Matcher matcher = regex.matcher(message);
             if (!matcher.find()) continue;
 
+            // Check default "charges" group.
             setCharges(chat_message.charges != null
                 // Charges amount is fixed.
                 ? chat_message.charges
                 // Charges amount is dynamic and extracted from the message.
                 : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
             );
+
+            // Check extra matches groups.
+            if (extra_groups != null) {
+                for (final String extra_group : extra_groups) {
+                    final String extra = matcher.group(extra_group);
+                    if (extra == null) continue;
+
+                    setConfiguration(config_key + "_" + extra_group, extra);
+                }
+            }
+
             return;
         }
     }
@@ -194,12 +209,23 @@ public class ChargedItemInfoBox extends InfoBox {
                 final Matcher matcher = regex.matcher(widget.getText().replaceAll("<br>", " "));
                 if (!matcher.find()) continue;
 
+                // Check default "charges" group.
                 setCharges(trigger_widget.charges != null
                     // Charges amount is fixed.
                     ? trigger_widget.charges
                     // Charges amount is dynamic and extracted from the message.
                     : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
                 );
+
+                // Check extra matches groups.
+                if (extra_groups != null) {
+                    for (final String extra_group : extra_groups) {
+                        final String extra = matcher.group(extra_group);
+                        if (extra == null) continue;
+
+                        setConfiguration(config_key + "_" + extra_group, extra);
+                    }
+                }
             }
         });
     }
@@ -213,12 +239,20 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private void setCharges(final int charges) {
         if (config_key == null) return;
-        configs.setConfiguration(ChargesImprovedConfig.group, config_key, charges);
+        setConfiguration(config_key, charges);
     }
 
     private void decreaseCharges(final int charges) {
         if (this.charges - charges < 0) return;
         setCharges(this.charges - charges);
+    }
+
+    private void setConfiguration(final String key, @Nonnull final String value) {
+        configs.setConfiguration(ChargesImprovedConfig.group, key, value);
+    }
+
+    private void setConfiguration(final String key, final int value) {
+        configs.setConfiguration(ChargesImprovedConfig.group, key, value);
     }
 }
 

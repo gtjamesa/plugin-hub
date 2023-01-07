@@ -33,4 +33,11 @@ public class TriggerWidget {
         this.widget_group = 193;
         this.widget_child = 2;
     }
+
+    public TriggerWidget(@Nonnull final String message, final int charges) {
+        this.message = message;
+        this.charges = charges;
+        this.widget_group = 193;
+        this.widget_child = 2;
+    }
 }
