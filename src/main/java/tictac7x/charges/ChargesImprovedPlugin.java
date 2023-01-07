@@ -2,10 +2,16 @@ package tictac7x.charges;
 
 import javax.inject.Inject;
 
-import net.runelite.api.*;
 import lombok.extern.slf4j.Slf4j;
 import com.google.inject.Provides;
-import net.runelite.api.events.*;
+import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
+import net.runelite.api.ItemContainer;
+import net.runelite.api.events.AnimationChanged;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.HitsplatApplied;
+import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -64,6 +70,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_TridentOfTheSeas(client, client_thread, configs, items, this),
 			new B_ExpeditiousBracelet(client, client_thread, configs, items, this),
 			new B_BraceletOfSlaughter(client, client_thread, configs, items, this),
+			new U_BottomlessCompostBucket(client, client_thread, configs, items, this),
 
 			new BarrowsAhrimHood(client, client_thread, configs, items, this),
 			new BarrowsAhrimRobetop(  client, client_thread, configs, items, this),

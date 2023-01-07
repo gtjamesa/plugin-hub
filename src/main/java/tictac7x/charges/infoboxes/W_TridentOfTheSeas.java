@@ -33,7 +33,7 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
             new TriggerAnimation(1167, 1)
         };
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You add .* charges? to the Trident of the seas( \\(full\\))?.New total: (?<charges>.+)", 193, 2)
+            new TriggerWidget("You add .* charges? to the Trident of the seas( \\(full\\))?. New total: (?<charges>.+)")
         };
     }
 }

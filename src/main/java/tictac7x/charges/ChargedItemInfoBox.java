@@ -18,7 +18,7 @@ import tictac7x.charges.triggers.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
+import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -191,7 +191,7 @@ public class ChargedItemInfoBox extends InfoBox {
                 if (widget == null) continue;
 
                 final Pattern regex = Pattern.compile(trigger_widget.message);
-                final Matcher matcher = regex.matcher(widget.getText().replaceAll("<br>", ""));
+                final Matcher matcher = regex.matcher(widget.getText().replaceAll("<br>", " "));
                 if (!matcher.find()) continue;
 
                 setCharges(trigger_widget.charges != null

@@ -13,17 +13,24 @@ public class TriggerWidget {
     public final int widget_group;
     public final int widget_child;
 
-    public TriggerWidget(final String message, final int charges, final int widget_group, final int widget_child) {
+    public TriggerWidget(@Nonnull final String message, final int charges, final int widget_group, final int widget_child) {
         this.message = message;
         this.charges = charges;
         this.widget_group = widget_group;
         this.widget_child = widget_child;
     }
 
-    public TriggerWidget(final String message, final int widget_group, final int widget_child) {
+    public TriggerWidget(@Nonnull final String message, final int widget_group, final int widget_child) {
         this.message = message;
         this.charges = null;
         this.widget_group = widget_group;
         this.widget_child = widget_child;
+    }
+
+    public TriggerWidget(@Nonnull final String message) {
+        this.message = message;
+        this.charges = null;
+        this.widget_group = 193;
+        this.widget_child = 2;
     }
 }

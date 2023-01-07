@@ -13,8 +13,9 @@ public interface ChargesImprovedConfig extends Config {
     String trident_of_the_seas = "trident_of_the_seas";
     String arclight = "arclight";
     String crystal_shield = "crystal_shield";
-    String bracelet_of_expeditious = "expeditious_bracelet";
+    String expeditious_bracelet = "expeditious_bracelet";
     String bracelet_of_slaughter = "bracelet_of_slaughter";
+    String bottomless_compost_bucket = "bottomless_compost_bucket";
 
     @ConfigItem(
         keyName = trident_of_the_seas,
@@ -38,7 +39,7 @@ public interface ChargesImprovedConfig extends Config {
     ) default int getCrystalShieldCharges() { return -1; }
 
     @ConfigItem(
-        keyName = bracelet_of_expeditious,
+        keyName = expeditious_bracelet,
         name = "Expeditious bracelet",
         description = "Expeditious bracelet charges",
         position = 4
@@ -50,4 +51,11 @@ public interface ChargesImprovedConfig extends Config {
         description = "Bracelet of slaughter charges",
         position = 5
     ) default int getBraceletOfSlaughterCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = bottomless_compost_bucket,
+        name = "Bottomless compost bucket",
+        description = "Bottomless compost bucket charges",
+        position = 6
+    ) default int getBottomlessCompostBucketCharges() { return -1; }
 }
