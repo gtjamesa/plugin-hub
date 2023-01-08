@@ -11,6 +11,7 @@ import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.eventbus.Subscribe;
@@ -105,17 +106,13 @@ public class ChargesImprovedPlugin extends Plugin {
 		overlay_charged_items = new ChargedItemsOverlay(infoboxes_charged_items);
 
 		overlays.add(overlay_charged_items);
-		for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-			infoboxes.addInfoBox(infobox);
-		}
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));
 	}
 
 	@Override
 	protected void shutDown() {
 		overlays.remove(overlay_charged_items);
-		for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-			infoboxes.removeInfoBox(infobox);
-		}
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.removeInfoBox(infobox));
 	}
 
 	@Subscribe
@@ -135,7 +132,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-		log.debug(event.getType() + " - " + event.getMessage().replaceAll("</?col.*?>", ""));
+//		log.debug(event.getType() + " - " + event.getMessage().replaceAll("</?col.*?>", ""));
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
 	}
 
@@ -157,6 +154,12 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onWidgetLoaded(event));
+	}
+
+	@Subscribe
+	public void onMenuOptionClicked(final MenuOptionClicked event) {
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onMenuOptionClicked(event));
+		System.out.println(event.getId() + " " + event.getMenuTarget() + " " + event.getMenuOption() + " " + event.getMenuAction().name());
 	}
 }
 

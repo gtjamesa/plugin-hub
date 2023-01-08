@@ -2,10 +2,12 @@ package tictac7x.charges;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
+import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.HitsplatApplied;
+import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
@@ -29,35 +31,20 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ItemManager items;
     protected final ConfigManager configs;
 
-    @Nullable
-    protected ItemContainer inventory;
-
-    @Nullable
-    protected ItemContainer equipment;
+    @Nullable protected ItemContainer inventory;
+    @Nullable protected ItemContainer equipment;
+    @Nullable protected String menu_option;
 
     protected boolean needs_to_be_equipped;
     protected boolean equipped;
 
-    @Nullable
-    protected String config_key;
-
-    @Nullable
-    protected TriggerChatMessage[] triggers_chat_messages;
-
-    @Nullable
-    protected TriggerAnimation[] triggers_animations;
-
-    @Nullable
-    protected TriggerHitsplat[] triggers_hitsplats;
-
-    @Nullable
-    protected TriggerItem[] triggers_items;
-
-    @Nullable
-    protected TriggerWidget[] triggers_widgets;
-
-    @Nullable
-    protected String[] extra_groups;
+    @Nullable protected String config_key;
+    @Nullable protected TriggerChatMessage[] triggers_chat_messages;
+    @Nullable protected TriggerAnimation[] triggers_animations;
+    @Nullable protected TriggerHitsplat[] triggers_hitsplats;
+    @Nullable protected TriggerItem[] triggers_items;
+    @Nullable protected TriggerWidget[] triggers_widgets;
+    @Nullable protected String[] extra_groups;
 
     protected int charges = -1;
     private boolean render = false;
@@ -98,11 +85,13 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onItemContainersChanged(@Nonnull final ItemContainer inventory, @Nonnull final ItemContainer equipment) {
+        // Save inventory and equipment item containers for other uses.
         this.inventory = inventory;
         this.equipment = equipment;
+
+        // No trigger items to detect charges.
         if (triggers_items == null) return;
 
-        int charges = -1;
         boolean equipped = false;
         boolean render = false;
 
@@ -112,23 +101,25 @@ public class ChargedItemInfoBox extends InfoBox {
                 render = true;
             }
 
-            // Find out charges for the item.
-            if (trigger_item.charges != null) {
-                if (charges == -1) charges = 0;
-                charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
-                charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
-            }
-
             // Find out if item is equipped.
             if (equipment.contains(trigger_item.item_id)) {
                 equipped = true;
             }
+
+            // Check if inventory or equipment contains trigger item.
+            if (!inventory.contains(trigger_item.item_id) && !equipment.contains(trigger_item.item_id)) continue;
+
+            // Find out charges for the item.
+            if (trigger_item.charges != null) {
+                int charges = 0;
+                charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
+                charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
+                this.charges = charges;
+            }
         }
 
-        if (charges != -1) this.charges = charges;
         this.equipped = equipped;
         this.render = render;
-
     }
 
     public void onChatMessage(final ChatMessage event) {
@@ -157,9 +148,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (extra_groups != null) {
                 for (final String extra_group : extra_groups) {
                     final String extra = matcher.group(extra_group);
-                    if (extra == null) continue;
-
-                    setConfiguration(config_key + "_" + extra_group, extra);
+                    if (extra != null) setConfiguration(config_key + "_" + extra_group, extra);
                 }
             }
 
@@ -173,11 +162,33 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        if (triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1) return;
+        if (inventory == null || equipment == null || triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1) return;
 
-        for (final TriggerAnimation animation : triggers_animations) {
-            if (animation.animation_id == event.getActor().getAnimation()) {
-                decreaseCharges(animation.discharges);
+        for (final TriggerAnimation trigger_animation : triggers_animations) {
+            boolean valid = true;
+            if (trigger_animation.animation_id == event.getActor().getAnimation()) {
+                // Check for correct menu option.
+                System.out.println("ACTION " + trigger_animation.menu_option + "actual: " + menu_option);
+                if (trigger_animation.menu_option != null && menu_option != null && !menu_option.equals(trigger_animation.menu_option)) {
+                    valid = false;
+                }
+
+                // Check for unallowed items.
+                if (valid && trigger_animation.unallowed_items != null) {
+                    for (final int item_id : trigger_animation.unallowed_items) {
+                        if (inventory.contains(item_id) || equipment.contains(item_id)) {
+                            valid = false;
+                        }
+                    }
+                }
+
+                if (!valid) continue;
+                System.out.println("STILL HERE...");
+                if (trigger_animation.decrease_charges) {
+                    decreaseCharges(trigger_animation.charges);
+                } else {
+                    increaseCharges(trigger_animation.charges);
+                }
             }
         }
     }
@@ -206,8 +217,10 @@ public class ChargedItemInfoBox extends InfoBox {
                 if (widget == null) continue;
 
                 final Pattern regex = Pattern.compile(trigger_widget.message);
-                final Matcher matcher = regex.matcher(widget.getText().replaceAll("<br>", " "));
+                final String message = widget.getText().replaceAll("<br>", " ");
+                final Matcher matcher = regex.matcher(message);
                 if (!matcher.find()) continue;
+
 
                 // Check default "charges" group.
                 setCharges(trigger_widget.charges != null
@@ -221,13 +234,15 @@ public class ChargedItemInfoBox extends InfoBox {
                 if (extra_groups != null) {
                     for (final String extra_group : extra_groups) {
                         final String extra = matcher.group(extra_group);
-                        if (extra == null) continue;
-
-                        setConfiguration(config_key + "_" + extra_group, extra);
+                        if (extra != null) setConfiguration(config_key + "_" + extra_group, extra);
                     }
                 }
             }
         });
+    }
+
+    public void onMenuOptionClicked(final MenuOptionClicked event) {
+        this.menu_option = event.getMenuOption();
     }
 
     private void loadChargesFromConfig() {
@@ -239,12 +254,18 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private void setCharges(final int charges) {
         if (config_key == null) return;
+        this.charges = charges;
         setConfiguration(config_key, charges);
     }
 
     private void decreaseCharges(final int charges) {
         if (this.charges - charges < 0) return;
         setCharges(this.charges - charges);
+    }
+
+    private void increaseCharges(final int charges) {
+        if (this.charges == -1) return;
+        setCharges(this.charges + charges);
     }
 
     private void setConfiguration(final String key, @Nonnull final String value) {
