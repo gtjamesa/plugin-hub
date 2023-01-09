@@ -24,8 +24,8 @@ public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(8197, 1),
-            new TriggerAnimation(832, 2, new int[]{ItemID.BUCKET}, "Take")
+            new TriggerAnimation(8197, 1, false),
+            new TriggerAnimation(832, 2, false, new int[]{ItemID.BUCKET}, "Take")
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.", 1),

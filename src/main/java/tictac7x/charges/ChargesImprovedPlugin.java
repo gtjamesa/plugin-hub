@@ -132,7 +132,6 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-//		log.debug(event.getType() + " - " + event.getMessage().replaceAll("</?col.*?>", ""));
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
 	}
 
@@ -159,7 +158,6 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onMenuOptionClicked(event));
-		System.out.println(event.getId() + " " + event.getMenuTarget() + " " + event.getMenuOption() + " " + event.getMenuAction().name());
 	}
 }
 

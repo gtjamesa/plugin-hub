@@ -2,7 +2,6 @@ package tictac7x.charges;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
-import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
@@ -35,7 +34,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected ItemContainer equipment;
     @Nullable protected String menu_option;
 
-    protected boolean needs_to_be_equipped;
+    protected boolean needs_to_be_equipped_for_infobox;
     protected boolean equipped;
 
     @Nullable protected String config_key;
@@ -66,12 +65,12 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getText() {
-        return this.charges == -1 ? "?" : needs_to_be_equipped && !equipped ? "0" : String.valueOf(charges);
+        return this.charges == -1 ? "?" : needs_to_be_equipped_for_infobox && !equipped ? "0" : String.valueOf(charges);
     }
 
     @Override
     public String getTooltip() {
-        return items.getItemComposition(item_id).getName() + (needs_to_be_equipped && !equipped ? " - Needs to be equipped" : "");
+        return items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !equipped ? " - Needs to be equipped" : "");
     }
 
     @Override
@@ -162,13 +161,13 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        if (inventory == null || equipment == null || triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1) return;
+        if (inventory == null || equipment == null || triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1 || this.triggers_items == null) return;
 
         for (final TriggerAnimation trigger_animation : triggers_animations) {
             boolean valid = true;
+
             if (trigger_animation.animation_id == event.getActor().getAnimation()) {
                 // Check for correct menu option.
-                System.out.println("ACTION " + trigger_animation.menu_option + "actual: " + menu_option);
                 if (trigger_animation.menu_option != null && menu_option != null && !menu_option.equals(trigger_animation.menu_option)) {
                     valid = false;
                 }
@@ -178,12 +177,25 @@ public class ChargedItemInfoBox extends InfoBox {
                     for (final int item_id : trigger_animation.unallowed_items) {
                         if (inventory.contains(item_id) || equipment.contains(item_id)) {
                             valid = false;
+                            break;
                         }
                     }
                 }
 
+                // Check if equipped.
+                if (trigger_animation.equipped) {
+                    for (final TriggerItem trigger_item : triggers_items) {
+                        if (!equipment.contains(trigger_item.item_id)) {
+                            valid = false;
+                            break;
+                        }
+                    }
+                }
+
+                // Invalid trigger, don't modify charges.
                 if (!valid) continue;
-                System.out.println("STILL HERE...");
+
+                // Valid trigger, modify charges.
                 if (trigger_animation.decrease_charges) {
                     decreaseCharges(trigger_animation.charges);
                 } else {

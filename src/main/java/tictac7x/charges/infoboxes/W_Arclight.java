@@ -23,7 +23,7 @@ public class W_Arclight extends ChargedItemInfoBox {
             new TriggerChatMessage("Your arclight has (?<charges>.+) charges? left.")
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(390, 1)
+            new TriggerAnimation(390, 1, true)
         };
     }
 }

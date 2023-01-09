@@ -15,7 +15,7 @@ public class B_ExpeditiousBracelet extends ChargedItemInfoBox {
     public B_ExpeditiousBracelet(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, plugin);
         this.config_key = ChargesImprovedConfig.expeditious_bracelet;
-        this.needs_to_be_equipped = true;
+        this.needs_to_be_equipped_for_infobox = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.EXPEDITIOUS_BRACELET),
         };
