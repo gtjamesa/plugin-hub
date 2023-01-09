@@ -20,7 +20,7 @@ public class W_Arclight extends ChargedItemInfoBox {
             new TriggerItem(ItemID.ARCLIGHT),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your arclight has (?<charges>.+) charges? left.", 1)
+            new TriggerChatMessage("Your arclight has (?<charges>.+) charges? left.")
         };
         this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(390, 1)
