@@ -184,12 +184,13 @@ public class ChargedItemInfoBox extends InfoBox {
 
                 // Check if equipped.
                 if (trigger_animation.equipped) {
+                    boolean equipped = false;
                     for (final TriggerItem trigger_item : triggers_items) {
-                        if (!equipment.contains(trigger_item.item_id)) {
-                            valid = false;
-                            break;
+                        if (equipment.contains(trigger_item.item_id)) {
+                            equipped = true;
                         }
                     }
+                    if (!equipped) valid = false;
                 }
 
                 // Invalid trigger, don't modify charges.
@@ -209,13 +210,28 @@ public class ChargedItemInfoBox extends InfoBox {
         if (triggers_hitsplats == null) return;
 
         for (final TriggerHitsplat hitsplat : triggers_hitsplats) {
-            if (
-                hitsplat.self && event.getActor() == client.getLocalPlayer() &&
-                event.getHitsplat().getHitsplatType() == hitsplat.hitsplat_id &&
-                equipment != null && hitsplat.equipped && equipment.contains(item_id)
-            ) {
-                decreaseCharges(hitsplat.discharges);
+            // Player check.
+            if (hitsplat.self && event.getActor() != client.getLocalPlayer()) continue;
+
+            // Enemy check.
+            if (!hitsplat.self && (event.getActor() == client.getLocalPlayer() || event.getHitsplat().isOthers())) continue;
+
+            // Successful hit check.
+            if (hitsplat.successful && event.getHitsplat().getAmount() == 0) continue;
+
+            // Equipped check.
+            if (hitsplat.equipped && triggers_items != null && equipment != null) {
+                boolean equipped = false;
+                for (final TriggerItem trigger_item : triggers_items) {
+                    if (equipment.contains(trigger_item.item_id)) {
+                        equipped = true;
+                    }
+                }
+                if (!equipped) continue;
             }
+
+            // Valid hitsplat, modify charges.
+            decreaseCharges(hitsplat.discharges);
         }
     }
 
