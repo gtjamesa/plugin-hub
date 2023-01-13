@@ -36,7 +36,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
     protected boolean needs_to_be_equipped_for_infobox;
     protected boolean equipped;
-    @Nullable protected Integer animation;
 
     @Nullable protected String config_key;
     @Nullable protected TriggerChatMessage[] triggers_chat_messages;
@@ -46,6 +45,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected String[] extra_groups;
 
+    protected int animation = -1;
     protected int charges = -1;
     private boolean render = false;
 
@@ -162,50 +162,52 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        if (inventory == null || equipment == null || triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1 || this.triggers_items == null) return;
+        // Player check.
+        if (event.getActor() != client.getLocalPlayer()) return;
 
+        // Save animation ID for others to use.
         this.animation = event.getActor().getAnimation();
-        System.out.println("ANIMATION SAVED: " + animation);
 
+        // No animations to check.
+        if (inventory == null || equipment == null || triggers_animations == null || this.charges == -1 || this.triggers_items == null) return;
+
+        // Check all animation triggers.
         for (final TriggerAnimation trigger_animation : triggers_animations) {
-            boolean valid = true;
+            // Valid animation id check.
+            if (trigger_animation.animation_id != event.getActor().getAnimation()) continue;
 
-            if (trigger_animation.animation_id == event.getActor().getAnimation()) {
-                // Check for correct menu option.
-                if (trigger_animation.menu_option != null && menu_option != null && !menu_option.equals(trigger_animation.menu_option)) {
-                    valid = false;
-                }
+            // Menu option check.
+            if (trigger_animation.menu_option != null && menu_option != null && !menu_option.equals(trigger_animation.menu_option)) continue;
 
-                // Check for unallowed items.
-                if (valid && trigger_animation.unallowed_items != null) {
-                    for (final int item_id : trigger_animation.unallowed_items) {
-                        if (inventory.contains(item_id) || equipment.contains(item_id)) {
-                            valid = false;
-                            break;
-                        }
+            // Unallowed items check.
+            if (trigger_animation.unallowed_items != null) {
+                boolean unallowed_items = false;
+                for (final int item_id : trigger_animation.unallowed_items) {
+                    if (inventory.contains(item_id) || equipment.contains(item_id)) {
+                        unallowed_items = true;
+                        break;
                     }
                 }
+                if (unallowed_items) continue;
+            }
 
-                // Check if equipped.
-                if (trigger_animation.equipped) {
-                    boolean equipped = false;
-                    for (final TriggerItem trigger_item : triggers_items) {
-                        if (equipment.contains(trigger_item.item_id)) {
-                            equipped = true;
-                        }
+            // Equipped check.
+            if (trigger_animation.equipped) {
+                boolean equipped = false;
+                for (final TriggerItem trigger_item : triggers_items) {
+                    if (equipment.contains(trigger_item.item_id)) {
+                        equipped = true;
+                        break;
                     }
-                    if (!equipped) valid = false;
                 }
+                if (!equipped) continue;
+            }
 
-                // Invalid trigger, don't modify charges.
-                if (!valid) continue;
-
-                // Valid trigger, modify charges.
-                if (trigger_animation.decrease_charges) {
-                    decreaseCharges(trigger_animation.charges);
-                } else {
-                    increaseCharges(trigger_animation.charges);
-                }
+            // Valid trigger, modify charges.
+            if (trigger_animation.decrease_charges) {
+                decreaseCharges(trigger_animation.charges);
+            } else {
+                increaseCharges(trigger_animation.charges);
             }
         }
     }
@@ -213,31 +215,43 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onHitsplatApplied(final HitsplatApplied event) {
         if (triggers_hitsplats == null) return;
 
-        System.out.println("CHECK ANIMATION: " + this.animation);
-
-        for (final TriggerHitsplat hitsplat : triggers_hitsplats) {
+        // Check all hitsplat triggers.
+        for (final TriggerHitsplat trigger_hitsplat : triggers_hitsplats) {
             // Player check.
-            if (hitsplat.self && event.getActor() != client.getLocalPlayer()) continue;
+            if (trigger_hitsplat.self && event.getActor() != client.getLocalPlayer()) continue;
 
             // Enemy check.
-            if (!hitsplat.self && (event.getActor() == client.getLocalPlayer() || event.getHitsplat().isOthers())) continue;
+            if (!trigger_hitsplat.self && (event.getActor() == client.getLocalPlayer() || event.getHitsplat().isOthers())) continue;
 
             // Successful hit check.
-            if (hitsplat.successful && event.getHitsplat().getAmount() == 0) continue;
+            if (trigger_hitsplat.successful && event.getHitsplat().getAmount() == 0) continue;
 
             // Equipped check.
-            if (hitsplat.equipped && triggers_items != null && equipment != null) {
+            if (trigger_hitsplat.equipped && triggers_items != null && equipment != null) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
                     if (equipment.contains(trigger_item.item_id)) {
                         equipped = true;
+                        break;
                     }
                 }
                 if (!equipped) continue;
             }
 
+            // Animation check.
+            if (trigger_hitsplat.animation != null) {
+                boolean valid = false;
+                for (final int animation : trigger_hitsplat.animation) {
+                    if (animation == this.animation) {
+                        valid = true;
+                        break;
+                    }
+                }
+                if (!valid) continue;
+            }
+
             // Valid hitsplat, modify charges.
-            decreaseCharges(hitsplat.discharges);
+            decreaseCharges(trigger_hitsplat.discharges);
         }
     }
 

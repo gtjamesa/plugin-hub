@@ -13,7 +13,8 @@ import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class W_Arclight extends ChargedItemInfoBox {
-    private final int ARCLIGHT_ATTACK = 390;
+    private final int ARCLIGHT_ATTACK_SLASH = 390;
+    private final int ARCLIGHT_ATTACK_STAB = 386;
 
     public W_Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
         super(ItemID.ARCLIGHT, client, client_thread, configs, items, plugin);
@@ -26,7 +27,7 @@ public class W_Arclight extends ChargedItemInfoBox {
             new TriggerChatMessage("Your arclight can perform (?<charges>.+) more attacks.")
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(false, true, 1, true, ARCLIGHT_ATTACK)
+            new TriggerHitsplat(false, true, 1, true, new int[]{ARCLIGHT_ATTACK_SLASH, ARCLIGHT_ATTACK_STAB})
         };
     }
 }
