@@ -36,6 +36,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     protected boolean needs_to_be_equipped_for_infobox;
     protected boolean equipped;
+    @Nullable protected Integer animation;
 
     @Nullable protected String config_key;
     @Nullable protected TriggerChatMessage[] triggers_chat_messages;
@@ -163,6 +164,9 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onAnimationChanged(final AnimationChanged event) {
         if (inventory == null || equipment == null || triggers_animations == null || event.getActor() != client.getLocalPlayer() || this.charges == -1 || this.triggers_items == null) return;
 
+        this.animation = event.getActor().getAnimation();
+        System.out.println("ANIMATION SAVED: " + animation);
+
         for (final TriggerAnimation trigger_animation : triggers_animations) {
             boolean valid = true;
 
@@ -208,6 +212,8 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public void onHitsplatApplied(final HitsplatApplied event) {
         if (triggers_hitsplats == null) return;
+
+        System.out.println("CHECK ANIMATION: " + this.animation);
 
         for (final TriggerHitsplat hitsplat : triggers_hitsplats) {
             // Player check.
