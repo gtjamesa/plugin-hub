@@ -223,8 +223,8 @@ public class ChargedItemInfoBox extends InfoBox {
             // Enemy check.
             if (!trigger_hitsplat.self && (event.getActor() == client.getLocalPlayer() || event.getHitsplat().isOthers())) continue;
 
-            // Successful hit check.
-            if (trigger_hitsplat.successful && event.getHitsplat().getAmount() == 0) continue;
+            // Hitsplat type check.
+            if (trigger_hitsplat.hitsplat_id != event.getHitsplat().getHitsplatType()) continue;
 
             // Equipped check.
             if (trigger_hitsplat.equipped && triggers_items != null && equipment != null) {

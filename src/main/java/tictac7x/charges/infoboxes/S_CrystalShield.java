@@ -24,7 +24,7 @@ public class S_CrystalShield extends ChargedItemInfoBox {
             new TriggerChatMessage("Your crystal shield has (?<charges>.+) charges? remaining.")
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(true, true, 1, true)
+            new TriggerHitsplat(true, true, 1)
         };
     }
 }
