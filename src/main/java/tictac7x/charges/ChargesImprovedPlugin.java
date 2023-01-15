@@ -147,7 +147,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (debug) {
 			System.out.println("MESSAGE | " +
 				"type: " + event.getType().name() +
-				", message: " + event.getMessage() +
+				", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
 				", sender: " + event.getSender()
 			);
 		}

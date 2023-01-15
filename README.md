@@ -25,6 +25,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Shields
 - [x] Crystal shield
+- [x] Falador shield
 
 ### Jewelery
 - [x] Bracelet of slaughter

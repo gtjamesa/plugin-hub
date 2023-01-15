@@ -18,6 +18,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
         this.infoboxes_charged_items = infoboxes_charged_items;
         showOnInventory();
         showOnEquipment();
+        showOnBank();
     }
 
     @Override
@@ -51,6 +52,6 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
     }
 
     private String getCharges(final ChargedItemInfoBox infobox) {
-        return infobox.charges == -1 ? "?" : String.valueOf(infobox.charges);
+        return infobox.getCharges() == -1 ? "?" : String.valueOf(infobox.getCharges());
     }
 }

@@ -17,9 +17,12 @@ import tictac7x.charges.triggers.TriggerWidget;
 import javax.annotation.Nullable;
 
 public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
+    @Nullable private String tooltip_extra;
+
     public U_BottomlessCompostBucket(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
         super(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, plugin);
         this.config_key = ChargesImprovedConfig.bottomless_compost_bucket;
+        this.extra_config_keys = new String[]{"type"};
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET, 0),
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
@@ -39,17 +42,22 @@ public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
             new TriggerWidget("You discard the contents of your bottomless compost bucket.(?<type>.*)", 0),
             new TriggerWidget("You fill your bottomless compost bucket with .* buckets? of (?<type>.+?) ?compost. Your bottomless compost bucket now contains a total of (?<charges>.+) uses.")
         };
-        this.extra_groups = new String[]{"type"};
     }
 
     @Override
     public String getTooltip() {
-        final @Nullable String type = getCompostType();
-        final String tooltip_type = charges == 0 ? " (empty)" : charges > 0 && type != null && type.length() > 0 ? " (" + type + ")" : " (unknown)";
-        return super.getTooltip() + tooltip_type;
+        return super.getTooltip() + tooltip_extra;
     }
     
     private String getCompostType() {
         return configs.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.bottomless_compost_bucket_type);
+    }
+
+    @Override
+    protected void onChargesUpdated() {
+        super.onChargesUpdated();
+
+        final @Nullable String type = getCompostType();
+        this.tooltip_extra = super.getCharges() == 0 ? " (empty)" : super.getCharges() > 0 && type != null && type.length() > 0 ? " (" + type + ")" : " (unknown)";
     }
 }

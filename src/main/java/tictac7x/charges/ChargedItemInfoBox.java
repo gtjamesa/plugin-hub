@@ -35,24 +35,25 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Nullable protected ItemContainer inventory;
     @Nullable protected ItemContainer equipment;
-    @Nullable protected String menu_option;
-
-    protected boolean needs_to_be_equipped_for_infobox;
-    protected boolean equipped;
 
     @Nullable protected String config_key;
+    @Nullable protected String[] extra_config_keys;
     @Nullable protected TriggerChatMessage[] triggers_chat_messages;
     @Nullable protected TriggerAnimation[] triggers_animations;
     @Nullable protected TriggerGraphic[] triggers_graphics;
     @Nullable protected TriggerHitsplat[] triggers_hitsplats;
     @Nullable protected TriggerItem[] triggers_items;
     @Nullable protected TriggerWidget[] triggers_widgets;
-    @Nullable protected String[] extra_groups;
 
-    protected int animation = -1;
-    protected int graphic = -1;
-    protected int charges = -1;
-    protected String tooltip;
+    protected boolean needs_to_be_equipped_for_infobox;
+    private boolean in_equipment;
+    private boolean in_inventory;
+    @Nullable protected String menu_option;
+    private int animation = -1;
+    private int graphic = -1;
+    private int charges = -1;
+
+    private String tooltip;
     private boolean render = false;
 
     public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
@@ -63,7 +64,12 @@ public class ChargedItemInfoBox extends InfoBox {
         this.configs = configs;
         this.items = items;
         this.infoboxes = infoboxes;
-        loadChargesFromConfig();
+
+        client_thread.invokeLater(() -> {
+            this.loadChargesFromConfig();
+            this.updateTooltip();
+            this.onChargesUpdated();
+        });
     }
 
     @Override
@@ -73,12 +79,12 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getText() {
-        return this.charges == -1 ? "?" : needs_to_be_equipped_for_infobox && !equipped ? "0" : String.valueOf(charges);
+        return this.charges == -1 ? "?" : needs_to_be_equipped_for_infobox && !in_equipment ? "0" : String.valueOf(charges);
     }
 
     @Override
     public String getTooltip() {
-        return tooltip;
+        return this.tooltip;
     }
 
     @Override
@@ -88,7 +94,11 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public boolean render() {
-        return render;
+        return this.render;
+    }
+
+    public int getCharges() {
+        return this.charges;
     }
 
     public void onItemContainersChanged(@Nonnull final ItemContainer inventory, @Nonnull final ItemContainer equipment) {
@@ -99,36 +109,44 @@ public class ChargedItemInfoBox extends InfoBox {
         // No trigger items to detect charges.
         if (triggers_items == null) return;
 
-        this.equipped = false;
-        this.render = false;
+        boolean in_equipment = false;
+        boolean in_inventory = false;
+        boolean render = false;
+        Integer charges = null;
 
         for (final TriggerItem trigger_item : triggers_items) {
+            // Find out if item is equipped.
+            final boolean in_equipment_item = equipment.contains(trigger_item.item_id);
+            final boolean in_inventory_item = inventory.contains(trigger_item.item_id);
+
             // Find out if infobox should be rendered.
-            if (inventory.contains(trigger_item.item_id) || equipment.contains(trigger_item.item_id)) {
-                this.render = true;
+            if (in_inventory_item || in_equipment_item) {
+                render = true;
 
                 // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
                 if (trigger_item.item_id != item_id) {
                     this.updateInfobox(trigger_item.item_id);
                 }
+
+                if (in_equipment_item) in_equipment = true;
             }
 
-            // Find out if item is equipped.
-            if (equipment.contains(trigger_item.item_id)) {
-                this.equipped = true;
-            }
-
-            // Check if inventory or equipment contains trigger item.
-            if (!inventory.contains(trigger_item.item_id) && !equipment.contains(trigger_item.item_id)) continue;
+            // Item not found, don't calculate charges.
+            if (!in_equipment_item && !in_inventory_item) continue;
 
             // Find out charges for the item.
             if (trigger_item.charges != null) {
-                int charges = 0;
+                if (charges == null) charges = 0;
                 charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
                 charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
-                this.charges = charges;
             }
         }
+
+        // Update infobox variables for other triggers.
+        this.in_equipment = in_equipment;
+        this.in_inventory = in_inventory;
+        this.render = render;
+        if (charges != null) this.charges = charges;
     }
 
     public void onChatMessage(final ChatMessage event) {
@@ -141,7 +159,7 @@ public class ChargedItemInfoBox extends InfoBox {
         final String message = event.getMessage().replaceAll("</?col.*?>", "");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
-            final Pattern regex = Pattern.compile(chat_message.message);
+            final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
             if (!matcher.find()) continue;
 
@@ -154,13 +172,16 @@ public class ChargedItemInfoBox extends InfoBox {
             );
 
             // Check extra matches groups.
-            if (extra_groups != null) {
-                for (final String extra_group : extra_groups) {
+            if (extra_config_keys != null) {
+                for (final String extra_group : extra_config_keys) {
                     final String extra = matcher.group(extra_group);
-                    if (extra != null) setConfiguration(config_key + "_" + extra_group, extra);
+                    if (extra != null) {
+                        setConfiguration(config_key + "_" + extra_group, extra.replaceAll(",", ""));
+                    }
                 }
             }
 
+            // Chat message used, no need to check other messages.
             return;
         }
     }
@@ -339,8 +360,8 @@ public class ChargedItemInfoBox extends InfoBox {
                 );
 
                 // Check extra matches groups.
-                if (extra_groups != null) {
-                    for (final String extra_group : extra_groups) {
+                if (extra_config_keys != null) {
+                    for (final String extra_group : extra_config_keys) {
                         final String extra = matcher.group(extra_group);
                         if (extra != null) setConfiguration(config_key + "_" + extra_group, extra);
                     }
@@ -354,16 +375,15 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     private void loadChargesFromConfig() {
-        client_thread.invokeLater(() -> {
-            if (config_key == null) return;
-            this.charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
-        });
+        if (config_key == null) return;
+        this.charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
     }
 
     private void setCharges(final int charges) {
         if (config_key == null) return;
         this.charges = charges;
-        setConfiguration(config_key, charges);
+        this.setConfiguration(config_key, charges);
+        this.onChargesUpdated();
     }
 
     private void decreaseCharges(final int charges) {
@@ -389,12 +409,18 @@ public class ChargedItemInfoBox extends InfoBox {
         this.item_id = item_id;
 
         // Tooltip.
-        this.tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !equipped ? " - Needs to be equipped" : "");
+        this.updateTooltip();
 
         // Image.
         setImage(items.getImage(item_id));
         infoboxes.updateInfoBoxImage(this);
     }
+
+    private void updateTooltip() {
+        this.tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
+    }
+
+    protected void onChargesUpdated() {}
 }
 
 
