@@ -21,6 +21,7 @@ public interface ChargesImprovedConfig extends Config {
     String iban_staff = "iban_staff";
     String xeric_talisman = "xeric_talisman";
     String pharaoh_sceptre = "pharaoh_sceptre";
+    String falador_shield = "falador_shield";
 
     @ConfigItem(
         keyName = trident_of_the_seas,
@@ -98,4 +99,11 @@ public interface ChargesImprovedConfig extends Config {
         description = "Pharaoh sceptre charges",
         position = 11
     ) default int getPharaohSceptreCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = falador_shield,
+        name = "Falador shield",
+        description = "Falador shield charges",
+        position = 12
+    ) default int getFaladorShieldCharges() { return -1; }
 }

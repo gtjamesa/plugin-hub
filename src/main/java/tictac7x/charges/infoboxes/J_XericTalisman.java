@@ -6,6 +6,7 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerAnimation;
@@ -14,8 +15,8 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class J_XericTalisman extends ChargedItemInfoBox {
-    public J_XericTalisman(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
-        super(ItemID.XERICS_TALISMAN, client, client_thread, configs, items, plugin);
+    public J_XericTalisman(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
+        super(ItemID.XERICS_TALISMAN, client, client_thread, configs, items, infoboxes, plugin);
         this.config_key = ChargesImprovedConfig.xeric_talisman;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.XERICS_TALISMAN_INERT, 0),

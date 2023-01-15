@@ -6,6 +6,7 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -17,8 +18,8 @@ public class W_Arclight extends ChargedItemInfoBox {
     private final int ARCLIGHT_ATTACK_STAB = 386;
     private final int ARCLIGHT_ATTACK_SLASH = 390;
 
-    public W_Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
-        super(ItemID.ARCLIGHT, client, client_thread, configs, items, plugin);
+    public W_Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
+        super(ItemID.ARCLIGHT, client, client_thread, configs, items, infoboxes, plugin);
         this.config_key = ChargesImprovedConfig.arclight;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.ARCLIGHT),

@@ -6,6 +6,7 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerAnimation;
@@ -16,8 +17,8 @@ import tictac7x.charges.triggers.TriggerWidget;
 import javax.annotation.Nullable;
 
 public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
-    public U_BottomlessCompostBucket(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
-        super(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, plugin);
+    public U_BottomlessCompostBucket(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
+        super(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, plugin);
         this.config_key = ChargesImprovedConfig.bottomless_compost_bucket;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET, 0),

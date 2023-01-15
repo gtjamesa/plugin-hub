@@ -5,6 +5,7 @@ import net.runelite.api.Client;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetLoaded;
@@ -15,6 +16,7 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.triggers.*;
 
 import javax.annotation.Nonnull;
@@ -24,10 +26,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChargedItemInfoBox extends InfoBox {
-    protected final int item_id;
+    protected int item_id;
     protected final Client client;
     protected final ClientThread client_thread;
     protected final ItemManager items;
+    protected final InfoBoxManager infoboxes;
     protected final ConfigManager configs;
 
     @Nullable protected ItemContainer inventory;
@@ -40,22 +43,26 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected String config_key;
     @Nullable protected TriggerChatMessage[] triggers_chat_messages;
     @Nullable protected TriggerAnimation[] triggers_animations;
+    @Nullable protected TriggerGraphic[] triggers_graphics;
     @Nullable protected TriggerHitsplat[] triggers_hitsplats;
     @Nullable protected TriggerItem[] triggers_items;
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected String[] extra_groups;
 
     protected int animation = -1;
+    protected int graphic = -1;
     protected int charges = -1;
+    protected String tooltip;
     private boolean render = false;
 
-    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
+    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
         super(items.getImage(item_id), plugin);
         this.item_id = item_id;
         this.client = client;
         this.client_thread = client_thread;
         this.configs = configs;
         this.items = items;
+        this.infoboxes = infoboxes;
         loadChargesFromConfig();
     }
 
@@ -71,7 +78,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getTooltip() {
-        return items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !equipped ? " - Needs to be equipped" : "");
+        return tooltip;
     }
 
     @Override
@@ -92,18 +99,23 @@ public class ChargedItemInfoBox extends InfoBox {
         // No trigger items to detect charges.
         if (triggers_items == null) return;
 
-        boolean equipped = false;
-        boolean render = false;
+        this.equipped = false;
+        this.render = false;
 
         for (final TriggerItem trigger_item : triggers_items) {
             // Find out if infobox should be rendered.
             if (inventory.contains(trigger_item.item_id) || equipment.contains(trigger_item.item_id)) {
-                render = true;
+                this.render = true;
+
+                // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
+                if (trigger_item.item_id != item_id) {
+                    this.updateInfobox(trigger_item.item_id);
+                }
             }
 
             // Find out if item is equipped.
             if (equipment.contains(trigger_item.item_id)) {
-                equipped = true;
+                this.equipped = true;
             }
 
             // Check if inventory or equipment contains trigger item.
@@ -117,9 +129,6 @@ public class ChargedItemInfoBox extends InfoBox {
                 this.charges = charges;
             }
         }
-
-        this.equipped = equipped;
-        this.render = render;
     }
 
     public void onChatMessage(final ChatMessage event) {
@@ -208,6 +217,57 @@ public class ChargedItemInfoBox extends InfoBox {
                 decreaseCharges(trigger_animation.charges);
             } else {
                 increaseCharges(trigger_animation.charges);
+            }
+        }
+    }
+
+    public void onGraphicChanged(final GraphicChanged event) {
+        // Player check.
+        if (event.getActor() != client.getLocalPlayer()) return;
+
+        // Save animation ID for others to use.
+        this.graphic = event.getActor().getGraphic();
+
+        // No animations to check.
+        if (inventory == null || equipment == null || triggers_graphics == null || this.charges == -1 || this.triggers_items == null) return;
+
+        // Check all animation triggers.
+        for (final TriggerGraphic trigger_graphic : triggers_graphics) {
+            // Valid animation id check.
+            if (trigger_graphic.graphic_id != event.getActor().getGraphic()) continue;
+
+            // Menu option check.
+            if (trigger_graphic.menu_option != null && menu_option != null && !menu_option.equals(trigger_graphic.menu_option)) continue;
+
+            // Unallowed items check.
+            if (trigger_graphic.unallowed_items != null) {
+                boolean unallowed_items = false;
+                for (final int item_id : trigger_graphic.unallowed_items) {
+                    if (inventory.contains(item_id) || equipment.contains(item_id)) {
+                        unallowed_items = true;
+                        break;
+                    }
+                }
+                if (unallowed_items) continue;
+            }
+
+            // Equipped check.
+            if (trigger_graphic.equipped) {
+                boolean equipped = false;
+                for (final TriggerItem trigger_item : triggers_items) {
+                    if (equipment.contains(trigger_item.item_id)) {
+                        equipped = true;
+                        break;
+                    }
+                }
+                if (!equipped) continue;
+            }
+
+            // Valid trigger, modify charges.
+            if (trigger_graphic.decrease_charges) {
+                decreaseCharges(trigger_graphic.charges);
+            } else {
+                increaseCharges(trigger_graphic.charges);
             }
         }
     }
@@ -322,6 +382,18 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private void setConfiguration(final String key, final int value) {
         configs.setConfiguration(ChargesImprovedConfig.group, key, value);
+    }
+
+    private void updateInfobox(final int item_id) {
+        // Item id.
+        this.item_id = item_id;
+
+        // Tooltip.
+        this.tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !equipped ? " - Needs to be equipped" : "");
+
+        // Image.
+        setImage(items.getImage(item_id));
+        infoboxes.updateInfoBoxImage(this);
     }
 }
 

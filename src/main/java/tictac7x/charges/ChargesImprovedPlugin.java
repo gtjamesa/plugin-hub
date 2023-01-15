@@ -9,6 +9,7 @@ import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
@@ -68,49 +69,50 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Override
 	protected void startUp() {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
-			new W_Arclight(client, client_thread, configs, items, this),
-			new W_TridentOfTheSeas(client, client_thread, configs, items, this),
-			new W_SkullSceptre(client, client_thread, configs, items, this),
-			new W_IbanStaff(client, client_thread, configs, items, this),
-			new W_PharaohSceptre(client, client_thread, configs, items, this),
+			new W_Arclight(client, client_thread, configs, items, infoboxes, this),
+			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, this),
+			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, this),
+			new W_IbanStaff(client, client_thread, configs, items, infoboxes, this),
+			new W_PharaohSceptre(client, client_thread, configs, items, infoboxes, this),
 
-			new S_CrystalShield(client, client_thread, configs, items, this),
+			new S_CrystalShield(client, client_thread, configs, items, infoboxes, this),
+			new S_FaladorShield(client, client_thread, configs, items, infoboxes, this),
 
-			new J_ExpeditiousBracelet(client, client_thread, configs, items, this),
-			new J_BraceletOfSlaughter(client, client_thread, configs, items, this),
-			new J_XericTalisman(client, client_thread, configs, items, this),
+			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, this),
+			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, this),
+			new J_XericTalisman(client, client_thread, configs, items, infoboxes, this),
 
-			new U_BottomlessCompostBucket(client, client_thread, configs, items, this),
+			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, this),
 
-			new BarrowsAhrimHood(client, client_thread, configs, items, this),
-			new BarrowsAhrimRobetop(  client, client_thread, configs, items, this),
-			new BarrowsAhrimRobeskirt(client, client_thread, configs, items, this),
-			new BarrowsAhrimStaff(client, client_thread, configs, items, this),
+			new BarrowsAhrimHood(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsAhrimRobetop(  client, client_thread, configs, items, infoboxes, this),
+			new BarrowsAhrimRobeskirt(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsAhrimStaff(client, client_thread, configs, items, infoboxes, this),
 
-			new BarrowsDharokHelm(client, client_thread, configs, items, this),
-			new BarrowsDharokPlatebody(  client, client_thread, configs, items, this),
-			new BarrowsDharokPlatelegs(client, client_thread, configs, items, this),
-			new BarrowsDharokGreataxe(client, client_thread, configs, items, this),
+			new BarrowsDharokHelm(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsDharokPlatebody(  client, client_thread, configs, items, infoboxes, this),
+			new BarrowsDharokPlatelegs(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsDharokGreataxe(client, client_thread, configs, items, infoboxes, this),
 
-			new BarrowsGuthanHelm(client, client_thread, configs, items, this),
-			new BarrowsGuthanPlatebody(  client, client_thread, configs, items, this),
-			new BarrowsGuthanChainskirt(client, client_thread, configs, items, this),
-			new BarrowsGuthanWarspear(client, client_thread, configs, items, this),
+			new BarrowsGuthanHelm(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsGuthanPlatebody(  client, client_thread, configs, items, infoboxes, this),
+			new BarrowsGuthanChainskirt(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsGuthanWarspear(client, client_thread, configs, items, infoboxes, this),
 
-			new BarrowsKarilCoif(client, client_thread, configs, items, this),
-			new BarrowsKarilLeathertop(  client, client_thread, configs, items, this),
-			new BarrowsKarilLeatherskirt(client, client_thread, configs, items, this),
-			new BarrowsKarilCrossbow(client, client_thread, configs, items, this),
+			new BarrowsKarilCoif(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsKarilLeathertop(  client, client_thread, configs, items, infoboxes, this),
+			new BarrowsKarilLeatherskirt(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsKarilCrossbow(client, client_thread, configs, items, infoboxes, this),
 
-			new BarrowsToragHelm(client, client_thread, configs, items, this),
-			new BarrowsToragPlatebody(  client, client_thread, configs, items, this),
-			new BarrowsToragPlatelegs(client, client_thread, configs, items, this),
-			new BarrowsToragHammers(client, client_thread, configs, items, this),
+			new BarrowsToragHelm(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsToragPlatebody(  client, client_thread, configs, items, infoboxes, this),
+			new BarrowsToragPlatelegs(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsToragHammers(client, client_thread, configs, items, infoboxes, this),
 
-			new BarrowsVeracHelm(client, client_thread, configs, items, this),
-			new BarrowsVeracBrassard(  client, client_thread, configs, items, this),
-			new BarrowsVeracPlateskirt(client, client_thread, configs, items, this),
-			new BarrowsVeracFlail(client, client_thread, configs, items, this),
+			new BarrowsVeracHelm(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsVeracBrassard(  client, client_thread, configs, items, infoboxes, this),
+			new BarrowsVeracPlateskirt(client, client_thread, configs, items, infoboxes, this),
+			new BarrowsVeracFlail(client, client_thread, configs, items, infoboxes, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(infoboxes_charged_items);
 
@@ -157,6 +159,16 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (debug && event.getActor() == client.getLocalPlayer()) {
 			System.out.println("ANIMATION | " +
 				"id: " + event.getActor().getAnimation()
+			);
+		}
+	}
+
+	@Subscribe
+	public void onGraphicChanged(final GraphicChanged event) {
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onGraphicChanged(event));
+		if (debug && event.getActor() == client.getLocalPlayer()) {
+			System.out.println("GRAPHIC | " +
+				"id: " + event.getActor().getGraphic()
 			);
 		}
 	}

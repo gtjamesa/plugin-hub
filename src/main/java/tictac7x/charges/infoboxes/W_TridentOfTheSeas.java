@@ -6,6 +6,7 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerAnimation;
@@ -14,8 +15,8 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_TridentOfTheSeas extends ChargedItemInfoBox {
-    public W_TridentOfTheSeas(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
-        super(ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, plugin);
+    public W_TridentOfTheSeas(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
+        super(ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, plugin);
         this.config_key = ChargesImprovedConfig.trident_of_the_seas;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.UNCHARGED_TRIDENT),

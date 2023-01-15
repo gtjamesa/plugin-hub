@@ -6,12 +6,13 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
+import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsToragHammers extends ChargedItemInfoBox {
-    public BarrowsToragHammers(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final Plugin plugin) {
-        super(ItemID.TORAGS_HAMMERS, client, client_thread, configs, items, plugin);
+    public BarrowsToragHammers(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
+        super(ItemID.TORAGS_HAMMERS, client, client_thread, configs, items, infoboxes, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_HAMMERS, 100),
             new TriggerItem(ItemID.TORAGS_HAMMERS_100, 100),
