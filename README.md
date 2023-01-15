@@ -4,22 +4,32 @@ Show charges of various items that are in inventory or equipped
 ## Missing items
 If some item is missing, and you would like to see it added, create an issue here in github.
 
-## Implemented armor
+If you find any dialogs or chat messages that don't seem to affect the charges of the items that are in this list, let me know.
+
+## Implemented items
+### Armor
 - [x] Barrows gear
-    - [x] Guthan
-    - [x] Verac
-    - [x] Dharok
-    - [x] Ahrim
-    - [x] Karil
-    - [x] Torag
+  - [x] Ahrim
+  - [x] Dharok
+  - [x] Guthan
+  - [x] Karil
+  - [x] Torag
+  - [x] Verac
 
-## Implemented weapons
-- [x] Trident of the sea
+### Weapons
 - [x] Arclight
+- [x] Iban's staff
+- [x] Pharaoh's sceptre
+- [x] Skull sceptre
+- [x] Trident of the sea
 
-## Implemented shields
+### Shields
 - [x] Crystal shield
 
-## Implemented jewelery
+### Jewelery
 - [x] Bracelet of slaughter
 - [x] Expeditious bracelet
+- [x] Xeric's talisman
+
+### Utilities
+- [x] Bottomless compost bucket

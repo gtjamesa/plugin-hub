@@ -69,10 +69,17 @@ public class ChargesImprovedPlugin extends Plugin {
 	protected void startUp() {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
 			new W_Arclight(client, client_thread, configs, items, this),
-			new S_CrystalShield(client, client_thread, configs, items, this),
 			new W_TridentOfTheSeas(client, client_thread, configs, items, this),
-			new B_ExpeditiousBracelet(client, client_thread, configs, items, this),
-			new B_BraceletOfSlaughter(client, client_thread, configs, items, this),
+			new W_SkullSceptre(client, client_thread, configs, items, this),
+			new W_IbanStaff(client, client_thread, configs, items, this),
+			new W_PharaohSceptre(client, client_thread, configs, items, this),
+
+			new S_CrystalShield(client, client_thread, configs, items, this),
+
+			new J_ExpeditiousBracelet(client, client_thread, configs, items, this),
+			new J_BraceletOfSlaughter(client, client_thread, configs, items, this),
+			new J_XericTalisman(client, client_thread, configs, items, this),
+
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, this),
 
 			new BarrowsAhrimHood(client, client_thread, configs, items, this),
