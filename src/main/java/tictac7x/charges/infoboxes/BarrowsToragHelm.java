@@ -8,11 +8,12 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsToragHelm extends ChargedItemInfoBox {
-    public BarrowsToragHelm(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.TORAGS_HELM, client, client_thread, configs, items, infoboxes, plugin);
+    public BarrowsToragHelm(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.TORAGS_HELM, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_HELM, 100),
             new TriggerItem(ItemID.TORAGS_HELM_100, 100),

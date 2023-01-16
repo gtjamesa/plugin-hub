@@ -3,6 +3,9 @@ package tictac7x.charges;
 import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
+import net.runelite.client.config.ConfigSection;
+
+import java.awt.Color;
 
 import static tictac7x.charges.ChargesImprovedConfig.group;
 
@@ -23,6 +26,7 @@ public interface ChargesImprovedConfig extends Config {
     String pharaoh_sceptre = "pharaoh_sceptre";
     String falador_shield = "falador_shield";
     String ash_sanctifier = "ash_sanctifier";
+    String bone_crusher = "bone_crusher";
 
     @ConfigItem(
         keyName = trident_of_the_seas,
@@ -110,9 +114,46 @@ public interface ChargesImprovedConfig extends Config {
 
     @ConfigItem(
         keyName = ash_sanctifier,
-        name = "Ash_sanctifier",
-        description = "Ash_sanctifier charges",
+        name = "Ash sanctifier",
+        description = "Ash sanctifier charges",
         position = 13
     ) default int getAshSanctifierCharges() { return -1; }
 
+    @ConfigItem(
+        keyName = bone_crusher,
+        name = "Bone crusher",
+        description = "Bone crusher charges",
+        position = 14
+    ) default int getBoneCrusherCharges() { return -1; }
+
+    @ConfigSection(
+        name = "Colors",
+        description = "Colors of item overlays",
+        position = 1,
+        closedByDefault = false
+    ) String colors = "Colors";
+
+    @ConfigItem(
+        keyName = "colors_default",
+        name = "Default",
+        description = "Color of default charges",
+        position = 1,
+        section = colors
+    ) default Color getColorDefault() { return Color.white; }
+
+    @ConfigItem(
+        keyName = "colors_unknown",
+        name = "Unknown",
+        description = "Color of unknown charges",
+        position = 2,
+        section = colors
+    ) default Color getColorUnknown() { return Color.orange; }
+
+    @ConfigItem(
+        keyName = "colors_empty",
+        name = "Empty",
+        description = "Color of empty charges",
+        position = 3,
+        section = colors
+    ) default Color getColorEmpty() { return Color.red; }
 }

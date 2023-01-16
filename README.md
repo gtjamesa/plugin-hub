@@ -30,7 +30,10 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Jewelery
 - [x] Bracelet of slaughter
 - [x] Expeditious bracelet
+- [x] Slayer ring
 - [x] Xeric's talisman
 
 ### Utilities
+- [x] Ash sanctifier
+- [x] Bonecrusher
 - [x] Bottomless compost bucket

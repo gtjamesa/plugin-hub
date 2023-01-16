@@ -15,8 +15,8 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_PharaohSceptre extends ChargedItemInfoBox {
-    public W_PharaohSceptre(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.PHARAOHS_SCEPTRE, client, client_thread, configs, items, infoboxes, plugin);
+    public W_PharaohSceptre(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.PHARAOHS_SCEPTRE, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.pharaoh_sceptre;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE),

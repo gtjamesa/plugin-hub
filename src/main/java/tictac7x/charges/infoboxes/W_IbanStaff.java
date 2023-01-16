@@ -15,8 +15,8 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_IbanStaff extends ChargedItemInfoBox {
-    public W_IbanStaff(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.IBANS_STAFF, client, client_thread, configs, items, infoboxes, plugin);
+    public W_IbanStaff(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.IBANS_STAFF, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.iban_staff;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.IBANS_STAFF),

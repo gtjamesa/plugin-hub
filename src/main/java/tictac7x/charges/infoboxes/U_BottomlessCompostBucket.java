@@ -19,8 +19,8 @@ import javax.annotation.Nullable;
 public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
     @Nullable private String tooltip_extra;
 
-    public U_BottomlessCompostBucket(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, plugin);
+    public U_BottomlessCompostBucket(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.bottomless_compost_bucket;
         this.extra_config_keys = new String[]{"type"};
         this.triggers_items = new TriggerItem[]{

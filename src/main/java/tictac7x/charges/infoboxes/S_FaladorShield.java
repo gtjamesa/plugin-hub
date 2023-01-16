@@ -15,8 +15,8 @@ import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class S_FaladorShield extends ChargedItemInfoBox {
-    public S_FaladorShield(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, plugin);
+    public S_FaladorShield(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.falador_shield;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.FALADOR_SHIELD),

@@ -8,11 +8,12 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsVeracBrassard extends ChargedItemInfoBox {
-    public BarrowsVeracBrassard(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, plugin);
+    public BarrowsVeracBrassard(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_BRASSARD, 100),
             new TriggerItem(ItemID.VERACS_BRASSARD_100, 100),

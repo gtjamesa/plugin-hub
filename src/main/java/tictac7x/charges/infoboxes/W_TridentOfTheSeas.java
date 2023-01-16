@@ -15,8 +15,8 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_TridentOfTheSeas extends ChargedItemInfoBox {
-    public W_TridentOfTheSeas(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, plugin);
+    public W_TridentOfTheSeas(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.trident_of_the_seas;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.UNCHARGED_TRIDENT),

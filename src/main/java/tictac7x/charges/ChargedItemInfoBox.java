@@ -32,6 +32,7 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ItemManager items;
     protected final InfoBoxManager infoboxes;
     protected final ConfigManager configs;
+    protected final ChargesImprovedConfig config;
 
     @Nullable protected ItemContainer inventory;
     @Nullable protected ItemContainer equipment;
@@ -56,7 +57,7 @@ public class ChargedItemInfoBox extends InfoBox {
     private String tooltip;
     private boolean render = false;
 
-    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
+    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(items.getImage(item_id), plugin);
         this.item_id = item_id;
         this.client = client;
@@ -64,6 +65,7 @@ public class ChargedItemInfoBox extends InfoBox {
         this.configs = configs;
         this.items = items;
         this.infoboxes = infoboxes;
+        this.config = config;
 
         client_thread.invokeLater(() -> {
             this.loadChargesFromConfig();
@@ -74,12 +76,12 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getName() {
-        return super.getName() + "_" + item_id;
+        return super.getName() + "_" + this.item_id;
     }
 
     @Override
     public String getText() {
-        return this.charges == -1 ? "?" : needs_to_be_equipped_for_infobox && !in_equipment ? "0" : String.valueOf(charges);
+        return ChargesImprovedPlugin.getChargesMinified(this.needs_to_be_equipped_for_infobox && !this.in_equipment ? 0 : this.charges);
     }
 
     @Override
@@ -89,7 +91,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        return getText().equals("?") ? Color.orange : getText().equals("0") ? Color.red : Color.white;
+        return getText().equals("?") ? config.getColorUnknown() : getText().equals("0") ? config.getColorEmpty() : config.getColorDefault();
     }
 
     @Override

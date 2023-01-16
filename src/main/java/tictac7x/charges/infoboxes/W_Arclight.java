@@ -18,8 +18,8 @@ public class W_Arclight extends ChargedItemInfoBox {
     private final int ARCLIGHT_ATTACK_STAB = 386;
     private final int ARCLIGHT_ATTACK_SLASH = 390;
 
-    public W_Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
-        super(ItemID.ARCLIGHT, client, client_thread, configs, items, infoboxes, plugin);
+    public W_Arclight(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.ARCLIGHT, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.arclight;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.ARCLIGHT),
