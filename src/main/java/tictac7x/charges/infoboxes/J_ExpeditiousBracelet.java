@@ -11,6 +11,7 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.triggers.TriggerWidget;
 
 public class J_ExpeditiousBracelet extends ChargedItemInfoBox {
     public J_ExpeditiousBracelet(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final Plugin plugin) {
@@ -24,6 +25,9 @@ public class J_ExpeditiousBracelet extends ChargedItemInfoBox {
             new TriggerChatMessage("Your expeditious bracelet has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer( task)? faster. It has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.", 30)
+        };
+        this.triggers_widgets = new TriggerWidget[]{
+            new TriggerWidget("The bracelet shatters. Your next expeditious bracelet will start afresh from (?<charges>.+) charges.")
         };
     }
 }

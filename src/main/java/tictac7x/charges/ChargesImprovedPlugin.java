@@ -83,6 +83,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_XericTalisman(client, client_thread, configs, items, infoboxes, this),
 
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, this),
+			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, this),
 
 			new BarrowsAhrimHood(client, client_thread, configs, items, infoboxes, this),
 			new BarrowsAhrimRobetop(  client, client_thread, configs, items, infoboxes, this),

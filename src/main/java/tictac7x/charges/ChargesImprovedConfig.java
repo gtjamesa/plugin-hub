@@ -22,6 +22,7 @@ public interface ChargesImprovedConfig extends Config {
     String xeric_talisman = "xeric_talisman";
     String pharaoh_sceptre = "pharaoh_sceptre";
     String falador_shield = "falador_shield";
+    String ash_sanctifier = "ash_sanctifier";
 
     @ConfigItem(
         keyName = trident_of_the_seas,
@@ -106,4 +107,12 @@ public interface ChargesImprovedConfig extends Config {
         description = "Falador shield charges",
         position = 12
     ) default int getFaladorShieldCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = ash_sanctifier,
+        name = "Ash_sanctifier",
+        description = "Ash_sanctifier charges",
+        position = 13
+    ) default int getAshSanctifierCharges() { return -1; }
+
 }

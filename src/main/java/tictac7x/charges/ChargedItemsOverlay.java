@@ -41,7 +41,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
                 final Rectangle bounds = item_widget.getCanvasBounds();
                 final TextComponent charges_component = new TextComponent();
 
-                charges_component.setPosition(new Point(bounds.x, bounds.y + 10));
+                charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
                 charges_component.setColor(charges.equals("?") ? Color.orange : charges.equals("0") ? Color.red : Color.white);
                 charges_component.setText(charges);
                 charges_component.render(graphics);
