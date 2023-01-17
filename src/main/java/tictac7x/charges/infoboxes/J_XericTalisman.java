@@ -23,12 +23,15 @@ public class J_XericTalisman extends ChargedItemInfoBox {
             new TriggerItem(ItemID.XERICS_TALISMAN),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The talisman has (?<charges>.+) charges?.")
+            new TriggerChatMessage("The talisman has one charge.", 1),
+            new TriggerChatMessage("The talisman has (?<charges>.+) charges."),
+            new TriggerChatMessage("Your talisman has run out of charges.", 0),
         };
         this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(3865, 1, false)
         };
         this.triggers_widgets = new TriggerWidget[]{
+            new TriggerWidget("Your talisman now has one charge."),
             new TriggerWidget("Your talisman now has (?<charges>.+) charges?.")
         };
     }

@@ -26,10 +26,10 @@ public class U_BoneCrusher extends ChargedItemInfoBox {
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The bonecrusher has (?<charges>.+) charges?."),
+            new TriggerChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges?."),
         };
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("The bonecrusher has (?<charges>.+) charges? left.")
+            new TriggerWidget("The bonecrusher( necklace)? has (?<charges>.+) charges? left.")
         };
     }
 }

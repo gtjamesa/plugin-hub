@@ -34,6 +34,6 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Xeric's talisman
 
 ### Utilities
-- [x] Ash sanctifier
-- [x] Bonecrusher
+- [x] Ash sanctifier (partial)
+- [x] Bonecrusher (partial)
 - [x] Bottomless compost bucket

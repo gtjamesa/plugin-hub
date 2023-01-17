@@ -28,102 +28,123 @@ public interface ChargesImprovedConfig extends Config {
     String ash_sanctifier = "ash_sanctifier";
     String bone_crusher = "bone_crusher";
 
+    @ConfigSection(
+        name = "Debug",
+        description = "Values of charges for all items under the hood",
+        position = 99,
+        closedByDefault = true
+    ) String debug = "Debug";
+
     @ConfigItem(
         keyName = trident_of_the_seas,
         name = "Trident of the seas",
         description = "Trident of the seas charges",
-        position = 1
+        position = 1,
+        section = debug
     ) default int getTridentOfTheSeasCharges() { return -1; }
 
     @ConfigItem(
         keyName = arclight,
         name = "Arclight",
         description = "Arclight charges",
-        position = 2
+        position = 2,
+        section = debug
     ) default int getArclightCharges() { return -1; }
 
     @ConfigItem(
         keyName = crystal_shield,
         name = "Crystal shield",
         description = "Crystal shield charges",
-        position = 3
+        position = 3,
+        section = debug
     ) default int getCrystalShieldCharges() { return -1; }
 
     @ConfigItem(
         keyName = expeditious_bracelet,
         name = "Expeditious bracelet",
         description = "Expeditious bracelet charges",
-        position = 4
+        position = 4,
+        section = debug
     ) default int getBraceletOfExpeditiousCharges() { return -1; }
 
     @ConfigItem(
         keyName = bracelet_of_slaughter,
         name = "Bracelet of slaughter",
         description = "Bracelet of slaughter charges",
-        position = 5
+        position = 5,
+        section = debug
     ) default int getBraceletOfSlaughterCharges() { return -1; }
 
     @ConfigItem(
         keyName = bottomless_compost_bucket,
         name = "Bottomless compost bucket",
         description = "Bottomless compost bucket charges",
-        position = 6
+        position = 6,
+        section = debug
     ) default int getBottomlessCompostBucketCharges() { return -1; }
 
     @ConfigItem(
         keyName = bottomless_compost_bucket_type,
         name = "Bottomless compost bucket type",
         description = "Bottomless compost bucket type",
-        position = 7
+        position = 7,
+        section = debug
     ) default String getBottomlessCompostBucketType() { return ""; }
 
     @ConfigItem(
         keyName = skull_sceptre,
         name = "Skull sceptre",
         description = "Skull sceptre charges",
-        position = 8
+        position = 8,
+        section = debug
     ) default int getSkullSceptreCharges() { return -1; }
 
     @ConfigItem(
         keyName = skull_sceptre,
         name = "Iban staff",
         description = "Iban staff charges",
-        position = 9
+        position = 9,
+        section = debug
     ) default int getIbanStaffCharges() { return -1; }
 
     @ConfigItem(
         keyName = xeric_talisman,
         name = "Xeric talisman",
         description = "Xeric talisman charges",
-        position = 10
+        position = 10,
+        section = debug
     ) default int getXericTalismanCharges() { return -1; }
 
     @ConfigItem(
         keyName = pharaoh_sceptre,
         name = "Pharaoh sceptre",
         description = "Pharaoh sceptre charges",
-        position = 11
+        position = 11,
+        section = debug
     ) default int getPharaohSceptreCharges() { return -1; }
 
     @ConfigItem(
         keyName = falador_shield,
         name = "Falador shield",
         description = "Falador shield charges",
-        position = 12
+        position = 12,
+        section = debug
     ) default int getFaladorShieldCharges() { return -1; }
 
     @ConfigItem(
         keyName = ash_sanctifier,
         name = "Ash sanctifier",
         description = "Ash sanctifier charges",
-        position = 13
+        position = 13,
+        section = debug
     ) default int getAshSanctifierCharges() { return -1; }
 
     @ConfigItem(
         keyName = bone_crusher,
         name = "Bone crusher",
         description = "Bone crusher charges",
-        position = 14
+        position = 14,
+        section = debug
     ) default int getBoneCrusherCharges() { return -1; }
 
     @ConfigSection(
@@ -133,27 +154,27 @@ public interface ChargesImprovedConfig extends Config {
         closedByDefault = false
     ) String colors = "Colors";
 
-    @ConfigItem(
-        keyName = "colors_default",
-        name = "Default",
-        description = "Color of default charges",
-        position = 1,
-        section = colors
-    ) default Color getColorDefault() { return Color.white; }
+        @ConfigItem(
+            keyName = "colors_default",
+            name = "Default",
+            description = "Color of default charges",
+            position = 1,
+            section = colors
+        ) default Color getColorDefault() { return Color.white; }
 
-    @ConfigItem(
-        keyName = "colors_unknown",
-        name = "Unknown",
-        description = "Color of unknown charges",
-        position = 2,
-        section = colors
-    ) default Color getColorUnknown() { return Color.orange; }
+        @ConfigItem(
+            keyName = "colors_unknown",
+            name = "Unknown",
+            description = "Color of unknown charges",
+            position = 2,
+            section = colors
+        ) default Color getColorUnknown() { return Color.gray; }
 
-    @ConfigItem(
-        keyName = "colors_empty",
-        name = "Empty",
-        description = "Color of empty charges",
-        position = 3,
-        section = colors
-    ) default Color getColorEmpty() { return Color.red; }
+        @ConfigItem(
+            keyName = "colors_empty",
+            name = "Empty",
+            description = "Color of empty charges",
+            position = 3,
+            section = colors
+        ) default Color getColorEmpty() { return Color.red; }
 }

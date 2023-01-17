@@ -117,7 +117,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new BarrowsVeracPlateskirt(client, client_thread, configs, items, infoboxes, config, this),
 			new BarrowsVeracFlail(client, client_thread, configs, items, infoboxes, config, this),
 		};
-		overlay_charged_items = new ChargedItemsOverlay(config, infoboxes_charged_items);
+		overlay_charged_items = new ChargedItemsOverlay(items, config, infoboxes_charged_items);
 
 		overlays.add(overlay_charged_items);
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));
