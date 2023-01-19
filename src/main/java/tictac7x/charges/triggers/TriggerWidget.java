@@ -13,7 +13,7 @@ public class TriggerWidget {
     public final int widget_group;
     public final int widget_child;
 
-    public TriggerWidget(@Nonnull final String message, final int charges, final int widget_group, final int widget_child) {
+    public TriggerWidget(@Nonnull final String message, final int widget_group, final int widget_child, final int charges) {
         this.message = message;
         this.charges = charges;
         this.widget_group = widget_group;

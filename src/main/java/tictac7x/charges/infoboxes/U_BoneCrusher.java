@@ -16,8 +16,6 @@ import tictac7x.charges.triggers.TriggerWidget;
 import javax.annotation.Nullable;
 
 public class U_BoneCrusher extends ChargedItemInfoBox {
-    @Nullable private String tooltip_extra;
-
     public U_BoneCrusher(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.bone_crusher;
@@ -26,10 +24,13 @@ public class U_BoneCrusher extends ChargedItemInfoBox {
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("The bonecrusher( necklace)? has no charges.", 0),
+            new TriggerChatMessage("Your bonecrusher( necklace)? has run out of charges.", 0),
             new TriggerChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges?."),
         };
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("The bonecrusher( necklace)? has (?<charges>.+) charges? left.")
+            new TriggerWidget("You remove all the charges from the bonecrusher( necklace)?.", 11, 2, 0),
+            new TriggerWidget("The bonecrusher( necklace)? has (?<charges>.+) charges? left."),
         };
     }
 }

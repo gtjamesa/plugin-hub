@@ -165,6 +165,8 @@ public class ChargedItemInfoBox extends InfoBox {
             final Matcher matcher = regex.matcher(message);
             if (!matcher.find()) continue;
 
+            System.out.println(message + " " +  chat_message.charges);
+
             // Check default "charges" group.
             setCharges(chat_message.charges != null
                 // Charges amount is fixed.
