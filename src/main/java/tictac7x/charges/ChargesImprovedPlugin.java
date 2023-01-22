@@ -34,7 +34,7 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final boolean debug = true;
+	private final boolean debug = false;
 
 	@Inject
 	private Client client;
