@@ -15,12 +15,12 @@ public class BarrowsKarilLeatherskirt extends ChargedItemInfoBox {
     public BarrowsKarilLeatherskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.KARILS_LEATHERSKIRT, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT, 100),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_100, 100),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_75, 75),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_50, 50),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_25, 25),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_0, 0)
+            new TriggerItem(ItemID.KARILS_LEATHERSKIRT).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_100).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_75).fixedCharges(75),
+            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_50).fixedCharges(50),
+            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_25).fixedCharges(25),
+            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_0).fixedCharges(0)
         };
     }
 }

@@ -15,12 +15,12 @@ public class BarrowsGuthanChainskirt extends ChargedItemInfoBox {
     public BarrowsGuthanChainskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.GUTHANS_CHAINSKIRT, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT, 100),
-            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_100, 100),
-            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_75, 75),
-            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_50, 50),
-            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_25, 25),
-            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_0, 0)
+            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT).fixedCharges(100),
+            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_100).fixedCharges(100),
+            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_75).fixedCharges(75),
+            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_50).fixedCharges(50),
+            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_25).fixedCharges(25),
+            new TriggerItem(ItemID.GUTHANS_CHAINSKIRT_0).fixedCharges(0)
         };
     }
 }

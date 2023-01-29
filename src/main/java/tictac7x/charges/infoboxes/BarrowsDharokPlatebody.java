@@ -15,12 +15,12 @@ public class BarrowsDharokPlatebody extends ChargedItemInfoBox {
     public BarrowsDharokPlatebody(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.DHAROKS_PLATEBODY, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.DHAROKS_PLATEBODY, 100),
-            new TriggerItem(ItemID.DHAROKS_PLATEBODY_100, 100),
-            new TriggerItem(ItemID.DHAROKS_PLATEBODY_75, 75),
-            new TriggerItem(ItemID.DHAROKS_PLATEBODY_50, 50),
-            new TriggerItem(ItemID.DHAROKS_PLATEBODY_25, 25),
-            new TriggerItem(ItemID.DHAROKS_PLATEBODY_0, 0)
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_100).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_75).fixedCharges(75),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_50).fixedCharges(50),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_25).fixedCharges(25),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_0).fixedCharges(0)
         };
     }
 }

@@ -18,14 +18,14 @@ public class J_SlayerRing extends ChargedItemInfoBox {
     public J_SlayerRing(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.SLAYER_RING_1, 1),
-            new TriggerItem(ItemID.SLAYER_RING_2, 2),
-            new TriggerItem(ItemID.SLAYER_RING_3, 3),
-            new TriggerItem(ItemID.SLAYER_RING_4, 4),
-            new TriggerItem(ItemID.SLAYER_RING_5, 5),
-            new TriggerItem(ItemID.SLAYER_RING_6, 6),
-            new TriggerItem(ItemID.SLAYER_RING_7, 7),
-            new TriggerItem(ItemID.SLAYER_RING_8, 8),
+            new TriggerItem(ItemID.SLAYER_RING_1).fixedCharges(1),
+            new TriggerItem(ItemID.SLAYER_RING_2).fixedCharges(2),
+            new TriggerItem(ItemID.SLAYER_RING_3).fixedCharges(3),
+            new TriggerItem(ItemID.SLAYER_RING_4).fixedCharges(4),
+            new TriggerItem(ItemID.SLAYER_RING_5).fixedCharges(5),
+            new TriggerItem(ItemID.SLAYER_RING_6).fixedCharges(6),
+            new TriggerItem(ItemID.SLAYER_RING_7).fixedCharges(7),
+            new TriggerItem(ItemID.SLAYER_RING_8).fixedCharges(8),
         };
     }
 }

@@ -6,15 +6,14 @@ public class TriggerItem {
     public final int item_id;
 
     @Nullable
-    public final Integer charges;
-
-    public TriggerItem(final int item_id, final int charges) {
-        this.item_id = item_id;
-        this.charges = charges;
-    }
+    public Integer charges;
 
     public TriggerItem(final int item_id) {
         this.item_id = item_id;
-        this.charges = null;
+    }
+
+    public TriggerItem fixedCharges(final int charges) {
+        this.charges = charges;
+        return this;
     }
 }

@@ -9,25 +9,21 @@ public class TriggerChatMessage {
     public final Pattern message;
 
     @Nullable
-    public final Integer charges;
+    public Integer charges;
 
-    public final boolean target;
+    public boolean menu_target;
 
     public TriggerChatMessage(@Nonnull final String message) {
         this.message = Pattern.compile(message);
-        this.charges = null;
-        this.target = false;
     }
 
-    public TriggerChatMessage(@Nonnull final String message, final int charges) {
-        this.message = Pattern.compile(message);
+    public TriggerChatMessage fixedCharges(final int charges) {
         this.charges = charges;
-        this.target = false;
+        return this;
     }
 
-    public TriggerChatMessage(@Nonnull final String message, final boolean target) {
-        this.message = Pattern.compile(message);
-        this.charges = null;
-        this.target = target;
+    public TriggerChatMessage onItemClick() {
+        this.menu_target = true;
+        return this;
     }
 }

@@ -8,36 +8,25 @@ public class TriggerWidget {
     public final String message;
 
     @Nullable
-    public final Integer charges;
+    public Integer charges;
 
-    public final int widget_group;
-    public final int widget_child;
-
-    public TriggerWidget(@Nonnull final String message, final int widget_group, final int widget_child, final int charges) {
-        this.message = message;
-        this.charges = charges;
-        this.widget_group = widget_group;
-        this.widget_child = widget_child;
-    }
-
-    public TriggerWidget(@Nonnull final String message, final int widget_group, final int widget_child) {
-        this.message = message;
-        this.charges = null;
-        this.widget_group = widget_group;
-        this.widget_child = widget_child;
-    }
+    public int group_id;
+    public int child_id;
 
     public TriggerWidget(@Nonnull final String message) {
         this.message = message;
-        this.charges = null;
-        this.widget_group = 193;
-        this.widget_child = 2;
+        this.group_id = 193;
+        this.child_id = 2;
     }
 
-    public TriggerWidget(@Nonnull final String message, final int charges) {
-        this.message = message;
+    public TriggerWidget customWidget(final int group_id, final int child_id) {
+        this.group_id = group_id;
+        this.child_id = child_id;
+        return this;
+    }
+
+    public TriggerWidget fixedCharges(final int charges) {
         this.charges = charges;
-        this.widget_group = 193;
-        this.widget_child = 2;
+        return this;
     }
 }

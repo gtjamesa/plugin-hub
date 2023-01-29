@@ -13,8 +13,6 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class J_BraceletOfSlaughter extends ChargedItemInfoBox {
-    private final int MAX_CHARGES = 30;
-
     public J_BraceletOfSlaughter(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.BRACELET_OF_SLAUGHTER, client, client_thread, configs, items, infoboxes, config, plugin);
         this.config_key = ChargesImprovedConfig.bracelet_of_slaughter;
@@ -25,7 +23,7 @@ public class J_BraceletOfSlaughter extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.", MAX_CHARGES)
+            new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30)
         };
     }
 }

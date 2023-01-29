@@ -21,7 +21,7 @@ public class S_Chronicle extends ChargedItemInfoBox {
             new TriggerItem(ItemID.CHRONICLE),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your book has (?<charges>.+) charges? left.")
+            new TriggerChatMessage("Your book has (?<charges>.+) charges? left.").onItemClick()
         };
     }
 }

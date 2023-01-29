@@ -2,29 +2,37 @@ package tictac7x.charges.triggers;
 
 import net.runelite.api.HitsplatID;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TriggerHitsplat {
-    public final boolean self;
     public final int hitsplat_id;
-    public final boolean equipped;
     public final int discharges;
-    @Nullable public final int[] animation;
+    public boolean self;
+    public boolean equipped;
+    @Nullable public int[] animations;
 
-    public TriggerHitsplat(final boolean self, final boolean equipped, final int discharges) {
-        this.self = self;
+    public TriggerHitsplat(final int discharges) {
         this.hitsplat_id = HitsplatID.DAMAGE_ME;
-        this.equipped = equipped;
         this.discharges = discharges;
-        this.animation = null;
     }
 
-    public TriggerHitsplat(final boolean self, final boolean equipped, final int discharges, @Nonnull final int[] animation) {
-        this.self = self;
-        this.hitsplat_id = HitsplatID.DAMAGE_ME;
-        this.equipped = equipped;
-        this.discharges = discharges;
-        this.animation = animation;
+    public TriggerHitsplat onSelf() {
+        this.self = true;
+        return this;
+    }
+
+    public TriggerHitsplat onEnemy() {
+        this.self = false;
+        return this;
+    }
+
+    public TriggerHitsplat equipped() {
+        this.equipped = true;
+        return this;
+    }
+
+    public TriggerHitsplat onAnimations(final int[] animations) {
+        this.animations = animations;
+        return this;
     }
 }

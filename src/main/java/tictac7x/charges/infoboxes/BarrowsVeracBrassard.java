@@ -15,12 +15,12 @@ public class BarrowsVeracBrassard extends ChargedItemInfoBox {
     public BarrowsVeracBrassard(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.VERACS_BRASSARD, 100),
-            new TriggerItem(ItemID.VERACS_BRASSARD_100, 100),
-            new TriggerItem(ItemID.VERACS_BRASSARD_75, 75),
-            new TriggerItem(ItemID.VERACS_BRASSARD_50, 50),
-            new TriggerItem(ItemID.VERACS_BRASSARD_25, 25),
-            new TriggerItem(ItemID.VERACS_BRASSARD_0, 0)
+            new TriggerItem(ItemID.VERACS_BRASSARD).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_BRASSARD_100).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_BRASSARD_75).fixedCharges(75),
+            new TriggerItem(ItemID.VERACS_BRASSARD_50).fixedCharges(50),
+            new TriggerItem(ItemID.VERACS_BRASSARD_25).fixedCharges(25),
+            new TriggerItem(ItemID.VERACS_BRASSARD_0).fixedCharges(0)
         };
     }
 }

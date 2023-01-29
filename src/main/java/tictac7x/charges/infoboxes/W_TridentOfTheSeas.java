@@ -24,14 +24,14 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
             new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Trident of the seas has one charge.", 1),
+            new TriggerChatMessage("Your Trident of the seas has one charge.").fixedCharges(1),
             new TriggerChatMessage("Your Trident of the seas( only)?( \\(full\\))? has (?<charges>.+) charges( left)?."),
-            new TriggerChatMessage("Your Trident of the seas has run out of charges.", 0),
-            new TriggerChatMessage("The Uncharged trident has no charges left. You need death runes, chaos runes, fire runes and coins to charge it.", 0),
-            new TriggerChatMessage("Your Uncharged trident has no charges.", 0)
+            new TriggerChatMessage("Your Trident of the seas has run out of charges.").fixedCharges(0),
+            new TriggerChatMessage("The Uncharged trident has no charges left. You need death runes, chaos runes, fire runes and coins to charge it.").fixedCharges(0),
+            new TriggerChatMessage("Your Uncharged trident has no charges.").fixedCharges(0)
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(1167, 1, true)
+            new TriggerAnimation(1167, 1).equipped()
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("You add .* charges? to the Trident of the seas( \\(full\\))?. New total: (?<charges>.+)")

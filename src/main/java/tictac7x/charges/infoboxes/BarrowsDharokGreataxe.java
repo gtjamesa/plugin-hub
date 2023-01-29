@@ -16,12 +16,12 @@ public class BarrowsDharokGreataxe extends ChargedItemInfoBox {
         super(ItemID.DHAROKS_GREATAXE, client, client_thread, configs, items, infoboxes, config, plugin);
 
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.DHAROKS_GREATAXE, 100),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_100, 100),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_75, 75),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_50, 50),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_25, 25),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_0, 0)
+            new TriggerItem(ItemID.DHAROKS_GREATAXE).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_GREATAXE_100).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_GREATAXE_75).fixedCharges(75),
+            new TriggerItem(ItemID.DHAROKS_GREATAXE_50).fixedCharges(50),
+            new TriggerItem(ItemID.DHAROKS_GREATAXE_25).fixedCharges(25),
+            new TriggerItem(ItemID.DHAROKS_GREATAXE_0).fixedCharges(0)
         };
     }
 }

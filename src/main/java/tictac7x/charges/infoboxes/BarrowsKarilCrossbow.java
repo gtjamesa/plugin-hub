@@ -15,12 +15,12 @@ public class BarrowsKarilCrossbow extends ChargedItemInfoBox {
     public BarrowsKarilCrossbow(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.KARILS_CROSSBOW, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.KARILS_CROSSBOW, 100),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_100, 100),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_75, 75),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_50, 50),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_25, 25),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_0, 0)
+            new TriggerItem(ItemID.KARILS_CROSSBOW).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_CROSSBOW_100).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_CROSSBOW_75).fixedCharges(75),
+            new TriggerItem(ItemID.KARILS_CROSSBOW_50).fixedCharges(50),
+            new TriggerItem(ItemID.KARILS_CROSSBOW_25).fixedCharges(25),
+            new TriggerItem(ItemID.KARILS_CROSSBOW_0).fixedCharges(0)
         };
     }
 }

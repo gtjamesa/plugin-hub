@@ -24,22 +24,22 @@ public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
         this.config_key = ChargesImprovedConfig.bottomless_compost_bucket;
         this.extra_config_keys = new String[]{"type"};
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET, 0),
+            new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET).fixedCharges(0),
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(8197, 1, false),
-            new TriggerAnimation(832, 2, false, new int[]{ItemID.BUCKET}, "Take")
+            new TriggerAnimation(8197, 1),
+            new TriggerAnimation(832, 2).unallowedItems(new int[]{ItemID.BUCKET})
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.", 1),
+            new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
             new TriggerChatMessage("Your bottomless compost bucket has (?<charges>.+) uses of (?<type>.+) ?compost remaining."),
-            new TriggerChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)", 0)
+            new TriggerChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)").fixedCharges(0)
         };
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("Your bottomless compost bucket is currently holding one use of (?<type>.+?) ?compost.", 1),
+            new TriggerWidget("Your bottomless compost bucket is currently holding one use of (?<type>.+?) ?compost.").fixedCharges(1),
             new TriggerWidget("Your bottomless compost bucket is currently holding (?<charges>.+) uses of (?<type>.+?) ?compost."),
-            new TriggerWidget("You discard the contents of your bottomless compost bucket.(?<type>.*)", 0),
+            new TriggerWidget("You discard the contents of your bottomless compost bucket.(?<type>.*)").fixedCharges(0),
             new TriggerWidget("You fill your bottomless compost bucket with .* buckets? of (?<type>.+?) ?compost. Your bottomless compost bucket now contains a total of (?<charges>.+) uses.")
         };
     }

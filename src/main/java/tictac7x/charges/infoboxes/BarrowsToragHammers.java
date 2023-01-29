@@ -15,12 +15,12 @@ public class BarrowsToragHammers extends ChargedItemInfoBox {
     public BarrowsToragHammers(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.TORAGS_HAMMERS, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.TORAGS_HAMMERS, 100),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_100, 100),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_75, 75),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_50, 50),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_25, 25),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_0, 0)
+            new TriggerItem(ItemID.TORAGS_HAMMERS).fixedCharges(100),
+            new TriggerItem(ItemID.TORAGS_HAMMERS_100).fixedCharges(100),
+            new TriggerItem(ItemID.TORAGS_HAMMERS_75).fixedCharges(75),
+            new TriggerItem(ItemID.TORAGS_HAMMERS_50).fixedCharges(50),
+            new TriggerItem(ItemID.TORAGS_HAMMERS_25).fixedCharges(25),
+            new TriggerItem(ItemID.TORAGS_HAMMERS_0).fixedCharges(0)
         };
     }
 }

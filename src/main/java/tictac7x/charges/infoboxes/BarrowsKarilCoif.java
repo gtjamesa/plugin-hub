@@ -15,12 +15,12 @@ public class BarrowsKarilCoif extends ChargedItemInfoBox {
     public BarrowsKarilCoif(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.KARILS_COIF, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.KARILS_COIF, 100),
-            new TriggerItem(ItemID.KARILS_COIF_100, 100),
-            new TriggerItem(ItemID.KARILS_COIF_75, 75),
-            new TriggerItem(ItemID.KARILS_COIF_50, 50),
-            new TriggerItem(ItemID.KARILS_COIF_25, 25),
-            new TriggerItem(ItemID.KARILS_COIF_0, 0)
+            new TriggerItem(ItemID.KARILS_COIF).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_COIF_100).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_COIF_75).fixedCharges(75),
+            new TriggerItem(ItemID.KARILS_COIF_50).fixedCharges(50),
+            new TriggerItem(ItemID.KARILS_COIF_25).fixedCharges(25),
+            new TriggerItem(ItemID.KARILS_COIF_0).fixedCharges(0)
         };
     }
 }

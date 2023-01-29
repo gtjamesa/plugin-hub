@@ -27,10 +27,10 @@ public class W_Arclight extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your arclight has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your arclight can perform (?<charges>.+) more attacks."),
-            new TriggerChatMessage("Your arclight has degraded.", 0)
+            new TriggerChatMessage("Your arclight has degraded.").fixedCharges(0)
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(false, true, 1, new int[]{ARCLIGHT_ATTACK_STAB, ARCLIGHT_ATTACK_SLASH})
+            new TriggerHitsplat(1).equipped().onEnemy().onAnimations(new int[]{ARCLIGHT_ATTACK_STAB, ARCLIGHT_ATTACK_SLASH})
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("You combine Darklight with the shards and it seems to glow in your hands creating Arclight. Your Arclight has (?<charges>.+) charges.")

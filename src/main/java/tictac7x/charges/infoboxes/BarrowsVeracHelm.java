@@ -15,12 +15,12 @@ public class BarrowsVeracHelm extends ChargedItemInfoBox {
     public BarrowsVeracHelm(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.VERACS_HELM, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.VERACS_HELM, 100),
-            new TriggerItem(ItemID.VERACS_HELM_100, 100),
-            new TriggerItem(ItemID.VERACS_HELM_75, 75),
-            new TriggerItem(ItemID.VERACS_HELM_50, 50),
-            new TriggerItem(ItemID.VERACS_HELM_25, 25),
-            new TriggerItem(ItemID.VERACS_HELM_0, 0)
+            new TriggerItem(ItemID.VERACS_HELM).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_HELM_100).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_HELM_75).fixedCharges(75),
+            new TriggerItem(ItemID.VERACS_HELM_50).fixedCharges(50),
+            new TriggerItem(ItemID.VERACS_HELM_25).fixedCharges(25),
+            new TriggerItem(ItemID.VERACS_HELM_0).fixedCharges(0)
         };
     }
 }

@@ -15,12 +15,12 @@ public class BarrowsVeracFlail extends ChargedItemInfoBox {
     public BarrowsVeracFlail(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.VERACS_FLAIL, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.VERACS_FLAIL, 100),
-            new TriggerItem(ItemID.VERACS_FLAIL_100, 100),
-            new TriggerItem(ItemID.VERACS_FLAIL_75, 75),
-            new TriggerItem(ItemID.VERACS_FLAIL_50, 50),
-            new TriggerItem(ItemID.VERACS_FLAIL_25, 25),
-            new TriggerItem(ItemID.VERACS_FLAIL_0, 0)
+            new TriggerItem(ItemID.VERACS_FLAIL).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_FLAIL_100).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_FLAIL_75).fixedCharges(75),
+            new TriggerItem(ItemID.VERACS_FLAIL_50).fixedCharges(50),
+            new TriggerItem(ItemID.VERACS_FLAIL_25).fixedCharges(25),
+            new TriggerItem(ItemID.VERACS_FLAIL_0).fixedCharges(0)
         };
     }
 }

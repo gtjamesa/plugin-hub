@@ -15,12 +15,12 @@ public class BarrowsKarilLeathertop extends ChargedItemInfoBox {
     public BarrowsKarilLeathertop(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.KARILS_LEATHERTOP, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.KARILS_LEATHERTOP, 100),
-            new TriggerItem(ItemID.KARILS_LEATHERTOP_100, 100),
-            new TriggerItem(ItemID.KARILS_LEATHERTOP_75, 75),
-            new TriggerItem(ItemID.KARILS_LEATHERTOP_50, 50),
-            new TriggerItem(ItemID.KARILS_LEATHERTOP_25, 25),
-            new TriggerItem(ItemID.KARILS_LEATHERTOP_0, 0)
+            new TriggerItem(ItemID.KARILS_LEATHERTOP).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_100).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_75).fixedCharges(75),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_50).fixedCharges(50),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_25).fixedCharges(25),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_0).fixedCharges(0)
         };
     }
 }

@@ -15,12 +15,12 @@ public class BarrowsAhrimHood extends ChargedItemInfoBox {
     public BarrowsAhrimHood(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.AHRIMS_HOOD, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.AHRIMS_HOOD, 100),
-            new TriggerItem(ItemID.AHRIMS_HOOD_100, 100),
-            new TriggerItem(ItemID.AHRIMS_HOOD_75, 75),
-            new TriggerItem(ItemID.AHRIMS_HOOD_50, 50),
-            new TriggerItem(ItemID.AHRIMS_HOOD_25, 25),
-            new TriggerItem(ItemID.AHRIMS_HOOD_0, 0)
+            new TriggerItem(ItemID.AHRIMS_HOOD).fixedCharges(100),
+            new TriggerItem(ItemID.AHRIMS_HOOD_100).fixedCharges(100),
+            new TriggerItem(ItemID.AHRIMS_HOOD_75).fixedCharges(75),
+            new TriggerItem(ItemID.AHRIMS_HOOD_50).fixedCharges(50),
+            new TriggerItem(ItemID.AHRIMS_HOOD_25).fixedCharges(25),
+            new TriggerItem(ItemID.AHRIMS_HOOD_0).fixedCharges(0)
         };
     }
 }

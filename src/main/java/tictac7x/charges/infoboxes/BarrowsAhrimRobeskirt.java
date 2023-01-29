@@ -15,12 +15,12 @@ public class BarrowsAhrimRobeskirt extends ChargedItemInfoBox {
     public BarrowsAhrimRobeskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT, 100),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100, 100),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_75, 75),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_50, 50),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_25, 25),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_0, 0)
+            new TriggerItem(ItemID.AHRIMS_ROBESKIRT).fixedCharges(100),
+            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100).fixedCharges(100),
+            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_75).fixedCharges(75),
+            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_50).fixedCharges(50),
+            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_25).fixedCharges(25),
+            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_0).fixedCharges(0)
         };
     }
 }

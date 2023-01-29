@@ -38,13 +38,13 @@ public class W_PharaohSceptre extends ChargedItemInfoBox {
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_21446),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_26948),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_26950),
-            new TriggerItem(ItemID.PHARAOHS_SCEPTRE_UNCHARGED, 0),
+            new TriggerItem(ItemID.PHARAOHS_SCEPTRE_UNCHARGED).fixedCharges(0),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.")
+            new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.").onItemClick()
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(2881, 1, false)
+            new TriggerAnimation(2881, 1)
         };
     }
 }

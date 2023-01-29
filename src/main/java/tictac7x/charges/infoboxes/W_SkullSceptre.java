@@ -23,7 +23,7 @@ public class W_SkullSceptre extends ChargedItemInfoBox {
             new TriggerItem(ItemID.SKULL_SCEPTRE_I)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Skull Sceptre has (?<charges>.+) charges left."),
+            new TriggerChatMessage("Your Skull Sceptre has (?<charges>.+) charges left.").onItemClick(),
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left."),

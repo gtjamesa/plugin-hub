@@ -22,6 +22,8 @@ import tictac7x.charges.triggers.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,8 +51,8 @@ public class ChargedItemInfoBox extends InfoBox {
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean in_equipment;
     private boolean in_inventory;
-    @Nullable protected String menu_option;
-    @Nullable protected String menu_target;
+    @Nonnull final protected List<String> menu_options = new ArrayList<>();
+    @Nonnull final protected List<String> menu_targets = new ArrayList<>();
     private int animation = -1;
     private int graphic = -1;
     private int charges = -1;
@@ -162,11 +164,14 @@ public class ChargedItemInfoBox extends InfoBox {
         final String message = event.getMessage().replaceAll("</?col.*?>", "");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
-            // Target check.
+            // Menu target check.
             if (
-                chat_message.target &&
-                (this.menu_target == null || !this.menu_target.equals(items.getItemComposition(this.item_id).getName()))
+                chat_message.menu_target &&
+                (!this.menu_targets.contains(items.getItemComposition(this.item_id).getName()))
             ) continue;
+
+            // Menu target used.
+            if (chat_message.menu_target) this.menu_targets.clear();
 
             final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
@@ -215,9 +220,6 @@ public class ChargedItemInfoBox extends InfoBox {
             // Valid animation id check.
             if (trigger_animation.animation_id != event.getActor().getAnimation()) continue;
 
-            // Menu option check.
-            if (trigger_animation.menu_option != null && menu_option != null && !menu_option.equals(trigger_animation.menu_option)) continue;
-
             // Unallowed items check.
             if (trigger_animation.unallowed_items != null) {
                 boolean unallowed_items = false;
@@ -241,6 +243,12 @@ public class ChargedItemInfoBox extends InfoBox {
                 }
                 if (!equipped) continue;
             }
+
+            // Menu option check.
+            if (trigger_animation.menu_option != null && !this.menu_options.contains(trigger_animation.menu_option)) continue;
+
+            // Menu option used.
+            if (trigger_animation.menu_option != null) this.menu_options.clear();
 
             // Valid trigger, modify charges.
             if (trigger_animation.decrease_charges) {
@@ -266,9 +274,6 @@ public class ChargedItemInfoBox extends InfoBox {
             // Valid animation id check.
             if (trigger_graphic.graphic_id != event.getActor().getGraphic()) continue;
 
-            // Menu option check.
-            if (trigger_graphic.menu_option != null && menu_option != null && !menu_option.equals(trigger_graphic.menu_option)) continue;
-
             // Unallowed items check.
             if (trigger_graphic.unallowed_items != null) {
                 boolean unallowed_items = false;
@@ -292,6 +297,12 @@ public class ChargedItemInfoBox extends InfoBox {
                 }
                 if (!equipped) continue;
             }
+
+            // Menu option check.
+            if (trigger_graphic.menu_option != null && !this.menu_options.contains(trigger_graphic.menu_option)) continue;
+
+            // Menu option used.
+            if (trigger_graphic.menu_option != null) this.menu_options.clear();
 
             // Valid trigger, modify charges.
             if (trigger_graphic.decrease_charges) {
@@ -329,9 +340,9 @@ public class ChargedItemInfoBox extends InfoBox {
             }
 
             // Animation check.
-            if (trigger_hitsplat.animation != null) {
+            if (trigger_hitsplat.animations != null) {
                 boolean valid = false;
-                for (final int animation : trigger_hitsplat.animation) {
+                for (final int animation : trigger_hitsplat.animations) {
                     if (animation == this.animation) {
                         valid = true;
                         break;
@@ -351,7 +362,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
         client_thread.invokeLater(() -> {
             for (final TriggerWidget trigger_widget : triggers_widgets) {
-                final Widget widget = client.getWidget(trigger_widget.widget_group, trigger_widget.widget_child);
+                final Widget widget = client.getWidget(trigger_widget.group_id, trigger_widget.child_id);
                 if (widget == null) continue;
 
                 final Pattern regex = Pattern.compile(trigger_widget.message);
@@ -380,8 +391,16 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
-        this.menu_option = event.getMenuOption();
-        this.menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
+        if (this.in_inventory || this.in_equipment) {
+            final String menu_option = event.getMenuOption();
+            final String menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
+
+            if (menu_option != null && menu_option.length() > 0) this.menu_options.add(event.getMenuOption());
+            if (menu_target.length() > 0) this.menu_targets.add(event.getMenuTarget().replaceAll("</?col.*?>", ""));
+        } else {
+            this.menu_options.clear();
+            this.menu_targets.clear();
+        }
     }
 
     private void loadChargesFromConfig() {

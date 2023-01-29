@@ -15,12 +15,12 @@ public class BarrowsDharokPlatelegs extends ChargedItemInfoBox {
     public BarrowsDharokPlatelegs(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.DHAROKS_PLATELEGS, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.DHAROKS_PLATELEGS, 100),
-            new TriggerItem(ItemID.DHAROKS_PLATELEGS_100, 100),
-            new TriggerItem(ItemID.DHAROKS_PLATELEGS_75, 75),
-            new TriggerItem(ItemID.DHAROKS_PLATELEGS_50, 50),
-            new TriggerItem(ItemID.DHAROKS_PLATELEGS_25, 25),
-            new TriggerItem(ItemID.DHAROKS_PLATELEGS_0, 0)
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_100).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_75).fixedCharges(75),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_50).fixedCharges(50),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_25).fixedCharges(25),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_0).fixedCharges(0)
         };
     }
 }

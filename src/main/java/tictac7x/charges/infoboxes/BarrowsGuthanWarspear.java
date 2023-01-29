@@ -15,12 +15,12 @@ public class BarrowsGuthanWarspear extends ChargedItemInfoBox {
     public BarrowsGuthanWarspear(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, infoboxes, config, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.GUTHANS_WARSPEAR, 100),
-            new TriggerItem(ItemID.GUTHANS_WARSPEAR_100, 100),
-            new TriggerItem(ItemID.GUTHANS_WARSPEAR_75, 75),
-            new TriggerItem(ItemID.GUTHANS_WARSPEAR_50, 50),
-            new TriggerItem(ItemID.GUTHANS_WARSPEAR_25, 25),
-            new TriggerItem(ItemID.GUTHANS_WARSPEAR_0, 0)
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR).fixedCharges(100),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_100).fixedCharges(100),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_75).fixedCharges(75),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_50).fixedCharges(50),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_25).fixedCharges(25),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_0).fixedCharges(0)
         };
     }
 }
