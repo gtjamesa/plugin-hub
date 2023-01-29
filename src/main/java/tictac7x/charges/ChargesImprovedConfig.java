@@ -27,6 +27,8 @@ public interface ChargesImprovedConfig extends Config {
     String falador_shield = "falador_shield";
     String ash_sanctifier = "ash_sanctifier";
     String bone_crusher = "bone_crusher";
+    String gricoller_can = "gricoller_can";
+    String chronicle = "chonicle";
 
     @ConfigSection(
         name = "Debug",
@@ -146,6 +148,22 @@ public interface ChargesImprovedConfig extends Config {
         position = 14,
         section = debug
     ) default int getBoneCrusherCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = gricoller_can,
+        name = "Gricoller's can",
+        description = "Gricoller's can charges",
+        position = 15,
+        section = debug
+    ) default int getGricollerCanCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = chronicle,
+        name = "Chronicle",
+        description = "Chronicle charges",
+        position = 16,
+        section = debug
+    ) default int getChronicleCharges() { return -1; }
 
     @ConfigSection(
         name = "Colors",

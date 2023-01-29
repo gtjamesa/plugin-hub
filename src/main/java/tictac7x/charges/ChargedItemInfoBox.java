@@ -50,6 +50,7 @@ public class ChargedItemInfoBox extends InfoBox {
     private boolean in_equipment;
     private boolean in_inventory;
     @Nullable protected String menu_option;
+    @Nullable protected String menu_target;
     private int animation = -1;
     private int graphic = -1;
     private int charges = -1;
@@ -161,6 +162,12 @@ public class ChargedItemInfoBox extends InfoBox {
         final String message = event.getMessage().replaceAll("</?col.*?>", "");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
+            // Target check.
+            if (
+                chat_message.target &&
+                (this.menu_target == null || !this.menu_target.equals(items.getItemComposition(this.item_id).getName()))
+            ) continue;
+
             final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
             if (!matcher.find()) continue;
@@ -170,7 +177,7 @@ public class ChargedItemInfoBox extends InfoBox {
                 // Charges amount is fixed.
                 ? chat_message.charges
                 // Charges amount is dynamic and extracted from the message.
-                : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
+                : Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", ""))
             );
 
             // Check extra matches groups.
@@ -374,6 +381,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
         this.menu_option = event.getMenuOption();
+        this.menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
     }
 
     private void loadChargesFromConfig() {

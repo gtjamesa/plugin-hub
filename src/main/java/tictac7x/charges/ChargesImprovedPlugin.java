@@ -34,7 +34,7 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final boolean debug = false;
+	private final boolean debug = true;
 
 	@Inject
 	private Client client;
@@ -77,6 +77,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, config, this),
+			new S_Chronicle(client, client_thread, configs, items, infoboxes, config, this),
 
 			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, config, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, config, this),
@@ -86,6 +87,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, config, this),
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, config, this),
+			new U_GricollerCan(client, client_thread, configs, items, infoboxes, config, this),
 
 			new BarrowsAhrimHood(client, client_thread, configs, items, infoboxes, config, this),
 			new BarrowsAhrimRobetop(client, client_thread, configs, items, infoboxes, config, this),
