@@ -24,13 +24,14 @@ public class U_GricollerCan extends ChargedItemInfoBox {
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(2293, 1).unallowedItems(new int[]{
+            new TriggerAnimation(2293).decreaseCharges(1).unallowedItems(new int[]{
                 ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
                 ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
                 ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
                 ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
                 ItemID.WATERING_CAN8
-            })
+            }),
+            new TriggerAnimation(2293).decreaseCharges(1).onItemClick()
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Watering can charges remaining: (?<charges>.+)%").onItemClick(),

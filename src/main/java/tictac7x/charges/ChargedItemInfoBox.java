@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,8 +50,8 @@ public class ChargedItemInfoBox extends InfoBox {
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean in_equipment;
     private boolean in_inventory;
-    @Nonnull final protected List<String> menu_options = new ArrayList<>();
-    @Nonnull final protected List<String> menu_targets = new ArrayList<>();
+    @Nullable String menu_option;
+    @Nullable String menu_target;
     private int animation = -1;
     private int graphic = -1;
     private int charges = -1;
@@ -134,6 +133,7 @@ public class ChargedItemInfoBox extends InfoBox {
                 }
 
                 if (in_equipment_item) in_equipment = true;
+                if (in_inventory_item) in_inventory = true;
             }
 
             // Item not found, don't calculate charges.
@@ -167,11 +167,9 @@ public class ChargedItemInfoBox extends InfoBox {
             // Menu target check.
             if (
                 chat_message.menu_target &&
-                (!this.menu_targets.contains(items.getItemComposition(this.item_id).getName()))
+                (this.menu_target == null ||
+                (!this.menu_target.equals(items.getItemComposition(this.item_id).getName())))
             ) continue;
-
-            // Menu target used.
-            if (chat_message.menu_target) this.menu_targets.clear();
 
             final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
@@ -244,11 +242,11 @@ public class ChargedItemInfoBox extends InfoBox {
                 if (!equipped) continue;
             }
 
-            // Menu option check.
-            if (trigger_animation.menu_option != null && !this.menu_options.contains(trigger_animation.menu_option)) continue;
+            // Menu target check.
+            if (trigger_animation.menu_target && (this.menu_target == null || !this.menu_target.equals(items.getItemComposition(this.item_id).getName()))) continue;
 
-            // Menu option used.
-            if (trigger_animation.menu_option != null) this.menu_options.clear();
+            // Menu option check.
+            if (trigger_animation.menu_option != null && (this.menu_option == null || !this.menu_option.contains(trigger_animation.menu_option))) continue;
 
             // Valid trigger, modify charges.
             if (trigger_animation.decrease_charges) {
@@ -299,10 +297,7 @@ public class ChargedItemInfoBox extends InfoBox {
             }
 
             // Menu option check.
-            if (trigger_graphic.menu_option != null && !this.menu_options.contains(trigger_graphic.menu_option)) continue;
-
-            // Menu option used.
-            if (trigger_graphic.menu_option != null) this.menu_options.clear();
+            if (trigger_graphic.menu_option != null && (this.menu_option == null || !this.menu_option.equals(trigger_graphic.menu_option))) continue;
 
             // Valid trigger, modify charges.
             if (trigger_graphic.decrease_charges) {
@@ -391,15 +386,14 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
-        if (this.in_inventory || this.in_equipment) {
-            final String menu_option = event.getMenuOption();
-            final String menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
+        final String menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
+        final String menu_option = event.getMenuOption();
 
-            if (menu_option != null && menu_option.length() > 0) this.menu_options.add(event.getMenuOption());
-            if (menu_target.length() > 0) this.menu_targets.add(event.getMenuTarget().replaceAll("</?col.*?>", ""));
-        } else {
-            this.menu_options.clear();
-            this.menu_targets.clear();
+        if ((this.in_inventory || this.in_equipment) && menu_target.length() > 0) {
+            if (menu_option != null && menu_option.length() > 0) {
+                this.menu_option = menu_option;
+            }
+            this.menu_target = menu_target;
         }
     }
 

@@ -44,7 +44,7 @@ public class W_PharaohSceptre extends ChargedItemInfoBox {
             new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.").onItemClick()
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(2881, 1)
+            new TriggerAnimation(2881).decreaseCharges(1)
         };
     }
 }
