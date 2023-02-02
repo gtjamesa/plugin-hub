@@ -26,6 +26,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Shields
 - [x] Crystal shield
 - [x] Falador shield
+- [x] Chronicle
 
 ### Jewelery
 - [x] Bracelet of slaughter
@@ -34,6 +35,8 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Xeric's talisman
 
 ### Utilities
-- [x] Ash sanctifier (partial)
-- [x] Bonecrusher (partial)
+- [x] Ash sanctifier
+- [x] Bonecrusher
 - [x] Bottomless compost bucket
+- [x] Gricoller's can
+- [x] Soul bearer
