@@ -361,8 +361,6 @@ public class ChargedItemInfoBox extends InfoBox {
                 if (trigger_widget.sub_child_id != null && widget != null) widget = widget.getChild(trigger_widget.sub_child_id);
                 if (widget == null) continue;
 
-                System.out.println(widget.getText());
-
                 final Pattern regex = Pattern.compile(trigger_widget.message);
                 final String message = widget.getText().replaceAll("<br>", " ");
                 final Matcher matcher = regex.matcher(message);
