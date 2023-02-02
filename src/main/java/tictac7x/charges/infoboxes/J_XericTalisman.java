@@ -32,7 +32,8 @@ public class J_XericTalisman extends ChargedItemInfoBox {
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("Your talisman now has one charge."),
-            new TriggerWidget("Your talisman now has (?<charges>.+) charges?.")
+            new TriggerWidget("Your talisman now has (?<charges>.+) charges?."),
+            new TriggerWidget("The talisman has (?<charges>.+) charges.").customWidget(187, 0, 1)
         };
     }
 }

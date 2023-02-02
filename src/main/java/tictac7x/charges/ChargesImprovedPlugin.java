@@ -34,7 +34,7 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final boolean debug = true;
+	private final boolean debug = false;
 
 	@Inject
 	private Client client;
@@ -88,6 +88,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, config, this),
 			new U_GricollerCan(client, client_thread, configs, items, infoboxes, config, this),
+			new U_SoulBearer(client, client_thread, configs, items, infoboxes, config, this),
 
 			new BarrowsAhrimHood(client, client_thread, configs, items, infoboxes, config, this),
 			new BarrowsAhrimRobetop(client, client_thread, configs, items, infoboxes, config, this),

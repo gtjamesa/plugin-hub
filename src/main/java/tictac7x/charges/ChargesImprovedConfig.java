@@ -29,6 +29,7 @@ public interface ChargesImprovedConfig extends Config {
     String bone_crusher = "bone_crusher";
     String gricoller_can = "gricoller_can";
     String chronicle = "chonicle";
+    String soul_bearer = "soul_bearer";
 
     @ConfigSection(
         name = "Debug",
@@ -164,6 +165,14 @@ public interface ChargesImprovedConfig extends Config {
         position = 16,
         section = debug
     ) default int getChronicleCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = soul_bearer,
+        name = "Soul bearer",
+        description = "Soul bearer charges",
+        position = 17,
+        section = debug
+    ) default int getSoulBearerCharges() { return -1; }
 
     @ConfigSection(
         name = "Colors",

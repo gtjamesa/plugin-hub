@@ -357,8 +357,11 @@ public class ChargedItemInfoBox extends InfoBox {
 
         client_thread.invokeLater(() -> {
             for (final TriggerWidget trigger_widget : triggers_widgets) {
-                final Widget widget = client.getWidget(trigger_widget.group_id, trigger_widget.child_id);
+                Widget widget = client.getWidget(trigger_widget.group_id, trigger_widget.child_id);
+                if (trigger_widget.sub_child_id != null && widget != null) widget = widget.getChild(trigger_widget.sub_child_id);
                 if (widget == null) continue;
+
+                System.out.println(widget.getText());
 
                 final Pattern regex = Pattern.compile(trigger_widget.message);
                 final String message = widget.getText().replaceAll("<br>", " ");
