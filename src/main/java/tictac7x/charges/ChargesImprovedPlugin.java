@@ -74,6 +74,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, config, this),
 			new W_IbanStaff(client, client_thread, configs, items, infoboxes, config, this),
 			new W_PharaohSceptre(client, client_thread, configs, items, infoboxes, config, this),
+			new W_BryophytaStaff(client, client_thread, configs, items, infoboxes, config, this),
 
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, config, this),

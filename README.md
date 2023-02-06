@@ -22,11 +22,12 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Pharaoh's sceptre
 - [x] Skull sceptre
 - [x] Trident of the sea
+- [x] Bryophyta's staff
 
 ### Shields
+- [x] Chronicle
 - [x] Crystal shield
 - [x] Falador shield
-- [x] Chronicle
 
 ### Jewelery
 - [x] Bracelet of slaughter

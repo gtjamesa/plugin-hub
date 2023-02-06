@@ -30,7 +30,7 @@ public class S_FaladorShield extends ChargedItemInfoBox {
             new TriggerChatMessage("You have already used your charge for today.").onItemClick(),
         };
         this.triggers_graphics = new TriggerGraphic[]{
-            new TriggerGraphic(321, 1, false)
+            new TriggerGraphic(321).decreaseCharges(1)
         };
     }
 }

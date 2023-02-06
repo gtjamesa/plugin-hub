@@ -30,6 +30,7 @@ public interface ChargesImprovedConfig extends Config {
     String gricoller_can = "gricoller_can";
     String chronicle = "chonicle";
     String soul_bearer = "soul_bearer";
+    String bryophyta_staff = "bryophyta_staff";
 
     @ConfigSection(
         name = "Debug",
@@ -173,6 +174,14 @@ public interface ChargesImprovedConfig extends Config {
         position = 17,
         section = debug
     ) default int getSoulBearerCharges() { return -1; }
+
+    @ConfigItem(
+        keyName = bryophyta_staff,
+        name = "Bryophyta's Staff",
+        description = "Bryophyta's Staff charges",
+        position = 18,
+        section = debug
+    ) default int getBryophytaStaffCharges() { return -1; }
 
     @ConfigSection(
         name = "Colors",
