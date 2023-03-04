@@ -10,11 +10,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsVeracBrassard extends ChargedItemInfoBox {
-    public BarrowsVeracBrassard(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
-        super(ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+public class BarrowsVeracsBrassard extends ChargedItemInfoBox {
+    public BarrowsVeracsBrassard(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ChargesItem.BARROWS_GEAR, ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
         this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{

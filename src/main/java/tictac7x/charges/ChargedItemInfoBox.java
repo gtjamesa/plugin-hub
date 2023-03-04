@@ -24,11 +24,11 @@ import tictac7x.charges.triggers.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChargedItemInfoBox extends InfoBox {
+    private final ChargesItem infobox_id;
     protected int item_id;
     protected final Client client;
     protected final ClientThread client_thread;
@@ -63,9 +63,11 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private String tooltip;
     private boolean render = false;
+    private boolean render_from_config = false;
 
-    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public ChargedItemInfoBox(final ChargesItem infobox_id, final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(items.getImage(item_id), plugin);
+        this.infobox_id = infobox_id;
         this.item_id = item_id;
         this.client = client;
         this.client_thread = client_thread;
@@ -76,6 +78,7 @@ public class ChargedItemInfoBox extends InfoBox {
         this.config = config;
 
         client_thread.invokeLater(() -> {
+            this.loadRenderFromConfig();
             this.loadChargesFromConfig();
             this.updateTooltip();
             this.onChargesUpdated();
@@ -104,7 +107,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public boolean render() {
-        return this.render;
+        return this.render_from_config && this.render;
     }
 
     public int getCharges() {
@@ -206,6 +209,8 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onConfigChanged(final ConfigChanged event) {
         if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
             this.charges = Integer.parseInt(event.getNewValue());
+        } else if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(ChargesImprovedConfig.infoboxes)) {
+            this.render_from_config = config.visibleChargesItemInfoboxes().contains(this.infobox_id);
         }
     }
 
@@ -433,9 +438,14 @@ public class ChargedItemInfoBox extends InfoBox {
         }
     }
 
+    private void loadRenderFromConfig() {
+        this.render_from_config = config.visibleChargesItemInfoboxes().contains(this.infobox_id);
+    }
+
     private void loadChargesFromConfig() {
         if (config_key == null) return;
         this.charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
+
     }
 
     private void setCharges(final int charges) {

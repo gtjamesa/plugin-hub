@@ -6,6 +6,9 @@ import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 
 import java.awt.Color;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.Set;
 
 import static tictac7x.charges.ChargesImprovedConfig.group;
 
@@ -44,7 +47,7 @@ public interface ChargesImprovedConfig extends Config {
         name = "Colors",
         description = "Colors of item overlays",
         position = 1
-    ) String colors = "Colors";
+    ) String colors = "colors";
 
         @ConfigItem(
             keyName = "colors_default",
@@ -71,11 +74,28 @@ public interface ChargesImprovedConfig extends Config {
         ) default Color getColorEmpty() { return Color.red; }
 
     @ConfigSection(
+        name = "Infoboxes",
+        description = "Colors of item overlays",
+        position = 2,
+        closedByDefault = true
+    ) String infoboxes = "infoboxes";
+
+        @ConfigItem(
+            keyName = infoboxes,
+            name = "Show for",
+            description = "Show infoboxes for selected items (use ctrl + click to select multiple items)",
+            position = 1,
+            section = infoboxes
+        ) default Set<ChargesItem> visibleChargesItemInfoboxes() {
+            return EnumSet.allOf(ChargesItem.class);
+        }
+
+    @ConfigSection(
         name = "Debug",
         description = "Values of charges for all items under the hood",
         position = 99,
         closedByDefault = true
-    ) String debug = "Debug";
+    ) String debug = "debug";
 
         @ConfigItem(
             keyName = trident_of_the_seas,

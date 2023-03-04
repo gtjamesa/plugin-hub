@@ -31,7 +31,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.infoboxes.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 
@@ -42,11 +41,13 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private String plugin_version = "0.2.1";
+	private String plugin_version = "v0.2.2";
 	private String plugin_message = "" +
-			"<colHIGHLIGHT>Item Charges Improved v0.2.1:<br>" +
-			"<colHIGHLIGHT>* Correctly detect unused barrows gear charges<br>" +
-			"<colHIGHLIGHT>* Daily items reset their charges accordingly";
+		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
+		"<colHIGHLIGHT>* Correctly detect unused barrows gear charges<br>" +
+		"<colHIGHLIGHT>* Daily items reset their charges accordingly<br>" +
+		"<colHIGHLIGHT>* Able to choose for which items infoboxes will be shown";
+
 	@Inject
 	private Client client;
 
@@ -89,9 +90,9 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_IbanStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_PharaohSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_BryophytaStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new W_IbansStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new W_PharaohsSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -99,44 +100,44 @@ public class ChargesImprovedPlugin extends Plugin {
 
 			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_XericTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_GricollerCan(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new BarrowsAhrimHood(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsAhrimRobetop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsAhrimRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsAhrimStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsAhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsAhrimsStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new BarrowsDharokHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsDharokPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsDharokPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsDharokGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsDharoksHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsDharoksPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsDharoksPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsDharoksGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new BarrowsGuthanHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsGuthanPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsGuthanChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsGuthanWarspear(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsGuthansHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsGuthansPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsGuthansChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsGuthansWarspear(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new BarrowsKarilCoif(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsKarilLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsKarilLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsKarilCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsKarilsCoif(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsKarilsLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsKarilsLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsKarilsCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new BarrowsToragHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsToragPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsToragPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsToragHammers(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsToragsHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsToragsPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsToragsPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsToragsHammers(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new BarrowsVeracHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsVeracBrassard(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsVeracPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsVeracFlail(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsVeracsHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsVeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(items, config, infoboxes_charged_items);
 
