@@ -11,6 +11,8 @@ import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
@@ -33,6 +35,7 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ItemManager items;
     protected final InfoBoxManager infoboxes;
     protected final ConfigManager configs;
+    protected final ChatMessageManager chat_messages;
     protected final ChargesImprovedConfig config;
 
     @Nullable protected ItemContainer inventory;
@@ -46,6 +49,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerHitsplat[] triggers_hitsplats;
     @Nullable protected TriggerItem[] triggers_items;
     @Nullable protected TriggerWidget[] triggers_widgets;
+    @Nullable protected TriggerReset[] triggers_resets;
 
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean in_equipment;
@@ -54,12 +58,13 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable String menu_target;
     private int animation = -1;
     private int graphic = -1;
-    private int charges = -1;
+    protected int charges = -1;
+    protected boolean charges_from_name = false;
 
     private String tooltip;
     private boolean render = false;
 
-    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
+    public ChargedItemInfoBox(final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(items.getImage(item_id), plugin);
         this.item_id = item_id;
         this.client = client;
@@ -67,6 +72,7 @@ public class ChargedItemInfoBox extends InfoBox {
         this.configs = configs;
         this.items = items;
         this.infoboxes = infoboxes;
+        this.chat_messages = chat_messages;
         this.config = config;
 
         client_thread.invokeLater(() -> {
@@ -398,16 +404,47 @@ public class ChargedItemInfoBox extends InfoBox {
         }
     }
 
+    public void resetCharges() {
+        if (this.triggers_resets == null) return;
+
+        // Send message about item charges being reset if player has it on them.
+        client_thread.invokeLater(() -> {
+            if (this.in_equipment || this.in_inventory) {
+                chat_messages.queue(QueuedMessage.builder()
+                    .type(ChatMessageType.CONSOLE)
+                    .runeLiteFormattedMessage("<colHIGHLIGHT>" + items.getItemComposition(item_id).getName() + " daily charges have been reset.")
+                    .build()
+                );
+            }
+        });
+
+        // Check for item resets.
+        for (final TriggerReset trigger_reset : this.triggers_resets) {
+            // Same item variations have different amount of charges.
+            if (trigger_reset.item_id != null) {
+                if (this.item_id == trigger_reset.item_id) {
+                    this.setCharges(trigger_reset.charges);
+                }
+
+            // All variants of the item reset to the same amount of charges.
+            } else {
+                this.setCharges(trigger_reset.charges);
+            }
+        }
+    }
+
     private void loadChargesFromConfig() {
         if (config_key == null) return;
         this.charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
     }
 
     private void setCharges(final int charges) {
-        if (config_key == null) return;
         this.charges = charges;
-        this.setConfiguration(config_key, charges);
         this.onChargesUpdated();
+
+        if (config_key != null) {
+            this.setConfiguration(config_key, charges);
+        }
     }
 
     private void decreaseCharges(final int charges) {

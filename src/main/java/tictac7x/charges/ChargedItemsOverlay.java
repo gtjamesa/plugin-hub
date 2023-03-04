@@ -47,10 +47,12 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
                 graphics.setFont(FontManager.getRunescapeSmallFont());
 
                 // Charges from name (override the infobox).
-                final String name = items.getItemComposition(item_id).getName();
-                final Matcher matcher = charges_in_name.matcher(name);
-                if (matcher.find()) {
-                    charges = ChargesImprovedPlugin.getChargesMinified(Integer.parseInt(matcher.group("charges")));
+                if (infobox.charges_from_name) {
+                    final String name = items.getItemComposition(item_id).getName();
+                    final Matcher matcher = charges_in_name.matcher(name);
+                    if (matcher.find()) {
+                        charges = ChargesImprovedPlugin.getChargesMinified(Integer.parseInt(matcher.group("charges")));
+                    }
                 }
 
                 final Rectangle bounds = item_widget.getCanvasBounds();

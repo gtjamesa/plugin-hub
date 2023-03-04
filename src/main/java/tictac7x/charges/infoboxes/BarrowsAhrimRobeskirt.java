@@ -3,6 +3,7 @@ package tictac7x.charges.infoboxes;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
@@ -12,8 +13,10 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsAhrimRobeskirt extends ChargedItemInfoBox {
-    public BarrowsAhrimRobeskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChargesImprovedConfig config, final Plugin plugin) {
-        super(ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, config, plugin);
+    public BarrowsAhrimRobeskirt(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+        super(ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        this.charges = 100;
+        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100).fixedCharges(100),
