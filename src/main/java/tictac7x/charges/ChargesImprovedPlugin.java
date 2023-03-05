@@ -41,12 +41,11 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private String plugin_version = "v0.2.2";
+	private String plugin_version = "v0.2.3";
 	private String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Correctly detect unused barrows gear charges<br>" +
-		"<colHIGHLIGHT>* Daily items reset their charges accordingly<br>" +
-		"<colHIGHLIGHT>* Able to choose for which items infoboxes will be shown";
+		"<colHIGHLIGHT>* Celestial ring added<br>" +
+		"<colHIGHLIGHT>* Infoboxes that you want to hide need to be selected in the settings<br>";;
 
 	@Inject
 	private Client client;
@@ -98,10 +97,11 @@ public class ChargesImprovedPlugin extends Plugin {
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -173,21 +173,21 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
-//			", sender: " + event.getSender()
-//		);
+		System.out.println("MESSAGE | " +
+			"type: " + event.getType().name() +
+			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
+			", sender: " + event.getSender()
+		);
 	}
 
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onAnimationChanged(event));
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("ANIMATION | " +
-//				"id: " + event.getActor().getAnimation()
-//			);
-//		}
+		if (event.getActor() == client.getLocalPlayer()) {
+			System.out.println("ANIMATION | " +
+				"id: " + event.getActor().getAnimation()
+			);
+		}
 	}
 
 	@Subscribe

@@ -16,6 +16,7 @@ import static tictac7x.charges.ChargesImprovedConfig.group;
 public interface ChargesImprovedConfig extends Config {
     String group = "tictac7x-charges";
     String version = "version";
+    String infoboxes_hidden = "infoboxes_hidden";
 
     String trident_of_the_seas = "trident_of_the_seas";
     String arclight = "arclight";
@@ -35,6 +36,7 @@ public interface ChargesImprovedConfig extends Config {
     String chronicle = "chonicle";
     String soul_bearer = "soul_bearer";
     String bryophyta_staff = "bryophyta_staff";
+    String celestial_ring = "celestial_ring";
 
     @ConfigItem(
         keyName = version,
@@ -75,19 +77,19 @@ public interface ChargesImprovedConfig extends Config {
 
     @ConfigSection(
         name = "Infoboxes",
-        description = "Colors of item overlays",
+        description = "Select items to hide infoboxes for",
         position = 2,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
 
         @ConfigItem(
-            keyName = infoboxes,
-            name = "Show for",
-            description = "Show infoboxes for selected items (use ctrl + click to select multiple items)",
+            keyName = infoboxes_hidden,
+            name = "Hidden",
+            description = "Select items to hide infoboxes for (use ctrl + click to select multiple items)",
             position = 1,
             section = infoboxes
-        ) default Set<ChargesItem> visibleChargesItemInfoboxes() {
-            return EnumSet.allOf(ChargesItem.class);
+        ) default Set<ChargesItem> getHiddenInfoboxes() {
+            return EnumSet.noneOf(ChargesItem.class);
         }
 
     @ConfigSection(
@@ -240,4 +242,12 @@ public interface ChargesImprovedConfig extends Config {
             position = 18,
             section = debug
         ) default int getBryophytaStaffCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = celestial_ring,
+            name = "Celestial Ring",
+            description = "Celestial Ring charges",
+            position = 19,
+            section = debug
+        ) default int getCelestialRingCharges() { return -1; }
 }

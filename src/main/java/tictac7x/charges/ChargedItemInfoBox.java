@@ -63,7 +63,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private String tooltip;
     private boolean render = false;
-    private boolean render_from_config = false;
+    private boolean hidden = false;
 
     public ChargedItemInfoBox(final ChargesItem infobox_id, final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(items.getImage(item_id), plugin);
@@ -107,7 +107,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public boolean render() {
-        return this.render_from_config && this.render;
+        return !this.hidden && this.render;
     }
 
     public int getCharges() {
@@ -180,17 +180,31 @@ public class ChargedItemInfoBox extends InfoBox {
                 (!this.menu_target.equals(items.getItemComposition(this.item_id).getName())))
             ) continue;
 
+            // Equipped check.
+            if (chat_message.equipped && !this.in_equipment) {
+                continue;
+            }
+
             final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
             if (!matcher.find()) continue;
 
-            // Check default "charges" group.
-            setCharges(chat_message.charges != null
-                // Charges amount is fixed.
-                ? chat_message.charges
-                // Charges amount is dynamic and extracted from the message.
-                : Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", ""))
-            );
+            // Increase charges by fixed amount.
+            if (chat_message.increase_charges != null) {
+                this.increaseCharges(chat_message.increase_charges);
+
+            // Decrease charges by fixed amount.
+            } else if (chat_message.decrease_charges != null) {
+                this.decreaseCharges(chat_message.decrease_charges);
+
+            // Set charges to fixed amount.
+            } else if (chat_message.fixed_charges != null) {
+                this.setCharges(chat_message.fixed_charges);
+
+            // Set charges dynamically from the chat message.
+            } else {
+                setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", "")));
+            }
 
             // Check extra matches groups.
             if (extra_config_keys != null) {
@@ -207,10 +221,12 @@ public class ChargedItemInfoBox extends InfoBox {
         }
     }
     public void onConfigChanged(final ConfigChanged event) {
-        if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
-            this.charges = Integer.parseInt(event.getNewValue());
-        } else if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(ChargesImprovedConfig.infoboxes)) {
-            this.render_from_config = config.visibleChargesItemInfoboxes().contains(this.infobox_id);
+        if (event.getGroup().equals(ChargesImprovedConfig.group)) {
+            if (event.getKey().equals(config_key)) {
+                this.charges = Integer.parseInt(event.getNewValue());
+            } else if (event.getKey().equals(ChargesImprovedConfig.infoboxes_hidden)) {
+                this.hidden = config.getHiddenInfoboxes().contains(this.infobox_id);
+            }
         }
     }
 
@@ -439,7 +455,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     private void loadRenderFromConfig() {
-        this.render_from_config = config.visibleChargesItemInfoboxes().contains(this.infobox_id);
+        this.hidden = config.getHiddenInfoboxes().contains(this.infobox_id);
     }
 
     private void loadChargesFromConfig() {

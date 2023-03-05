@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.2.2
+# Item Charges Improved - v0.2.3
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
@@ -18,11 +18,11 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Weapons
 - [x] Arclight
+- [x] Bryophyta's staff
 - [x] Iban's staff
 - [x] Pharaoh's sceptre
 - [x] Skull sceptre
 - [x] Trident of the sea
-- [x] Bryophyta's staff
 
 ### Shields
 - [x] Chronicle
@@ -31,6 +31,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Jewelery
 - [x] Bracelet of slaughter
+- [x] Celestial Ring
 - [x] Expeditious bracelet
 - [x] Slayer ring
 - [x] Xeric's talisman
