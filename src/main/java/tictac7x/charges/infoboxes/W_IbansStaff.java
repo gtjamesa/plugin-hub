@@ -18,7 +18,7 @@ import tictac7x.charges.triggers.TriggerItem;
 public class W_IbansStaff extends ChargedItemInfoBox {
     public W_IbansStaff(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ChargesItem.IBANS_STAFF, ItemID.IBANS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.config_key = ChargesImprovedConfig.iban_staff;
+        this.config_key = ChargesImprovedConfig.ibans_staff;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.IBANS_STAFF),
             new TriggerItem(ItemID.IBANS_STAFF_1410),

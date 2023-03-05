@@ -18,7 +18,7 @@ import tictac7x.charges.triggers.TriggerItem;
 public class U_GricollersCan extends ChargedItemInfoBox {
     public U_GricollersCan(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ChargesItem.GRICOLLERS_CAN, ItemID.GRICOLLERS_CAN, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.config_key = ChargesImprovedConfig.gricoller_can;
+        this.config_key = ChargesImprovedConfig.gricollers_can;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };

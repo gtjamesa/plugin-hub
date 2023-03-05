@@ -19,7 +19,7 @@ import tictac7x.charges.triggers.TriggerWidget;
 public class W_BryophytasStaff extends ChargedItemInfoBox {
     public W_BryophytasStaff(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(ChargesItem.BRYOPHYTAS_STAFF, ItemID.BRYOPHYTAS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.config_key = ChargesImprovedConfig.bryophyta_staff;
+        this.config_key = ChargesImprovedConfig.bryophytas_staff;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF)

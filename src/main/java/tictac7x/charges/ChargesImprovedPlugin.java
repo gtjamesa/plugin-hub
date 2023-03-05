@@ -9,6 +9,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
+import net.runelite.api.Varbits;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
@@ -16,6 +17,7 @@ import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -32,6 +34,7 @@ import tictac7x.charges.infoboxes.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 @Slf4j
@@ -41,11 +44,13 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private String plugin_version = "v0.2.3";
-	private String plugin_message = "" +
+	private final String plugin_version = "v0.2.3";
+	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Celestial ring added<br>" +
-		"<colHIGHLIGHT>* Infoboxes that you want to hide need to be selected in the settings<br>";;
+		"<colHIGHLIGHT>* Infoboxes that you want to hide need to be selected in the settings<br>";
+
+	private final int VARBIT_MINUTES = 8354;
 
 	@Inject
 	private Client client;
@@ -81,7 +86,6 @@ public class ChargesImprovedPlugin extends Plugin {
 	private ChargedItemInfoBox[] infoboxes_charged_items;
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
-	private Thread hourlyResetChecker = null;
 
 	@Override
 	protected void startUp() {
@@ -143,16 +147,12 @@ public class ChargesImprovedPlugin extends Plugin {
 
 		overlays.add(overlay_charged_items);
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));
-
-		hourlyResetChecker = checkHourlyReset();
-		hourlyResetChecker.start();
 	}
 
 	@Override
 	protected void shutDown() {
 		overlays.remove(overlay_charged_items);
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.removeInfoBox(infobox));
-		hourlyResetChecker.interrupt();
 	}
 
 	@Subscribe
@@ -173,21 +173,21 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
-		System.out.println("MESSAGE | " +
-			"type: " + event.getType().name() +
-			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
-			", sender: " + event.getSender()
-		);
+//		System.out.println("MESSAGE | " +
+//			"type: " + event.getType().name() +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
+//			", sender: " + event.getSender()
+//		);
 	}
 
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onAnimationChanged(event));
-		if (event.getActor() == client.getLocalPlayer()) {
-			System.out.println("ANIMATION | " +
-				"id: " + event.getActor().getAnimation()
-			);
-		}
+//		if (event.getActor() == client.getLocalPlayer()) {
+//			System.out.println("ANIMATION | " +
+//				"id: " + event.getActor().getAnimation()
+//			);
+//		}
 	}
 
 	@Subscribe
@@ -256,33 +256,29 @@ public class ChargesImprovedPlugin extends Plugin {
 		}
 	}
 
+	@Subscribe
+	public void onVarbitChanged(final VarbitChanged event) {
+		// If logged in and server minute is 0, it means new day started while being logged in.
+		// If dates don't match, it means we were previously logged in some other day.
+		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN) {
+			final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
+
+			// Server minutes are 0 or dates don't match, reset charges.
+			if (event.getValue() == 0 || !config.getResetDate().equals(date)) {
+				configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.reset_date, date);
+
+				for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
+					infobox.resetCharges();
+				}
+			}
+		}
+	}
+
 	public static String getChargesMinified(final int charges) {
 		if (charges == -1) return "?";
 		if (charges > 1000000) return charges / 1000000 + "M";
 		if (charges > 1000) return charges / 1000 + "K";
 		return String.valueOf(charges);
-	}
-
-	private Thread checkHourlyReset() {
-		return new Thread(() -> {
-			int day = LocalDateTime.now(timezone).getDayOfMonth();
-
-			while (true) {
-				final LocalDateTime date = LocalDateTime.now(timezone);
-				// Day changed, check for charges resets.
-				if (date.getDayOfMonth() != day) {
-					for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-						infobox.resetCharges();
-					}
-				}
-
-				// Sleep until next hour + 5 seconds to be sure.
-				final int secondsToSleepForNextHour = 60 * (59 - date.getMinute()) + 59 - date.getSecond();
-				try {
-					Thread.sleep(1000 * (secondsToSleepForNextHour + 5));
-				} catch (final Exception ignored) {}
-			}
-		});
 	}
 }
 
