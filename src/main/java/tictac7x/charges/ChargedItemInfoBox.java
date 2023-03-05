@@ -63,7 +63,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private String tooltip;
     private boolean render = false;
-    private boolean hidden = false;
 
     public ChargedItemInfoBox(final ChargesItem infobox_id, final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
         super(items.getImage(item_id), plugin);
@@ -78,7 +77,6 @@ public class ChargedItemInfoBox extends InfoBox {
         this.config = config;
 
         client_thread.invokeLater(() -> {
-            this.loadRenderFromConfig();
             this.loadChargesFromConfig();
             this.updateTooltip();
             this.onChargesUpdated();
@@ -105,9 +103,13 @@ public class ChargedItemInfoBox extends InfoBox {
         return getText().equals("?") ? config.getColorUnknown() : getText().equals("0") ? config.getColorEmpty() : config.getColorDefault();
     }
 
+    private boolean isAllowed() {
+        return !config.getHiddenInfoboxes().contains(this.infobox_id);
+    }
+
     @Override
     public boolean render() {
-        return !this.hidden && this.render;
+        return config.showInfoboxes() && isAllowed() && this.render;
     }
 
     public int getCharges() {
@@ -221,12 +223,8 @@ public class ChargedItemInfoBox extends InfoBox {
         }
     }
     public void onConfigChanged(final ConfigChanged event) {
-        if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-            if (event.getKey().equals(config_key)) {
-                this.charges = Integer.parseInt(event.getNewValue());
-            } else if (event.getKey().equals(ChargesImprovedConfig.infoboxes_hidden)) {
-                this.hidden = config.getHiddenInfoboxes().contains(this.infobox_id);
-            }
+        if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
+            this.charges = Integer.parseInt(event.getNewValue());
         }
     }
 
@@ -452,10 +450,6 @@ public class ChargedItemInfoBox extends InfoBox {
                 this.setCharges(trigger_reset.charges);
             }
         }
-    }
-
-    private void loadRenderFromConfig() {
-        this.hidden = config.getHiddenInfoboxes().contains(this.infobox_id);
     }
 
     private void loadChargesFromConfig() {

@@ -27,7 +27,8 @@ public class S_FaladorShield extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),
-            new TriggerChatMessage("You have already used your charge for today.").onItemClick(),
+            new TriggerChatMessage("You have already used your charge for today.").onItemClick().fixedCharges(0),
+            new TriggerChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0)
         };
         this.triggers_graphics = new TriggerGraphic[]{
             new TriggerGraphic(321).decreaseCharges(1)

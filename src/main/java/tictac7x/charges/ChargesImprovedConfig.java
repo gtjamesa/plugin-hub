@@ -16,6 +16,7 @@ public interface ChargesImprovedConfig extends Config {
     String group = "tictac7x-charges";
     String version = "version";
     String reset_date = "reset_date";
+    String infoboxes_show = "infoboxes_show";
     String infoboxes_hidden = "infoboxes_hidden";
 
     String arclight = "arclight";
@@ -90,10 +91,20 @@ public interface ChargesImprovedConfig extends Config {
     ) String infoboxes = "infoboxes";
 
         @ConfigItem(
+            keyName = infoboxes_show,
+            name = "Show infoboxes",
+            description = "Whether to allow showing infoboxes for items",
+            position = 1,
+            section = infoboxes
+        ) default boolean showInfoboxes() {
+        return true;
+    }
+
+        @ConfigItem(
             keyName = infoboxes_hidden,
             name = "Hidden",
             description = "Select items to hide infoboxes for (use ctrl + click to select multiple items)",
-            position = 1,
+            position = 2,
             section = infoboxes
         ) default Set<ChargesItem> getHiddenInfoboxes() {
             return EnumSet.noneOf(ChargesItem.class);
