@@ -48,7 +48,8 @@ public interface ChargesImprovedConfig extends Config {
     @ConfigItem(
         keyName = reset_date,
         name = reset_date,
-        description = reset_date
+        description = reset_date,
+        hidden = true
     ) default String getResetDate() { return ""; };
 
     @ConfigSection(
@@ -152,7 +153,7 @@ public interface ChargesImprovedConfig extends Config {
             name = "Bryophyta's Staff",
             description = "Bryophyta's Staff charges",
             section = debug
-        ) default int getBryophytaStaffCharges() { return -1; }
+        ) default int getBryophytasStaffCharges() { return -1; }
 
         @ConfigItem(
             keyName = celestial_ring,
@@ -194,21 +195,21 @@ public interface ChargesImprovedConfig extends Config {
             name = "Gricoller's can",
             description = "Gricoller's can charges",
             section = debug
-        ) default int getGricollerCanCharges() { return -1; }
+        ) default int getGricollersCanCharges() { return -1; }
 
         @ConfigItem(
             keyName = ibans_staff,
             name = "Iban's staff",
             description = "Iban's staff charges",
             section = debug
-        ) default int getIbanStaffCharges() { return -1; }
+        ) default int getIbansStaffCharges() { return -1; }
 
         @ConfigItem(
             keyName = pharaohs_sceptre,
             name = "Pharaoh's sceptre",
             description = "Pharaoh's sceptre charges",
             section = debug
-        ) default int getPharaohSceptreCharges() { return -1; }
+        ) default int getPharaohsSceptreCharges() { return -1; }
 
         @ConfigItem(
             keyName = skull_sceptre,
@@ -236,5 +237,5 @@ public interface ChargesImprovedConfig extends Config {
             name = "Xeric's talisman",
             description = "Xeric's talisman charges",
             section = debug
-        ) default int getXericTalismanCharges() { return -1; }
+        ) default int getXericsTalismanCharges() { return -1; }
 }
