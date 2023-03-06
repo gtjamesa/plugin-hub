@@ -9,7 +9,6 @@ import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
-import net.runelite.api.Varbits;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
@@ -274,7 +273,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	}
 
 	private void resetCharges(final String date) {
-		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.reset_date, date);
+		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
 		Arrays.stream(infoboxes_charged_items).forEach(ChargedItemInfoBox::resetCharges);
 	}
 

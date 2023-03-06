@@ -1,6 +1,5 @@
 package tictac7x.charges.triggers;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TriggerGraphic {

@@ -15,7 +15,7 @@ import static tictac7x.charges.ChargesImprovedConfig.group;
 public interface ChargesImprovedConfig extends Config {
     String group = "tictac7x-charges";
     String version = "version";
-    String reset_date = "reset_date";
+    String date = "date";
     String infoboxes_show = "infoboxes_show";
     String infoboxes_hidden = "infoboxes_hidden";
 
@@ -38,20 +38,6 @@ public interface ChargesImprovedConfig extends Config {
     String soul_bearer = "soul_bearer";
     String trident_of_the_seas = "trident_of_the_seas";
     String xerics_talisman = "xerics_talisman";
-
-    @ConfigItem(
-        keyName = version,
-        name = version,
-        description = version,
-        hidden = true
-    ) default String getVersion() { return ""; };
-
-    @ConfigItem(
-        keyName = reset_date,
-        name = reset_date,
-        description = reset_date,
-        hidden = true
-    ) default String getResetDate() { return ""; };
 
     @ConfigSection(
         name = "Colors",
@@ -116,6 +102,22 @@ public interface ChargesImprovedConfig extends Config {
         position = 99,
         closedByDefault = true
     ) String debug = "debug";
+
+        @ConfigItem(
+            keyName = version,
+            name = "Version",
+            description = "Version of the plugin for update message",
+            section = debug,
+            position = 1
+        ) default String getVersion() { return ""; };
+
+        @ConfigItem(
+            keyName = date,
+            name = "Date",
+            description = "Date to check for charges reset when logging in",
+            section = debug,
+            position = 2
+        ) default String getResetDate() { return ""; };
 
         @ConfigItem(
             keyName = arclight,
