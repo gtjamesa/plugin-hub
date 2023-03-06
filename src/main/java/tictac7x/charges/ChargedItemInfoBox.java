@@ -109,7 +109,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public boolean render() {
-        return config.showInfoboxes() && isAllowed() && this.render;
+        return config.showInfoboxes() && this.isAllowed() && this.render;
     }
 
     public int getCharges() {
@@ -427,15 +427,15 @@ public class ChargedItemInfoBox extends InfoBox {
         if (this.triggers_resets == null) return;
 
         // Send message about item charges being reset if player has it on them.
-        client_thread.invokeLater(() -> {
-            if (this.in_equipment || this.in_inventory) {
+        if (this.in_equipment || this.in_inventory) {
+            client_thread.invokeLater(() -> {
                 chat_messages.queue(QueuedMessage.builder()
                     .type(ChatMessageType.CONSOLE)
                     .runeLiteFormattedMessage("<colHIGHLIGHT>" + items.getItemComposition(item_id).getName() + " daily charges have been reset.")
                     .build()
                 );
-            }
-        });
+            });
+        }
 
         // Check for item resets.
         for (final TriggerReset trigger_reset : this.triggers_resets) {

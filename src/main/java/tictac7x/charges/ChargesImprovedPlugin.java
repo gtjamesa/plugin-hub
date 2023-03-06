@@ -86,6 +86,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	private ChargedItemInfoBox[] infoboxes_charged_items;
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
+	private String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 
 	@Override
 	protected void startUp() {
@@ -166,6 +167,11 @@ public class ChargesImprovedPlugin extends Plugin {
 
 			if (inventory != null && equipment != null) {
 				Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onItemContainersChanged(inventory, equipment));
+
+				// We need to know about items to show messages about resetting charges.
+				if (!config.getResetDate().equals(date)) {
+					resetCharges(date);
+				}
 			}
 		}
 	}
@@ -245,8 +251,10 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onGameStateChanged(final GameStateChanged event) {
+		if (event.getGameState() != GameState.LOGGED_IN) return;
+
 		// Send message about plugin updates for once.
-		if (event.getGameState() == GameState.LOGGED_IN && !config.getVersion().equals(plugin_version)) {
+		if (!config.getVersion().equals(plugin_version)) {
 			configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.version, plugin_version);
 			chat_messages.queue(QueuedMessage.builder()
 				.type(ChatMessageType.CONSOLE)
@@ -258,20 +266,16 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onVarbitChanged(final VarbitChanged event) {
-		// If logged in and server minute is 0, it means new day started while being logged in.
-		// If dates don't match, it means we were previously logged in some other day.
-		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN) {
+		// If server minutes are 0, it's a new day!
+		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
 			final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
-
-			// Server minutes are 0 or dates don't match, reset charges.
-			if (event.getValue() == 0 || !config.getResetDate().equals(date)) {
-				configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.reset_date, date);
-
-				for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-					infobox.resetCharges();
-				}
-			}
+			resetCharges(date);
 		}
+	}
+
+	private void resetCharges(final String date) {
+		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.reset_date, date);
+		Arrays.stream(infoboxes_charged_items).forEach(ChargedItemInfoBox::resetCharges);
 	}
 
 	public static String getChargesMinified(final int charges) {
