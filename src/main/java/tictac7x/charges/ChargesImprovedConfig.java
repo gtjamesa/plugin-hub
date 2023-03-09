@@ -225,18 +225,19 @@ public interface ChargesImprovedConfig extends Config {
             description = "Pharaoh's sceptre charges",
             section = debug
         ) default int getPharaohsSceptreCharges() { return -1; }
+
         @ConfigItem(
-                keyName = ring_of_suffering,
-                name = "Ring of Suffering",
-                description = "Ring of suffering charges",
-                section = debug
+            keyName = ring_of_suffering,
+            name = "Ring of Suffering",
+            description = "Ring of suffering charges",
+            section = debug
         ) default int getRingOfSufferingCharges() { return -1; }
 
         @ConfigItem(
-                keyName = sanguinesti_staff,
-                name = "Sanguinesti staff",
-                description = "Sanguinesti staff charges",
-                section = debug
+            keyName = sanguinesti_staff,
+            name = "Sanguinesti staff",
+            description = "Sanguinesti staff charges",
+            section = debug
         ) default int getSanguinestiStaffCharges() { return -1; }
 
         @ConfigItem(

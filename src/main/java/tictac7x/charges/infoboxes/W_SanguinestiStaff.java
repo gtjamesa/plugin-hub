@@ -22,23 +22,23 @@ public class W_SanguinestiStaff extends ChargedItemInfoBox {
         super(ChargesItem.SANGUINESTI_STAFF, ItemID.SANGUINESTI_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.sanguinesti_staff;
         this.triggers_items = new TriggerItem[]{
-                new TriggerItem(ItemID.SANGUINESTI_STAFF),
-                new TriggerItem(ItemID.SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
-                new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF),
-                new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
+            new TriggerItem(ItemID.SANGUINESTI_STAFF),
+            new TriggerItem(ItemID.SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
+            new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF),
+            new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-                //  new TriggerChatMessage("Your Sanguinesti staff has (?<charges>.+) charges remaining.").onItemClick(),
-                //  new TriggerChatMessage("Your (Holy s|S)?anguinesti staff has (?<charges>.+) charges? remaining.").onItemClick(),
-                new TriggerChatMessage("You apply an additional .+ charges? charges to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
+            //  new TriggerChatMessage("Your Sanguinesti staff has (?<charges>.+) charges remaining.").onItemClick(),
+            //  new TriggerChatMessage("Your (Holy s|S)?anguinesti staff has (?<charges>.+) charges? remaining.").onItemClick(),
+            new TriggerChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
         };
         this.triggers_widgets = new TriggerWidget[]{
-                //  new TriggerWidget("You apply an additional .+ charges? to the Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
-                new TriggerWidget("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges in total."),
-                new TriggerWidget("You apply (?<charges>.+) charges to your Sanguinesti staff.")
+            //  new TriggerWidget("You apply an additional .+ charges? to the Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
+            new TriggerWidget("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges in total."),
+            new TriggerWidget("You apply (?<charges>.+) charges to your Sanguinesti staff.")
         };
         this.triggers_animations = new TriggerAnimation[]{
-                new TriggerAnimation(1167).decreaseCharges(1).equipped()
+            new TriggerAnimation(1167).decreaseCharges(1).equipped()
         };
     }
 }
