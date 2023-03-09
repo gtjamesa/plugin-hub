@@ -43,11 +43,11 @@ import java.util.Arrays;
 	tags = { "charges" }
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.2.3";
+	private final String plugin_version = "v0.2.4";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Celestial ring added<br>" +
-		"<colHIGHLIGHT>* Infoboxes that you want to hide need to be selected in the settings<br>";
+		"<colHIGHLIGHT>* Sanguinesti staff added<br>" +
+		"<colHIGHLIGHT>* Ring of suffering added";
 
 	private final int VARBIT_MINUTES = 8354;
 
