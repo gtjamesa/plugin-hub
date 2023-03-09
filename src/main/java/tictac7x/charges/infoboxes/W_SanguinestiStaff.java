@@ -18,7 +18,16 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_SanguinestiStaff extends ChargedItemInfoBox {
-    public W_SanguinestiStaff(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public W_SanguinestiStaff(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.SANGUINESTI_STAFF, ItemID.SANGUINESTI_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.sanguinesti_staff;
         this.triggers_items = new TriggerItem[]{

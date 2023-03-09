@@ -19,7 +19,16 @@ import tictac7x.charges.triggers.TriggerWidget;
 import javax.annotation.Nullable;
 
 public class U_AshSanctifier extends ChargedItemInfoBox {
-    public U_AshSanctifier(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public U_AshSanctifier(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.ASH_SANCTIFIER, ItemID.ASH_SANCTIFIER, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.ash_sanctifier;
         this.triggers_items = new TriggerItem[]{

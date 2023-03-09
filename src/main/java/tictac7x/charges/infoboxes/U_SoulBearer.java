@@ -19,7 +19,16 @@ import tictac7x.charges.triggers.TriggerWidget;
 import javax.annotation.Nullable;
 
 public class U_SoulBearer extends ChargedItemInfoBox {
-    public U_SoulBearer(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public U_SoulBearer(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.SOUL_BEARER, ItemID.SOUL_BEARER, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.soul_bearer;
         this.triggers_items = new TriggerItem[]{

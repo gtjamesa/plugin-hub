@@ -15,7 +15,16 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class J_RingOfSuffering extends ChargedItemInfoBox {
-    public J_RingOfSuffering(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public J_RingOfSuffering(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.RING_OF_SUFFERING, ItemID.RING_OF_SUFFERING, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.ring_of_suffering;
         this.triggers_items = new TriggerItem[]{

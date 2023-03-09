@@ -16,7 +16,16 @@ import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class S_Chronicle extends ChargedItemInfoBox {
-    public S_Chronicle(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public S_Chronicle(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.CHRONICLE, ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.chronicle;
         this.triggers_items = new TriggerItem[]{

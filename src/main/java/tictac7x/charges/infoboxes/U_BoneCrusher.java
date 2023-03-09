@@ -18,7 +18,16 @@ import tictac7x.charges.triggers.TriggerWidget;
 import javax.annotation.Nullable;
 
 public class U_BoneCrusher extends ChargedItemInfoBox {
-    public U_BoneCrusher(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public U_BoneCrusher(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.BONE_CRUSHER, ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.bone_crusher;
         this.triggers_items = new TriggerItem[]{

@@ -17,7 +17,16 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_SkullSceptre extends ChargedItemInfoBox {
-    public W_SkullSceptre(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public W_SkullSceptre(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.SKULL_SCEPTRE, ItemID.SKULL_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.skull_sceptre;
         this.triggers_items = new TriggerItem[]{

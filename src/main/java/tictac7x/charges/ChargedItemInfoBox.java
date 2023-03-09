@@ -64,7 +64,18 @@ public class ChargedItemInfoBox extends InfoBox {
     private String tooltip;
     private boolean render = false;
 
-    public ChargedItemInfoBox(final ChargesItem infobox_id, final int item_id, final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public ChargedItemInfoBox(
+        final ChargesItem infobox_id,
+        final int item_id,
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(items.getImage(item_id), plugin);
         this.infobox_id = infobox_id;
         this.item_id = item_id;

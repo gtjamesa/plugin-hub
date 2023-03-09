@@ -16,7 +16,16 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class W_PharaohsSceptre extends ChargedItemInfoBox {
-    public W_PharaohsSceptre(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public W_PharaohsSceptre(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.PHARAOHS_SCEPTRE, ItemID.PHARAOHS_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.pharaohs_sceptre;
         this.triggers_items = new TriggerItem[]{

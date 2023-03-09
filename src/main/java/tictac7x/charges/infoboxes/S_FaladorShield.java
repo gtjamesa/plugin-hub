@@ -13,12 +13,20 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerGraphic;
-import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerReset;
 
 public class S_FaladorShield extends ChargedItemInfoBox {
-    public S_FaladorShield(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public S_FaladorShield(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.falador_shield;
         this.triggers_items = new TriggerItem[]{

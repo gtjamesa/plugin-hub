@@ -16,7 +16,16 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
 public class J_CelestialRing extends ChargedItemInfoBox {
-    public J_CelestialRing(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public J_CelestialRing(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.CELESTIAL_RING, ItemID.CELESTIAL_RING, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.celestial_ring;
         this.needs_to_be_equipped_for_infobox = true;

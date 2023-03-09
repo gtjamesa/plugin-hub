@@ -1,7 +1,6 @@
 package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
-import net.runelite.api.HitsplatID;
 import net.runelite.api.ItemID;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -17,7 +16,16 @@ import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class S_CrystalShield extends ChargedItemInfoBox {
-    public S_CrystalShield(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public S_CrystalShield(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.CRYSTAL_SHIELD, ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.crystal_shield;
         this.triggers_items = new TriggerItem[]{

@@ -14,7 +14,16 @@ import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsToragsPlatelegs extends ChargedItemInfoBox {
-    public BarrowsToragsPlatelegs(final Client client, final ClientThread client_thread, final ConfigManager configs, final ItemManager items, final InfoBoxManager infoboxes, final ChatMessageManager chat_messages, final ChargesImprovedConfig config, final Plugin plugin) {
+    public BarrowsToragsPlatelegs(
+        final Client client,
+        final ClientThread client_thread,
+        final ConfigManager configs,
+        final ItemManager items,
+        final InfoBoxManager infoboxes,
+        final ChatMessageManager chat_messages,
+        final ChargesImprovedConfig config,
+        final Plugin plugin
+    ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.TORAGS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
         this.charges_from_name = true;
