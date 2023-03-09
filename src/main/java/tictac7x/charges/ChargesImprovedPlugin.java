@@ -96,6 +96,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_IbansStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_PharaohsSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -104,6 +105,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
