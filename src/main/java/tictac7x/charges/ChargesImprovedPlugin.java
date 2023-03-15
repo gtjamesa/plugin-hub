@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.InventoryID;
+import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
@@ -26,53 +28,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.infoboxes.BarrowsAhrimsHood;
-import tictac7x.charges.infoboxes.BarrowsAhrimsRobeskirt;
-import tictac7x.charges.infoboxes.BarrowsAhrimsRobetop;
-import tictac7x.charges.infoboxes.BarrowsAhrimsStaff;
-import tictac7x.charges.infoboxes.BarrowsDharoksGreataxe;
-import tictac7x.charges.infoboxes.BarrowsDharoksHelm;
-import tictac7x.charges.infoboxes.BarrowsDharoksPlatebody;
-import tictac7x.charges.infoboxes.BarrowsDharoksPlatelegs;
-import tictac7x.charges.infoboxes.BarrowsGuthansChainskirt;
-import tictac7x.charges.infoboxes.BarrowsGuthansHelm;
-import tictac7x.charges.infoboxes.BarrowsGuthansPlatebody;
-import tictac7x.charges.infoboxes.BarrowsGuthansWarspear;
-import tictac7x.charges.infoboxes.BarrowsKarilsCoif;
-import tictac7x.charges.infoboxes.BarrowsKarilsCrossbow;
-import tictac7x.charges.infoboxes.BarrowsKarilsLeatherskirt;
-import tictac7x.charges.infoboxes.BarrowsKarilsLeathertop;
-import tictac7x.charges.infoboxes.BarrowsToragsHammers;
-import tictac7x.charges.infoboxes.BarrowsToragsHelm;
-import tictac7x.charges.infoboxes.BarrowsToragsPlatebody;
-import tictac7x.charges.infoboxes.BarrowsToragsPlatelegs;
-import tictac7x.charges.infoboxes.BarrowsVeracsBrassard;
-import tictac7x.charges.infoboxes.BarrowsVeracsFlail;
-import tictac7x.charges.infoboxes.BarrowsVeracsHelm;
-import tictac7x.charges.infoboxes.BarrowsVeracsPlateskirt;
-import tictac7x.charges.infoboxes.J_BraceletOfSlaughter;
-import tictac7x.charges.infoboxes.J_CelestialRing;
-import tictac7x.charges.infoboxes.J_ExpeditiousBracelet;
-import tictac7x.charges.infoboxes.J_RingOfSuffering;
-import tictac7x.charges.infoboxes.J_SlayerRing;
-import tictac7x.charges.infoboxes.J_XericsTalisman;
-import tictac7x.charges.infoboxes.S_BookOfTheDead;
-import tictac7x.charges.infoboxes.S_Chronicle;
-import tictac7x.charges.infoboxes.S_CrystalShield;
-import tictac7x.charges.infoboxes.S_FaladorShield;
-import tictac7x.charges.infoboxes.U_AshSanctifier;
-import tictac7x.charges.infoboxes.U_BoneCrusher;
-import tictac7x.charges.infoboxes.U_BottomlessCompostBucket;
-import tictac7x.charges.infoboxes.U_FishBarrel;
-import tictac7x.charges.infoboxes.U_GricollersCan;
-import tictac7x.charges.infoboxes.U_SoulBearer;
-import tictac7x.charges.infoboxes.W_Arclight;
-import tictac7x.charges.infoboxes.W_BryophytasStaff;
-import tictac7x.charges.infoboxes.W_IbansStaff;
-import tictac7x.charges.infoboxes.W_PharaohsSceptre;
-import tictac7x.charges.infoboxes.W_SanguinestiStaff;
-import tictac7x.charges.infoboxes.W_SkullSceptre;
-import tictac7x.charges.infoboxes.W_TridentOfTheSeas;
+import tictac7x.charges.infoboxes.*;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
@@ -235,22 +191,16 @@ public class ChargesImprovedPlugin extends Plugin {
 		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
 			infobox.onItemContainersChanged(event);
 		}
-//		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onItemContainersChanged(inventory, equipment));
-//		if (
-//			event.getContainerId() == InventoryID.INVENTORY.getId() ||
-//			event.getContainerId() == InventoryID.EQUIPMENT.getId()
-//		) {
-//			final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
-//			final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
-//
-//			if (inventory != null && equipment != null) {
-//
-//				// We need to know about items to show messages about resetting charges.
-//				if (!config.getResetDate().equals(date)) {
-//					resetCharges(date);
-//				}
-//			}
-//		}
+
+		final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
+		final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
+
+		if (inventory != null && equipment != null) {
+			// We need to know about items to show messages about resetting charges.
+			if (!config.getResetDate().equals(date)) {
+				resetCharges(date);
+			}
+		}
 	}
 
 	@Subscribe
