@@ -11,13 +11,12 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
-public class J_XericsTalisman extends ChargedItemInfoBox {
-    public J_XericsTalisman(
+public class S_BookOfTheDead extends ChargedItemInfoBox {
+    public S_BookOfTheDead(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -27,23 +26,19 @@ public class J_XericsTalisman extends ChargedItemInfoBox {
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.XERICS_TALISMAN, ItemID.XERICS_TALISMAN, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.config_key = ChargesImprovedConfig.xerics_talisman;
+        super(ChargesItem.BOOK_OF_THE_DEAD, ItemID.BOOK_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        this.config_key = ChargesImprovedConfig.book_of_the_dead;
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.XERICS_TALISMAN_INERT).fixedCharges(0),
-            new TriggerItem(ItemID.XERICS_TALISMAN),
+            new TriggerItem(ItemID.KHAREDSTS_MEMOIRS),
+            new TriggerItem(ItemID.BOOK_OF_THE_DEAD)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The talisman has one charge.").onItemClick(),
-            new TriggerChatMessage("The talisman has (?<charges>.+) charges.").onItemClick(),
-        };
-        this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(3865).decreaseCharges(1).onItemClick()
+            new TriggerChatMessage("The Book of the Dead now has (?<charges>.+) (memories|memory) remaining."),
+            new TriggerChatMessage("The Book of the Dead holds no charges.").fixedCharges(0)
         };
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("Your talisman now has one charge."),
-            new TriggerWidget("Your talisman now has (?<charges>.+) charges?."),
-            new TriggerWidget("The talisman has (?<charges>.+) charges.").customWidget(187, 0, 1)
+            new TriggerWidget("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+) memories? remain."),
+            new TriggerWidget("The Book of the Dead now has (?<charges>.+) charges.")
         };
     }
 }

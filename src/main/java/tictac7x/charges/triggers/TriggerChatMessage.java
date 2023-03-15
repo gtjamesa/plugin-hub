@@ -2,11 +2,15 @@ package tictac7x.charges.triggers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 public class TriggerChatMessage {
     @Nonnull
     public final Pattern message;
+
+    @Nullable
+    public Consumer<String> consumer;
 
     @Nullable
     public Integer fixed_charges;
@@ -47,6 +51,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage equipped() {
         this.equipped = true;
+        return this;
+    }
+
+    public TriggerChatMessage extraConsumer(final Consumer<String> consumer) {
+        this.consumer = consumer;
         return this;
     }
 }

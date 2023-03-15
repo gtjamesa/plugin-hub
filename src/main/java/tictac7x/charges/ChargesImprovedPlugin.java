@@ -1,9 +1,7 @@
 package tictac7x.charges;
 
-import javax.inject.Inject;
-
-import lombok.extern.slf4j.Slf4j;
 import com.google.inject.Provides;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -21,16 +19,63 @@ import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
-import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.infoboxes.*;
+import tictac7x.charges.infoboxes.BarrowsAhrimsHood;
+import tictac7x.charges.infoboxes.BarrowsAhrimsRobeskirt;
+import tictac7x.charges.infoboxes.BarrowsAhrimsRobetop;
+import tictac7x.charges.infoboxes.BarrowsAhrimsStaff;
+import tictac7x.charges.infoboxes.BarrowsDharoksGreataxe;
+import tictac7x.charges.infoboxes.BarrowsDharoksHelm;
+import tictac7x.charges.infoboxes.BarrowsDharoksPlatebody;
+import tictac7x.charges.infoboxes.BarrowsDharoksPlatelegs;
+import tictac7x.charges.infoboxes.BarrowsGuthansChainskirt;
+import tictac7x.charges.infoboxes.BarrowsGuthansHelm;
+import tictac7x.charges.infoboxes.BarrowsGuthansPlatebody;
+import tictac7x.charges.infoboxes.BarrowsGuthansWarspear;
+import tictac7x.charges.infoboxes.BarrowsKarilsCoif;
+import tictac7x.charges.infoboxes.BarrowsKarilsCrossbow;
+import tictac7x.charges.infoboxes.BarrowsKarilsLeatherskirt;
+import tictac7x.charges.infoboxes.BarrowsKarilsLeathertop;
+import tictac7x.charges.infoboxes.BarrowsToragsHammers;
+import tictac7x.charges.infoboxes.BarrowsToragsHelm;
+import tictac7x.charges.infoboxes.BarrowsToragsPlatebody;
+import tictac7x.charges.infoboxes.BarrowsToragsPlatelegs;
+import tictac7x.charges.infoboxes.BarrowsVeracsBrassard;
+import tictac7x.charges.infoboxes.BarrowsVeracsFlail;
+import tictac7x.charges.infoboxes.BarrowsVeracsHelm;
+import tictac7x.charges.infoboxes.BarrowsVeracsPlateskirt;
+import tictac7x.charges.infoboxes.J_BraceletOfSlaughter;
+import tictac7x.charges.infoboxes.J_CelestialRing;
+import tictac7x.charges.infoboxes.J_ExpeditiousBracelet;
+import tictac7x.charges.infoboxes.J_RingOfSuffering;
+import tictac7x.charges.infoboxes.J_SlayerRing;
+import tictac7x.charges.infoboxes.J_XericsTalisman;
+import tictac7x.charges.infoboxes.S_BookOfTheDead;
+import tictac7x.charges.infoboxes.S_Chronicle;
+import tictac7x.charges.infoboxes.S_CrystalShield;
+import tictac7x.charges.infoboxes.S_FaladorShield;
+import tictac7x.charges.infoboxes.U_AshSanctifier;
+import tictac7x.charges.infoboxes.U_BoneCrusher;
+import tictac7x.charges.infoboxes.U_BottomlessCompostBucket;
+import tictac7x.charges.infoboxes.U_FishBarrel;
+import tictac7x.charges.infoboxes.U_GricollersCan;
+import tictac7x.charges.infoboxes.U_SoulBearer;
+import tictac7x.charges.infoboxes.W_Arclight;
+import tictac7x.charges.infoboxes.W_BryophytasStaff;
+import tictac7x.charges.infoboxes.W_IbansStaff;
+import tictac7x.charges.infoboxes.W_PharaohsSceptre;
+import tictac7x.charges.infoboxes.W_SanguinestiStaff;
+import tictac7x.charges.infoboxes.W_SkullSceptre;
+import tictac7x.charges.infoboxes.W_TridentOfTheSeas;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -98,9 +143,10 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
+			new S_BookOfTheDead(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -109,9 +155,10 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 

@@ -2,10 +2,14 @@ package tictac7x.charges.triggers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class TriggerWidget {
     private final int WIDGET_DEFAULT_GROUP_ID = 193;
     private final int WIDGET_DEFAULT_CHILD_ID = 2;
+
+    @Nullable
+    public Consumer<String> consumer;
 
     @Nonnull
     public final String message;
@@ -38,6 +42,11 @@ public class TriggerWidget {
 
     public TriggerWidget fixedCharges(final int charges) {
         this.charges = charges;
+        return this;
+    }
+
+    public TriggerWidget extraConsumer(final Consumer<String> consumer) {
+        this.consumer = consumer;
         return this;
     }
 }

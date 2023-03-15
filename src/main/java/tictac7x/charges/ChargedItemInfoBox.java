@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 
 public class ChargedItemInfoBox extends InfoBox {
     private final ChargesItem infobox_id;
-    protected int item_id;
+    public int item_id;
     protected final Client client;
     protected final ClientThread client_thread;
     protected final ItemManager items;
@@ -38,7 +38,8 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ChatMessageManager chat_messages;
     protected final ChargesImprovedConfig config;
 
-    @Nullable protected ItemContainer inventory;
+    @Nullable
+    public ItemContainer inventory;
     @Nullable protected ItemContainer equipment;
 
     @Nullable protected String config_key;
@@ -50,6 +51,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerItem[] triggers_items;
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected TriggerReset[] triggers_resets;
+    protected TriggerMenuOption[] triggers_menu_options = new TriggerMenuOption[]{};
 
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean in_equipment;
@@ -63,6 +65,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private String tooltip;
     private boolean render = false;
+    public boolean zero_charges_is_positive = false;
 
     public ChargedItemInfoBox(
         final ChargesItem infobox_id,
@@ -111,7 +114,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        return getText().equals("?") ? config.getColorUnknown() : getText().equals("0") ? config.getColorEmpty() : config.getColorDefault();
+        return getText().equals("?") ? config.getColorUnknown() : getText().equals("0") && !this.zero_charges_is_positive ? config.getColorEmpty() : config.getColorDefault();
     }
 
     private boolean isAllowed() {
@@ -178,12 +181,17 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public void onChatMessage(final ChatMessage event) {
         if (
+            // No chat messages triggers.
+            triggers_chat_messages == null ||
+            // Message type that we are not interested in.
             event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM ||
+            // No config to save charges to.
             this.config_key == null ||
-            triggers_chat_messages == null
+            // Not in inventory nor in equipment.
+            (!this.in_inventory && !this.in_equipment)
         ) return;
 
-        final String message = event.getMessage().replaceAll("</?col.*?>", "");
+        final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
             // Menu target check.
@@ -193,13 +201,13 @@ public class ChargedItemInfoBox extends InfoBox {
                 (!this.menu_target.equals(items.getItemComposition(this.item_id).getName())))
             ) continue;
 
-            // Equipped check.
-            if (chat_message.equipped && !this.in_equipment) {
-                continue;
-            }
+            // Item needs to be equipped but isn't.
+            if (chat_message.equipped && !this.in_equipment) continue;
 
             final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
+
+            // Message does not match the pattern.
             if (!matcher.find()) continue;
 
             // Increase charges by fixed amount.
@@ -214,9 +222,17 @@ public class ChargedItemInfoBox extends InfoBox {
             } else if (chat_message.fixed_charges != null) {
                 this.setCharges(chat_message.fixed_charges);
 
+            // Custom consumer.
+            } else if (chat_message.consumer != null) {
+                chat_message.consumer.accept(message);
+
             // Set charges dynamically from the chat message.
-            } else {
+            } else if (matcher.group("charges") != null) {
                 setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", "")));
+
+            // No trigger found.
+            } else {
+                continue;
             }
 
             // Check extra matches groups.
@@ -233,6 +249,42 @@ public class ChargedItemInfoBox extends InfoBox {
             return;
         }
     }
+    public void onWidgetLoaded(final WidgetLoaded event) {
+        if (triggers_widgets == null || config_key == null) return;
+
+        client_thread.invokeLater(() -> {
+            for (final TriggerWidget trigger_widget : triggers_widgets) {
+                Widget widget = client.getWidget(trigger_widget.group_id, trigger_widget.child_id);
+                if (trigger_widget.sub_child_id != null && widget != null) widget = widget.getChild(trigger_widget.sub_child_id);
+                if (widget == null) continue;
+
+                final String message = widget.getText().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
+                final Pattern regex = Pattern.compile(trigger_widget.message);
+                final Matcher matcher = regex.matcher(message);
+                if (!matcher.find()) continue;
+
+                // Charges amount is fixed.
+                if (trigger_widget.charges != null) {
+                    setCharges(trigger_widget.charges);
+                // Charges amount has custom logic.
+                } else if (trigger_widget.consumer != null) {
+                    trigger_widget.consumer.accept(message);
+                // Charges amount is dynamic.
+                } else if (matcher.group("charges") != null) {
+                    setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "")));
+                }
+
+                // Check extra matches groups.
+                if (extra_config_keys != null) {
+                    for (final String extra_group : extra_config_keys) {
+                        final String extra = matcher.group(extra_group);
+                        if (extra != null) setConfiguration(config_key + "_" + extra_group, extra);
+                    }
+                }
+            }
+        });
+    }
+
     public void onConfigChanged(final ConfigChanged event) {
         if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
             this.charges = Integer.parseInt(event.getNewValue());
@@ -388,49 +440,42 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
 
-    public void onWidgetLoaded(final WidgetLoaded event) {
-        if (triggers_widgets == null || config_key == null) return;
-
-        client_thread.invokeLater(() -> {
-            for (final TriggerWidget trigger_widget : triggers_widgets) {
-                Widget widget = client.getWidget(trigger_widget.group_id, trigger_widget.child_id);
-                if (trigger_widget.sub_child_id != null && widget != null) widget = widget.getChild(trigger_widget.sub_child_id);
-                if (widget == null) continue;
-
-                final Pattern regex = Pattern.compile(trigger_widget.message);
-                final String message = widget.getText().replaceAll("<br>", " ");
-                final Matcher matcher = regex.matcher(message);
-                if (!matcher.find()) continue;
-
-
-                // Check default "charges" group.
-                setCharges(trigger_widget.charges != null
-                    // Charges amount is fixed.
-                    ? trigger_widget.charges
-                    // Charges amount is dynamic and extracted from the message.
-                    : Integer.parseInt(matcher.group("charges").replaceAll(",", ""))
-                );
-
-                // Check extra matches groups.
-                if (extra_config_keys != null) {
-                    for (final String extra_group : extra_config_keys) {
-                        final String extra = matcher.group(extra_group);
-                        if (extra != null) setConfiguration(config_key + "_" + extra_group, extra);
-                    }
-                }
-            }
-        });
-    }
-
     public void onMenuOptionClicked(final MenuOptionClicked event) {
         final String menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
         final String menu_option = event.getMenuOption();
 
-        if ((this.in_inventory || this.in_equipment) && menu_target.length() > 0) {
-            if (menu_option != null && menu_option.length() > 0) {
-                this.menu_option = menu_option;
-            }
-            this.menu_target = menu_target;
+        if (
+            // Not menu.
+            menu_target.length() == 0 ||
+            // Item not in inventory nor equipment.
+            !this.in_inventory && !this.in_equipment ||
+            // Menu option not found.
+            menu_option == null || menu_option.length() == 0
+        ) {
+            return;
+        }
+
+
+        // Save menu option and target for other triggers to use.
+        this.menu_option = menu_option;
+        this.menu_target = menu_target;
+
+        for (final TriggerMenuOption trigger_menu_option : this.triggers_menu_options) {
+            if (!trigger_menu_option.option.equals(menu_option)) continue;
+
+            // Fixed charges.
+            if (trigger_menu_option.fixed_charges != null) {
+                this.setCharges(trigger_menu_option.fixed_charges);
+
+            // Custom consumer.
+            } else if (trigger_menu_option.consumer != null) {
+                trigger_menu_option.consumer.accept(menu_option);
+
+            // Trigger not used.
+            } else continue;
+
+            // Menu option trigger used.
+            return;
         }
     }
 
@@ -469,7 +514,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     }
 
-    private void setCharges(final int charges) {
+    public void setCharges(final int charges) {
         this.charges = charges;
         this.onChargesUpdated();
 
@@ -483,7 +528,7 @@ public class ChargedItemInfoBox extends InfoBox {
         setCharges(this.charges - charges);
     }
 
-    private void increaseCharges(final int charges) {
+    public void increaseCharges(final int charges) {
         if (this.charges == -1) return;
         setCharges(this.charges + charges);
     }

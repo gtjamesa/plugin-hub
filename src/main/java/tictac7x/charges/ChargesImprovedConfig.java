@@ -22,6 +22,7 @@ public interface ChargesImprovedConfig extends Config {
     String arclight = "arclight";
     String ash_sanctifier = "ash_sanctifier";
     String bone_crusher = "bone_crusher";
+    String book_of_the_dead = "book_of_the_dead";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
     String bottomless_compost_bucket_type = "bottomless_compost_bucket_type";
     String bracelet_of_slaughter = "bracelet_of_slaughter";
@@ -31,6 +32,7 @@ public interface ChargesImprovedConfig extends Config {
     String crystal_shield = "crystal_shield";
     String expeditious_bracelet = "expeditious_bracelet";
     String falador_shield = "falador_shield";
+    String fish_barrel = "fish_barrel";
     String gricollers_can = "gricollers_can";
     String ibans_staff = "ibans_staff";
     String pharaohs_sceptre = "pharaohs_sceptre";
@@ -143,6 +145,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getBoneCrusherCharges() { return -1; }
 
         @ConfigItem(
+            keyName = book_of_the_dead,
+            name = "Book of the dead",
+            description = "Book of the dead charges",
+            section = debug
+        ) default int getBookOfTheDeadCharges() { return -1; }
+
+        @ConfigItem(
             keyName = bottomless_compost_bucket,
             name = "Bottomless compost bucket",
             description = "Bottomless compost bucket charges",
@@ -204,6 +213,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "Falador shield charges",
             section = debug
         ) default int getFaladorShieldCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = fish_barrel,
+            name = "Fish barrel",
+            description = "Fish barrel charges",
+            section = debug
+        ) default int getFishBarrelCharges() { return -1; }
 
         @ConfigItem(
             keyName = gricollers_can,
