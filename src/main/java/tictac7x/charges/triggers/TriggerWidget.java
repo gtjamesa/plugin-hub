@@ -8,18 +8,14 @@ public class TriggerWidget {
     private final int WIDGET_DEFAULT_GROUP_ID = 193;
     private final int WIDGET_DEFAULT_CHILD_ID = 2;
 
-    @Nullable
-    public Consumer<String> consumer;
-
-    @Nonnull
-    public final String message;
-
-    @Nullable
-    public Integer charges;
+    @Nonnull public final String message;
 
     public int group_id;
     public int child_id;
     public Integer sub_child_id;
+
+    @Nullable public Consumer<String> consumer;
+    @Nullable public Integer charges;
 
     public TriggerWidget(@Nonnull final String message) {
         this.message = message;
@@ -45,7 +41,7 @@ public class TriggerWidget {
         return this;
     }
 
-    public TriggerWidget extraConsumer(final Consumer<String> consumer) {
+    public TriggerWidget extraConsumer(@Nonnull final Consumer<String> consumer) {
         this.consumer = consumer;
         return this;
     }

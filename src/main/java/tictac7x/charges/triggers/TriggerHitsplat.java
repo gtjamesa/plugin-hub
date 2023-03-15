@@ -7,8 +7,10 @@ import javax.annotation.Nullable;
 public class TriggerHitsplat {
     public final int hitsplat_id;
     public final int discharges;
+
     public boolean self;
     public boolean equipped;
+
     @Nullable public int[] animations;
 
     public TriggerHitsplat(final int discharges) {

@@ -6,28 +6,17 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 public class TriggerChatMessage {
-    @Nonnull
-    public final Pattern message;
-
-    @Nullable
-    public Consumer<String> consumer;
-
-    @Nullable
-    public Integer fixed_charges;
-
-    @Nullable
-    public Integer decrease_charges;
-
-    @Nullable
-    public Integer increase_charges;
+    @Nonnull public final Pattern message;
 
     public boolean menu_target;
-
     public boolean equipped;
-
     public boolean inventory_same;
-
     public boolean inventory_count_same;
+
+    @Nullable public Consumer<String> consumer;
+    @Nullable public Integer fixed_charges;
+    @Nullable public Integer decrease_charges;
+    @Nullable public Integer increase_charges;
 
     public TriggerChatMessage(@Nonnull final String message) {
         this.message = Pattern.compile(message);

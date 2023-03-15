@@ -5,8 +5,7 @@ import javax.annotation.Nullable;
 public class TriggerItem {
     public final int item_id;
 
-    @Nullable
-    public Integer charges;
+    @Nullable public Integer charges;
 
     public TriggerItem(final int item_id) {
         this.item_id = item_id;

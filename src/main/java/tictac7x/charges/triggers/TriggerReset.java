@@ -4,8 +4,8 @@ import javax.annotation.Nullable;
 
 public class TriggerReset {
     public final int charges;
-    @Nullable
-    public Integer item_id;
+
+    @Nullable public Integer item_id;
 
     public TriggerReset(final int charges) {
         this.charges = charges;

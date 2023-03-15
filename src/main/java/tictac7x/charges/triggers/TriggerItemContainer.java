@@ -5,16 +5,11 @@ import javax.annotation.Nullable;
 public class TriggerItemContainer {
     public final int inventory_id;
 
-    @Nullable
-    public String menu_target;
-
-    @Nullable
-    public String menu_option;
-
-    @Nullable
-    public Integer fixed_charges;
-
     public boolean increase_by_difference;
+
+    @Nullable public String menu_target;
+    @Nullable public String menu_option;
+    @Nullable public Integer fixed_charges;
 
     public TriggerItemContainer(final int inventory_id) {
         this.inventory_id = inventory_id;

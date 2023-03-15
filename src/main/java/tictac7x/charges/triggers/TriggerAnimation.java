@@ -1,14 +1,17 @@
 package tictac7x.charges.triggers;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TriggerAnimation {
     public final int animation_id;
+
     public int charges;
     public boolean decrease_charges;
     public boolean equipped;
-    @Nullable public int[] unallowed_items;
     public boolean menu_target;
+
+    @Nullable public int[] unallowed_items;
     @Nullable public String menu_option;
 
     public TriggerAnimation(final int animation_id) {
@@ -27,11 +30,6 @@ public class TriggerAnimation {
         return this;
     }
 
-    public TriggerAnimation unallowedItems(final int[] unallowed_items) {
-        this.unallowed_items = unallowed_items;
-        return this;
-    }
-
     public TriggerAnimation equipped() {
         this.equipped = true;
         return this;
@@ -42,7 +40,12 @@ public class TriggerAnimation {
         return this;
     }
 
-    public TriggerAnimation onMenuOption(final String menu_option) {
+    public TriggerAnimation unallowedItems(@Nonnull final int[] unallowed_items) {
+        this.unallowed_items = unallowed_items;
+        return this;
+    }
+
+    public TriggerAnimation onMenuOption(@Nonnull final String menu_option) {
         this.menu_option = menu_option;
         return this;
     }

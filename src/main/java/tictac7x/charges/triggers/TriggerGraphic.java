@@ -4,9 +4,11 @@ import javax.annotation.Nullable;
 
 public class TriggerGraphic {
     public final int graphic_id;
+
     public int charges;
     public boolean decrease_charges;
     public boolean equipped;
+
     @Nullable public int[] unallowed_items;
     @Nullable public String menu_option;
 

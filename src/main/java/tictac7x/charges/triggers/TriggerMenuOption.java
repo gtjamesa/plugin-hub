@@ -4,11 +4,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TriggerMenuOption {
-    @Nonnull
-    public final String option;
+    @Nonnull public final String option;
 
-    @Nullable
-    public Integer fixed_charges;
+    @Nullable public Integer fixed_charges;
 
     public TriggerMenuOption(@Nonnull final String option) {
         this.option = option;
