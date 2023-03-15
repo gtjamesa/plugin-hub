@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.2.4
+# Item Charges Improved - v0.2.5
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
@@ -26,9 +26,11 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Trident of the sea
 
 ### Shields
+- [x] Book of the Dead
 - [x] Chronicle
 - [x] Crystal shield
 - [x] Falador shield
+- [x] Kharedst's Memoirs
 
 ### Jewelery
 - [x] Bracelet of slaughter
@@ -42,5 +44,6 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Ash sanctifier
 - [x] Bonecrusher
 - [x] Bottomless compost bucket
+- [x] Fish barrel
 - [x] Gricoller's can
 - [x] Soul bearer

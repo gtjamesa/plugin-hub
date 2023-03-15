@@ -84,14 +84,41 @@ import java.util.Arrays;
 @PluginDescriptor(
 	name = "Item Charges Improved",
 	description = "Show charges of various items",
-	tags = { "charges" }
+	tags = {
+		"charges",
+		"barrows",
+		"bracelet",
+		"ring",
+		"xeric",
+		"talisman",
+		"book",
+		"chronicle",
+		"shield",
+		"ash",
+		"bone",
+		"bottomless",
+		"bucket",
+		"fish",
+		"gricoller",
+		"can",
+		"soul",
+		"arclight",
+		"bryophyta",
+		"staff",
+		"iban",
+		"pharaoh",
+		"sceptre",
+		"skull",
+		"sanguinesti",
+		"trident"
+	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.2.4";
+	private final String plugin_version = "v0.2.5";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Sanguinesti staff added<br>" +
-		"<colHIGHLIGHT>* Ring of suffering added";
+		"<colHIGHLIGHT>* Kharedst's Memoirs / Book of the Dead added<br>" +
+		"<colHIGHLIGHT>* Fish barrel added";
 
 	private final int VARBIT_MINUTES = 8354;
 
