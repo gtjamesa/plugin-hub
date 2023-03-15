@@ -2,11 +2,15 @@ package tictac7x.charges;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
+import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
+import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
@@ -19,11 +23,22 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.triggers.*;
+import tictac7x.charges.triggers.TriggerAnimation;
+import tictac7x.charges.triggers.TriggerChatMessage;
+import tictac7x.charges.triggers.TriggerGraphic;
+import tictac7x.charges.triggers.TriggerHitsplat;
+import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.triggers.TriggerItemContainer;
+import tictac7x.charges.triggers.TriggerMenuOption;
+import tictac7x.charges.triggers.TriggerReset;
+import tictac7x.charges.triggers.TriggerWidget;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,9 +53,9 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ChatMessageManager chat_messages;
     protected final ChargesImprovedConfig config;
 
-    @Nullable
-    public ItemContainer inventory;
+    @Nullable public ItemContainer inventory;
     @Nullable protected ItemContainer equipment;
+    @Nullable private Item[] inventory_items;
 
     @Nullable protected String config_key;
     @Nullable protected String[] extra_config_keys;
@@ -51,13 +66,13 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerItem[] triggers_items;
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected TriggerReset[] triggers_resets;
+    protected TriggerItemContainer[] triggers_item_containers = new TriggerItemContainer[]{};
     protected TriggerMenuOption[] triggers_menu_options = new TriggerMenuOption[]{};
 
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean in_equipment;
     private boolean in_inventory;
-    @Nullable String menu_option;
-    @Nullable String menu_target;
+    private List<String[]> menu_entries = new ArrayList<>();
     private int animation = -1;
     private int graphic = -1;
     protected int charges = -1;
@@ -66,6 +81,8 @@ public class ChargedItemInfoBox extends InfoBox {
     private String tooltip;
     private boolean render = false;
     public boolean zero_charges_is_positive = false;
+    private int gametick = 0;
+    private int gametick_before = 0;
 
     public ChargedItemInfoBox(
         final ChargesItem infobox_id,
@@ -130,10 +147,62 @@ public class ChargedItemInfoBox extends InfoBox {
         return this.charges;
     }
 
-    public void onItemContainersChanged(@Nonnull final ItemContainer inventory, @Nonnull final ItemContainer equipment) {
+    public void onItemContainersChanged(final ItemContainerChanged event) {
+        if (event.getItemContainer() == null) return;
+
+        // Find items difference before items are overridden.
+        int items_difference = 0;
+        if (event.getItemContainer().getId() == InventoryID.INVENTORY.getId() && this.inventory_items != null) {
+            items_difference = itemsDifference(this.inventory_items, event.getItemContainer().getItems());
+        }
+
+        // Update inventory reference.
+        if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
+            this.inventory = event.getItemContainer();
+            this.inventory_items = this.inventory.getItems();
+        }
+
+        for (final TriggerItemContainer trigger_item_container : this.triggers_item_containers) {
+            // Item container is wrong.
+            if (trigger_item_container.inventory_id != event.getContainerId()) continue;
+
+            // Menu target check.
+            if (
+                trigger_item_container.menu_target != null &&
+                this.menu_entries.stream().noneMatch(entry -> entry[0].equals(trigger_item_container.menu_target))
+            ) continue;
+
+            // Menu option check.
+            if (
+                trigger_item_container.menu_option != null &&
+                this.menu_entries.stream().noneMatch(entry -> entry[1].equals(trigger_item_container.menu_option))
+            ) continue;
+
+            // Fixed charges.
+            if (trigger_item_container.fixed_charges != null) {
+                this.setCharges(trigger_item_container.fixed_charges);
+                break;
+            }
+
+            // Increase by difference of amount of items.
+            if (trigger_item_container.increase_by_difference) {
+                this.increaseCharges(items_difference);
+                break;
+            }
+
+            // Charges dynamically based on the items of the item container.
+            if (event.getItemContainer() != null) {
+                this.setCharges(event.getItemContainer().count());
+                break;
+            }
+        }
+
         // Save inventory and equipment item containers for other uses.
-        this.inventory = inventory;
-        this.equipment = equipment;
+        if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
+            this.inventory = event.getItemContainer();
+        } else if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
+            this.equipment = event.getItemContainer();
+        }
 
         // No trigger items to detect charges.
         if (triggers_items == null) return;
@@ -145,8 +214,8 @@ public class ChargedItemInfoBox extends InfoBox {
 
         for (final TriggerItem trigger_item : triggers_items) {
             // Find out if item is equipped.
-            final boolean in_equipment_item = equipment.contains(trigger_item.item_id);
-            final boolean in_inventory_item = inventory.contains(trigger_item.item_id);
+            final boolean in_equipment_item = this.equipment != null && equipment.contains(trigger_item.item_id);
+            final boolean in_inventory_item = this.inventory != null && inventory.contains(trigger_item.item_id);
 
             // Find out if infobox should be rendered.
             if (in_inventory_item || in_equipment_item) {
@@ -167,8 +236,8 @@ public class ChargedItemInfoBox extends InfoBox {
             // Find out charges for the item.
             if (trigger_item.charges != null) {
                 if (charges == null) charges = 0;
-                charges += inventory.count(trigger_item.item_id) * trigger_item.charges;
-                charges += equipment.count(trigger_item.item_id) * trigger_item.charges;
+                charges += this.inventory != null ? this.inventory.count(trigger_item.item_id) * trigger_item.charges : 0;
+                charges += this.equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.charges : 0;
             }
         }
 
@@ -194,21 +263,20 @@ public class ChargedItemInfoBox extends InfoBox {
         final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
-            // Menu target check.
-            if (
-                chat_message.menu_target &&
-                (this.menu_target == null ||
-                (!this.menu_target.equals(items.getItemComposition(this.item_id).getName())))
-            ) continue;
-
-            // Item needs to be equipped but isn't.
-            if (chat_message.equipped && !this.in_equipment) continue;
-
             final Pattern regex = chat_message.message;
             final Matcher matcher = regex.matcher(message);
 
             // Message does not match the pattern.
             if (!matcher.find()) continue;
+
+            // Menu target check.
+            if (
+                chat_message.menu_target &&
+                this.menu_entries.stream().noneMatch(entry -> entry[0].equals(items.getItemComposition(this.item_id).getName()))
+            ) continue;
+
+            // Item needs to be equipped but isn't.
+            if (chat_message.equipped && !this.in_equipment) continue;
 
             // Increase charges by fixed amount.
             if (chat_message.increase_charges != null) {
@@ -331,10 +399,16 @@ public class ChargedItemInfoBox extends InfoBox {
             }
 
             // Menu target check.
-            if (trigger_animation.menu_target && (this.menu_target == null || !this.menu_target.equals(items.getItemComposition(this.item_id).getName()))) continue;
+            if (
+                trigger_animation.menu_target &&
+                this.menu_entries.stream().noneMatch(entry -> entry[0].equals(items.getItemComposition(this.item_id).getName()))
+            ) continue;
 
             // Menu option check.
-            if (trigger_animation.menu_option != null && (this.menu_option == null || !this.menu_option.contains(trigger_animation.menu_option))) continue;
+            if (
+                trigger_animation.menu_option != null &&
+                this.menu_entries.stream().noneMatch(entry -> entry[1].equals(trigger_animation.menu_option))
+            ) continue;
 
             // Valid trigger, modify charges.
             if (trigger_animation.decrease_charges) {
@@ -385,7 +459,7 @@ public class ChargedItemInfoBox extends InfoBox {
             }
 
             // Menu option check.
-            if (trigger_graphic.menu_option != null && (this.menu_option == null || !this.menu_option.equals(trigger_graphic.menu_option))) continue;
+            if (trigger_graphic.menu_option != null && (!this.menu_entries.contains(trigger_graphic.menu_option))) continue;
 
             // Valid trigger, modify charges.
             if (trigger_graphic.decrease_charges) {
@@ -455,10 +529,13 @@ public class ChargedItemInfoBox extends InfoBox {
             return;
         }
 
+        // Gametick changed, clear previous menu entries.
+        if (gametick != gametick_before) {
+            this.menu_entries.clear();
+        }
 
         // Save menu option and target for other triggers to use.
-        this.menu_option = menu_option;
-        this.menu_target = menu_target;
+        this.menu_entries.add(new String[]{menu_target, menu_option});
 
         for (final TriggerMenuOption trigger_menu_option : this.triggers_menu_options) {
             if (!trigger_menu_option.option.equals(menu_option)) continue;
@@ -466,16 +543,8 @@ public class ChargedItemInfoBox extends InfoBox {
             // Fixed charges.
             if (trigger_menu_option.fixed_charges != null) {
                 this.setCharges(trigger_menu_option.fixed_charges);
-
-            // Custom consumer.
-            } else if (trigger_menu_option.consumer != null) {
-                trigger_menu_option.consumer.accept(menu_option);
-
-            // Trigger not used.
-            } else continue;
-
-            // Menu option trigger used.
-            return;
+                break;
+            }
         }
     }
 
@@ -558,6 +627,18 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     protected void onChargesUpdated() {}
+
+    public void onGameTick(final GameTick gametick) {
+        this.gametick++;
+    }
+
+    private int itemsDifference(final Item[] items_before, final Item[] items_after) {
+        final int items_before_count = (int) Arrays.stream(items_before).filter(item -> item.getId() != -1).count();
+        final int items_after_count = (int) Arrays.stream(items_after).filter(item -> item.getId() != -1).count();
+
+        return Math.abs(items_before_count - items_after_count);
+
+    }
 }
 
 

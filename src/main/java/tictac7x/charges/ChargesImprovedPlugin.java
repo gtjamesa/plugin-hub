@@ -5,11 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.InventoryID;
-import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
@@ -206,22 +205,25 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
-		if (
-			event.getContainerId() == InventoryID.INVENTORY.getId() ||
-			event.getContainerId() == InventoryID.EQUIPMENT.getId()
-		) {
-			final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
-			final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
-
-			if (inventory != null && equipment != null) {
-				Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onItemContainersChanged(inventory, equipment));
-
-				// We need to know about items to show messages about resetting charges.
-				if (!config.getResetDate().equals(date)) {
-					resetCharges(date);
-				}
-			}
+		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
+			infobox.onItemContainersChanged(event);
 		}
+//		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onItemContainersChanged(inventory, equipment));
+//		if (
+//			event.getContainerId() == InventoryID.INVENTORY.getId() ||
+//			event.getContainerId() == InventoryID.EQUIPMENT.getId()
+//		) {
+//			final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
+//			final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
+//
+//			if (inventory != null && equipment != null) {
+//
+//				// We need to know about items to show messages about resetting charges.
+//				if (!config.getResetDate().equals(date)) {
+//					resetCharges(date);
+//				}
+//			}
+//		}
 	}
 
 	@Subscribe
@@ -318,6 +320,13 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
 			final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 			resetCharges(date);
+		}
+	}
+
+	@Subscribe
+	public void onGameTick(final GameTick gametick) {
+		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
+			infobox.onGameTick(gametick);
 		}
 	}
 

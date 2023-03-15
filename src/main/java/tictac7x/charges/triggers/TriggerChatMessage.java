@@ -25,6 +25,10 @@ public class TriggerChatMessage {
 
     public boolean equipped;
 
+    public boolean inventory_same;
+
+    public boolean inventory_count_same;
+
     public TriggerChatMessage(@Nonnull final String message) {
         this.message = Pattern.compile(message);
     }
@@ -51,6 +55,16 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage equipped() {
         this.equipped = true;
+        return this;
+    }
+
+    public TriggerChatMessage inventorySame() {
+        this.inventory_same = true;
+        return this;
+    }
+
+    public TriggerChatMessage inventoryCountSame() {
+        this.inventory_count_same = true;
         return this;
     }
 
