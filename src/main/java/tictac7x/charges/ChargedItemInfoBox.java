@@ -533,8 +533,9 @@ public class ChargedItemInfoBox extends InfoBox {
             return;
         }
 
-        // Gametick changed, clear previous menu entries.
-        if (gametick != gametick_before) {
+        // Gametick changed, clear previous menu entries since they are no longer valid.
+        if (gametick > gametick_before + 1) {
+            gametick = 0; gametick_before = 0;
             menu_entries.clear();
         }
 
