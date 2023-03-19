@@ -35,6 +35,7 @@ public class W_BryophytasStaff extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("The nature staff has (?<charges>.+) charges?."),
+            new TriggerChatMessage("Your staff saved you a nature rune.").increaseCharges(1),
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("Your Bryophyta's staff now has (?<charges>.+) charges?.")
