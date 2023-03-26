@@ -314,9 +314,9 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	public static String getChargesMinified(final int charges) {
 		if (charges == -1) return "?";
-		if (charges > 1000000) return charges / 1000000 + "M";
-		if (charges > 1000) return charges / 1000 + "K";
-		return String.valueOf(charges);
+		if (charges < 1000) return String.valueOf(charges);
+		if (charges >= 1000000) return charges / 1000000 + "M";
+		return charges / 1000 + "." + (charges % 1000 / 100) + "K";
 	}
 }
 
