@@ -26,7 +26,6 @@ public class BarrowsGuthansWarspear extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_WARSPEAR).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_WARSPEAR_100).fixedCharges(100),

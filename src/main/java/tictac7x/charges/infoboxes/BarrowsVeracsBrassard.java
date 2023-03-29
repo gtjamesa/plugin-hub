@@ -26,7 +26,6 @@ public class BarrowsVeracsBrassard extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_BRASSARD).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_BRASSARD_100).fixedCharges(100),

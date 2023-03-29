@@ -25,7 +25,6 @@ public class J_SlayerRing extends ChargedItemInfoBox {
         final Plugin plugin
     ) {
         super(ChargesItem.SLAYER_RING, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.SLAYER_RING_1).fixedCharges(1),
             new TriggerItem(ItemID.SLAYER_RING_2).fixedCharges(2),

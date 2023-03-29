@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.2.5
+# Item Charges Improved - v0.2.6
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
@@ -23,14 +23,13 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Pharaoh's sceptre
 - [x] Sanguinesti Staff
 - [x] Skull sceptre
-- [x] Trident of the sea
+- [x] Trident of the seas / swamp
 
 ### Shields
-- [x] Book of the Dead
 - [x] Chronicle
 - [x] Crystal shield
 - [x] Falador shield
-- [x] Kharedst's Memoirs
+- [x] Kharedst's Memoirs / Book of the Dead
 
 ### Jewelery
 - [x] Bracelet of slaughter

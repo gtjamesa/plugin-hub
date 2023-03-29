@@ -22,7 +22,7 @@ public interface ChargesImprovedConfig extends Config {
     String arclight = "arclight";
     String ash_sanctifier = "ash_sanctifier";
     String bone_crusher = "bone_crusher";
-    String book_of_the_dead = "book_of_the_dead";
+    String kharedsts_memoirs = "kharedsts_memoirs";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
     String bottomless_compost_bucket_type = "bottomless_compost_bucket_type";
     String bracelet_of_slaughter = "bracelet_of_slaughter";
@@ -145,11 +145,11 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getBoneCrusherCharges() { return -1; }
 
         @ConfigItem(
-            keyName = book_of_the_dead,
-            name = "Book of the dead",
-            description = "Book of the dead charges",
+            keyName = kharedsts_memoirs,
+            name = "Kharedst's memoirs",
+            description = "Kharedst's memoirs charges",
             section = debug
-        ) default int getBookOfTheDeadCharges() { return -1; }
+        ) default int getKharedstsMemoirsCharges() { return -1; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket,

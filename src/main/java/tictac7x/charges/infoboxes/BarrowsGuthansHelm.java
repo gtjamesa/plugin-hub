@@ -26,7 +26,6 @@ public class BarrowsGuthansHelm extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.GUTHANS_HELM, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_HELM).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_HELM_100).fixedCharges(100),

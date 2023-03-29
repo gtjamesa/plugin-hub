@@ -14,13 +14,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChargedItemsOverlay extends WidgetItemOverlay {
-    private final ItemManager items;
     private final ChargesImprovedConfig config;
     private final ChargedItemInfoBox[] infoboxes_charged_items;
     private final Pattern charges_in_name = Pattern.compile(".*?\\(?(?<charges>\\d+)\\)?");
 
-    public ChargedItemsOverlay(final ItemManager items, final ChargesImprovedConfig config, final ChargedItemInfoBox[] infoboxes_charged_items) {
-        this.items = items;
+    public ChargedItemsOverlay(final ChargesImprovedConfig config, final ChargedItemInfoBox[] infoboxes_charged_items) {
         this.config = config;
         this.infoboxes_charged_items = infoboxes_charged_items;
         showOnInventory();
@@ -32,39 +30,34 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
         for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
             if (infobox.triggers_items == null) continue;
-            boolean matches = false;
 
-            for (final TriggerItem trigger_item : infobox.triggers_items) {
-                if (trigger_item.item_id == item_id) {
-                    matches = true;
+            TriggerItem trigger_item = null;
+            for (final TriggerItem trigger : infobox.triggers_items) {
+                if (trigger.item_id == item_id) {
+                    trigger_item = trigger;
                     break;
                 }
             }
+            if (trigger_item == null) continue;
 
-            if (matches) {
-                // Charges from infobox.
-                String charges = ChargesImprovedPlugin.getChargesMinified(infobox.getCharges());
-                graphics.setFont(FontManager.getRunescapeSmallFont());
+            // Charges from infobox.
+            String charges = ChargesImprovedPlugin.getChargesMinified(infobox.getCharges());
+            graphics.setFont(FontManager.getRunescapeSmallFont());
 
-                // Charges from name (override the infobox).
-                if (infobox.charges_from_name) {
-                    final String name = items.getItemComposition(item_id).getName();
-                    final Matcher matcher = charges_in_name.matcher(name);
-                    if (matcher.find()) {
-                        charges = ChargesImprovedPlugin.getChargesMinified(Integer.parseInt(matcher.group("charges")));
-                    }
-                }
-
-                final Rectangle bounds = item_widget.getCanvasBounds();
-                final TextComponent charges_component = new TextComponent();
-
-                charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
-                charges_component.setColor(charges.equals("?") ? config.getColorUnknown() : charges.equals("0") && !infobox.zero_charges_is_positive ? config.getColorEmpty() : config.getColorDefault());
-                charges_component.setText(charges);
-                charges_component.render(graphics);
-
-                return;
+            // Charges from name (override the infobox).
+            if (trigger_item.fixed_charges != null) {
+                charges = ChargesImprovedPlugin.getChargesMinified(trigger_item.fixed_charges);
             }
+
+            final Rectangle bounds = item_widget.getCanvasBounds();
+            final TextComponent charges_component = new TextComponent();
+
+            charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
+            charges_component.setColor(charges.equals("?") ? config.getColorUnknown() : charges.equals("0") && !infobox.zero_charges_is_positive ? config.getColorEmpty() : config.getColorDefault());
+            charges_component.setText(charges);
+            charges_component.render(graphics);
+
+            return;
         }
     }
 }

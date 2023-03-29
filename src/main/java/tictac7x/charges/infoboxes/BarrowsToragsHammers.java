@@ -26,7 +26,6 @@ public class BarrowsToragsHammers extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.TORAGS_HAMMERS, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_HAMMERS).fixedCharges(100),
             new TriggerItem(ItemID.TORAGS_HAMMERS_100).fixedCharges(100),

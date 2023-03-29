@@ -32,7 +32,7 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.UNCHARGED_TRIDENT),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS),
-            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL),
+            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL).fixedCharges(2500),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP_E),
         };

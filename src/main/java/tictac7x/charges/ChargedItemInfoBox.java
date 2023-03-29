@@ -76,7 +76,6 @@ public class ChargedItemInfoBox extends InfoBox {
     private int animation = -1;
     private int graphic = -1;
     protected int charges = -1;
-    protected boolean charges_from_name = false;
 
     private String tooltip;
     private boolean render = false;
@@ -236,10 +235,10 @@ public class ChargedItemInfoBox extends InfoBox {
             if (!in_equipment_item && !in_inventory_item) continue;
 
             // Find out charges for the item.
-            if (trigger_item.charges != null) {
+            if (trigger_item.fixed_charges != null) {
                 if (charges == null) charges = 0;
-                charges += inventory != null ? inventory.count(trigger_item.item_id) * trigger_item.charges : 0;
-                charges += equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.charges : 0;
+                charges += inventory != null ? inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
             }
         }
 

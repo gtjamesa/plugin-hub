@@ -70,11 +70,10 @@ import java.util.Arrays;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.2.5";
+	private final String plugin_version = "v0.2.6";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Kharedst's Memoirs / Book of the Dead added<br>" +
-		"<colHIGHLIGHT>* Fish barrel added";
+		"<colHIGHLIGHT>* Trident of the swamp added";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -125,7 +124,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			new S_BookOfTheDead(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -174,7 +173,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 		};
-		overlay_charged_items = new ChargedItemsOverlay(items, config, infoboxes_charged_items);
+		overlay_charged_items = new ChargedItemsOverlay(config, infoboxes_charged_items);
 
 		overlays.add(overlay_charged_items);
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));

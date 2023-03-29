@@ -26,7 +26,6 @@ public class BarrowsAhrimsRobetop extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.AHRIMS_ROBETOP, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBETOP).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBETOP_100).fixedCharges(100),

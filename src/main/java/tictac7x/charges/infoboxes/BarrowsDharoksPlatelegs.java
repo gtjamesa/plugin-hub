@@ -26,7 +26,6 @@ public class BarrowsDharoksPlatelegs extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.DHAROKS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.DHAROKS_PLATELEGS).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_PLATELEGS_100).fixedCharges(100),

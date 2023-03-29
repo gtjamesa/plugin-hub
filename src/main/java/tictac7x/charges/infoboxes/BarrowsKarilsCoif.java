@@ -26,7 +26,6 @@ public class BarrowsKarilsCoif extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_COIF, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_COIF).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_COIF_100).fixedCharges(100),

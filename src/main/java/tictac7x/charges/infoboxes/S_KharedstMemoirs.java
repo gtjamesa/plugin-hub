@@ -15,8 +15,8 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
-public class S_BookOfTheDead extends ChargedItemInfoBox {
-    public S_BookOfTheDead(
+public class S_KharedstMemoirs extends ChargedItemInfoBox {
+    public S_KharedstMemoirs(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -26,8 +26,8 @@ public class S_BookOfTheDead extends ChargedItemInfoBox {
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.BOOK_OF_THE_DEAD, ItemID.BOOK_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.config_key = ChargesImprovedConfig.book_of_the_dead;
+        super(ChargesItem.KHAREDSTS_MEMOIRS, ItemID.KHAREDSTS_MEMOIRS, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        this.config_key = ChargesImprovedConfig.kharedsts_memoirs;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KHAREDSTS_MEMOIRS),
             new TriggerItem(ItemID.BOOK_OF_THE_DEAD)

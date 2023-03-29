@@ -26,7 +26,6 @@ public class BarrowsDharoksGreataxe extends ChargedItemInfoBox {
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.DHAROKS_GREATAXE, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.charges = 100;
-        this.charges_from_name = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.DHAROKS_GREATAXE).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_GREATAXE_100).fixedCharges(100),
