@@ -315,7 +315,11 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (charges == -1) return "?";
 		if (charges < 1000) return String.valueOf(charges);
 		if (charges >= 1000000) return charges / 1000000 + "M";
-		return charges / 1000 + "." + (charges < 10000 ? charges % 1000 / 100 : "") + "K";
+
+		final int thousands = charges / 1000;
+		final int hundreds = charges % 1000 / 100;
+
+		return thousands + (thousands < 10 && hundreds > 0 ? "." + hundreds : "") + "K";
 	}
 }
 

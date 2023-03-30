@@ -30,24 +30,24 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
         super(ChargesItem.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.trident_of_the_seas;
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.UNCHARGED_TRIDENT),
+            new TriggerItem(ItemID.UNCHARGED_TRIDENT).fixedCharges(0),
+            new TriggerItem(ItemID.UNCHARGED_TRIDENT_E).fixedCharges(0),
+            new TriggerItem(ItemID.UNCHARGED_TOXIC_TRIDENT).fixedCharges(0),
+            new TriggerItem(ItemID.UNCHARGED_TOXIC_TRIDENT_E).fixedCharges(0),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL).fixedCharges(2500),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP_E),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Trident of the (seas|swamp) has one charge.").fixedCharges(1),
-            new TriggerChatMessage("Your Trident of the (seas|swamp)( only)?( \\(full\\))? has (?<charges>.+) charges( left)?."),
-            new TriggerChatMessage("Your Trident of the (seas|swamp) has run out of charges.").fixedCharges(0),
-            new TriggerChatMessage("The Uncharged( toxic)? trident has no charges left. You need death runes, chaos runes, fire runes and (coins|Zulrah's scales) to charge it.").fixedCharges(0),
-            new TriggerChatMessage("Your Uncharged( toxic)? trident has no charges.").fixedCharges(0)
+            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
+            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))?( only)? has (?<charges>.+) charges( left)?."),
         };
         this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(1167).decreaseCharges(1).equipped()
         };
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You add .* charges? to the Trident of the (seas|swamp)( \\(full\\))?. New total: (?<charges>.+)")
+            new TriggerWidget("You add .* charges? to the Trident of the (seas|swamp)( \\((full|e)\\))?. New total: (?<charges>.+)")
         };
     }
 }
