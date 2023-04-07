@@ -28,6 +28,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Shields
 - [x] Chronicle
 - [x] Crystal shield
+- [x] Dragonfire shield / ward
 - [x] Falador shield
 - [x] Kharedst's Memoirs / Book of the Dead
 

@@ -128,6 +128,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -135,6 +136,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -312,6 +314,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	}
 
 	public static String getChargesMinified(final int charges) {
+		if (charges == -2) return "∞";
 		if (charges == -1) return "?";
 		if (charges < 1000) return String.valueOf(charges);
 		if (charges >= 1000000) return charges / 1000000 + "M";

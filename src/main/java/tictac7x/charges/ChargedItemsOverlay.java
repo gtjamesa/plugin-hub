@@ -42,6 +42,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
 
             // Charges from infobox.
             String charges = ChargesImprovedPlugin.getChargesMinified(infobox.getCharges());
+
             graphics.setFont(FontManager.getRunescapeSmallFont());
 
             // Charges from name (override the infobox).

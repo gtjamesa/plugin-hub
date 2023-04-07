@@ -42,6 +42,9 @@ public interface ChargesImprovedConfig extends Config {
     String soul_bearer = "soul_bearer";
     String trident_of_the_seas = "trident_of_the_seas";
     String xerics_talisman = "xerics_talisman";
+    String dragonfire_shield = "dragonfire_shield";
+    String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
+    String camulet = "camulet";
 
     @ConfigSection(
         name = "Colors",
@@ -283,4 +286,18 @@ public interface ChargesImprovedConfig extends Config {
             description = "Xeric's talisman charges",
             section = debug
         ) default int getXericsTalismanCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = dragonfire_shield,
+            name = "Dragonfire shield",
+            description = "Dragonfire shield charges",
+            section = debug
+        ) default int getDragonfireShieldCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = camulet,
+            name = "Camulet",
+            description = "Camulet charges",
+            section = debug
+        ) default int getCamuletCharges() { return -1; }
 }
