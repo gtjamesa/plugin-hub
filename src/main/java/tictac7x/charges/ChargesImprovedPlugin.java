@@ -70,10 +70,11 @@ import java.util.Arrays;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.2.6";
+	private final String plugin_version = "v0.2.7";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Trident of the swamp added";
+		"<colHIGHLIGHT>* Dragonfire shields added<br>" +
+		"<colHIGHLIGHT>* Circlet of water added<br>";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -116,6 +117,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Override
 	protected void startUp() {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
+			// Weapons
 			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -124,12 +126,14 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
+			// Shields
 			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
+			// Jewellery
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -138,6 +142,10 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
+			// Helms
+			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+
+			// Unwearables
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),

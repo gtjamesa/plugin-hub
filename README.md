@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.2.6
+# Item Charges Improved - v0.2.7
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
@@ -32,7 +32,10 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Falador shield
 - [x] Kharedst's Memoirs / Book of the Dead
 
-### Jewelery
+### Helms
+- [x] Circlet of water
+
+### Jewellery
 - [x] Bracelet of slaughter
 - [x] Celestial Ring
 - [x] Expeditious bracelet
@@ -40,7 +43,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Slayer ring
 - [x] Xeric's talisman
 
-### Utilities
+### Unwearables
 - [x] Ash sanctifier
 - [x] Bonecrusher
 - [x] Bottomless compost bucket

@@ -46,6 +46,8 @@ public interface ChargesImprovedConfig extends Config {
     String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
     String camulet = "camulet";
 
+    String circlet_of_water = "circlet_of_water";
+
     @ConfigSection(
         name = "Colors",
         description = "Colors of item overlays",
@@ -300,4 +302,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Camulet charges",
             section = debug
         ) default int getCamuletCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = circlet_of_water,
+            name = "Circlet of water",
+            description = "Circlet of water charges",
+            section = debug
+        ) default int getCircletOfWaterCharges() { return -1; }
 }
