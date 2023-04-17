@@ -50,3 +50,4 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Fish barrel
 - [x] Gricoller's can
 - [x] Soul bearer
+- [x] Teleport crystal

@@ -16,7 +16,6 @@ import java.util.regex.Pattern;
 public class ChargedItemsOverlay extends WidgetItemOverlay {
     private final ChargesImprovedConfig config;
     private final ChargedItemInfoBox[] infoboxes_charged_items;
-    private final Pattern charges_in_name = Pattern.compile(".*?\\(?(?<charges>\\d+)\\)?");
 
     public ChargedItemsOverlay(final ChargesImprovedConfig config, final ChargedItemInfoBox[] infoboxes_charged_items) {
         this.config = config;
@@ -28,8 +27,10 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
 
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
+        if (!config.showItemOverlays()) return;
+
         for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-            if (infobox.triggers_items == null) continue;
+            if (infobox.triggers_items == null || config.getHiddenItemOverlays().contains(infobox.infobox_id)) continue;
 
             TriggerItem trigger_item = null;
             for (final TriggerItem trigger : infobox.triggers_items) {

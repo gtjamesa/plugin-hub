@@ -36,6 +36,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+
+
 @Slf4j
 @PluginDescriptor(
 	name = "Item Charges Improved",
@@ -66,7 +68,10 @@ import java.util.Arrays;
 		"sceptre",
 		"skull",
 		"sanguinesti",
-		"trident"
+		"trident",
+		"dragonfire",
+		"circlet",
+		"camulet"
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
@@ -74,9 +79,14 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Dragonfire shields added<br>" +
-		"<colHIGHLIGHT>* Circlet of water added<br>";
+		"<colHIGHLIGHT>* Circlet of water added<br>" +
+		"<colHIGHLIGHT>* Teleport crystals added<br>" +
+		"<colHIGHLIGHT>* Able to hide item overlays for specific items";
 
 	private final int VARBIT_MINUTES = 8354;
+
+	public static final int CHARGES_UNKNOWN = -1;
+	public static final int CHARGES_UNLIMITED = -2;
 
 	@Inject
 	private Client client;
@@ -152,6 +162,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -322,8 +333,8 @@ public class ChargesImprovedPlugin extends Plugin {
 	}
 
 	public static String getChargesMinified(final int charges) {
-		if (charges == -2) return "∞";
-		if (charges == -1) return "?";
+		if (charges == CHARGES_UNLIMITED) return "∞";
+		if (charges == CHARGES_UNKNOWN) return "?";
 		if (charges < 1000) return String.valueOf(charges);
 		if (charges >= 1000000) return charges / 1000000 + "M";
 

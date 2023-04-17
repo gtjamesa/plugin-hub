@@ -43,7 +43,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChargedItemInfoBox extends InfoBox {
-    private final ChargesItem infobox_id;
+    public final ChargesItem infobox_id;
     public int item_id;
     protected final Client client;
     protected final ClientThread client_thread;
@@ -75,7 +75,7 @@ public class ChargedItemInfoBox extends InfoBox {
     private final List<String[]> menu_entries = new ArrayList<>();
     private int animation = -1;
     private int graphic = -1;
-    protected int charges = -1;
+    protected int charges = ChargesImprovedPlugin.CHARGES_UNKNOWN;
 
     private String tooltip;
     private boolean render = false;
@@ -370,7 +370,7 @@ public class ChargedItemInfoBox extends InfoBox {
         animation = event.getActor().getAnimation();
 
         // No animations to check.
-        if (inventory == null || equipment == null || triggers_animations == null || charges == -1 || triggers_items == null) return;
+        if (inventory == null || equipment == null || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerAnimation trigger_animation : triggers_animations) {
@@ -430,7 +430,7 @@ public class ChargedItemInfoBox extends InfoBox {
         graphic = event.getActor().getGraphic();
 
         // No animations to check.
-        if (inventory == null || equipment == null || triggers_graphics == null || charges == -1 || triggers_items == null) return;
+        if (inventory == null || equipment == null || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerGraphic trigger_graphic : triggers_graphics) {
@@ -605,7 +605,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void increaseCharges(final int charges) {
-        if (this.charges == -1) return;
+        if (this.charges < 0) return;
         setCharges(this.charges + charges);
     }
 
