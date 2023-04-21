@@ -1,6 +1,7 @@
 package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
+import net.runelite.api.GraphicID;
 import net.runelite.api.ItemID;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -41,7 +42,8 @@ public class W_BryophytasStaff extends ChargedItemInfoBox {
             new TriggerWidget("Your Bryophyta's staff now has (?<charges>.+) charges?.")
         };
         this.triggers_graphics = new TriggerGraphic[]{
-            new TriggerGraphic(113).decreaseCharges(1).equipped()
+            new TriggerGraphic(112).decreaseCharges(1).equipped(),
+            new TriggerGraphic(113).decreaseCharges(1).equipped(),
         };
     }
 }

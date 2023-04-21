@@ -246,11 +246,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onGraphicChanged(event));
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("GRAPHIC | " +
-//				"id: " + event.getActor().getGraphic()
-//			);
-//		}
+		if (event.getActor() == client.getLocalPlayer()) {
+			System.out.println("GRAPHIC | " +
+				"id: " + event.getActor().getGraphic()
+			);
+		}
 	}
 
 	@Subscribe
