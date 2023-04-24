@@ -163,6 +163,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -246,11 +247,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onGraphicChanged(event));
-		if (event.getActor() == client.getLocalPlayer()) {
-			System.out.println("GRAPHIC | " +
-				"id: " + event.getActor().getGraphic()
-			);
-		}
+//		if (event.getActor() == client.getLocalPlayer()) {
+//			System.out.println("GRAPHIC | " +
+//				"id: " + event.getActor().getGraphic()
+//			);
+//		}
 	}
 
 	@Subscribe

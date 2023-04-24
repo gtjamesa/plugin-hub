@@ -49,6 +49,7 @@ public interface ChargesImprovedConfig extends Config {
     String camulet = "camulet";
     String circlet_of_water = "circlet_of_water";
     String teleport_crystal = "teleport_crystal";
+    String waterskin = "waterskin";
 
     @ConfigSection(
         name = "Colors",
@@ -345,4 +346,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Teleport crystal charges",
             section = debug
         ) default int getTeleportCrystalCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = waterskin,
+            name = "Waterskin",
+            description = "Waterskin charges",
+            section = debug
+        ) default int getWaterskinCharges() { return -1; }
 }

@@ -30,4 +30,5 @@ public enum ChargesItem {
     TOXIC_STAFF_OF_THE_DEAD,
     TRIDENT_OF_THE_SEAS,
     XERICS_TALISMAN,
+    WATERSKIN,
 }
