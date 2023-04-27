@@ -151,6 +151,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			// Helms
 			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, config, this),

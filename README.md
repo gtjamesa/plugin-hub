@@ -36,6 +36,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Circlet of water
 
 ### Jewellery
+- [x] Bracelet of clay
 - [x] Bracelet of slaughter
 - [x] Celestial Ring
 - [x] Expeditious bracelet

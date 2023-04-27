@@ -1,9 +1,6 @@
 package tictac7x.charges;
 
-import net.runelite.client.config.Config;
-import net.runelite.client.config.ConfigGroup;
-import net.runelite.client.config.ConfigItem;
-import net.runelite.client.config.ConfigSection;
+import net.runelite.client.config.*;
 
 import java.awt.Color;
 import java.util.EnumSet;
@@ -50,6 +47,7 @@ public interface ChargesImprovedConfig extends Config {
     String circlet_of_water = "circlet_of_water";
     String teleport_crystal = "teleport_crystal";
     String waterskin = "waterskin";
+    String bracelet_of_clay = "bracelet_of_clay";
 
     @ConfigSection(
         name = "Colors",
@@ -57,6 +55,7 @@ public interface ChargesImprovedConfig extends Config {
         position = 1
     ) String colors = "colors";
 
+        @Alpha
         @ConfigItem(
             keyName = "colors_default",
             name = "Default",
@@ -65,6 +64,7 @@ public interface ChargesImprovedConfig extends Config {
             section = colors
         ) default Color getColorDefault() { return Color.white; }
 
+        @Alpha
         @ConfigItem(
             keyName = "colors_unknown",
             name = "Unknown",
@@ -73,6 +73,7 @@ public interface ChargesImprovedConfig extends Config {
             section = colors
         ) default Color getColorUnknown() { return Color.gray; }
 
+        @Alpha
         @ConfigItem(
             keyName = "colors_empty",
             name = "Empty",
@@ -353,4 +354,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Waterskin charges",
             section = debug
         ) default int getWaterskinCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = bracelet_of_clay,
+            name = "Bracelet of clay",
+            description = "Bracelet of clay charges",
+            section = debug
+        ) default int getBraceletOfClayCharges() { return -1; }
 }
