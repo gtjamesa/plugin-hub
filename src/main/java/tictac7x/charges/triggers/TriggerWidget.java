@@ -5,14 +5,19 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class TriggerWidget {
-    private final int WIDGET_DEFAULT_GROUP_ID = 193;
-    private final int WIDGET_DEFAULT_CHILD_ID = 2;
+    public static final int WIDGET_DEFAULT_GROUP_ID = 193;
+    public static final int WIDGET_DEFAULT_CHILD_ID = 2;
+
+    public static final int WIDGET_NPC_GROUP_ID = 231;
+    public static final int WIDGET_NPC_CHILD_ID = 6;
 
     @Nonnull public final String message;
 
     public int group_id;
     public int child_id;
     public Integer sub_child_id;
+
+    public boolean increase_dynamically;
 
     @Nullable public Consumer<String> consumer;
     @Nullable public Integer charges;
@@ -43,6 +48,11 @@ public class TriggerWidget {
 
     public TriggerWidget extraConsumer(@Nonnull final Consumer<String> consumer) {
         this.consumer = consumer;
+        return this;
+    }
+
+    public TriggerWidget increaseDynamically() {
+        this.increase_dynamically = true;
         return this;
     }
 }

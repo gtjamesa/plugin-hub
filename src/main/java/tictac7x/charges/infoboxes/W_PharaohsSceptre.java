@@ -14,6 +14,7 @@ import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_PharaohsSceptre extends ChargedItemInfoBox {
     public W_PharaohsSceptre(
@@ -52,6 +53,11 @@ public class W_PharaohsSceptre extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.").onItemClick()
+        };
+        this.triggers_widgets = new TriggerWidget[]{
+            new TriggerWidget("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way.").customWidget(TriggerWidget.WIDGET_NPC_GROUP_ID, TriggerWidget.WIDGET_NPC_CHILD_ID),
+            new TriggerWidget("Right, you already had (?<charges>.+) charges?, and I don't give discounts. That means .+ artefacts gives you .+ charges?. Now be on your way.").customWidget(TriggerWidget.WIDGET_NPC_GROUP_ID, TriggerWidget.WIDGET_NPC_CHILD_ID),
+            new TriggerWidget("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically().customWidget(TriggerWidget.WIDGET_NPC_GROUP_ID, TriggerWidget.WIDGET_NPC_CHILD_ID)
         };
         this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(2881).decreaseCharges(1)

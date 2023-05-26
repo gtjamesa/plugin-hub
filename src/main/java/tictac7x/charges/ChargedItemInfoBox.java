@@ -342,7 +342,14 @@ public class ChargedItemInfoBox extends InfoBox {
                     trigger_widget.consumer.accept(message);
                 // Charges amount is dynamic.
                 } else if (matcher.group("charges") != null) {
-                    setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "")));
+                    final int charges = Integer.parseInt(matcher.group("charges").replaceAll(",", ""));
+
+                    // Charges increased dynamically.
+                    if (trigger_widget.increase_dynamically) {
+                        increaseCharges(charges);
+                    } else {
+                        setCharges(charges);
+                    }
                 }
 
                 // Check extra matches groups.

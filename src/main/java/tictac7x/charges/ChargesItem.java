@@ -32,4 +32,5 @@ public enum ChargesItem {
     TRIDENT_OF_THE_SEAS,
     XERICS_TALISMAN,
     WATERSKIN,
+    OGRE_BELLOWS,
 }

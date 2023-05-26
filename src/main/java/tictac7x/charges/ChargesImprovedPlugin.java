@@ -75,13 +75,11 @@ import java.util.Arrays;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.2.7";
+	private final String plugin_version = "v0.2.8";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Dragonfire shields added<br>" +
-		"<colHIGHLIGHT>* Circlet of water added<br>" +
-		"<colHIGHLIGHT>* Teleport crystals added<br>" +
-		"<colHIGHLIGHT>* Able to hide item overlays for specific items";
+		"<colHIGHLIGHT>* Ogre Bellows added<br>" +
+		"<colHIGHLIGHT>* Pharaoh Sceptre fixes";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -165,6 +163,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
