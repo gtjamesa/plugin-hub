@@ -377,7 +377,7 @@ public class ChargedItemInfoBox extends InfoBox {
         animation = event.getActor().getAnimation();
 
         // No animations to check.
-        if (inventory == null || equipment == null || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (inventory == null || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerAnimation trigger_animation : triggers_animations) {
@@ -388,7 +388,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_animation.unallowed_items != null) {
                 boolean unallowed_items = false;
                 for (final int item_id : trigger_animation.unallowed_items) {
-                    if (inventory.contains(item_id) || equipment.contains(item_id)) {
+                    if (inventory.contains(item_id) || equipment != null && equipment.contains(item_id)) {
                         unallowed_items = true;
                         break;
                     }
@@ -400,7 +400,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_animation.equipped) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
-                    if (equipment.contains(trigger_item.item_id)) {
+                    if (equipment != null && equipment.contains(trigger_item.item_id)) {
                         equipped = true;
                         break;
                     }
@@ -437,7 +437,7 @@ public class ChargedItemInfoBox extends InfoBox {
         graphic = event.getActor().getGraphic();
 
         // No animations to check.
-        if (inventory == null || equipment == null || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (inventory == null || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerGraphic trigger_graphic : triggers_graphics) {
@@ -448,7 +448,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_graphic.unallowed_items != null) {
                 boolean unallowed_items = false;
                 for (final int item_id : trigger_graphic.unallowed_items) {
-                    if (inventory.contains(item_id) || equipment.contains(item_id)) {
+                    if (inventory.contains(item_id) || equipment != null && equipment.contains(item_id)) {
                         unallowed_items = true;
                         break;
                     }
@@ -460,7 +460,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_graphic.equipped) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
-                    if (equipment.contains(trigger_item.item_id)) {
+                    if (equipment != null && equipment.contains(trigger_item.item_id)) {
                         equipped = true;
                         break;
                     }
