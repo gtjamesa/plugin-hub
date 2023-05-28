@@ -340,7 +340,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (charges >= 1000000) return charges / 1000000 + "M";
 
 		final int thousands = charges / 1000;
-		final int hundreds = charges % 1000 / 100;
+		final int hundreds = (charges % 1000 + 50) / 100;
 
 		return thousands + (thousands < 10 && hundreds > 0 ? "." + hundreds : "") + "K";
 	}
