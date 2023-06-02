@@ -15,8 +15,8 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerWidget;
 
-public class J_ExpeditiousBracelet extends ChargedItemInfoBox {
-    public J_ExpeditiousBracelet(
+public class J_BraceletOfExpeditious extends ChargedItemInfoBox {
+    public J_BraceletOfExpeditious(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -26,7 +26,7 @@ public class J_ExpeditiousBracelet extends ChargedItemInfoBox {
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.EXPEDITIOUS_BRACELET, ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.BRACELET_OF_EXPEDITIOUS, ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
         this.config_key = ChargesImprovedConfig.expeditious_bracelet;
         this.needs_to_be_equipped_for_infobox = true;
         this.triggers_items = new TriggerItem[]{

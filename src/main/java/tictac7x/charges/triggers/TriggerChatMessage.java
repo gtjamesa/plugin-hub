@@ -12,6 +12,7 @@ public class TriggerChatMessage {
     public boolean equipped;
     public boolean inventory_same;
     public boolean inventory_count_same;
+    public boolean multiple_charges;
 
     @Nullable public Consumer<String> consumer;
     @Nullable public Integer fixed_charges;
@@ -59,6 +60,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage extraConsumer(final Consumer<String> consumer) {
         this.consumer = consumer;
+        return this;
+    }
+
+    public TriggerChatMessage multipleCharges() {
+        this.multiple_charges = true;
         return this;
     }
 }

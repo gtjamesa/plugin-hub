@@ -291,6 +291,17 @@ public class ChargedItemInfoBox extends InfoBox {
             } else if (chat_message.fixed_charges != null) {
                 setCharges(chat_message.fixed_charges);
 
+            // Set charges from multiple amounts.
+            } else if (chat_message.multiple_charges) {
+                int charges = 0;
+
+                final Matcher matcher_multiple = Pattern.compile(".*?(\\d+)").matcher(message);
+                while (matcher_multiple.find()) {
+                    charges += Integer.parseInt(matcher_multiple.group(1));
+                }
+
+                setCharges(charges);
+
             // Custom consumer.
             } else if (chat_message.consumer != null) {
                 chat_message.consumer.accept(message);

@@ -142,19 +142,23 @@ public class ChargesImprovedPlugin extends Plugin {
 			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			// Jewellery
+			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_BraceletOfExpeditious(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_ExpeditiousBracelet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
 			// Helms
 			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 
-			// Unwearables
+			// Capes
+			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+
+			// Utilities
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),

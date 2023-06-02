@@ -21,8 +21,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class U_FishBarrel extends ChargedItemInfoBox {
-    private final ChargedItemInfoBox infobox;
-
     private final int FISH_BARREL_SIZE = 28;
 
     public U_FishBarrel(
@@ -36,7 +34,6 @@ public class U_FishBarrel extends ChargedItemInfoBox {
         final Plugin plugin
     ) {
         super(ChargesItem.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.infobox = this;
 
         this.config_key = ChargesImprovedConfig.fish_barrel;
         this.zero_charges_is_positive = true;
@@ -54,8 +51,8 @@ public class U_FishBarrel extends ChargedItemInfoBox {
             new TriggerChatMessage("Your barrel is empty.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(FISH_BARREL_SIZE),
             new TriggerChatMessage("(You catch .*)|(.* enabled you to catch an extra fish.)").extraConsumer(message -> {
-                if (infobox.item_id == ItemID.OPEN_FISH_BARREL && infobox.getCharges() < FISH_BARREL_SIZE) {
-                    infobox.increaseCharges(1);
+                if (item_id == ItemID.OPEN_FISH_BARREL && getCharges() < FISH_BARREL_SIZE) {
+                    increaseCharges(1);
                 }
             })
         };
@@ -69,7 +66,7 @@ public class U_FishBarrel extends ChargedItemInfoBox {
                     charges += Integer.parseInt(matcher.group(1));
                 }
 
-                infobox.setCharges(charges);
+                setCharges(charges);
             })
         };
     }

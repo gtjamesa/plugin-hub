@@ -48,6 +48,8 @@ public interface ChargesImprovedConfig extends Config {
     String teleport_crystal = "teleport_crystal";
     String waterskin = "waterskin";
     String bracelet_of_clay = "bracelet_of_clay";
+    String coffin = "coffin";
+    String bracelet_of_flamtaer = "bracelet_of_flamtaer";
 
     @ConfigSection(
         name = "Colors",
@@ -361,4 +363,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Bracelet of clay charges",
             section = debug
         ) default int getBraceletOfClayCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = coffin,
+            name = "Coffin",
+            description = "Coffin charges",
+            section = debug
+        ) default int getCoffinCharges() { return -1; }
 }
