@@ -50,6 +50,7 @@ public interface ChargesImprovedConfig extends Config {
     String bracelet_of_clay = "bracelet_of_clay";
     String coffin = "coffin";
     String bracelet_of_flamtaer = "bracelet_of_flamtaer";
+    String ring_of_recoil = "ring_of_recoil";
 
     @ConfigSection(
         name = "Colors",

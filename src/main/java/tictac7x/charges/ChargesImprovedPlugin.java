@@ -147,6 +147,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
@@ -273,13 +274,13 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onHitsplatApplied(event));
-//		System.out.println("HITSPLAT | " +
-//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
-//			", type: " + event.getHitsplat().getHitsplatType() +
-//			", amount:" + event.getHitsplat().getAmount() +
-//			", others = " + event.getHitsplat().isOthers() +
-//			", mine = " + event.getHitsplat().isMine()
-//		);
+		System.out.println("HITSPLAT | " +
+			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
+			", type: " + event.getHitsplat().getHitsplatType() +
+			", amount:" + event.getHitsplat().getAmount() +
+			", others = " + event.getHitsplat().isOthers() +
+			", mine = " + event.getHitsplat().isMine()
+		);
 	}
 
 	@Subscribe

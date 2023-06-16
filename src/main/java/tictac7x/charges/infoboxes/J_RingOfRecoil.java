@@ -14,8 +14,8 @@ import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class J_BraceletOfFlamtaer extends ChargedItemInfoBox {
-    public J_BraceletOfFlamtaer(
+public class J_RingOfRecoil extends ChargedItemInfoBox {
+    public J_RingOfRecoil(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -25,16 +25,10 @@ public class J_BraceletOfFlamtaer extends ChargedItemInfoBox {
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.BRACELET_OF_FLAMTAER, ItemID.FLAMTAER_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
-        this.config_key = ChargesImprovedConfig.bracelet_of_flamtaer;
-        this.needs_to_be_equipped_for_infobox = true;
+        super(ChargesItem.RING_OF_RECOIL, ItemID.RING_OF_RECOIL, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        this.config_key = ChargesImprovedConfig.ring_of_recoil;
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.FLAMTAER_BRACELET),
-        };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80),
+            new TriggerItem(ItemID.RING_OF_RECOIL),
         };
     }
 }
