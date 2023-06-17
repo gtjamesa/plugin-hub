@@ -2,6 +2,7 @@ package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
@@ -21,10 +22,11 @@ public class J_SlayerRing extends ChargedItemInfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.SLAYER_RING, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.SLAYER_RING, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.SLAYER_RING_1).fixedCharges(1),
             new TriggerItem(ItemID.SLAYER_RING_2).fixedCharges(2),

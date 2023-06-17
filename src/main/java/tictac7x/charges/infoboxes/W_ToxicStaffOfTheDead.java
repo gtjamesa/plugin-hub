@@ -2,6 +2,7 @@ package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
@@ -23,10 +24,11 @@ public class W_ToxicStaffOfTheDead extends ChargedItemInfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
         this.config_key = ChargesImprovedConfig.toxic_staff_of_the_dead;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TOXIC_STAFF_UNCHARGED).fixedCharges(0),

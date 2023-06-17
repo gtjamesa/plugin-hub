@@ -2,6 +2,7 @@ package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
@@ -24,10 +25,11 @@ public class S_FaladorShield extends ChargedItemInfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
         this.config_key = ChargesImprovedConfig.falador_shield;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.FALADOR_SHIELD_3),

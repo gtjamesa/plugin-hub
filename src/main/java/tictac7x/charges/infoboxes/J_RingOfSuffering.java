@@ -2,6 +2,7 @@ package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
@@ -22,10 +23,11 @@ public class J_RingOfSuffering extends ChargedItemInfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.RING_OF_SUFFERING, ItemID.RING_OF_SUFFERING, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.RING_OF_SUFFERING, ItemID.RING_OF_SUFFERING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
         this.config_key = ChargesImprovedConfig.ring_of_suffering;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_SUFFERING).fixedCharges(0),

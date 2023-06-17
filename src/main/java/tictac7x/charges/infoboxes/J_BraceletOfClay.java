@@ -2,6 +2,7 @@ package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
@@ -22,10 +23,11 @@ public class J_BraceletOfClay extends ChargedItemInfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.BRACELET_OF_CLAY, ItemID.BRACELET_OF_CLAY, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.BRACELET_OF_CLAY, ItemID.BRACELET_OF_CLAY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
         this.config_key = ChargesImprovedConfig.bracelet_of_clay;
         this.needs_to_be_equipped_for_infobox = true;
         this.triggers_items = new TriggerItem[]{

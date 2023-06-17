@@ -14,6 +14,7 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
@@ -51,6 +52,7 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final InfoBoxManager infoboxes;
     protected final ConfigManager configs;
     protected final ChatMessageManager chat_messages;
+    protected final Notifier notifier;
     protected final ChargesImprovedConfig config;
 
     @Nullable public ItemContainer inventory;
@@ -92,6 +94,7 @@ public class ChargedItemInfoBox extends InfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
@@ -104,6 +107,7 @@ public class ChargedItemInfoBox extends InfoBox {
         this.items = items;
         this.infoboxes = infoboxes;
         this.chat_messages = chat_messages;
+        this.notifier = notifier;
         this.config = config;
 
         client_thread.invokeLater(() -> {
@@ -323,6 +327,11 @@ public class ChargedItemInfoBox extends InfoBox {
                         setConfiguration(config_key + "_" + extra_group, extra.replaceAll(",", ""));
                     }
                 }
+            }
+
+            // Notifications.
+            if (chat_message.notification) {
+                notifier.notify(chat_message.notification_message != null ? chat_message.notification_message : message);
             }
 
             // Chat message used, no need to check other messages.
@@ -604,7 +613,9 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private void loadChargesFromConfig() {
         if (config_key == null) return;
-        charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
+        try {
+            charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
+        } catch (final Exception ignored) {}
 
     }
 

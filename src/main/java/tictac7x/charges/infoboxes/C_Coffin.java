@@ -3,6 +3,7 @@ package tictac7x.charges.infoboxes;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemID;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
@@ -35,10 +36,11 @@ public class C_Coffin extends ChargedItemInfoBox {
         final ItemManager items,
         final InfoBoxManager infoboxes,
         final ChatMessageManager chat_messages,
+        final Notifier notifier,
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.COFFIN, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, config, plugin);
+        super(ChargesItem.COFFIN, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
         this.config_key = ChargesImprovedConfig.coffin;
         this.zero_charges_is_positive = true;
 

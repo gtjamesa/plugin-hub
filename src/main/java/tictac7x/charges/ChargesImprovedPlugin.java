@@ -17,6 +17,7 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
+import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
@@ -110,6 +111,9 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Inject
 	private ChatMessageManager chat_messages;
 
+	@Inject
+	private Notifier notifier;
+
 	@Provides
 	ChargesImprovedConfig provideConfig(ConfigManager configManager) {
 		return configManager.getConfig(ChargesImprovedConfig.class);
@@ -126,79 +130,79 @@ public class ChargesImprovedPlugin extends Plugin {
 	protected void startUp() {
 		infoboxes_charged_items = new ChargedItemInfoBox[]{
 			// Weapons
-			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_IbansStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_PharaohsSceptre(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_IbansStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_PharaohsSceptre(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Shields
-			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Jewellery
-			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_BraceletOfExpeditious(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_BraceletOfExpeditious(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Helms
-			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Capes
-			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Utilities
-			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
-			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsAhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsAhrimsStaff(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsAhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsAhrimsStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
-			new BarrowsDharoksHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsDharoksPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsDharoksPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsDharoksGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsDharoksHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsDharoksPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsDharoksPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsDharoksGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
-			new BarrowsGuthansHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsGuthansPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsGuthansChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsGuthansWarspear(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsGuthansHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsGuthansPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsGuthansChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsGuthansWarspear(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
-			new BarrowsKarilsCoif(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsKarilsLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsKarilsLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsKarilsCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsKarilsCoif(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsKarilsLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsKarilsLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsKarilsCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
-			new BarrowsToragsHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsToragsPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsToragsPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsToragsHammers(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsToragsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsToragsPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsToragsPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsToragsHammers(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
-			new BarrowsVeracsHelm(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsVeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
-			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, config, this),
+			new BarrowsVeracsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsVeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(config, infoboxes_charged_items);
 

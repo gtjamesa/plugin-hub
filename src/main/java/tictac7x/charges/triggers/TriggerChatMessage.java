@@ -13,11 +13,13 @@ public class TriggerChatMessage {
     public boolean inventory_same;
     public boolean inventory_count_same;
     public boolean multiple_charges;
+    public boolean notification;
 
     @Nullable public Consumer<String> consumer;
     @Nullable public Integer fixed_charges;
     @Nullable public Integer decrease_charges;
     @Nullable public Integer increase_charges;
+    @Nullable public String notification_message;
 
     public TriggerChatMessage(@Nonnull final String message) {
         this.message = Pattern.compile(message);
@@ -65,6 +67,17 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage multipleCharges() {
         this.multiple_charges = true;
+        return this;
+    }
+
+    public TriggerChatMessage notification() {
+        this.notification = true;
+        return this;
+    }
+
+    public TriggerChatMessage notification(final String message) {
+        this.notification = true;
+        this.notification_message = message;
         return this;
     }
 }
