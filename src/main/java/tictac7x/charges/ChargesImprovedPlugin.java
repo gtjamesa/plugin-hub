@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.HitsplatID;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
@@ -349,7 +350,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (charges >= 1000000) return charges / 1000000 + "M";
 
 		final int thousands = charges / 1000;
-		final int hundreds = (charges % 1000 + 50) / 100;
+		final int hundreds = Math.min((charges % 1000 + 50) / 100, 9);
 
 		return thousands + (thousands < 10 && hundreds > 0 ? "." + hundreds : "") + "K";
 	}
