@@ -37,7 +37,7 @@ public class J_BraceletOfExpeditious extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your expeditious bracelet has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer( task)? faster. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your Expeditious bracelet crumbles to dust")
+            new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your Expeditious bracelet crumbles to dust.")
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("The bracelet shatters. Your next expeditious bracelet will start afresh from (?<charges>.+) charges.")

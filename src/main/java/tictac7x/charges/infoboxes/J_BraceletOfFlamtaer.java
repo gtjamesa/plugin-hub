@@ -37,7 +37,7 @@ public class J_BraceletOfFlamtaer extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80).notification("Your flamtaer bracelet crumbles to dust"),
+            new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80).notification("Your flamtaer bracelet crumbles to dust."),
         };
         this.triggers_widgets = new TriggerWidget[]{
             new TriggerWidget("The bracelet shatters. Your next Flamtaer bracelet will star afresh from (?<charges>.+) charges.")

@@ -280,7 +280,7 @@ public class ChargedItemInfoBox extends InfoBox {
                 menu_entries.stream().noneMatch(entry -> entry[0].equals(items.getItemComposition(item_id).getName()))
             ) continue;
 
-            // Item needs to be equipped but isn't.
+            // Item needs to be equipped.
             if (chat_message.equipped && !in_equipment) continue;
 
             // Increase charges by fixed amount.
