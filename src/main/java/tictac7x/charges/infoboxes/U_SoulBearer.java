@@ -12,12 +12,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
-
-import javax.annotation.Nullable;
 
 public class U_SoulBearer extends ChargedItemInfoBox {
     public U_SoulBearer(
@@ -38,10 +34,12 @@ public class U_SoulBearer extends ChargedItemInfoBox {
             new TriggerItem(ItemID.DAMAGED_SOUL_BEARER).fixedCharges(0),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("You remove the runes from the soul bearer.").fixedCharges(0),
+            new TriggerChatMessage("(The|Your) soul bearer( now)? has one charge.").fixedCharges(1),
+            new TriggerChatMessage("Your soul bearer carries the ensouled heads to your bank. It has run out of charges.").fixedCharges(0).notification(),
             new TriggerChatMessage("The soul bearer has (?<charges>.+) charges?."),
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("Your soul bearer carries the ensouled heads to your bank. It has (?<charges>.+) charges? left.")
+            new TriggerChatMessage("You add .+ charges? to your soul bearer. It now has (?<charges>.+) charges?."),
+            new TriggerChatMessage("Your soul bearer carries the ensouled heads to your bank. It has (?<charges>.+) charges? left.")
         };
     }
 }
