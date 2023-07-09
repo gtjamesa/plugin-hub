@@ -14,7 +14,6 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
 
 public class J_BraceletOfExpeditious extends ChargedItemInfoBox {
     public J_BraceletOfExpeditious(
@@ -35,12 +34,10 @@ public class J_BraceletOfExpeditious extends ChargedItemInfoBox {
             new TriggerItem(ItemID.EXPEDITIOUS_BRACELET),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("The bracelet shatters. Your next expeditious bracelet will start afresh from 30 charges.").fixedCharges(30),
+            new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your expeditious bracelet crumbles to dust."),
             new TriggerChatMessage("Your expeditious bracelet has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer( task)? faster. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your Expeditious bracelet crumbles to dust.")
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("The bracelet shatters. Your next expeditious bracelet will start afresh from (?<charges>.+) charges.")
         };
     }
 }
