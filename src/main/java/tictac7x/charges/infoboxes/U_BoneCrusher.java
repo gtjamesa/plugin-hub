@@ -14,9 +14,6 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
-
-import javax.annotation.Nullable;
 
 public class U_BoneCrusher extends ChargedItemInfoBox {
     public U_BoneCrusher(
@@ -37,13 +34,11 @@ public class U_BoneCrusher extends ChargedItemInfoBox {
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
             new TriggerChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
-            new TriggerChatMessage("Your bonecrusher( necklace)? has run out of charges.").fixedCharges(0),
-            new TriggerChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges?."),
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You remove all the charges from the bonecrusher( necklace)?.").customWidget(11, 2).fixedCharges(0),
-            new TriggerWidget("The bonecrusher( necklace)? has (?<charges>.+) charges? left."),
+            new TriggerChatMessage("You remove all the charges from the bonecrusher( necklace)?.").fixedCharges(0),
+            new TriggerChatMessage("Your bonecrusher( necklace)? has run out of charges.").fixedCharges(0).notification(),
+            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?."),
         };
     }
 }

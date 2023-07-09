@@ -43,13 +43,13 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
-            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))?( only)? has (?<charges>.+) charges( left)?."),
+            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))?( only)? has (?<charges>.+) charges?( left)?."),
+        };
+        this.triggers_widgets = new TriggerWidget[]{
+            new TriggerWidget("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)")
         };
         this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(1167).decreaseCharges(1).equipped()
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You add .* charges? to the Trident of the (seas|swamp)( \\((full|e)\\))?. New total: (?<charges>.+)")
         };
     }
 }

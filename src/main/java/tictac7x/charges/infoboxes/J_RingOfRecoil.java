@@ -39,7 +39,7 @@ public class J_RingOfRecoil extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("You can inflict (?<charges>.+) more points? of damage before a ring will shatter"),
-            new TriggerChatMessage("Your Ring of Recoil has shattered.").fixedCharges(40)
+            new TriggerChatMessage("Your Ring of Recoil has shattered.").fixedCharges(40).notification()
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).equipped().onSelf()

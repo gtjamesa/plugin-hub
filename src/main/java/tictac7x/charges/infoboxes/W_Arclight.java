@@ -40,7 +40,7 @@ public class W_Arclight extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your arclight has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your arclight can perform (?<charges>.+) more attacks."),
-            new TriggerChatMessage("Your arclight has degraded.").fixedCharges(0)
+            new TriggerChatMessage("Your arclight has degraded.").fixedCharges(0).notification()
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).equipped().onEnemy().onAnimations(new int[]{ARCLIGHT_ATTACK_STAB, ARCLIGHT_ATTACK_SLASH})

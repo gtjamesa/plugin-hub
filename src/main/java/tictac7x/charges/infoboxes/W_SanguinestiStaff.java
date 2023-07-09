@@ -1,7 +1,6 @@
 package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
-import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -39,13 +38,11 @@ public class W_SanguinestiStaff extends ChargedItemInfoBox {
             new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            //  new TriggerChatMessage("Your Sanguinesti staff has (?<charges>.+) charges remaining.").onItemClick(),
-            //  new TriggerChatMessage("Your (Holy s|S)?anguinesti staff has (?<charges>.+) charges? remaining.").onItemClick(),
+            new TriggerChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining."),
             new TriggerChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
         };
         this.triggers_widgets = new TriggerWidget[]{
-            //  new TriggerWidget("You apply an additional .+ charges? to the Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
-            new TriggerWidget("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges in total."),
+            new TriggerWidget("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
             new TriggerWidget("You apply (?<charges>.+) charges to your Sanguinesti staff.")
         };
         this.triggers_animations = new TriggerAnimation[]{

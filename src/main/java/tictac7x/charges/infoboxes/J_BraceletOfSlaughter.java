@@ -36,7 +36,7 @@ public class J_BraceletOfSlaughter extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30)
+            new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30).notification("Your slaughter bracelet crumbles to dust")
         };
     }
 }

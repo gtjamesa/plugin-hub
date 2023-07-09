@@ -237,11 +237,12 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
-//			", sender: " + event.getSender()
-//		);
+		log.debug(
+			"MESSAGE | " +
+			"type: " + event.getType().name() +
+			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
+			", sender: " + event.getSender()
+		);
 	}
 
 	@Subscribe

@@ -258,7 +258,7 @@ public class ChargedItemInfoBox extends InfoBox {
             // No chat messages triggers.
             triggers_chat_messages == null ||
             // Message type that we are not interested in.
-            event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM ||
+            event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM && event.getType() != ChatMessageType.MESBOX ||
             // No config to save charges to.
             config_key == null ||
             // Not in inventory nor in equipment.
@@ -312,7 +312,9 @@ public class ChargedItemInfoBox extends InfoBox {
 
             // Set charges dynamically from the chat message.
             } else if (matcher.group("charges") != null) {
-                setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", "")));
+                try {
+                    setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", "")));
+                } catch (final Exception ignored) {}
 
             // No trigger found.
             } else {
