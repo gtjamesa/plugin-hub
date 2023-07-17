@@ -34,12 +34,10 @@ public class J_RingOfRecoil extends ChargedItemInfoBox {
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_RECOIL),
         };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("The ring is fully charged. There would be no point in breaking it.").fixedCharges(40)
-        };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("You can inflict (?<charges>.+) more points? of damage before a ring will shatter"),
-            new TriggerChatMessage("Your Ring of Recoil has shattered.").fixedCharges(40).notification()
+            new TriggerChatMessage("Your Ring of Recoil has shattered.").fixedCharges(40).notification(),
+            new TriggerChatMessage("The ring is fully charged. There would be no point in breaking it.").fixedCharges(40)
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).equipped().onSelf()

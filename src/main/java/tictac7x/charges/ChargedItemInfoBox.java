@@ -313,7 +313,13 @@ public class ChargedItemInfoBox extends InfoBox {
             // Set charges dynamically from the chat message.
             } else if (matcher.group("charges") != null) {
                 try {
-                    setCharges(Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", "")));
+                    final int charges = Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", ""));
+
+                    if (chat_message.increase_dynamically) {
+                        increaseCharges(charges);
+                    } else {
+                        setCharges(charges);
+                    }
                 } catch (final Exception ignored) {}
 
             // No trigger found.

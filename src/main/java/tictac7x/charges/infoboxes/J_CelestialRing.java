@@ -35,14 +35,12 @@ public class J_CelestialRing extends ChargedItemInfoBox {
             new TriggerItem(ItemID.CELESTIAL_RING_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.CELESTIAL_RING)
         };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You add (?<charges>.+) charges? to your Celestial ring."),
-            new TriggerWidget("You add .+ charges? to your Celestial ring. It now has (?<charges>.+) charges?."),
-            new TriggerWidget("You fully uncharge your Celestial ring.").fixedCharges(0)
-        };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Celestial ring has (?<charges>.+) charges?.").onItemClick(),
-            new TriggerChatMessage("Your Celestial ring has run out of charges").fixedCharges(0),
+            new TriggerChatMessage("You add .+ charges? to your Celestial ring. It now has (?<charges>.+) charges?."),
+            new TriggerChatMessage("You add (?<charges>.+) charges? to your Celestial ring."),
+            new TriggerChatMessage("You fully uncharge your Celestial ring.").fixedCharges(0),
+            new TriggerChatMessage("Your Celestial ring has (?<charges>.+) charges?."),
+            new TriggerChatMessage("Your Celestial ring has run out of charges").fixedCharges(0).notification(),
             new TriggerChatMessage("You manage to mine").equipped().decreaseCharges(1)
         };
     }

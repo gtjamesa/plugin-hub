@@ -40,10 +40,8 @@ public class W_SanguinestiStaff extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining."),
             new TriggerChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
-            new TriggerWidget("You apply (?<charges>.+) charges to your Sanguinesti staff.")
+            new TriggerChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
+            new TriggerChatMessage("You apply (?<charges>.+) charges to your Sanguinesti staff.")
         };
         this.triggers_animations = new TriggerAnimation[]{
             new TriggerAnimation(1167).decreaseCharges(1).equipped()

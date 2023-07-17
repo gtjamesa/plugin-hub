@@ -47,13 +47,11 @@ public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
             new TriggerChatMessage("Your bottomless compost bucket has (?<charges>.+) uses of (?<type>.+) ?compost remaining."),
-            new TriggerChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)").fixedCharges(0)
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("Your bottomless compost bucket is currently holding one use of (?<type>.+?) ?compost.").fixedCharges(1),
-            new TriggerWidget("Your bottomless compost bucket is currently holding (?<charges>.+) uses of (?<type>.+?) ?compost."),
-            new TriggerWidget("You discard the contents of your bottomless compost bucket.(?<type>.*)").fixedCharges(0),
-            new TriggerWidget("You fill your bottomless compost bucket with .* buckets? of (?<type>.+?) ?compost. Your bottomless compost bucket now contains a total of (?<charges>.+) uses.")
+            new TriggerChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)").fixedCharges(0),
+            new TriggerChatMessage("Your bottomless compost bucket is currently holding one use of (?<type>.+?) ?compost.").fixedCharges(1),
+            new TriggerChatMessage("Your bottomless compost bucket is currently holding (?<charges>.+) uses of (?<type>.+?) ?compost."),
+            new TriggerChatMessage("You discard the contents of your bottomless compost bucket.(?<type>.*)").fixedCharges(0),
+            new TriggerChatMessage("You fill your bottomless compost bucket with .* buckets? of (?<type>.+?) ?compost. Your bottomless compost bucket now contains a total of (?<charges>.+) uses.")
         };
     }
 

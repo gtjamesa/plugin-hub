@@ -13,6 +13,7 @@ public class TriggerChatMessage {
     public boolean inventory_same;
     public boolean inventory_count_same;
     public boolean multiple_charges;
+    public boolean increase_dynamically;
     public boolean notification;
 
     @Nullable public Consumer<String> consumer;
@@ -67,6 +68,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage multipleCharges() {
         this.multiple_charges = true;
+        return this;
+    }
+
+    public TriggerChatMessage increaseDynamically() {
+        this.increase_dynamically = true;
         return this;
     }
 

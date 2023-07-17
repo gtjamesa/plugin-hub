@@ -22,23 +22,17 @@ public class TriggerWidget {
     @Nullable public Consumer<String> consumer;
     @Nullable public Integer charges;
 
-    public TriggerWidget(@Nonnull final String message) {
-        this.message = message;
-        this.group_id = WIDGET_DEFAULT_GROUP_ID;
-        this.child_id = WIDGET_DEFAULT_CHILD_ID;
-    }
-
-    public TriggerWidget customWidget(final int group_id, final int child_id) {
+    public TriggerWidget(final int group_id, final int child_id, @Nonnull final String message) {
         this.group_id = group_id;
         this.child_id = child_id;
-        return this;
+        this.message = message;
     }
 
-    public TriggerWidget customWidget(final int group_id, final int child_id, final int sub_child_id) {
+    public TriggerWidget(final int group_id, final int child_id, final int sub_child_id, @Nonnull final String message) {
         this.group_id = group_id;
         this.child_id = child_id;
         this.sub_child_id = sub_child_id;
-        return this;
+        this.message = message;
     }
 
     public TriggerWidget fixedCharges(final int charges) {

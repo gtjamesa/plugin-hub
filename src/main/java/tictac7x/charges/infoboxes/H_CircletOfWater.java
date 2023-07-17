@@ -35,12 +35,10 @@ public class H_CircletOfWater extends ChargedItemInfoBox {
             new TriggerItem(ItemID.CIRCLET_OF_WATER)
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your circlet has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1)
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("You add (?<charges>.+) charges? to your circlet.$"),
-            new TriggerWidget("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?.")
+                new TriggerChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
+                new TriggerChatMessage("Your circlet has (?<charges>.+) charges? left."),
+                new TriggerChatMessage("You add (?<charges>.+) charges? to your circlet.$"),
+                new TriggerChatMessage("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?."),
         };
     }
 }

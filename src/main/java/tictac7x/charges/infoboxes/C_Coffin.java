@@ -60,12 +60,9 @@ public class C_Coffin extends ChargedItemInfoBox {
 
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("You put the .+ remains into your open coffin.").increaseCharges(1),
-            new TriggerChatMessage("Loar (.+) / Phrin (.+) / Riyl (.+) / Asyn (.+) / Fiyr (.+) / Urium (.+)").multipleCharges()
-        };
-
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("Your coffin is empty.").fixedCharges(0),
-            new TriggerWidget("You cannot store anymore shade remains in this coffin.").extraConsumer((message) -> {
+            new TriggerChatMessage("Loar (.+) / Phrin (.+) / Riyl (.+) / Asyn (.+) / Fiyr (.+) / Urium (.+)").multipleCharges(),
+            new TriggerChatMessage("Your coffin is empty.").fixedCharges(0),
+            new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").extraConsumer((message) -> {
                 switch (item_id) {
                     case ItemID.BRONZE_COFFIN:
                     case ItemID.OPEN_BRONZE_COFFIN:

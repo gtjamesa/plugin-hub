@@ -77,11 +77,10 @@ import java.util.Arrays;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.2.8";
+	private final String plugin_version = "v0.2.9";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Ogre Bellows added<br>" +
-		"<colHIGHLIGHT>* Pharaoh Sceptre fixes";
+		"<colHIGHLIGHT>* General fixes and improvements";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -248,39 +247,39 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onAnimationChanged(event));
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("ANIMATION | " +
-//				"id: " + event.getActor().getAnimation()
-//			);
-//		}
+		if (event.getActor() == client.getLocalPlayer()) {
+			log.debug("ANIMATION | " +
+				"id: " + event.getActor().getAnimation()
+			);
+		}
 	}
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onGraphicChanged(event));
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("GRAPHIC | " +
-//				"id: " + event.getActor().getGraphic()
-//			);
-//		}
+		if (event.getActor() == client.getLocalPlayer()) {
+			log.debug("GRAPHIC | " +
+				"id: " + event.getActor().getGraphic()
+			);
+		}
 	}
 
 	@Subscribe
 	public void onConfigChanged(final ConfigChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onConfigChanged(event));
-//		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-//			System.out.println("CONFIG | " +
-//				"key: " + event.getKey() +
-//				", old value: " + event.getOldValue() +
-//				", new value: " + event.getNewValue()
-//			);
-//		}
+		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
+			log.debug("CONFIG | " +
+				"key: " + event.getKey() +
+				", old value: " + event.getOldValue() +
+				", new value: " + event.getNewValue()
+			);
+		}
 	}
 
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onHitsplatApplied(event));
-		System.out.println("HITSPLAT | " +
+		log.debug("HITSPLAT | " +
 			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
 			", type: " + event.getHitsplat().getHitsplatType() +
 			", amount:" + event.getHitsplat().getAmount() +
@@ -292,20 +291,20 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onWidgetLoaded(event));
-//		System.out.println("WIDGET | " +
-//			"group: " + event.getGroupId()
-//		);
+		log.debug("WIDGET | " +
+			"group: " + event.getGroupId()
+		);
 	}
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onMenuOptionClicked(event));
-//		System.out.println("OPTION | " +
-//			"option: " + event.getMenuOption() +
-//			", target: " + event.getMenuTarget() +
-//			", action name: " + event.getMenuAction().name() +
-//			", action id: " + event.getMenuAction().getId()
-//		);
+		log.debug("OPTION | " +
+			"option: " + event.getMenuOption() +
+			", target: " + event.getMenuTarget() +
+			", action name: " + event.getMenuAction().name() +
+			", action id: " + event.getMenuAction().getId()
+		);
 	}
 
 	@Subscribe

@@ -41,7 +41,9 @@ public class U_FishBarrel extends ChargedItemInfoBox {
         this.zero_charges_is_positive = true;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.FISH_BARREL),
-            new TriggerItem(ItemID.OPEN_FISH_BARREL)
+            new TriggerItem(ItemID.OPEN_FISH_BARREL),
+            new TriggerItem(ItemID.FISH_SACK_BARREL),
+            new TriggerItem(ItemID.OPEN_FISH_SACK_BARREL)
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
             new TriggerItemContainer(InventoryID.BANK.getId()).menuTarget("Open fish barrel").menuOption("Empty").fixedCharges(0),
@@ -50,26 +52,14 @@ public class U_FishBarrel extends ChargedItemInfoBox {
             new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Fish barrel").menuOption("Fill").increaseByDifference(),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your barrel is empty.").onItemClick().fixedCharges(0),
+            new TriggerChatMessage("(Your|The) barrel is empty.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(FISH_BARREL_SIZE),
             new TriggerChatMessage("(You catch .*)|(.* enabled you to catch an extra fish.)").extraConsumer(message -> {
-                if (item_id == ItemID.OPEN_FISH_BARREL && getCharges() < FISH_BARREL_SIZE) {
+                if ((item_id == ItemID.OPEN_FISH_BARREL || item_id == ItemID.OPEN_FISH_SACK_BARREL) && getCharges() < FISH_BARREL_SIZE) {
                     increaseCharges(1);
                 }
-            })
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("The barrel is empty").fixedCharges(0),
-            new TriggerWidget("The barrel contains:").extraConsumer(message -> {
-                int charges = 0;
-
-                final Matcher matcher = Pattern.compile(".*?(\\d+)").matcher(message);
-                while (matcher.find()) {
-                    charges += Integer.parseInt(matcher.group(1));
-                }
-
-                setCharges(charges);
-            })
+            }),
+            new TriggerChatMessage("The barrel contains:").multipleCharges()
         };
     }
 }

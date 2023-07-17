@@ -36,11 +36,9 @@ public class S_KharedstMemoirs extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) (memories|memory) remaining."),
-            new TriggerChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) holds no charges?.").fixedCharges(0)
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+) memories? remain."),
-            new TriggerWidget("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) charges.")
+            new TriggerChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) holds no charges?.").fixedCharges(0),
+            new TriggerChatMessage("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+) (memories|memory) remain."),
+            new TriggerChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) charges.")
         };
     }
 }

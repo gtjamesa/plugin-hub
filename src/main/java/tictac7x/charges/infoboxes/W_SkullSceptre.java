@@ -37,10 +37,8 @@ public class W_SkullSceptre extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left."),
-        };
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left."),
-            new TriggerWidget("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+?)( charges?)?\\.")
+            new TriggerChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left."),
+            new TriggerChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+?)( charges?)?.")
         };
     }
 }
