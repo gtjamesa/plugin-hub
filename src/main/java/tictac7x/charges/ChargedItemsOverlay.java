@@ -55,7 +55,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
             final TextComponent charges_component = new TextComponent();
 
             charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
-            charges_component.setColor(charges.equals("?") ? config.getColorUnknown() : charges.equals("0") && !infobox.zero_charges_is_positive ? config.getColorEmpty() : config.getColorDefault());
+            charges_component.setColor(charges.equals("?") ? config.getColorUnknown() : charges.equals("0") && !infobox.zero_charges_is_positive ? config.getColorEmpty() : infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges ? config.getColorEmpty() : config.getColorDefault());
             charges_component.setText(charges);
             charges_component.render(graphics);
 
