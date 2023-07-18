@@ -81,6 +81,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private String tooltip;
     private boolean render = false;
+    @Nullable public Integer negative_full_charges;
     public boolean zero_charges_is_positive = false;
     private int gametick = 0;
     private int gametick_before = 0;
@@ -580,13 +581,19 @@ public class ChargedItemInfoBox extends InfoBox {
         if (triggers_menu_options == null) return;
 
         for (final TriggerMenuOption trigger_menu_option : triggers_menu_options) {
-            if (!trigger_menu_option.option.equals(menu_option)) continue;
+            if (
+                !trigger_menu_option.option.equals(menu_option) ||
+                trigger_menu_option.target != null && !trigger_menu_option.target.equals(menu_target)
+            ) continue;
 
             // Fixed charges.
-            if (trigger_menu_option.fixed_charges != null) {
-                setCharges(trigger_menu_option.fixed_charges);
-                break;
-            }
+            new Thread(() -> {
+                try { Thread.sleep(600); } catch (final Exception ignored) {}
+                setCharges(trigger_menu_option.charges);
+            }).start();
+
+            // Menu option used.
+            return;
         }
     }
 
@@ -628,6 +635,8 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void setCharges(final int charges) {
+        if (this.negative_full_charges != null && charges > this.negative_full_charges) return;
+
         this.charges = charges;
         onChargesUpdated();
 

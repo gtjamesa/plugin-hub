@@ -80,7 +80,8 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_version = "v0.2.9";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* General fixes and improvements";
+		"<colHIGHLIGHT>* General fixes and improvements<br>" +
+		"<colHIGHLIGHT>* Log basket added";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -173,6 +174,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
@@ -218,6 +220,8 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
+		log.debug("ITEM CONTAINER | " + event.getContainerId());
+
 		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
 			infobox.onItemContainersChanged(event);
 		}

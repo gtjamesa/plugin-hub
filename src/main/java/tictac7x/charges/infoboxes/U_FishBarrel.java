@@ -13,10 +13,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerItemContainer;
-import tictac7x.charges.triggers.TriggerWidget;
+import tictac7x.charges.triggers.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,12 +42,6 @@ public class U_FishBarrel extends ChargedItemInfoBox {
             new TriggerItem(ItemID.FISH_SACK_BARREL),
             new TriggerItem(ItemID.OPEN_FISH_SACK_BARREL)
         };
-        this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(InventoryID.BANK.getId()).menuTarget("Open fish barrel").menuOption("Empty").fixedCharges(0),
-            new TriggerItemContainer(InventoryID.BANK.getId()).menuTarget("Fish barrel").menuOption("Empty").fixedCharges(0),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open fish barrel").menuOption("Fill").increaseByDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Fish barrel").menuOption("Fill").increaseByDifference(),
-        };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("(Your|The) barrel is empty.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(FISH_BARREL_SIZE),
@@ -60,6 +51,13 @@ public class U_FishBarrel extends ChargedItemInfoBox {
                 }
             }),
             new TriggerChatMessage("The barrel contains:").multipleCharges()
+        };
+        this.triggers_item_containers = new TriggerItemContainer[]{
+            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open fish barrel").menuOption("Fill").increaseByDifference(),
+            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Fish barrel").menuOption("Fill").increaseByDifference(),
+        };
+        this.triggers_menu_options = new TriggerMenuOption[]{
+            new TriggerMenuOption("Open fish barrel", "Empty", 0)
         };
     }
 }

@@ -51,6 +51,7 @@ public interface ChargesImprovedConfig extends Config {
     String coffin = "coffin";
     String bracelet_of_flamtaer = "bracelet_of_flamtaer";
     String ring_of_recoil = "ring_of_recoil";
+    String log_basket = "log_basket";
 
     @ConfigSection(
         name = "Colors",
@@ -371,4 +372,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Coffin charges",
             section = debug
         ) default int getCoffinCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = log_basket,
+            name = "Log basket",
+            description = "Log basket charges",
+            section = debug
+        ) default int getLogBasketCharges() { return -1; }
 }
