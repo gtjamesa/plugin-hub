@@ -25,6 +25,7 @@ public enum ChargesItem {
     IBANS_STAFF,
     KHAREDSTS_MEMOIRS,
     LOG_BASKET,
+    MAGIC_CAPE,
     OGRE_BELLOWS,
     PHARAOHS_SCEPTRE,
     RING_OF_RECOIL,

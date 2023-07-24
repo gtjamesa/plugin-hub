@@ -53,6 +53,7 @@ public interface ChargesImprovedConfig extends Config {
     String ring_of_recoil = "ring_of_recoil";
     String log_basket = "log_basket";
     String ardougne_cloak = "ardougne_cloak";
+    String magic_cape = "magic_cape";
 
     @ConfigSection(
         name = "Colors",
@@ -387,4 +388,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Ardougle cloak charges",
             section = debug
         ) default int getArdougneCloakCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = magic_cape,
+            name = "Magic cape",
+            description = "Magic cape charges",
+            section = debug
+        ) default int getMagicCapeCharges() { return -1; }
 }

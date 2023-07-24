@@ -2,12 +2,7 @@ package tictac7x.charges;
 
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.GameState;
-import net.runelite.api.HitsplatID;
-import net.runelite.api.InventoryID;
-import net.runelite.api.ItemContainer;
+import net.runelite.api.*;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
@@ -164,6 +159,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			// Capes
 			new C_ArdougneCloak(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new C_MagicCape(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Utilities
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
@@ -229,6 +225,12 @@ public class ChargesImprovedPlugin extends Plugin {
 
 		final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
 		final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
+
+		if (inventory != null ) {
+			for (final Item item: inventory.getItems()) {
+				System.out.println(item.getId());
+			}
+		}
 
 		if (inventory != null && equipment != null) {
 			// We need to know about items to show messages about resetting charges.
