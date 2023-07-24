@@ -52,6 +52,7 @@ public interface ChargesImprovedConfig extends Config {
     String bracelet_of_flamtaer = "bracelet_of_flamtaer";
     String ring_of_recoil = "ring_of_recoil";
     String log_basket = "log_basket";
+    String ardougne_cloak = "ardougne_cloak";
 
     @ConfigSection(
         name = "Colors",
@@ -379,4 +380,11 @@ public interface ChargesImprovedConfig extends Config {
             description = "Log basket charges",
             section = debug
         ) default int getLogBasketCharges() { return -1; }
+
+        @ConfigItem(
+            keyName = ardougne_cloak,
+            name = "Ardougne cloak",
+            description = "Ardougle cloak charges",
+            section = debug
+        ) default int getArdougneCloakCharges() { return -1; }
 }

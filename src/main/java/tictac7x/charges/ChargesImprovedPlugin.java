@@ -162,6 +162,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Capes
+			new C_ArdougneCloak(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Utilities

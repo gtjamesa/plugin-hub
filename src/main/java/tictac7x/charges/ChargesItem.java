@@ -2,6 +2,7 @@ package tictac7x.charges;
 
 public enum ChargesItem {
     ARCLIGHT,
+    ARDOUGNE_CLOAK,
     ASH_SANCTIFIER,
     BARROWS_GEAR,
     BONE_CRUSHER,
