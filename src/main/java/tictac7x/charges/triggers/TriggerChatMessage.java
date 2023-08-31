@@ -14,6 +14,7 @@ public class TriggerChatMessage {
     public boolean inventory_count_same;
     public boolean multiple_charges;
     public boolean increase_dynamically;
+    public boolean use_difference;
     public boolean notification;
 
     @Nullable public Consumer<String> consumer;
@@ -84,6 +85,11 @@ public class TriggerChatMessage {
     public TriggerChatMessage notification(final String message) {
         this.notification = true;
         this.notification_message = message;
+        return this;
+    }
+
+    public TriggerChatMessage useDifference() {
+        this.use_difference = true;
         return this;
     }
 }

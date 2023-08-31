@@ -17,6 +17,7 @@ public enum ChargesItem {
     CHRONICLE,
     CIRCLET_OF_WATER,
     COFFIN,
+    CRYSTAL_BOW,
     CRYSTAL_SHIELD,
     DRAGONFIRE_SHIELD,
     FALADOR_SHIELD,

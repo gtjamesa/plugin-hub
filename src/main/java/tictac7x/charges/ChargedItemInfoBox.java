@@ -307,6 +307,12 @@ public class ChargedItemInfoBox extends InfoBox {
 
                 setCharges(charges);
 
+            // Charges need to be calculated from total - used.
+            } else if (chat_message.use_difference) {
+                final int used = Integer.parseInt(matcher.group("used"));
+                final int total = Integer.parseInt(matcher.group("total"));
+                setCharges(total - used);
+
             // Custom consumer.
             } else if (chat_message.consumer != null) {
                 chat_message.consumer.accept(message);
@@ -462,28 +468,13 @@ public class ChargedItemInfoBox extends InfoBox {
         // Player check.
         if (event.getActor() != client.getLocalPlayer()) return;
 
-        // Save animation ID for others to use.
-        graphic = event.getActor().getGraphic();
-
         // No animations to check.
-        if (inventory == null || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerGraphic trigger_graphic : triggers_graphics) {
             // Valid animation id check.
-            if (trigger_graphic.graphic_id != event.getActor().getGraphic()) continue;
-
-            // Unallowed items check.
-            if (trigger_graphic.unallowed_items != null) {
-                boolean unallowed_items = false;
-                for (final int item_id : trigger_graphic.unallowed_items) {
-                    if (inventory.contains(item_id) || equipment != null && equipment.contains(item_id)) {
-                        unallowed_items = true;
-                        break;
-                    }
-                }
-                if (unallowed_items) continue;
-            }
+            if (!event.getActor().hasSpotAnim(trigger_graphic.graphic_id)) continue;
 
             // Equipped check.
             if (trigger_graphic.equipped) {
@@ -496,9 +487,6 @@ public class ChargedItemInfoBox extends InfoBox {
                 }
                 if (!equipped) continue;
             }
-
-            // Menu option check.
-            if (trigger_graphic.menu_option != null && (menu_entries.stream().noneMatch(entry -> entry[1].equals(trigger_graphic.menu_option)))) continue;
 
             // Valid trigger, modify charges.
             if (trigger_graphic.decrease_charges) {

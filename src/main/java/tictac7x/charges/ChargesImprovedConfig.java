@@ -29,6 +29,7 @@ public interface ChargesImprovedConfig extends Config {
     String celestial_ring = "celestial_ring";
     String chronicle = "chronicle";
     String crystal_shield = "crystal_shield";
+    String crystal_bow = "crystal_bow";
     String expeditious_bracelet = "expeditious_bracelet";
     String falador_shield = "falador_shield";
     String fish_barrel = "fish_barrel";
@@ -241,6 +242,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "Crystal shield charges",
             section = debug
         ) default int getCrystalShieldCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = crystal_bow,
+            name = "Crystal bow",
+            description = "Crystal bow charges",
+            section = debug
+        ) default int getCrystalBowCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = expeditious_bracelet,

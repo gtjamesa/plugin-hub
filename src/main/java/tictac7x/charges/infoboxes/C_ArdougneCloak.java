@@ -24,8 +24,6 @@ import java.util.regex.Pattern;
 import static tictac7x.charges.ChargesImprovedPlugin.CHARGES_UNLIMITED;
 
 public class C_ArdougneCloak extends ChargedItemInfoBox {
-    private final String regex_used = "You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.";
-
     public C_ArdougneCloak(
         final Client client,
         final ClientThread client_thread,
@@ -47,15 +45,9 @@ public class C_ArdougneCloak extends ChargedItemInfoBox {
         };
 
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage(regex_used).extraConsumer(message -> {
-                final Matcher matcher = Pattern.compile(regex_used).matcher(message);
-                if (matcher.find()) {
-                    final int used = Integer.parseInt(matcher.group("used"));
-                    final int total = Integer.parseInt(matcher.group("total"));
-                    setCharges(total - used);
-                }
-            }),
+            new TriggerChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference()
         };
+
         this.triggers_resets = new TriggerReset[]{
             new TriggerReset(3).dynamicItem(ItemID.ARDOUGNE_CLOAK_2),
             new TriggerReset(5).dynamicItem(ItemID.ARDOUGNE_CLOAK_3),

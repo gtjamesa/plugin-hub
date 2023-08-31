@@ -12,10 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
+import tictac7x.charges.triggers.*;
 
 public class W_TridentOfTheSeas extends ChargedItemInfoBox {
     public W_TridentOfTheSeas(
@@ -46,8 +43,8 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))?( only)? has (?<charges>.+) charges?( left)?."),
             new TriggerChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)")
         };
-        this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(1167).decreaseCharges(1).equipped()
+        this.triggers_graphics = new TriggerGraphic[]{
+            new TriggerGraphic(1251).decreaseCharges(1).equipped()
         };
     }
 }

@@ -133,6 +133,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_PharaohsSceptre(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new W_CrystalBow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 
 			// Shields
 			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
@@ -226,17 +227,9 @@ public class ChargesImprovedPlugin extends Plugin {
 		final ItemContainer inventory = client.getItemContainer(InventoryID.INVENTORY);
 		final ItemContainer equipment = client.getItemContainer(InventoryID.EQUIPMENT);
 
-		if (inventory != null ) {
-			for (final Item item: inventory.getItems()) {
-				System.out.println(item.getId());
-			}
-		}
-
-		if (inventory != null && equipment != null) {
-			// We need to know about items to show messages about resetting charges.
-			if (!config.getResetDate().equals(date)) {
-				resetCharges(date);
-			}
+		// We need to know about items to show messages about resetting charges.
+		if (!config.getResetDate().equals(date)) {
+			resetCharges(date);
 		}
 	}
 

@@ -13,18 +13,11 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
+import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerReset;
-import tictac7x.charges.triggers.TriggerWidget;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-public class C_MagicCape extends ChargedItemInfoBox {
-    private final int MAGIC_CAPE_T = 9763;
-    private final String regex_changed = "You have changed your spellbook (?<changed>.+)/(?<total>.+) times today.";
-
-    public C_MagicCape(
+public class W_CrystalBow extends ChargedItemInfoBox {
+    public W_CrystalBow(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -35,24 +28,16 @@ public class C_MagicCape extends ChargedItemInfoBox {
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.MAGIC_CAPE, ItemID.MAGIC_CAPE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
-        this.config_key = ChargesImprovedConfig.magic_cape;
-
+        super(ChargesItem.CRYSTAL_BOW, ItemID.CRYSTAL_BOW, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
+        this.config_key = ChargesImprovedConfig.crystal_bow;
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.MAGIC_CAPE),
-            new TriggerItem(MAGIC_CAPE_T)
+            new TriggerItem(ItemID.CRYSTAL_BOW),
         };
-
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage(regex_changed).useDifference(),
+            new TriggerChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.")
         };
-
-        this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/.+ left\\)")
-        };
-
-        this.triggers_resets = new TriggerReset[]{
-            new TriggerReset(5)
+        this.triggers_hitsplats = new TriggerHitsplat[]{
+            new TriggerHitsplat(1).onEnemy().equipped()
         };
     }
 }
