@@ -17,6 +17,7 @@ public class TriggerChatMessage {
     public boolean use_difference;
     public boolean notification;
 
+    @Nullable public Pattern ignore_message;
     @Nullable public Consumer<String> consumer;
     @Nullable public Integer fixed_charges;
     @Nullable public Integer decrease_charges;
@@ -90,6 +91,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage useDifference() {
         this.use_difference = true;
+        return this;
+    }
+
+    public TriggerChatMessage ignore(final String ignore_message) {
+        this.ignore_message = Pattern.compile(ignore_message);
         return this;
     }
 }

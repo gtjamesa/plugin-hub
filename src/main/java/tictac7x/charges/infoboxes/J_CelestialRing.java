@@ -41,7 +41,7 @@ public class J_CelestialRing extends ChargedItemInfoBox {
             new TriggerChatMessage("You fully uncharge your Celestial ring.").fixedCharges(0),
             new TriggerChatMessage("Your Celestial ring has (?<charges>.+) charges?."),
             new TriggerChatMessage("Your Celestial ring has run out of charges").fixedCharges(0).notification(),
-            new TriggerChatMessage("You manage to mine").equipped().decreaseCharges(1)
+            new TriggerChatMessage("You manage to mine").ignore("You manage to mine some pay-dirt.").equipped().decreaseCharges(1)
         };
     }
 }

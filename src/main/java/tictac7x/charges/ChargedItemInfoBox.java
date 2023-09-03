@@ -269,8 +269,13 @@ public class ChargedItemInfoBox extends InfoBox {
         final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
 
         for (final TriggerChatMessage chat_message : triggers_chat_messages) {
-            final Pattern regex = chat_message.message;
-            final Matcher matcher = regex.matcher(message);
+            final Matcher matcher = chat_message.message.matcher(message);
+
+            // Message should be ignored.
+            if (chat_message.ignore_message != null) {
+                final Matcher ignore_matcher = chat_message.ignore_message.matcher(message);
+                if (ignore_matcher.find()) return;
+            }
 
             // Message does not match the pattern.
             if (!matcher.find()) continue;
