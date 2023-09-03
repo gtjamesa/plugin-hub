@@ -19,6 +19,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Weapons
 - [x] Arclight
 - [x] Bryophyta's staff
+- [x] Crystal bow
 - [x] Iban's staff
 - [x] Pharaoh's sceptre
 - [x] Sanguinesti Staff
@@ -35,11 +36,19 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Helms
 - [x] Circlet of water
 
+### Capes
+- [x] Ardougle Cloak
+- [x] Coffin
+- [x] Magic Cape
+
 ### Jewellery
 - [x] Bracelet of clay
+- [x] Bracelet of expeditious
+- [x] Bracelet of flamtaer
 - [x] Bracelet of slaughter
+- [x] Camulet
 - [x] Celestial Ring
-- [x] Expeditious bracelet
+- [x] Ring of Recoil
 - [x] Ring of Suffering
 - [x] Slayer ring
 - [x] Xeric's talisman
@@ -50,5 +59,9 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bottomless compost bucket
 - [x] Fish barrel
 - [x] Gricoller's can
+- [x] Log basket
+- [x] Ogre bellows
 - [x] Soul bearer
 - [x] Teleport crystal
+- [x] Waterskins
+
