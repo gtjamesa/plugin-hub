@@ -330,6 +330,10 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onVarbitChanged(final VarbitChanged event) {
+		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
+			infobox.onVarbitChanged(event);
+		}
+
 		// If server minutes are 0, it's a new day!
 		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
 			final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);

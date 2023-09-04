@@ -12,6 +12,7 @@ import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
@@ -149,6 +150,36 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public int getCharges() {
         return charges;
+    }
+
+    public void onVarbitChanged(final VarbitChanged event) {
+        if (triggers_items == null) return;
+
+        for (final TriggerItem trigger_item : triggers_items) {
+            if (
+                // Item trigger does not use varbits.
+                trigger_item.varbit_id == null ||
+                trigger_item.varbit_value == null ||
+                // Varbit does not match the trigger item required varbit.
+                event.getVarbitId() != trigger_item.varbit_id ||
+                event.getValue() != trigger_item.varbit_value
+            ) continue;
+
+            // Find out charges for the item.
+            if (trigger_item.fixed_charges != null) {
+                int charges = 0;
+                charges += inventory != null ? inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                this.charges = charges;
+
+            // Find out charges based on the amount of item.
+            } else if (trigger_item.quantity_charges) {
+                int charges = 0;
+                charges += inventory != null ? inventory.count(trigger_item.item_id) : 0;
+                charges += equipment != null ? equipment.count(trigger_item.item_id) : 0;
+                this.charges = charges;
+            }
+        }
     }
 
     public void onItemContainersChanged(final ItemContainerChanged event) {
