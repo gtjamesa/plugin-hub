@@ -14,7 +14,6 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
 
 public class H_CircletOfWater extends ChargedItemInfoBox {
     public H_CircletOfWater(

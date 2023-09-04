@@ -1,5 +1,6 @@
 package tictac7x.charges;
 
+import net.runelite.api.Client;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.FontManager;
@@ -14,10 +15,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChargedItemsOverlay extends WidgetItemOverlay {
+    private final Client client;
     private final ChargesImprovedConfig config;
     private final ChargedItemInfoBox[] infoboxes_charged_items;
 
-    public ChargedItemsOverlay(final ChargesImprovedConfig config, final ChargedItemInfoBox[] infoboxes_charged_items) {
+    public ChargedItemsOverlay(final Client client, final ChargesImprovedConfig config, final ChargedItemInfoBox[] infoboxes_charged_items) {
+        this.client = client;
         this.config = config;
         this.infoboxes_charged_items = infoboxes_charged_items;
         showOnInventory();
@@ -32,14 +35,14 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
         for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
             if (infobox.triggers_items == null || config.getHiddenItemOverlays().contains(infobox.infobox_id)) continue;
 
-            TriggerItem trigger_item = null;
-            for (final TriggerItem trigger : infobox.triggers_items) {
-                if (trigger.item_id == item_id) {
-                    trigger_item = trigger;
+            TriggerItem trigger_item_to_use = null;
+            for (final TriggerItem trigger_item : infobox.triggers_items) {
+                if (trigger_item.item_id == item_id && !trigger_item.hide_overlay) {
+                    trigger_item_to_use = trigger_item;
                     break;
                 }
             }
-            if (trigger_item == null) continue;
+            if (trigger_item_to_use == null) continue;
 
             // Charges from infobox.
             String charges = ChargesImprovedPlugin.getChargesMinified(infobox.getCharges());
@@ -47,8 +50,8 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
             graphics.setFont(FontManager.getRunescapeSmallFont());
 
             // Charges from name (override the infobox).
-            if (trigger_item.fixed_charges != null) {
-                charges = ChargesImprovedPlugin.getChargesMinified(trigger_item.fixed_charges);
+            if (trigger_item_to_use.fixed_charges != null) {
+                charges = ChargesImprovedPlugin.getChargesMinified(trigger_item_to_use.fixed_charges);
             }
 
             final Rectangle bounds = item_widget.getCanvasBounds();

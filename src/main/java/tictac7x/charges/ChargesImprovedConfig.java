@@ -27,6 +27,7 @@ public interface ChargesImprovedConfig extends Config {
     String bracelet_of_slaughter = "bracelet_of_slaughter";
     String bryophytas_staff = "bryophytas_staff";
     String celestial_ring = "celestial_ring";
+    String escape_crystal = "escape_crystal";
     String chronicle = "chronicle";
     String crystal_shield = "crystal_shield";
     String crystal_bow = "crystal_bow";

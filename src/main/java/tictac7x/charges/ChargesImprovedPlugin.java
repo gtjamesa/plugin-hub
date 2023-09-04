@@ -76,7 +76,12 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Crystal bow added.<br>" +
-		"<colHIGHLIGHT>* General fixes.";
+		"<colHIGHLIGHT>* Flamtaer bracelet added.<br>" +
+		"<colHIGHLIGHT>* Ardougne cloak added.<br>" +
+		"<colHIGHLIGHT>* Magic cape added.<br>" +
+		"<colHIGHLIGHT>* Escape crystal added.<br>" +
+		"<colHIGHLIGHT>* Falador shield 4 fixes.<br>" +
+		"<colHIGHLIGHT>* Ring of suffering fixes.";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -148,6 +153,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
+			new J_EscapeCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
@@ -204,7 +210,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, this),
 		};
-		overlay_charged_items = new ChargedItemsOverlay(config, infoboxes_charged_items);
+		overlay_charged_items = new ChargedItemsOverlay(client, config, infoboxes_charged_items);
 
 		overlays.add(overlay_charged_items);
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));

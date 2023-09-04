@@ -17,9 +17,6 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerReset;
 import tictac7x.charges.triggers.TriggerWidget;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class C_MagicCape extends ChargedItemInfoBox {
     private final int MAGIC_CAPE_T = 9763;
     private final String regex_changed = "You have changed your spellbook (?<changed>.+)/(?<total>.+) times today.";

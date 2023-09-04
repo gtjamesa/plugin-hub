@@ -16,7 +16,6 @@ import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
-import tictac7x.charges.triggers.TriggerMenuOption;
 
 public class U_LogBasket extends ChargedItemInfoBox {
     private final int MAX_CHARGES = 28;

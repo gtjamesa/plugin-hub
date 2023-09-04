@@ -15,7 +15,6 @@ import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
 
 public class W_SanguinestiStaff extends ChargedItemInfoBox {
     public W_SanguinestiStaff(

@@ -239,11 +239,25 @@ public class ChargedItemInfoBox extends InfoBox {
             // Item not found, don't calculate charges.
             if (!in_equipment_item && !in_inventory_item) continue;
 
+            // Item trigger has varbit check.
+            if (
+                trigger_item.varbit_id != null &&
+                trigger_item.varbit_value != null
+                && client.getVarbitValue(trigger_item.varbit_id) != trigger_item.varbit_value
+            ) {
+                continue;
+            }
+
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
                 if (charges == null) charges = 0;
                 charges += inventory != null ? inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
                 charges += equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+            // Find out charges based on the amount of item.
+            } else if (trigger_item.quantity_charges) {
+                if (charges == null) charges = 0;
+                charges += inventory != null ? inventory.count(trigger_item.item_id) : 0;
+                charges += equipment != null ? equipment.count(trigger_item.item_id) : 0;
             }
         }
 

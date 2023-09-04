@@ -12,7 +12,9 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.*;
+import tictac7x.charges.triggers.TriggerChatMessage;
+import tictac7x.charges.triggers.TriggerGraphic;
+import tictac7x.charges.triggers.TriggerItem;
 
 public class S_DragonfireShield extends ChargedItemInfoBox {
     public S_DragonfireShield(

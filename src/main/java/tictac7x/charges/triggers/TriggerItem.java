@@ -4,7 +4,11 @@ import javax.annotation.Nullable;
 
 public class TriggerItem {
     public final int item_id;
+    public boolean quantity_charges;
+    public boolean hide_overlay;
 
+    @Nullable public Integer varbit_id;
+    @Nullable public Integer varbit_value;
     @Nullable public Integer fixed_charges;
     @Nullable public Integer max_charges;
 
@@ -19,6 +23,22 @@ public class TriggerItem {
 
     public TriggerItem maxCharges(final int charges) {
         this.max_charges = charges;
+        return this;
+    }
+
+    public TriggerItem quantityCharges() {
+        this.quantity_charges = true;
+        return this;
+    }
+
+    public TriggerItem varbitChecker(final int varbit_id, final int varbit_value) {
+        this.varbit_id = varbit_id;
+        this.varbit_value = varbit_value;
+        return this;
+    }
+
+    public TriggerItem hideOverlay() {
+        this.hide_overlay = true;
         return this;
     }
 }

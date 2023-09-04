@@ -13,10 +13,10 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.*;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import tictac7x.charges.triggers.TriggerChatMessage;
+import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.triggers.TriggerItemContainer;
+import tictac7x.charges.triggers.TriggerMenuOption;
 
 public class U_FishBarrel extends ChargedItemInfoBox {
     private final int FISH_BARREL_SIZE = 28;

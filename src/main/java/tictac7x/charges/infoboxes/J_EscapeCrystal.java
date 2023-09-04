@@ -14,8 +14,10 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class U_Waterskin extends ChargedItemInfoBox {
-    public U_Waterskin(
+public class J_EscapeCrystal extends ChargedItemInfoBox {
+    final private int VARBIT_ESCAPE_CRYSTAL_ACTIVATED = 14838;
+
+    public J_EscapeCrystal(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -26,14 +28,13 @@ public class U_Waterskin extends ChargedItemInfoBox {
         final ChargesImprovedConfig config,
         final Plugin plugin
     ) {
-        super(ChargesItem.WATERSKIN, ItemID.WATERSKIN0, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
-        this.config_key = ChargesImprovedConfig.waterskin;
+        super(ChargesItem.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
+        this.config_key = ChargesImprovedConfig.escape_crystal;
+        this.needs_to_be_equipped_for_infobox = true;
+
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.WATERSKIN0).fixedCharges(0),
-            new TriggerItem(ItemID.WATERSKIN1).fixedCharges(1),
-            new TriggerItem(ItemID.WATERSKIN2).fixedCharges(2),
-            new TriggerItem(ItemID.WATERSKIN3).fixedCharges(3),
-            new TriggerItem(ItemID.WATERSKIN4).fixedCharges(4),
+            new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).fixedCharges(0).hideOverlay(),
+            new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 1).quantityCharges().hideOverlay()
         };
     }
 }

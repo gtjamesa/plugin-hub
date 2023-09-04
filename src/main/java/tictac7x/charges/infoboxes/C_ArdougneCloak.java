@@ -1,7 +1,6 @@
 package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
-import net.runelite.api.InventoryID;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -15,11 +14,7 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerItemContainer;
 import tictac7x.charges.triggers.TriggerReset;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static tictac7x.charges.ChargesImprovedPlugin.CHARGES_UNLIMITED;
 

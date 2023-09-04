@@ -16,11 +16,6 @@ import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
-import tictac7x.charges.triggers.TriggerMenuOption;
-import tictac7x.charges.triggers.TriggerWidget;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class C_Coffin extends ChargedItemInfoBox {
     private final int SIZE_BRONZE_COFFIN = 3;
