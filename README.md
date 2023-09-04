@@ -48,6 +48,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bracelet of slaughter
 - [x] Camulet
 - [x] Celestial Ring
+- [x] Escape crystal
 - [x] Ring of Recoil
 - [x] Ring of Suffering
 - [x] Slayer ring
