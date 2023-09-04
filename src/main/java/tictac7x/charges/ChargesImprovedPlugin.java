@@ -75,8 +75,8 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_version = "v0.3";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* General fixes and improvements<br>" +
-		"<colHIGHLIGHT>* Log basket added";
+		"<colHIGHLIGHT>* Crystal bow added.<br>" +
+		"<colHIGHLIGHT>* General fixes.";
 
 	private final int VARBIT_MINUTES = 8354;
 

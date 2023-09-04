@@ -13,6 +13,7 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
 import tictac7x.charges.triggers.TriggerChatMessage;
+import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class J_RingOfSuffering extends ChargedItemInfoBox {
@@ -32,12 +33,19 @@ public class J_RingOfSuffering extends ChargedItemInfoBox {
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_SUFFERING).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SUFFERING_I).fixedCharges(0),
+            new TriggerItem(ItemID.RING_OF_SUFFERING_I_25246).fixedCharges(0),
+            new TriggerItem(ItemID.RING_OF_SUFFERING_I_26761).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SUFFERING_R),
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI),
+            new TriggerItem(ItemID.RING_OF_SUFFERING_RI_25248),
+            new TriggerItem(ItemID.RING_OF_SUFFERING_RI_26762),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick(),
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
+        };
+        this.triggers_hitsplats = new TriggerHitsplat[]{
+            new TriggerHitsplat(1).equipped().onSelf()
         };
     }
 }
