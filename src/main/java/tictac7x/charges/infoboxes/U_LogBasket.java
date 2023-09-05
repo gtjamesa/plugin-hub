@@ -45,11 +45,7 @@ public class U_LogBasket extends ChargedItemInfoBox {
             new TriggerChatMessage("(Your|The) basket is empty.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("You bank all your logs.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("The basket contains:").onItemClick().multipleCharges(),
-            new TriggerChatMessage("(You get some.* logs.|The nature offerings enabled you to chop an extra log.)").extraConsumer(message -> {
-                if (item_id == ItemID.OPEN_LOG_BASKET) {
-                    increaseCharges(1);
-                }
-            })
+            new TriggerChatMessage("(You get some.* logs.|The nature offerings enabled you to chop an extra log.)").specificItem(ItemID.OPEN_LOG_BASKET).specificItem(ItemID.OPEN_FORESTRY_BASKET).increaseCharges(1),
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
             new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open log basket").menuOption("Fill").increaseByDifference(),

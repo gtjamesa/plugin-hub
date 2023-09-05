@@ -322,6 +322,9 @@ public class ChargedItemInfoBox extends InfoBox {
                 if (ignore_matcher.find()) return;
             }
 
+            // Specific item check.
+            if (!chat_message.specific_items.isEmpty() && !chat_message.specific_items.contains(item_id)) continue;
+
             // Message does not match the pattern.
             if (!matcher.find()) continue;
 

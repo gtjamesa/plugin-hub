@@ -2,6 +2,8 @@ package tictac7x.charges.triggers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,7 @@ public class TriggerChatMessage {
     public boolean use_difference;
     public boolean notification;
 
+    public List<Integer> specific_items = new ArrayList<>();
     @Nullable public Pattern ignore_message;
     @Nullable public Consumer<String> consumer;
     @Nullable public Integer fixed_charges;
@@ -96,6 +99,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage ignore(final String ignore_message) {
         this.ignore_message = Pattern.compile(ignore_message);
+        return this;
+    }
+
+    public TriggerChatMessage specificItem(final int item_id) {
+        this.specific_items.add(item_id);
         return this;
     }
 }

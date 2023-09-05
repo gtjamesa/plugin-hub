@@ -81,7 +81,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>* Magic cape added.<br>" +
 		"<colHIGHLIGHT>* Escape crystal added.<br>" +
 		"<colHIGHLIGHT>* Falador shield 4 fixes.<br>" +
-		"<colHIGHLIGHT>* Ring of suffering fixes.";
+		"<colHIGHLIGHT>* Ring of suffering fixes.<br>" +
+		"<colHIGHLIGHT>* Forestry kit fixes.";
 
 	private final int VARBIT_MINUTES = 8354;
 
