@@ -6,6 +6,7 @@ public class TriggerItem {
     public final int item_id;
     public boolean quantity_charges;
     public boolean hide_overlay;
+    public boolean is_negative;
 
     @Nullable public Integer varbit_id;
     @Nullable public Integer varbit_value;
@@ -39,6 +40,11 @@ public class TriggerItem {
 
     public TriggerItem hideOverlay() {
         this.hide_overlay = true;
+        return this;
+    }
+
+    public TriggerItem isNegative() {
+        this.is_negative = true;
         return this;
     }
 }

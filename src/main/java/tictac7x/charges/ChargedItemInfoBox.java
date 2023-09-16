@@ -75,6 +75,7 @@ public class ChargedItemInfoBox extends InfoBox {
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean in_equipment;
     private boolean in_inventory;
+    private boolean is_negative;
     private final List<String[]> menu_entries = new ArrayList<>();
     private int animation = -1;
     private int graphic = -1;
@@ -126,7 +127,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getText() {
-        return ChargesImprovedPlugin.getChargesMinified(needs_to_be_equipped_for_infobox && !in_equipment ? 0 : charges);
+        return ChargesImprovedPlugin.getChargesMinified(charges);
     }
 
     @Override
@@ -136,11 +137,28 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        return getText().equals("?") ? config.getColorUnknown() : getText().equals("0") && !zero_charges_is_positive ? config.getColorEmpty() : config.getColorDefault();
+        return
+            charges == ChargesImprovedPlugin.CHARGES_UNKNOWN ? config.getColorUnknown() :
+            charges == 0 && !zero_charges_is_positive ? config.getColorEmpty() :
+            needs_to_be_equipped_for_infobox && !in_equipment ? config.getColorEmpty() :
+            is_negative ? config.getColorEmpty() :
+            config.getColorDefault();
     }
 
     private boolean isAllowed() {
         return !config.getHiddenInfoboxes().contains(infobox_id);
+    }
+
+    public boolean isNegative() {
+        return is_negative;
+    }
+
+    public boolean needsToBeEquipped() {
+        return needs_to_be_equipped_for_infobox;
+    }
+
+    public boolean isEquipped() {
+        return in_equipment;
     }
 
     @Override
@@ -179,6 +197,8 @@ public class ChargedItemInfoBox extends InfoBox {
                 charges += equipment != null ? equipment.count(trigger_item.item_id) : 0;
                 this.charges = charges;
             }
+
+            this.is_negative = trigger_item.is_negative;
         }
     }
 
@@ -250,6 +270,18 @@ public class ChargedItemInfoBox extends InfoBox {
         Integer charges = null;
 
         for (final TriggerItem trigger_item : triggers_items) {
+            // Item trigger has varbit check.
+            if (
+                trigger_item.varbit_id != null &&
+                trigger_item.varbit_value != null &&
+                client.getVarbitValue(trigger_item.varbit_id) != trigger_item.varbit_value
+            ) {
+                continue;
+            }
+
+            // Negative item check.
+            is_negative = trigger_item.is_negative;
+
             // Find out if item is equipped.
             final boolean in_equipment_item = equipment != null && equipment.contains(trigger_item.item_id);
             final boolean in_inventory_item = inventory != null && inventory.contains(trigger_item.item_id);
@@ -270,14 +302,7 @@ public class ChargedItemInfoBox extends InfoBox {
             // Item not found, don't calculate charges.
             if (!in_equipment_item && !in_inventory_item) continue;
 
-            // Item trigger has varbit check.
-            if (
-                trigger_item.varbit_id != null &&
-                trigger_item.varbit_value != null
-                && client.getVarbitValue(trigger_item.varbit_id) != trigger_item.varbit_value
-            ) {
-                continue;
-            }
+
 
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
@@ -337,6 +362,11 @@ public class ChargedItemInfoBox extends InfoBox {
             // Item needs to be equipped.
             if (chat_message.equipped && !in_equipment) continue;
 
+            // Notifications.
+            if (chat_message.notification) {
+                notifier.notify(chat_message.notification_message != null ? chat_message.notification_message : message);
+            }
+
             // Increase charges by fixed amount.
             if (chat_message.increase_charges != null) {
                 increaseCharges(chat_message.increase_charges);
@@ -371,7 +401,7 @@ public class ChargedItemInfoBox extends InfoBox {
                 chat_message.consumer.accept(message);
 
             // Set charges dynamically from the chat message.
-            } else if (matcher.group("charges") != null) {
+            } else {
                 try {
                     final int charges = Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", ""));
 
@@ -381,10 +411,6 @@ public class ChargedItemInfoBox extends InfoBox {
                         setCharges(charges);
                     }
                 } catch (final Exception ignored) {}
-
-            // No trigger found.
-            } else {
-                continue;
             }
 
             // Check extra matches groups.
@@ -397,15 +423,11 @@ public class ChargedItemInfoBox extends InfoBox {
                 }
             }
 
-            // Notifications.
-            if (chat_message.notification) {
-                notifier.notify(chat_message.notification_message != null ? chat_message.notification_message : message);
-            }
-
             // Chat message used, no need to check other messages.
             return;
         }
     }
+
     public void onWidgetLoaded(final WidgetLoaded event) {
         if (triggers_widgets == null || config_key == null) return;
 

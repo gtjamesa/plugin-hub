@@ -19,7 +19,7 @@ import tictac7x.charges.triggers.TriggerWidget;
 
 public class C_MagicCape extends ChargedItemInfoBox {
     private final int MAGIC_CAPE_T = 9763;
-    private final String regex_changed = "You have changed your spellbook (?<changed>.+)/(?<total>.+) times today.";
+    private final String regex_used = "You have changed your spellbook (?<used>.+)/(?<total>.+) times today.";
 
     public C_MagicCape(
         final Client client,
@@ -41,11 +41,11 @@ public class C_MagicCape extends ChargedItemInfoBox {
         };
 
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage(regex_changed).useDifference(),
+            new TriggerChatMessage(regex_used).useDifference(),
         };
 
         this.triggers_widgets = new TriggerWidget[]{
-            new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/.+ left\\)")
+            new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/5 left\\)")
         };
 
         this.triggers_resets = new TriggerReset[]{

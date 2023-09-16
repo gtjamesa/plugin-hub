@@ -33,7 +33,7 @@ public class J_EscapeCrystal extends ChargedItemInfoBox {
         this.needs_to_be_equipped_for_infobox = true;
 
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).fixedCharges(0).hideOverlay(),
+            new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).quantityCharges().isNegative().hideOverlay(),
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 1).quantityCharges().hideOverlay()
         };
     }

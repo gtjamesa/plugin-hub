@@ -1,6 +1,7 @@
 package tictac7x.charges;
 
 import net.runelite.api.Client;
+import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.FontManager;
@@ -25,8 +26,19 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
         this.infoboxes_charged_items = infoboxes_charged_items;
         showOnInventory();
         showOnEquipment();
+        showOnInterfaces(84);
         showOnBank();
     }
+
+    private boolean isBankWidget(final WidgetItem item_widget) {
+        return
+            item_widget.getWidget().getParentId() == 786442 ||
+            item_widget.getWidget().getParentId() == 786443 ||
+            item_widget.getWidget().getParentId() == 786444 ||
+            item_widget.getWidget().getParentId() == 786445
+        ;
+    }
+
 
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
@@ -58,10 +70,21 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
             final TextComponent charges_component = new TextComponent();
 
             charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
-            charges_component.setColor(charges.equals("?") ? config.getColorUnknown() : charges.equals("0") && !infobox.zero_charges_is_positive ? config.getColorEmpty() : infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges ? config.getColorEmpty() : config.getColorDefault());
             charges_component.setText(charges);
-            charges_component.render(graphics);
 
+            if (!isBankWidget(item_widget) && (infobox.isNegative() || infobox.needsToBeEquipped() && !infobox.isEquipped())) {
+                charges_component.setColor(config.getColorEmpty());
+            } else if (charges.equals("?")) {
+                charges_component.setColor(config.getColorUnknown());
+            } else if (charges.equals("0") && !infobox.zero_charges_is_positive) {
+                charges_component.setColor(config.getColorEmpty());
+            } else if (infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges) {
+                charges_component.setColor(config.getColorEmpty());
+            } else {
+                charges_component.setColor(config.getColorEmpty());
+            }
+
+            charges_component.render(graphics);
             return;
         }
     }

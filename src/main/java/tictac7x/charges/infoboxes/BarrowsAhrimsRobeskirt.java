@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesItem;
+import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsAhrimsRobeskirt extends ChargedItemInfoBox {
@@ -27,7 +28,6 @@ public class BarrowsAhrimsRobeskirt extends ChargedItemInfoBox {
         final Plugin plugin
     ) {
         super(ChargesItem.BARROWS_GEAR, ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
-        this.charges = 100;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100).fixedCharges(100),
@@ -35,6 +35,9 @@ public class BarrowsAhrimsRobeskirt extends ChargedItemInfoBox {
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_50).fixedCharges(50),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_25).fixedCharges(25),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_0).fixedCharges(0)
+        };
+        this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("Ahrim's skirt has broken!").notification()
         };
     }
 }

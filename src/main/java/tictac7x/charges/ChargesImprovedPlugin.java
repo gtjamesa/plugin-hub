@@ -340,6 +340,11 @@ public class ChargesImprovedPlugin extends Plugin {
 			final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 			resetCharges(date);
 		}
+
+		log.debug("VARBIT CHANGED | " +
+			"id: " + event.getVarbitId() +
+			", value: " + event.getValue()
+		);
 	}
 
 	@Subscribe
