@@ -9,9 +9,9 @@ public class TriggerAnimation {
     public int charges;
     public boolean decrease_charges;
     public boolean equipped;
-    public boolean menu_target;
 
     @Nullable public int[] unallowed_items;
+    @Nullable public String menu_target;
     @Nullable public String menu_option;
 
     public TriggerAnimation(final int animation_id) {
@@ -35,13 +35,13 @@ public class TriggerAnimation {
         return this;
     }
 
-    public TriggerAnimation onItemClick() {
-        this.menu_target = true;
+    public TriggerAnimation unallowedItems(@Nonnull final int[] unallowed_items) {
+        this.unallowed_items = unallowed_items;
         return this;
     }
 
-    public TriggerAnimation unallowedItems(@Nonnull final int[] unallowed_items) {
-        this.unallowed_items = unallowed_items;
+    public TriggerAnimation onMenuTarget(@Nonnull final String menu_target) {
+        this.menu_target = menu_target;
         return this;
     }
 

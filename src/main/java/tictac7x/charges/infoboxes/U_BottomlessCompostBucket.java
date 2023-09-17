@@ -42,10 +42,11 @@ public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(8197).decreaseCharges(1),
-            new TriggerAnimation(832).increaseCharges(2).onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET})
+            new TriggerAnimation(832).onMenuTarget("Big Compost Bin").onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET}).increaseCharges(2),
+            new TriggerAnimation(832).onMenuTarget("Compost Bin").onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET}).increaseCharges(1),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("You treat the .*").onItemClick().decreaseCharges(1),
             new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
             new TriggerChatMessage("Your bottomless compost bucket has (?<charges>.+) uses of (?<type>.+) ?compost remaining."),
             new TriggerChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)").fixedCharges(0),
@@ -70,6 +71,6 @@ public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
         super.onChargesUpdated();
 
         final @Nullable String type = getCompostType();
-        this.tooltip_extra = super.getCharges() == 0 ? " (empty)" : super.getCharges() > 0 && type != null && type.length() > 0 ? " (" + type + ")" : " (unknown)";
+        this.tooltip_extra = super.getCharges() == 0 ? " (empty)" : super.getCharges() > 0 && type != null && !type.isEmpty() ? " (" + type + ")" : " (unknown)";
     }
 }

@@ -363,18 +363,15 @@ public class ChargedItemInfoBox extends InfoBox {
                     } else {
                         setCharges(charges);
                     }
-                } catch (final Exception ignored) {
-                    continue;
-                }
+                } catch (final Exception ignored) {}
             }
 
             // Check extra matches groups.
             if (extra_config_keys != null) {
                 for (final String extra_group : extra_config_keys) {
-                    final String extra = matcher.group(extra_group);
-                    if (extra != null) {
-                        setConfiguration(config_key + "_" + extra_group, extra.replaceAll(",", ""));
-                    }
+                    try {
+                        setConfiguration(config_key + "_" + extra_group, matcher.group(extra_group).replaceAll(",", ""));
+                    } catch (final Exception ignored) {}
                 }
             }
 
@@ -459,7 +456,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_animation.equipped && !inEquipment()) continue;
 
             // Menu target check.
-            if (trigger_animation.menu_target && !inMenuTargets(items.getItemComposition(item_id).getName())) continue;
+            if (trigger_animation.menu_target != null && !inMenuTargets(trigger_animation.menu_target)) continue;
 
             // Menu option check.
             if (trigger_animation.menu_option != null && !inMenuOptions(trigger_animation.menu_option)) continue;
@@ -470,6 +467,8 @@ public class ChargedItemInfoBox extends InfoBox {
             } else {
                 increaseCharges(trigger_animation.charges);
             }
+
+            return;
         }
     }
 
@@ -636,7 +635,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     private boolean inMenuOptions(final String option) {
-        return store.menu_entries.stream().anyMatch(entry -> entry[0].equals(option));
+        return store.menu_entries.stream().anyMatch(entry -> entry[1].equals(option));
     }
 
     private String getItemName() {
