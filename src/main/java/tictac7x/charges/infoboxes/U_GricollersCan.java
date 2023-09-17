@@ -35,19 +35,19 @@ public class U_GricollersCan extends ChargedItemInfoBox {
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
-//        this.triggers_animations = new TriggerAnimation[]{
-//            new TriggerAnimation(2293).decreaseCharges(1).unallowedItems(new int[]{
-//                ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
-//                ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
-//                ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
-//                ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
-//                ItemID.WATERING_CAN8
-//            }),
-//            new TriggerAnimation(2293).decreaseCharges(1).onItemClick()
-//        };
+        this.triggers_animations = new TriggerAnimation[]{
+            new TriggerAnimation(2293).unallowedItems(new int[]{
+                ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
+                ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
+                ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
+                ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
+                ItemID.WATERING_CAN8
+            }).decreaseCharges(1),
+        };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Watering can charges remaining: (?<charges>.+)%").onItemClick(),
-            new TriggerChatMessage("You water .*").onItemClick().decreaseCharges(1)
+            new TriggerChatMessage("You water").onItemClick().decreaseCharges(1),
+            new TriggerChatMessage("You fill the watering can").onItemClick().fixedCharges(1000),
         };
     }
 }
