@@ -71,17 +71,10 @@ import java.util.Arrays;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.3";
+	private final String plugin_version = "v0.3.1";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Crystal bow added.<br>" +
-		"<colHIGHLIGHT>* Flamtaer bracelet added.<br>" +
-		"<colHIGHLIGHT>* Ardougne cloak added.<br>" +
-		"<colHIGHLIGHT>* Magic cape added.<br>" +
-		"<colHIGHLIGHT>* Escape crystal added.<br>" +
-		"<colHIGHLIGHT>* Falador shield 4 fixes.<br>" +
-		"<colHIGHLIGHT>* Ring of suffering fixes.<br>" +
-		"<colHIGHLIGHT>* Forestry kit fixes.";
+		"<colHIGHLIGHT>* Fixes for compost bucket, magic cape, gricollers can, charges daily resets.";
 
 	private final int VARBIT_MINUTES = 8354;
 
