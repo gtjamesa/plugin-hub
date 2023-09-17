@@ -74,7 +74,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
 
             if (charges.equals("?")) {
                 charges_component.setColor(config.getColorUnknown());
-            } else if (!isBankWidget(item_widget) && (infobox.isNegative() || infobox.needsToBeEquipped() && !infobox.isEquipped())) {
+            } else if (!isBankWidget(item_widget) && (infobox.isNegative() || infobox.needsToBeEquipped() && !infobox.inEquipment())) {
                 charges_component.setColor(config.getColorEmpty());
             } else if (charges.equals("0") && !infobox.zero_charges_is_positive) {
                 charges_component.setColor(config.getColorEmpty());

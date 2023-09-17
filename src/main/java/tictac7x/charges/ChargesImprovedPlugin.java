@@ -34,8 +34,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
-
-
 @Slf4j
 @PluginDescriptor(
 	name = "Item Charges Improved",
@@ -237,6 +235,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
 			infobox.onItemContainersChanged(event);
 		}
+
+		storage.onInventoryItemsChanged(event);
 
 		// We need to know about items to show messages about resetting charges.
 		if (!config.getResetDate().equals(date)) {

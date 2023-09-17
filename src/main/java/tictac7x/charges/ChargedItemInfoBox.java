@@ -4,7 +4,6 @@ import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
-import net.runelite.api.ItemContainer;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameTick;
@@ -59,9 +58,6 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ChargesImprovedConfig config;
     protected final Storage storage;
 
-
-    @Nullable private Item[] inventory_items;
-
     @Nullable protected String config_key;
     @Nullable protected String[] extra_config_keys;
     @Nullable protected TriggerChatMessage[] triggers_chat_messages;
@@ -75,12 +71,8 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerMenuOption[] triggers_menu_options;
 
     protected boolean needs_to_be_equipped_for_infobox;
-    private boolean in_equipment;
-    private boolean in_inventory;
     private boolean is_negative;
     private final List<String[]> menu_entries = new ArrayList<>();
-    private int animation = -1;
-    private int graphic = -1;
     protected int charges = ChargesImprovedPlugin.CHARGES_UNKNOWN;
 
     private String tooltip;
@@ -141,12 +133,13 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        return
+        return (
             charges == ChargesImprovedPlugin.CHARGES_UNKNOWN ? config.getColorUnknown() :
             charges == 0 && !zero_charges_is_positive ? config.getColorEmpty() :
-            needs_to_be_equipped_for_infobox && !in_equipment ? config.getColorEmpty() :
+            needs_to_be_equipped_for_infobox && !inEquipment() ? config.getColorEmpty() :
             is_negative ? config.getColorEmpty() :
-            config.getColorDefault();
+            config.getColorDefault()
+        );
     }
 
     private boolean isAllowed() {
@@ -159,10 +152,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public boolean needsToBeEquipped() {
         return needs_to_be_equipped_for_infobox;
-    }
-
-    public boolean isEquipped() {
-        return in_equipment;
     }
 
     @Override
@@ -190,15 +179,15 @@ public class ChargedItemInfoBox extends InfoBox {
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
                 int charges = 0;
-                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.inventory != null ? storage.inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.equipment != null ? storage.equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
                 this.charges = charges;
 
             // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 int charges = 0;
-                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) : 0;
-                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) : 0;
+                charges += storage.inventory != null ? storage.inventory.count(trigger_item.item_id) : 0;
+                charges += storage.equipment != null ? storage.equipment.count(trigger_item.item_id) : 0;
                 this.charges = charges;
             }
 
@@ -211,8 +200,8 @@ public class ChargedItemInfoBox extends InfoBox {
 
         // Find items difference before items are overridden.
         int items_difference = 0;
-        if (event.getItemContainer().getId() == InventoryID.INVENTORY.getId() && inventory_items != null) {
-            items_difference = itemsDifference(inventory_items, event.getItemContainer().getItems());
+        if (event.getItemContainer().getId() == InventoryID.INVENTORY.getId() && storage.inventory_items != null) {
+            items_difference = itemsDifference(storage.inventory_items, event.getItemContainer().getItems());
         }
 
         if (triggers_item_containers != null) {
@@ -274,8 +263,8 @@ public class ChargedItemInfoBox extends InfoBox {
             is_negative = trigger_item.is_negative;
 
             // Find out if item is equipped.
-            final boolean in_inventory_item = storage.getInventory().isPresent() && storage.getInventory().get().contains(trigger_item.item_id);
-            final boolean in_equipment_item = storage.getEquipment().isPresent() && storage.getEquipment().get().contains(trigger_item.item_id);
+            final boolean in_inventory_item = storage.inventory != null && storage.inventory.contains(trigger_item.item_id);
+            final boolean in_equipment_item = storage.equipment != null && storage.equipment.contains(trigger_item.item_id);
 
             // Item not found, don't calculate charges.
             if (!in_equipment_item && !in_inventory_item) continue;
@@ -293,19 +282,17 @@ public class ChargedItemInfoBox extends InfoBox {
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
                 if (charges == null) charges = 0;
-                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.inventory != null ? storage.inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.equipment != null ? storage.equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
             // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 if (charges == null) charges = 0;
-                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) : 0;
-                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) : 0;
+                charges += storage.inventory != null ? storage.inventory.count(trigger_item.item_id) : 0;
+                charges += storage.equipment != null ? storage.equipment.count(trigger_item.item_id) : 0;
             }
         }
 
         // Update infobox variables for other triggers.
-        this.in_equipment = in_equipment;
-        this.in_inventory = in_inventory;
         this.render = render;
         if (charges != null) this.charges = charges;
     }
@@ -319,7 +306,7 @@ public class ChargedItemInfoBox extends InfoBox {
             // No config to save charges to.
             config_key == null ||
             // Not in inventory nor in equipment.
-            (!in_inventory && !in_equipment)
+            (!inInventory() && !inEquipment())
         ) return;
 
         final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
@@ -346,7 +333,7 @@ public class ChargedItemInfoBox extends InfoBox {
             ) continue;
 
             // Item needs to be equipped.
-            if (chat_message.equipped && !in_equipment) continue;
+            if (chat_message.equipped && !inEquipment()) continue;
 
             // Notifications.
             if (chat_message.notification) {
@@ -471,11 +458,8 @@ public class ChargedItemInfoBox extends InfoBox {
         // Player check.
         if (event.getActor() != client.getLocalPlayer()) return;
 
-        // Save animation ID for others to use.
-        animation = event.getActor().getAnimation();
-
         // No animations to check.
-        if (!storage.getInventory().isPresent() || !storage.getEquipment().isPresent() || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (storage.inventory == null || storage.equipment == null || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         animationTriggerLooper: for (final TriggerAnimation trigger_animation : triggers_animations) {
@@ -485,7 +469,7 @@ public class ChargedItemInfoBox extends InfoBox {
             // Unallowed items check.
             if (trigger_animation.unallowed_items != null) {
                 for (final int item_id : trigger_animation.unallowed_items) {
-                    if (storage.getInventory().get().contains(item_id) || storage.getEquipment().get().contains(item_id)) {
+                    if (storage.inventory.contains(item_id) || storage.equipment.contains(item_id)) {
                         continue animationTriggerLooper;
                     }
                 }
@@ -495,7 +479,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_animation.equipped) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
-                    if (storage.getEquipment().get().contains(trigger_item.item_id)) {
+                    if (storage.equipment.contains(trigger_item.item_id)) {
                         equipped = true;
                         break;
                     }
@@ -529,7 +513,7 @@ public class ChargedItemInfoBox extends InfoBox {
         if (event.getActor() != client.getLocalPlayer()) return;
 
         // No animations to check.
-        if (!storage.getEquipment().isPresent() || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (storage.equipment == null || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerGraphic trigger_graphic : triggers_graphics) {
@@ -540,7 +524,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_graphic.equipped) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
-                    if (storage.getEquipment().get().contains(trigger_item.item_id)) {
+                    if (storage.equipment.contains(trigger_item.item_id)) {
                         equipped = true;
                         break;
                     }
@@ -560,7 +544,7 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onHitsplatApplied(final HitsplatApplied event) {
         if (triggers_hitsplats == null) return;
 
-        if (!storage.getEquipment().isPresent()) return;
+        if (storage.equipment == null) return;
 
         // Check all hitsplat triggers.
         for (final TriggerHitsplat trigger_hitsplat : triggers_hitsplats) {
@@ -574,7 +558,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_hitsplat.hitsplat_id != event.getHitsplat().getHitsplatType()) continue;
 
             // Equipped check.
-            if (trigger_hitsplat.equipped && !isItemEquipped()) {
+            if (trigger_hitsplat.equipped && !inEquipment()) {
                 continue;
             }
 
@@ -592,7 +576,7 @@ public class ChargedItemInfoBox extends InfoBox {
             // Not menu.
             menu_target.length() == 0 ||
             // Item not in inventory nor equipment.
-            !in_inventory && !in_equipment ||
+            !inInventory() && !inEquipment() ||
             // Menu option not found.
             menu_option == null || menu_option.length() == 0
         ) {
@@ -632,7 +616,7 @@ public class ChargedItemInfoBox extends InfoBox {
         if (triggers_resets == null) return;
 
         // Send message about item charges being reset if player has it on them.
-        if (in_equipment || in_inventory) {
+        if (inEquipment() || inInventory()) {
             client_thread.invokeLater(() -> {
                 chat_messages.queue(QueuedMessage.builder()
                     .type(ChatMessageType.CONSOLE)
@@ -707,7 +691,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     private void updateTooltip() {
-        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
+        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !inEquipment() ? " - Needs to be equipped" : "");
     }
 
     protected void onChargesUpdated() {}
@@ -724,13 +708,27 @@ public class ChargedItemInfoBox extends InfoBox {
 
     }
 
-    private boolean isItemEquipped() {
-        if (triggers_items == null || !storage.getEquipment().isPresent()) {
+    public boolean inEquipment() {
+        if (triggers_items == null || storage.equipment == null) {
             return false;
         }
 
         for (final TriggerItem trigger_item : triggers_items) {
-            if (storage.getEquipment().get().contains(trigger_item.item_id)) {
+            if (storage.equipment.contains(trigger_item.item_id)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean inInventory() {
+        if (triggers_items == null || storage.inventory == null) {
+            return false;
+        }
+
+        for (final TriggerItem trigger_item : triggers_items) {
+            if (storage.inventory.contains(trigger_item.item_id)) {
                 return true;
             }
         }

@@ -1,28 +1,31 @@
 package tictac7x.charges.storage;
 
 import net.runelite.api.InventoryID;
+import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.ItemContainerChanged;
 
-import java.util.Optional;
+import javax.annotation.Nullable;
 
 public class Storage {
-    Optional<ItemContainer> inventory = Optional.empty();
-    Optional<ItemContainer> equipment = Optional.empty();
+    @Nullable
+    public ItemContainer inventory = null;
+    @Nullable
+    public ItemContainer equipment = null;
+    @Nullable
+    public Item[] inventory_items = null;
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
-            inventory = Optional.of(event.getItemContainer());
+            inventory = event.getItemContainer();
         } else if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
-            equipment = Optional.of(event.getItemContainer());
+            equipment = event.getItemContainer();
         }
     }
 
-    public Optional<ItemContainer> getInventory() {
-        return inventory;
-    }
-
-    public Optional<ItemContainer> getEquipment() {
-        return equipment;
+    public void onInventoryItemsChanged(final ItemContainerChanged event) {
+        if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
+            inventory_items = event.getItemContainer().getItems();
+        }
     }
 }
