@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.storage.ChargesItem;
-import tictac7x.charges.storage.Storage;
+import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.*;
 
 public class W_TridentOfTheSeas extends ChargedItemInfoBox {
@@ -25,10 +25,10 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
-        final Storage storage,
+        final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
+        super(ChargesItem.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.trident_of_the_seas;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.UNCHARGED_TRIDENT).fixedCharges(0),

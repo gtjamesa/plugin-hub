@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.storage.ChargesItem;
-import tictac7x.charges.storage.Storage;
+import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class J_EscapeCrystal extends ChargedItemInfoBox {
@@ -27,10 +27,10 @@ public class J_EscapeCrystal extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
-        final Storage storage,
+        final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
+        super(ChargesItem.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.escape_crystal;
         this.needs_to_be_equipped_for_infobox = true;
 

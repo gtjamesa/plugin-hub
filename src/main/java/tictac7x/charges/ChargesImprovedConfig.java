@@ -1,7 +1,7 @@
 package tictac7x.charges;
 
 import net.runelite.client.config.*;
-import tictac7x.charges.storage.ChargesItem;
+import tictac7x.charges.store.ChargesItem;
 
 import java.awt.Color;
 import java.util.EnumSet;

@@ -45,7 +45,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
         if (!config.showItemOverlays()) return;
 
         for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-            if (infobox.triggers_items == null || config.getHiddenItemOverlays().contains(infobox.infobox_id)) continue;
+            if (infobox.triggers_items == null || config.getHiddenItemOverlays().contains(infobox.infobox_id) || infobox.charges == ChargesImprovedPlugin.CHARGES_UNLIMITED) continue;
 
             TriggerItem trigger_item_to_use = null;
             for (final TriggerItem trigger_item : infobox.triggers_items) {

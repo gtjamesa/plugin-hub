@@ -12,8 +12,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.storage.ChargesItem;
-import tictac7x.charges.storage.Storage;
+import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
@@ -30,10 +30,10 @@ public class U_FishBarrel extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
-        final Storage storage,
+        final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
+        super(ChargesItem.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
 
         this.config_key = ChargesImprovedConfig.fish_barrel;
         this.zero_charges_is_positive = true;
