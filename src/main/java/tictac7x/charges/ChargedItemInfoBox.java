@@ -69,7 +69,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
     protected int charges = ChargesImprovedPlugin.CHARGES_UNKNOWN;
 
-    private String tooltip;
     private boolean render = false;
     @Nullable public Integer negative_full_charges;
     public boolean zero_charges_is_positive = false;
@@ -104,7 +103,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
         client_thread.invokeLater(() -> {
             loadChargesFromConfig();
-            updateTooltip();
             onChargesUpdated();
         });
     }
@@ -121,7 +119,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getTooltip() {
-        return tooltip;
+        return items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !inEquipment() ? " - Needs to be equipped" : "");
     }
 
     @Override
@@ -580,16 +578,9 @@ public class ChargedItemInfoBox extends InfoBox {
         // Item id.
         this.item_id = item_id;
 
-        // Tooltip.
-        updateTooltip();
-
         // Image.
         setImage(items.getImage(item_id));
         infoboxes.updateInfoBoxImage(this);
-    }
-
-    private void updateTooltip() {
-        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !inEquipment() ? " - Needs to be equipped" : "");
     }
 
     protected void onChargesUpdated() {}
