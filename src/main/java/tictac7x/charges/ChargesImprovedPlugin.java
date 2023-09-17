@@ -127,7 +127,6 @@ public class ChargesImprovedPlugin extends Plugin {
 	private ChargedItemInfoBox[] infoboxes_charged_items;
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
-	private String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 
 	@Override
 	protected void startUp() {
@@ -228,98 +227,103 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
-		System.out.println("ITEM CONTAINER | " + event.getContainerId());
+//		System.out.println("ITEM CONTAINER | " + event.getContainerId());
 
 		store.onItemContainerChanged(event);
 
-		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
+		for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
 			infobox.onItemContainersChanged(event);
 		}
 
 		store.onInventoryItemsChanged(event);
-
-		// We need to know about items to show messages about resetting charges.
-		if (!config.getResetDate().equals(date)) {
-			resetCharges(date);
-		}
 	}
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
-		System.out.println("MESSAGE | " +
-			"type: " + event.getType().name() +
-			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
-			", sender: " + event.getSender()
-		);
+
+//		System.out.println("MESSAGE | " +
+//			"type: " + event.getType().name() +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
+//			", sender: " + event.getSender()
+//		);
 	}
 
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onAnimationChanged(event));
-		if (event.getActor() == client.getLocalPlayer()) {
-			System.out.println("ANIMATION | " +
-				"id: " + event.getActor().getAnimation()
-			);
-		}
+
+//		if (event.getActor() == client.getLocalPlayer()) {
+//			System.out.println("ANIMATION | " +
+//				"id: " + event.getActor().getAnimation()
+//			);
+//		}
 	}
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onGraphicChanged(event));
-		if (event.getActor() == client.getLocalPlayer()) {
-			System.out.println("GRAPHIC | " +
-				"id: " + event.getActor().getGraphic()
-			);
-		}
+
+//		if (event.getActor() == client.getLocalPlayer()) {
+//			System.out.println("GRAPHIC | " +
+//				"id: " + event.getActor().getGraphic()
+//			);
+//		}
 	}
 
 	@Subscribe
 	public void onConfigChanged(final ConfigChanged event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onConfigChanged(event));
-		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-			System.out.println("CONFIG | " +
-				"key: " + event.getKey() +
-				", old value: " + event.getOldValue() +
-				", new value: " + event.getNewValue()
-			);
-		}
+
+//		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
+//			System.out.println("CONFIG | " +
+//				"key: " + event.getKey() +
+//				", old value: " + event.getOldValue() +
+//				", new value: " + event.getNewValue()
+//			);
+//		}
 	}
 
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onHitsplatApplied(event));
-		log.debug("HITSPLAT | " +
-			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
-			", type: " + event.getHitsplat().getHitsplatType() +
-			", amount:" + event.getHitsplat().getAmount() +
-			", others = " + event.getHitsplat().isOthers() +
-			", mine = " + event.getHitsplat().isMine()
-		);
+
+//		System.out.println("HITSPLAT | " +
+//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
+//			", type: " + event.getHitsplat().getHitsplatType() +
+//			", amount:" + event.getHitsplat().getAmount() +
+//			", others = " + event.getHitsplat().isOthers() +
+//			", mine = " + event.getHitsplat().isMine()
+//		);
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onWidgetLoaded(event));
-		System.out.println("WIDGET | " +
-			"group: " + event.getGroupId()
-		);
+
+//		System.out.println("WIDGET | " +
+//				"group: " + event.getGroupId()
+//		);
 	}
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
-		System.out.println("MENU OPTION | " +
-				"option: " + event.getMenuOption() +
-				", target: " + event.getMenuTarget() +
-				", action name: " + event.getMenuAction().name() +
-				", action id: " + event.getMenuAction().getId()
-		);
-
 		store.onMenuOptionClicked(event);
+
+//		System.out.println("MENU OPTION | " +
+//				"option: " + event.getMenuOption() +
+//				", target: " + event.getMenuTarget() +
+//				", action name: " + event.getMenuAction().name() +
+//				", action id: " + event.getMenuAction().getId()
+//		);
 	}
 
 	@Subscribe
 	public void onGameStateChanged(final GameStateChanged event) {
+		if (event.getGameState() == GameState.LOGGING_IN) {
+			checkForChargesReset();
+		}
+
 		if (event.getGameState() != GameState.LOGGED_IN) return;
 
 		// Send message about plugin updates for once.
@@ -335,20 +339,17 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onVarbitChanged(final VarbitChanged event) {
-		for (final ChargedItemInfoBox infobox : this.infoboxes_charged_items) {
-			infobox.onVarbitChanged(event);
-		}
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onVarbitChanged(event));
 
 		// If server minutes are 0, it's a new day!
 		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
-			final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
-			resetCharges(date);
+			checkForChargesReset();
 		}
 
-		System.out.println("VARBIT CHANGED | " +
-			"id: " + event.getVarbitId() +
-			", value: " + event.getValue()
-		);
+//		System.out.println("VARBIT CHANGED | " +
+//			"id: " + event.getVarbitId() +
+//			", value: " + event.getValue()
+//		);
 	}
 
 	@Subscribe
@@ -356,9 +357,12 @@ public class ChargesImprovedPlugin extends Plugin {
 		store.onGameTick(gametick);
 	}
 
-	private void resetCharges(final String date) {
+	private void checkForChargesReset() {
+		final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
+		if (date.equals(config.getResetDate())) return;
+
 		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
-		Arrays.stream(infoboxes_charged_items).forEach(ChargedItemInfoBox::resetCharges);
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.resetCharges());
 	}
 
 	public static String getChargesMinified(final int charges) {

@@ -525,17 +525,6 @@ public class ChargedItemInfoBox extends InfoBox {
     public void resetCharges() {
         if (triggers_resets == null) return;
 
-        // Send message about item charges being reset if player has it on them.
-        if (inEquipment() || inInventory()) {
-            client_thread.invokeLater(() -> {
-                chat_messages.queue(QueuedMessage.builder()
-                    .type(ChatMessageType.CONSOLE)
-                    .runeLiteFormattedMessage("<colHIGHLIGHT>" + items.getItemComposition(item_id).getName() + " daily charges have been reset.")
-                    .build()
-                );
-            });
-        }
-
         // Check for item resets.
         for (final TriggerReset trigger_reset : triggers_resets) {
             // Same item variations have different amount of charges.
