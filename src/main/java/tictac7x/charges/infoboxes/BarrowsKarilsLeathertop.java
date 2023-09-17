@@ -11,7 +11,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesItem;
+import tictac7x.charges.storage.ChargesItem;
+import tictac7x.charges.storage.Storage;
+import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class BarrowsKarilsLeathertop extends ChargedItemInfoBox {
@@ -24,10 +26,10 @@ public class BarrowsKarilsLeathertop extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
+        final Storage storage,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_LEATHERTOP, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
-        this.charges = 100;
+        super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_LEATHERTOP, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_LEATHERTOP).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_LEATHERTOP_100).fixedCharges(100),
@@ -35,6 +37,9 @@ public class BarrowsKarilsLeathertop extends ChargedItemInfoBox {
             new TriggerItem(ItemID.KARILS_LEATHERTOP_50).fixedCharges(50),
             new TriggerItem(ItemID.KARILS_LEATHERTOP_25).fixedCharges(25),
             new TriggerItem(ItemID.KARILS_LEATHERTOP_0).fixedCharges(0)
+        };
+        this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("Karil's body has broken!").notification()
         };
     }
 }

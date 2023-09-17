@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesItem;
-import tictac7x.charges.triggers.TriggerAnimation;
+import tictac7x.charges.storage.ChargesItem;
+import tictac7x.charges.storage.Storage;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
@@ -26,9 +26,10 @@ public class W_ToxicStaffOfTheDead extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
+        final Storage storage,
         final Plugin plugin
     ) {
-        super(ChargesItem.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
+        super(ChargesItem.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
         this.config_key = ChargesImprovedConfig.toxic_staff_of_the_dead;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.TOXIC_STAFF_UNCHARGED).fixedCharges(0),

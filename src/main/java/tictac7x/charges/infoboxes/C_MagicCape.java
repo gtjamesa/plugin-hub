@@ -11,7 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesItem;
+import tictac7x.charges.storage.ChargesItem;
+import tictac7x.charges.storage.Storage;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerReset;
@@ -30,9 +31,10 @@ public class C_MagicCape extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
+        final Storage storage,
         final Plugin plugin
     ) {
-        super(ChargesItem.MAGIC_CAPE, ItemID.MAGIC_CAPE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
+        super(ChargesItem.MAGIC_CAPE, ItemID.MAGIC_CAPE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
         this.config_key = ChargesImprovedConfig.magic_cape;
 
         this.triggers_items = new TriggerItem[]{

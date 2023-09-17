@@ -11,7 +11,6 @@ public class TriggerHitsplat {
     public boolean self;
     public boolean equipped;
 
-    @Nullable public int[] animations;
 
     public TriggerHitsplat(final int discharges) {
         this.hitsplat_id = HitsplatID.DAMAGE_ME;
@@ -34,7 +33,6 @@ public class TriggerHitsplat {
     }
 
     public TriggerHitsplat onAnimations(final int[] animations) {
-        this.animations = animations;
         return this;
     }
 }

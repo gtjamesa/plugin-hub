@@ -11,7 +11,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesItem;
+import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.storage.ChargesItem;
+import tictac7x.charges.storage.Storage;
 import tictac7x.charges.triggers.TriggerItem;
 
 public class J_SlayerRing extends ChargedItemInfoBox {
@@ -24,9 +26,10 @@ public class J_SlayerRing extends ChargedItemInfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
+        final Storage storage,
         final Plugin plugin
     ) {
-        super(ChargesItem.SLAYER_RING, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, plugin);
+        super(ChargesItem.SLAYER_RING, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, storage, plugin);
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.SLAYER_RING_1).fixedCharges(1),
             new TriggerItem(ItemID.SLAYER_RING_2).fixedCharges(2),
@@ -36,6 +39,7 @@ public class J_SlayerRing extends ChargedItemInfoBox {
             new TriggerItem(ItemID.SLAYER_RING_6).fixedCharges(6),
             new TriggerItem(ItemID.SLAYER_RING_7).fixedCharges(7),
             new TriggerItem(ItemID.SLAYER_RING_8).fixedCharges(8),
+            new TriggerItem(ItemID.SLAYER_RING_ETERNAL).fixedCharges(ChargesImprovedPlugin.CHARGES_UNLIMITED)
         };
     }
 }

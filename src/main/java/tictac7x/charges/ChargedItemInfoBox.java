@@ -25,6 +25,8 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
+import tictac7x.charges.storage.ChargesItem;
+import tictac7x.charges.storage.Storage;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerGraphic;
@@ -55,9 +57,9 @@ public class ChargedItemInfoBox extends InfoBox {
     protected final ChatMessageManager chat_messages;
     protected final Notifier notifier;
     protected final ChargesImprovedConfig config;
+    protected final Storage storage;
 
-    @Nullable public ItemContainer inventory;
-    @Nullable protected ItemContainer equipment;
+
     @Nullable private Item[] inventory_items;
 
     @Nullable protected String config_key;
@@ -99,6 +101,7 @@ public class ChargedItemInfoBox extends InfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
+        final Storage storage,
         final Plugin plugin
     ) {
         super(items.getImage(item_id), plugin);
@@ -112,6 +115,7 @@ public class ChargedItemInfoBox extends InfoBox {
         this.chat_messages = chat_messages;
         this.notifier = notifier;
         this.config = config;
+        this.storage = storage;
 
         client_thread.invokeLater(() -> {
             loadChargesFromConfig();
@@ -186,15 +190,15 @@ public class ChargedItemInfoBox extends InfoBox {
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
                 int charges = 0;
-                charges += inventory != null ? inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                charges += equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
                 this.charges = charges;
 
             // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 int charges = 0;
-                charges += inventory != null ? inventory.count(trigger_item.item_id) : 0;
-                charges += equipment != null ? equipment.count(trigger_item.item_id) : 0;
+                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) : 0;
+                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) : 0;
                 this.charges = charges;
             }
 
@@ -209,12 +213,6 @@ public class ChargedItemInfoBox extends InfoBox {
         int items_difference = 0;
         if (event.getItemContainer().getId() == InventoryID.INVENTORY.getId() && inventory_items != null) {
             items_difference = itemsDifference(inventory_items, event.getItemContainer().getItems());
-        }
-
-        // Update inventory reference.
-        if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
-            inventory = event.getItemContainer();
-            inventory_items = inventory.getItems();
         }
 
         if (triggers_item_containers != null) {
@@ -254,13 +252,6 @@ public class ChargedItemInfoBox extends InfoBox {
             }
         }
 
-        // Save inventory and equipment item containers for other uses.
-        if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
-            inventory = event.getItemContainer();
-        } else if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
-            equipment = event.getItemContainer();
-        }
-
         // No trigger items to detect charges.
         if (triggers_items == null) return;
 
@@ -283,37 +274,32 @@ public class ChargedItemInfoBox extends InfoBox {
             is_negative = trigger_item.is_negative;
 
             // Find out if item is equipped.
-            final boolean in_equipment_item = equipment != null && equipment.contains(trigger_item.item_id);
-            final boolean in_inventory_item = inventory != null && inventory.contains(trigger_item.item_id);
-
-            // Find out if infobox should be rendered.
-            if (in_inventory_item || in_equipment_item) {
-                render = true;
-
-                // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
-                if (trigger_item.item_id != item_id) {
-                    updateInfobox(trigger_item.item_id);
-                }
-
-                if (in_equipment_item) in_equipment = true;
-                if (in_inventory_item) in_inventory = true;
-            }
+            final boolean in_inventory_item = storage.getInventory().isPresent() && storage.getInventory().get().contains(trigger_item.item_id);
+            final boolean in_equipment_item = storage.getEquipment().isPresent() && storage.getEquipment().get().contains(trigger_item.item_id);
 
             // Item not found, don't calculate charges.
             if (!in_equipment_item && !in_inventory_item) continue;
 
+            // Item found.
+            render = true;
+            if (in_equipment_item) in_equipment = true;
+            if (in_inventory_item) in_inventory = true;
 
+            // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
+            if (trigger_item.item_id != item_id) {
+                updateInfobox(trigger_item.item_id);
+            }
 
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
                 if (charges == null) charges = 0;
-                charges += inventory != null ? inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                charges += equipment != null ? equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
             // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 if (charges == null) charges = 0;
-                charges += inventory != null ? inventory.count(trigger_item.item_id) : 0;
-                charges += equipment != null ? equipment.count(trigger_item.item_id) : 0;
+                charges += storage.getInventory().isPresent() ? storage.getInventory().get().count(trigger_item.item_id) : 0;
+                charges += storage.getEquipment().isPresent() ? storage.getEquipment().get().count(trigger_item.item_id) : 0;
             }
         }
 
@@ -410,7 +396,9 @@ public class ChargedItemInfoBox extends InfoBox {
                     } else {
                         setCharges(charges);
                     }
-                } catch (final Exception ignored) {}
+                } catch (final Exception ignored) {
+                    continue;
+                }
             }
 
             // Check extra matches groups.
@@ -487,30 +475,27 @@ public class ChargedItemInfoBox extends InfoBox {
         animation = event.getActor().getAnimation();
 
         // No animations to check.
-        if (inventory == null || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (!storage.getInventory().isPresent() || !storage.getEquipment().isPresent() || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
-        for (final TriggerAnimation trigger_animation : triggers_animations) {
+        animationTriggerLooper: for (final TriggerAnimation trigger_animation : triggers_animations) {
             // Valid animation id check.
             if (trigger_animation.animation_id != event.getActor().getAnimation()) continue;
 
             // Unallowed items check.
             if (trigger_animation.unallowed_items != null) {
-                boolean unallowed_items = false;
                 for (final int item_id : trigger_animation.unallowed_items) {
-                    if (inventory.contains(item_id) || equipment != null && equipment.contains(item_id)) {
-                        unallowed_items = true;
-                        break;
+                    if (storage.getInventory().get().contains(item_id) || storage.getEquipment().get().contains(item_id)) {
+                        continue animationTriggerLooper;
                     }
                 }
-                if (unallowed_items) continue;
             }
 
             // Equipped check.
             if (trigger_animation.equipped) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
-                    if (equipment != null && equipment.contains(trigger_item.item_id)) {
+                    if (storage.getEquipment().get().contains(trigger_item.item_id)) {
                         equipped = true;
                         break;
                     }
@@ -544,7 +529,7 @@ public class ChargedItemInfoBox extends InfoBox {
         if (event.getActor() != client.getLocalPlayer()) return;
 
         // No animations to check.
-        if (triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (!storage.getEquipment().isPresent() || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerGraphic trigger_graphic : triggers_graphics) {
@@ -555,7 +540,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_graphic.equipped) {
                 boolean equipped = false;
                 for (final TriggerItem trigger_item : triggers_items) {
-                    if (equipment != null && equipment.contains(trigger_item.item_id)) {
+                    if (storage.getEquipment().get().contains(trigger_item.item_id)) {
                         equipped = true;
                         break;
                     }
@@ -575,6 +560,8 @@ public class ChargedItemInfoBox extends InfoBox {
     public void onHitsplatApplied(final HitsplatApplied event) {
         if (triggers_hitsplats == null) return;
 
+        if (!storage.getEquipment().isPresent()) return;
+
         // Check all hitsplat triggers.
         for (final TriggerHitsplat trigger_hitsplat : triggers_hitsplats) {
             // Player check.
@@ -587,27 +574,8 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_hitsplat.hitsplat_id != event.getHitsplat().getHitsplatType()) continue;
 
             // Equipped check.
-            if (trigger_hitsplat.equipped && triggers_items != null && equipment != null) {
-                boolean equipped = false;
-                for (final TriggerItem trigger_item : triggers_items) {
-                    if (equipment.contains(trigger_item.item_id)) {
-                        equipped = true;
-                        break;
-                    }
-                }
-                if (!equipped) continue;
-            }
-
-            // Animation check.
-            if (trigger_hitsplat.animations != null) {
-                boolean valid = false;
-                for (final int animation : trigger_hitsplat.animations) {
-                    if (animation == this.animation) {
-                        valid = true;
-                        break;
-                    }
-                }
-                if (!valid) continue;
+            if (trigger_hitsplat.equipped && !isItemEquipped()) {
+                continue;
             }
 
             // Valid hitsplat, modify charges.
@@ -754,6 +722,20 @@ public class ChargedItemInfoBox extends InfoBox {
 
         return Math.abs(items_before_count - items_after_count);
 
+    }
+
+    private boolean isItemEquipped() {
+        if (triggers_items == null || !storage.getEquipment().isPresent()) {
+            return false;
+        }
+
+        for (final TriggerItem trigger_item : triggers_items) {
+            if (storage.getEquipment().get().contains(trigger_item.item_id)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

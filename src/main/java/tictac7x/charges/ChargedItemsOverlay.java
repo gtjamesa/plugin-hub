@@ -72,16 +72,16 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
             charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
             charges_component.setText(charges);
 
-            if (!isBankWidget(item_widget) && (infobox.isNegative() || infobox.needsToBeEquipped() && !infobox.isEquipped())) {
-                charges_component.setColor(config.getColorEmpty());
-            } else if (charges.equals("?")) {
+            if (charges.equals("?")) {
                 charges_component.setColor(config.getColorUnknown());
+            } else if (!isBankWidget(item_widget) && (infobox.isNegative() || infobox.needsToBeEquipped() && !infobox.isEquipped())) {
+                charges_component.setColor(config.getColorEmpty());
             } else if (charges.equals("0") && !infobox.zero_charges_is_positive) {
                 charges_component.setColor(config.getColorEmpty());
             } else if (infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges) {
                 charges_component.setColor(config.getColorEmpty());
             } else {
-                charges_component.setColor(config.getColorEmpty());
+                charges_component.setColor(config.getColorDefault());
             }
 
             charges_component.render(graphics);

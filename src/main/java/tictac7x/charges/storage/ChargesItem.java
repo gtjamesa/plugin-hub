@@ -1,4 +1,4 @@
-package tictac7x.charges;
+package tictac7x.charges.storage;
 
 public enum ChargesItem {
     ARCLIGHT,
