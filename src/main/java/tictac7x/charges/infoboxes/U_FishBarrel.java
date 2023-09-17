@@ -17,7 +17,6 @@ import tictac7x.charges.storage.Storage;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
-import tictac7x.charges.triggers.TriggerMenuOption;
 
 public class U_FishBarrel extends ChargedItemInfoBox {
     private final int FISH_BARREL_SIZE = 28;
@@ -55,11 +54,10 @@ public class U_FishBarrel extends ChargedItemInfoBox {
             new TriggerChatMessage("The barrel contains:").multipleCharges()
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open fish barrel").menuOption("Fill").increaseByDifference(),
             new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Fish barrel").menuOption("Fill").increaseByDifference(),
-        };
-        this.triggers_menu_options = new TriggerMenuOption[]{
-            new TriggerMenuOption("Open fish barrel", "Empty", 0)
+            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open fish barrel").menuOption("Fill").increaseByDifference(),
+            new TriggerItemContainer(InventoryID.BANK.getId()).menuTarget("Fish barrel").menuOption("Empty").fixedCharges(0),
+            new TriggerItemContainer(InventoryID.BANK.getId()).menuTarget("Open fish barrel").menuOption("Empty").fixedCharges(0),
         };
     }
 }

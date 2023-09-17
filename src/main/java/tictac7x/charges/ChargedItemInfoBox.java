@@ -32,7 +32,6 @@ import tictac7x.charges.triggers.TriggerGraphic;
 import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
-import tictac7x.charges.triggers.TriggerMenuOption;
 import tictac7x.charges.triggers.TriggerReset;
 import tictac7x.charges.triggers.TriggerWidget;
 
@@ -68,7 +67,6 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected TriggerReset[] triggers_resets;
     @Nullable protected TriggerItemContainer[] triggers_item_containers;
-    @Nullable protected TriggerMenuOption[] triggers_menu_options;
 
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean is_negative;
@@ -244,8 +242,6 @@ public class ChargedItemInfoBox extends InfoBox {
         // No trigger items to detect charges.
         if (triggers_items == null) return;
 
-        boolean in_equipment = false;
-        boolean in_inventory = false;
         boolean render = false;
         Integer charges = null;
 
@@ -271,8 +267,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
             // Item found.
             render = true;
-            if (in_equipment_item) in_equipment = true;
-            if (in_inventory_item) in_inventory = true;
 
             // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
             if (trigger_item.item_id != item_id) {
@@ -476,16 +470,7 @@ public class ChargedItemInfoBox extends InfoBox {
             }
 
             // Equipped check.
-            if (trigger_animation.equipped) {
-                boolean equipped = false;
-                for (final TriggerItem trigger_item : triggers_items) {
-                    if (storage.equipment.contains(trigger_item.item_id)) {
-                        equipped = true;
-                        break;
-                    }
-                }
-                if (!equipped) continue;
-            }
+            if (trigger_animation.equipped && !inEquipment()) continue;
 
             // Menu target check.
             if (
@@ -521,16 +506,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (!event.getActor().hasSpotAnim(trigger_graphic.graphic_id)) continue;
 
             // Equipped check.
-            if (trigger_graphic.equipped) {
-                boolean equipped = false;
-                for (final TriggerItem trigger_item : triggers_items) {
-                    if (storage.equipment.contains(trigger_item.item_id)) {
-                        equipped = true;
-                        break;
-                    }
-                }
-                if (!equipped) continue;
-            }
+            if (trigger_graphic.equipped && !inEquipment()) continue;
 
             // Valid trigger, modify charges.
             if (trigger_graphic.decrease_charges) {
@@ -542,9 +518,7 @@ public class ChargedItemInfoBox extends InfoBox {
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
-        if (triggers_hitsplats == null) return;
-
-        if (storage.equipment == null) return;
+        if (triggers_hitsplats == null || storage.equipment == null) return;
 
         // Check all hitsplat triggers.
         for (final TriggerHitsplat trigger_hitsplat : triggers_hitsplats) {
@@ -558,9 +532,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_hitsplat.hitsplat_id != event.getHitsplat().getHitsplatType()) continue;
 
             // Equipped check.
-            if (trigger_hitsplat.equipped && !inEquipment()) {
-                continue;
-            }
+            if (trigger_hitsplat.equipped && !inEquipment()) continue;
 
             // Valid hitsplat, modify charges.
             decreaseCharges(trigger_hitsplat.discharges);
@@ -591,25 +563,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
         // Save menu option and target for other triggers to use.
         menu_entries.add(new String[]{menu_target, menu_option});
-
-        // No menu option triggers.
-        if (triggers_menu_options == null) return;
-
-        for (final TriggerMenuOption trigger_menu_option : triggers_menu_options) {
-            if (
-                !trigger_menu_option.option.equals(menu_option) ||
-                trigger_menu_option.target != null && !trigger_menu_option.target.equals(menu_target)
-            ) continue;
-
-            // Fixed charges.
-            new Thread(() -> {
-                try { Thread.sleep(600); } catch (final Exception ignored) {}
-                setCharges(trigger_menu_option.charges);
-            }).start();
-
-            // Menu option used.
-            return;
-        }
     }
 
     public void resetCharges() {
