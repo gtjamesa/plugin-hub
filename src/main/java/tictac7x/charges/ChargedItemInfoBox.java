@@ -64,11 +64,14 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerReset[] triggers_resets;
     @Nullable protected TriggerItemContainer[] triggers_item_containers;
 
+    protected boolean in_equipment = false;
+    private boolean in_inventory = false;
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean is_negative;
 
     protected int charges = ChargesImprovedPlugin.CHARGES_UNKNOWN;
 
+    private String tooltip;
     private boolean render = false;
     @Nullable public Integer negative_full_charges;
     public boolean zero_charges_is_positive = false;
@@ -103,6 +106,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
         client_thread.invokeLater(() -> {
             loadChargesFromConfig();
+            updateTooltip();
             onChargesUpdated();
         });
     }
@@ -119,7 +123,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public String getTooltip() {
-        return items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !inEquipment() ? " - Needs to be equipped" : "");
+        return tooltip;
     }
 
     @Override
@@ -127,7 +131,7 @@ public class ChargedItemInfoBox extends InfoBox {
         return (
             charges == ChargesImprovedPlugin.CHARGES_UNKNOWN ? config.getColorUnknown() :
             charges == 0 && !zero_charges_is_positive ? config.getColorEmpty() :
-            needs_to_be_equipped_for_infobox && !inEquipment() ? config.getColorEmpty() :
+            needs_to_be_equipped_for_infobox && !in_equipment ? config.getColorEmpty() :
             is_negative ? config.getColorEmpty() :
             config.getColorDefault()
         );
@@ -229,6 +233,8 @@ public class ChargedItemInfoBox extends InfoBox {
         // No trigger items to detect charges.
         if (triggers_items == null) return;
 
+        boolean in_inventory = false;
+        boolean in_equipment = false;
         boolean render = false;
         Integer charges = null;
 
@@ -254,6 +260,8 @@ public class ChargedItemInfoBox extends InfoBox {
 
             // Item found.
             render = true;
+            if (in_inventory_item) in_inventory = true;
+            if (in_equipment_item) in_equipment = true;
 
             // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
             if (trigger_item.item_id != item_id) {
@@ -275,7 +283,10 @@ public class ChargedItemInfoBox extends InfoBox {
 
         // Update infobox variables for other triggers.
         this.render = render;
+        this.in_inventory = in_inventory;
+        this.in_equipment = in_equipment;
         if (charges != null) this.charges = charges;
+        updateTooltip();
     }
 
     public void onChatMessage(final ChatMessage event) {
@@ -287,7 +298,7 @@ public class ChargedItemInfoBox extends InfoBox {
             // No config to save charges to.
             config_key == null ||
             // Not in inventory nor in equipment.
-            (!inInventory() && !inEquipment())
+            (!in_inventory && !in_equipment)
         ) return;
 
         final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
@@ -311,7 +322,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (chat_message.menu_target && !inMenuTargets(getItemName())) continue;
 
             // Item needs to be equipped.
-            if (chat_message.equipped && !inEquipment()) continue;
+            if (chat_message.equipped && !in_equipment) continue;
 
             // Notifications.
             if (chat_message.notification) {
@@ -451,7 +462,7 @@ public class ChargedItemInfoBox extends InfoBox {
             }
 
             // Equipped check.
-            if (trigger_animation.equipped && !inEquipment()) continue;
+            if (trigger_animation.equipped && !in_equipment) continue;
 
             // Menu target check.
             if (trigger_animation.menu_target != null && !inMenuTargets(trigger_animation.menu_target)) continue;
@@ -483,7 +494,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (!event.getActor().hasSpotAnim(trigger_graphic.graphic_id)) continue;
 
             // Equipped check.
-            if (trigger_graphic.equipped && !inEquipment()) continue;
+            if (trigger_graphic.equipped && !in_equipment) continue;
 
             // Valid trigger, modify charges.
             if (trigger_graphic.decrease_charges) {
@@ -509,7 +520,7 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_hitsplat.hitsplat_id != event.getHitsplat().getHitsplatType()) continue;
 
             // Equipped check.
-            if (trigger_hitsplat.equipped && !inEquipment()) continue;
+            if (trigger_hitsplat.equipped && !in_equipment) continue;
 
             // Valid hitsplat, modify charges.
             decreaseCharges(trigger_hitsplat.discharges);
@@ -578,9 +589,16 @@ public class ChargedItemInfoBox extends InfoBox {
         // Item id.
         this.item_id = item_id;
 
+        // Tooltip.
+        updateTooltip();
+
         // Image.
         setImage(items.getImage(item_id));
         infoboxes.updateInfoBoxImage(this);
+    }
+
+    private void updateTooltip() {
+        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
     }
 
     protected void onChargesUpdated() {}
@@ -591,34 +609,6 @@ public class ChargedItemInfoBox extends InfoBox {
 
         return Math.abs(items_before_count - items_after_count);
 
-    }
-
-    public boolean inEquipment() {
-        if (triggers_items == null || store.equipment == null) {
-            return false;
-        }
-
-        for (final TriggerItem trigger_item : triggers_items) {
-            if (store.equipment.contains(trigger_item.item_id)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean inInventory() {
-        if (triggers_items == null || store.inventory == null) {
-            return false;
-        }
-
-        for (final TriggerItem trigger_item : triggers_items) {
-            if (store.inventory.contains(trigger_item.item_id)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private boolean inMenuTargets(final String target) {
