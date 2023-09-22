@@ -131,6 +131,7 @@ public class ChargedItemInfoBox extends InfoBox {
         return (
             charges == ChargesImprovedPlugin.CHARGES_UNKNOWN ? config.getColorUnknown() :
             charges == 0 && !zero_charges_is_positive ? config.getColorEmpty() :
+            negative_full_charges != null && charges == negative_full_charges ? config.getColorEmpty() :
             needs_to_be_equipped_for_infobox && !in_equipment ? config.getColorEmpty() :
             is_negative ? config.getColorEmpty() :
             config.getColorDefault()
