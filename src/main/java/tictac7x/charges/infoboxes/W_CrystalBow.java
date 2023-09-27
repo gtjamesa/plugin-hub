@@ -34,6 +34,7 @@ public class W_CrystalBow extends ChargedItemInfoBox {
         this.config_key = ChargesImprovedConfig.crystal_bow;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_BOW),
+            new TriggerItem(ItemID.CRYSTAL_BOW_24123).fixedCharges(2500),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.")

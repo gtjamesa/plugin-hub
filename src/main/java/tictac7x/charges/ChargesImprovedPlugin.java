@@ -222,8 +222,6 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
-//		System.out.println("ITEM CONTAINER | " + event.getContainerId());
-
 		store.onItemContainerChanged(event);
 
 		for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
@@ -231,6 +229,11 @@ public class ChargesImprovedPlugin extends Plugin {
 		}
 
 		store.onInventoryItemsChanged(event);
+
+//		System.out.println("ITEM CONTAINER | " + event.getContainerId());
+//		for (final Item item : event.getItemContainer().getItems()) {
+//			System.out.println(item.getId() + ": " + items.getItemComposition(item.getId()).getName() + ", q: " + item.getQuantity());
+//		}
 	}
 
 	@Subscribe
