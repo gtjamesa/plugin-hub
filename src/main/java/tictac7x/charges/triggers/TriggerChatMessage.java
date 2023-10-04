@@ -12,10 +12,9 @@ public class TriggerChatMessage {
 
     public boolean menu_target;
     public boolean equipped;
-    public boolean inventory_same;
-    public boolean inventory_count_same;
     public boolean multiple_charges;
     public boolean increase_dynamically;
+    public boolean decrease_dynamically;
     public boolean use_difference;
     public boolean notification;
 
@@ -56,21 +55,6 @@ public class TriggerChatMessage {
         return this;
     }
 
-    public TriggerChatMessage inventorySame() {
-        this.inventory_same = true;
-        return this;
-    }
-
-    public TriggerChatMessage inventoryCountSame() {
-        this.inventory_count_same = true;
-        return this;
-    }
-
-    public TriggerChatMessage extraConsumer(final Consumer<String> consumer) {
-        this.consumer = consumer;
-        return this;
-    }
-
     public TriggerChatMessage multipleCharges() {
         this.multiple_charges = true;
         return this;
@@ -78,6 +62,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage increaseDynamically() {
         this.increase_dynamically = true;
+        return this;
+    }
+
+    public TriggerChatMessage decreaseDynamically() {
+        this.decrease_dynamically = true;
         return this;
     }
 
@@ -102,8 +91,12 @@ public class TriggerChatMessage {
         return this;
     }
 
-    public TriggerChatMessage specificItem(final int item_id) {
-        this.specific_items.add(item_id);
+    public TriggerChatMessage specificItem(final int ...item_ids) {
+        for (final int item_id : item_ids) {
+            this.specific_items.add(item_id);
+        }
         return this;
     }
+
+
 }

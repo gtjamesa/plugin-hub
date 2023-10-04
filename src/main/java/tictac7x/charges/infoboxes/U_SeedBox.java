@@ -2,7 +2,6 @@ package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
-import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -16,10 +15,9 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerXPDrop;
 
-public class U_AshSanctifier extends ChargedItemInfoBox {
-    public U_AshSanctifier(
+public class U_SeedBox extends ChargedItemInfoBox {
+    public U_SeedBox(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -31,17 +29,20 @@ public class U_AshSanctifier extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.ASH_SANCTIFIER, ItemID.ASH_SANCTIFIER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.config_key = ChargesImprovedConfig.ash_sanctifier;
+        super(ChargesItem.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        this.config_key = ChargesImprovedConfig.seed_box;
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.ASH_SANCTIFIER),
+            new TriggerItem(ItemID.SEED_BOX),
+            new TriggerItem(ItemID.OPEN_SEED_BOX),
         };
+        this.zero_charges_is_positive = true;
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your ash sanctifier has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("The ash sanctifier has (?<charges>.+) charges?.").onItemClick(),
-        };
-        this.triggers_xp_drops = new TriggerXPDrop[]{
-            new TriggerXPDrop(Skill.PRAYER).decreaseCharges(1),
+            new TriggerChatMessage("(The|Your) seed box is( now| already)? empty.").fixedCharges(0),
+            new TriggerChatMessage("Stored (?<charges>.+) x .* seed in your seed box.").increaseDynamically(),
+            new TriggerChatMessage("You put (?<charges>.+) x .* seed straight into your open seed box.").increaseDynamically(),
+            new TriggerChatMessage("Emptied (?<charges>.+) x .* seed to your inventory.").decreaseDynamically(),
+            new TriggerChatMessage("The seed box contains:").fixedCharges(0),
+            new TriggerChatMessage("(?<charges>.+) x .* seed.").increaseDynamically(),
         };
     }
 }

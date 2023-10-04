@@ -5,7 +5,8 @@ import javax.annotation.Nullable;
 public class TriggerItemContainer {
     public final int inventory_id;
 
-    public boolean increase_by_difference;
+    public boolean increase_by_inventory_difference;
+    public boolean decrease_by_bank_difference;
 
     @Nullable public String menu_target;
     @Nullable public String menu_option;
@@ -30,8 +31,13 @@ public class TriggerItemContainer {
         return this;
     }
 
-    public TriggerItemContainer increaseByDifference() {
-        this.increase_by_difference = true;
+    public TriggerItemContainer increaseByInventoryDifference() {
+        this.increase_by_inventory_difference = true;
+        return this;
+    }
+
+    public TriggerItemContainer decreaseByBankDifference() {
+        this.decrease_by_bank_difference = true;
         return this;
     }
 }

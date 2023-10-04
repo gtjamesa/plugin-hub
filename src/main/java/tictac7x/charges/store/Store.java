@@ -15,14 +15,13 @@ public class Store {
     private int gametick = 0;
     private int gametick_before = 0;
 
-    @Nullable
-    public ItemContainer inventory = null;
+    @Nullable public ItemContainer inventory = null;
 
-    @Nullable
-    public ItemContainer equipment = null;
+    @Nullable public ItemContainer equipment = null;
 
-    @Nullable
-    public Item[] inventory_items = null;
+    @Nullable public Item[] inventory_items = null;
+
+    @Nullable public  Item[] bank_items = null;
 
     public final List<String[]> menu_entries = new ArrayList<>();
 
@@ -37,6 +36,12 @@ public class Store {
     public void onInventoryItemsChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             inventory_items = event.getItemContainer().getItems();
+        }
+    }
+
+    public void onBankItemsChanged(final ItemContainerChanged event) {
+        if (event.getContainerId() == InventoryID.BANK.getId()) {
+            bank_items = event.getItemContainer().getItems();
         }
     }
 

@@ -57,6 +57,8 @@ public interface ChargesImprovedConfig extends Config {
     String log_basket = "log_basket";
     String ardougne_cloak = "ardougne_cloak";
     String magic_cape = "magic_cape";
+    String gem_bag = "gem_bag";
+    String seed_box = "seed_box";
 
     @ConfigSection(
         name = "Colors",
@@ -369,40 +371,54 @@ public interface ChargesImprovedConfig extends Config {
             name = "Waterskin",
             description = "Waterskin charges",
             section = debug
-        ) default int getWaterskinCharges() { return -1; }
+        ) default int getWaterskinCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bracelet_of_clay,
             name = "Bracelet of clay",
             description = "Bracelet of clay charges",
             section = debug
-        ) default int getBraceletOfClayCharges() { return -1; }
+        ) default int getBraceletOfClayCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = coffin,
             name = "Coffin",
             description = "Coffin charges",
             section = debug
-        ) default int getCoffinCharges() { return -1; }
+        ) default int getCoffinCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = log_basket,
             name = "Log basket",
             description = "Log basket charges",
             section = debug
-        ) default int getLogBasketCharges() { return -1; }
+        ) default int getLogBasketCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ardougne_cloak,
             name = "Ardougne cloak",
             description = "Ardougle cloak charges",
             section = debug
-        ) default int getArdougneCloakCharges() { return -1; }
+        ) default int getArdougneCloakCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = magic_cape,
             name = "Magic cape",
             description = "Magic cape charges",
             section = debug
-        ) default int getMagicCapeCharges() { return -1; }
+        ) default int getMagicCapeCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = gem_bag,
+            name = "Gem bag",
+            description = "Gem bag charges",
+            section = debug
+        ) default int getGemBagCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = seed_box,
+            name = "Seed box",
+            description = "Seed box charges",
+            section = debug
+        ) default int getSeedBoxCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
 }

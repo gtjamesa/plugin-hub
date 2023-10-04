@@ -170,8 +170,10 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_GemBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_FungicideSpray(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_SeedBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -229,6 +231,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		}
 
 		store.onInventoryItemsChanged(event);
+		store.onBankItemsChanged(event);
 
 //		System.out.println("ITEM CONTAINER | " + event.getContainerId());
 //		for (final Item item : event.getItemContainer().getItems()) {

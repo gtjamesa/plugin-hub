@@ -43,7 +43,7 @@ public class J_RingOfSuffering extends ChargedItemInfoBox {
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_26762),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick(),
+            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining.").onItemClick(),
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{

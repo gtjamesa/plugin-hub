@@ -15,7 +15,6 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
-import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
@@ -32,11 +31,14 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
 import tictac7x.charges.triggers.TriggerReset;
 import tictac7x.charges.triggers.TriggerWidget;
+import tictac7x.charges.triggers.TriggerXPDrop;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -63,6 +65,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected TriggerReset[] triggers_resets;
     @Nullable protected TriggerItemContainer[] triggers_item_containers;
+    @Nullable protected TriggerXPDrop[] triggers_xp_drops;
 
     protected boolean in_equipment = false;
     private boolean in_inventory = false;
@@ -75,7 +78,6 @@ public class ChargedItemInfoBox extends InfoBox {
     private boolean render = false;
     @Nullable public Integer negative_full_charges;
     public boolean zero_charges_is_positive = false;
-
 
     public ChargedItemInfoBox(
         final ChargesItem infobox_id,
@@ -191,14 +193,46 @@ public class ChargedItemInfoBox extends InfoBox {
         }
     }
 
+    private int getInventoryItemsDifference(final ItemContainerChanged event) {
+        if (event.getItemContainer().getId() != InventoryID.INVENTORY.getId() || store.inventory_items == null) return 0;
+
+        return itemsDifference(store.inventory_items, event.getItemContainer().getItems());
+    }
+
+    private int getBankItemsDifference(final ItemContainerChanged event) {
+        int difference = 0;
+
+        if (event.getContainerId() == InventoryID.BANK.getId() && store.bank_items != null) {
+            Map<Integer, Integer> differences = new HashMap<>();
+
+            // New bank items.
+            for (final Item new_item : event.getItemContainer().getItems()) {
+                differences.put(new_item.getId(), new_item.getQuantity());
+                items.getItemComposition(0).getPlaceholderId();
+            }
+
+            // Previous bank items.
+            for (final Item old_item : store.bank_items) {
+                differences.put(old_item.getId(), differences.getOrDefault(old_item.getId(), 0) - old_item.getQuantity());
+            }
+
+            // Find differences between all items.
+            for (final Map.Entry<Integer, Integer> item_difference : differences.entrySet()) {
+                if (item_difference.getValue() > 0) {
+                    difference += item_difference.getValue();
+                }
+            }
+        }
+
+        return difference;
+    }
+
     public void onItemContainersChanged(final ItemContainerChanged event) {
         if (event.getItemContainer() == null) return;
 
         // Find items difference before items are overridden.
-        int items_difference = 0;
-        if (event.getItemContainer().getId() == InventoryID.INVENTORY.getId() && store.inventory_items != null) {
-            items_difference = itemsDifference(store.inventory_items, event.getItemContainer().getItems());
-        }
+        final int inventory_items_difference = getInventoryItemsDifference(event);
+        final int bank_items_difference = getBankItemsDifference(event);
 
         if (triggers_item_containers != null) {
             for (final TriggerItemContainer trigger_item_container : triggers_item_containers) {
@@ -218,8 +252,14 @@ public class ChargedItemInfoBox extends InfoBox {
                 }
 
                 // Increase by difference of amount of items.
-                if (trigger_item_container.increase_by_difference) {
-                    increaseCharges(items_difference);
+                if (trigger_item_container.increase_by_inventory_difference) {
+                    increaseCharges(inventory_items_difference);
+                    break;
+                }
+
+                // Decrease by difference of amount of items.
+                if (trigger_item_container.decrease_by_bank_difference) {
+                    decreaseCharges(bank_items_difference);
                     break;
                 }
 
@@ -368,8 +408,12 @@ public class ChargedItemInfoBox extends InfoBox {
                 try {
                     final int charges = Integer.parseInt(matcher.group("charges").replaceAll(",", "").replaceAll("\\.", ""));
 
+                    // Increase dynamically.
                     if (chat_message.increase_dynamically) {
                         increaseCharges(charges);
+                    // Decrease dynamically.
+                    } else if (chat_message.decrease_dynamically) {
+                        decreaseCharges(charges);
                     } else {
                         setCharges(charges);
                     }
@@ -609,7 +653,6 @@ public class ChargedItemInfoBox extends InfoBox {
         final int items_after_count = (int) Arrays.stream(items_after).filter(item -> item.getId() != -1).count();
 
         return Math.abs(items_before_count - items_after_count);
-
     }
 
     private boolean inMenuTargets(final String target) {
