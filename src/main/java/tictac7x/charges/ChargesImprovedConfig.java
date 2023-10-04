@@ -8,6 +8,7 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import static tictac7x.charges.ChargesImprovedConfig.group;
+import static tictac7x.charges.ChargesImprovedPlugin.CHARGES_UNKNOWN;
 
 @ConfigGroup(group)
 public interface ChargesImprovedConfig extends Config {
@@ -57,6 +58,8 @@ public interface ChargesImprovedConfig extends Config {
     String log_basket = "log_basket";
     String ardougne_cloak = "ardougne_cloak";
     String magic_cape = "magic_cape";
+    String gem_bag = "gem_bag";
+    String seed_box = "seed_box";
     String crystal_helm = "crystal_helm";
     String crystal_body = "crystal_body";
     String crystal_legs = "crystal_legs";
@@ -176,35 +179,35 @@ public interface ChargesImprovedConfig extends Config {
             name = "Arclight",
             description = "Arclight charges",
             section = debug
-        ) default int getArclightCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getArclightCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ash_sanctifier,
             name = "Ash sanctifier",
             description = "Ash sanctifier charges",
             section = debug
-        ) default int getAshSanctifierCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getAshSanctifierCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bone_crusher,
             name = "Bone crusher",
             description = "Bone crusher charges",
             section = debug
-        ) default int getBoneCrusherCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getBoneCrusherCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = kharedsts_memoirs,
             name = "Kharedst's memoirs",
             description = "Kharedst's memoirs charges",
             section = debug
-        ) default int getKharedstsMemoirsCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getKharedstsMemoirsCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket,
             name = "Bottomless compost bucket",
             description = "Bottomless compost bucket charges",
             section = debug
-        ) default int getBottomlessCompostBucketCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getBottomlessCompostBucketCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket_type,
@@ -218,208 +221,229 @@ public interface ChargesImprovedConfig extends Config {
             name = "Bracelet of slaughter",
             description = "Bracelet of slaughter charges",
             section = debug
-        ) default int getBraceletOfSlaughterCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getBraceletOfSlaughterCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bryophytas_staff,
             name = "Bryophyta's Staff",
             description = "Bryophyta's Staff charges",
             section = debug
-        ) default int getBryophytasStaffCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getBryophytasStaffCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = celestial_ring,
             name = "Celestial Ring",
             description = "Celestial Ring charges",
             section = debug
-        ) default int getCelestialRingCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getCelestialRingCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = chronicle,
             name = "Chronicle",
             description = "Chronicle charges",
             section = debug
-        ) default int getChronicleCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getChronicleCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_shield,
             name = "Crystal shield",
             description = "Crystal shield charges",
             section = debug
-        ) default int getCrystalShieldCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getCrystalShieldCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_bow,
             name = "Crystal bow",
             description = "Crystal bow charges",
             section = debug
-        ) default int getCrystalBowCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getCrystalBowCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = expeditious_bracelet,
             name = "Expeditious bracelet",
             description = "Expeditious bracelet charges",
             section = debug
-        ) default int getBraceletOfExpeditiousCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getBraceletOfExpeditiousCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = falador_shield,
             name = "Falador shield",
             description = "Falador shield charges",
             section = debug
-        ) default int getFaladorShieldCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getFaladorShieldCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = fish_barrel,
             name = "Fish barrel",
             description = "Fish barrel charges",
             section = debug
-        ) default int getFishBarrelCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getFishBarrelCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = gricollers_can,
             name = "Gricoller's can",
             description = "Gricoller's can charges",
             section = debug
-        ) default int getGricollersCanCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getGricollersCanCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ibans_staff,
             name = "Iban's staff",
             description = "Iban's staff charges",
             section = debug
-        ) default int getIbansStaffCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getIbansStaffCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = pharaohs_sceptre,
             name = "Pharaoh's sceptre",
             description = "Pharaoh's sceptre charges",
             section = debug
-        ) default int getPharaohsSceptreCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getPharaohsSceptreCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_suffering,
             name = "Ring of Suffering",
             description = "Ring of suffering charges",
             section = debug
-        ) default int getRingOfSufferingCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getRingOfSufferingCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = sanguinesti_staff,
             name = "Sanguinesti staff",
             description = "Sanguinesti staff charges",
             section = debug
-        ) default int getSanguinestiStaffCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getSanguinestiStaffCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = skull_sceptre,
             name = "Skull sceptre",
             description = "Skull sceptre charges",
             section = debug
-        ) default int getSkullSceptreCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getSkullSceptreCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = soul_bearer,
             name = "Soul bearer",
             description = "Soul bearer charges",
             section = debug
-        ) default int getSoulBearerCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getSoulBearerCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = trident_of_the_seas,
             name = "Trident of the seas",
             description = "Trident of the seas charges",
             section = debug
-        ) default int getTridentOfTheSeasCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getTridentOfTheSeasCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = xerics_talisman,
             name = "Xeric's talisman",
             description = "Xeric's talisman charges",
             section = debug
-        ) default int getXericsTalismanCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getXericsTalismanCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = dragonfire_shield,
             name = "Dragonfire shield",
             description = "Dragonfire shield charges",
             section = debug
-        ) default int getDragonfireShieldCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getDragonfireShieldCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = camulet,
             name = "Camulet",
             description = "Camulet charges",
             section = debug
-        ) default int getCamuletCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getCamuletCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = circlet_of_water,
             name = "Circlet of water",
             description = "Circlet of water charges",
             section = debug
-        ) default int getCircletOfWaterCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getCircletOfWaterCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = teleport_crystal,
             name = "Teleport crystal",
             description = "Teleport crystal charges",
             section = debug
-        ) default int getTeleportCrystalCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getTeleportCrystalCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = waterskin,
             name = "Waterskin",
             description = "Waterskin charges",
             section = debug
-        ) default int getWaterskinCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getWaterskinCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bracelet_of_clay,
             name = "Bracelet of clay",
             description = "Bracelet of clay charges",
             section = debug
-        ) default int getBraceletOfClayCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getBraceletOfClayCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = coffin,
             name = "Coffin",
             description = "Coffin charges",
             section = debug
-        ) default int getCoffinCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getCoffinCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = log_basket,
             name = "Log basket",
             description = "Log basket charges",
             section = debug
-        ) default int getLogBasketCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getLogBasketCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ardougne_cloak,
             name = "Ardougne cloak",
             description = "Ardougle cloak charges",
             section = debug
-        ) default int getArdougneCloakCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getArdougneCloakCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = magic_cape,
             name = "Magic cape",
             description = "Magic cape charges",
             section = debug
-        ) default int getMagicCapeCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getMagicCapeCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = gem_bag,
             name = "Gem bag",
             description = "Gem bag charges",
             section = debug
-        ) default int getGemBagCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getGemBagCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = seed_box,
             name = "Seed box",
             description = "Seed box charges",
             section = debug
-        ) default int getSeedBoxCharges() { return ChargesImprovedPlugin.CHARGES_UNKNOWN; }
+        ) default int getSeedBoxCharges() { return CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = crystal_helm,
+            name = "Crystal helm",
+            description = "Crystal helm charges",
+            section = debug
+        ) default int getCrystalHelmCharges() { return CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = crystal_body,
+            name = "Crystal body",
+            description = "Crystal body charges",
+            section = debug
+        ) default int getCrystalBodyCharges() { return CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = crystal_legs,
+            name = "Crystal legs",
+            description = "Crystal legs charges",
+            section = debug
+        ) default int getCrystalLegsCharges() { return CHARGES_UNKNOWN; }
 }

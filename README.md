@@ -7,7 +7,7 @@ If some item is missing, and you would like to see it added, create an issue her
 If you find any dialogs or chat messages that don't seem to affect the charges of the items that are in this list, let me know.
 
 ## Implemented items
-### Armor
+### Armor sets
 - [x] Barrows gear
   - [x] Ahrim
   - [x] Dharok
@@ -15,6 +15,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
   - [x] Karil
   - [x] Torag
   - [x] Verac
+- [x] Crystal armor
 
 ### Weapons
 - [x] Arclight

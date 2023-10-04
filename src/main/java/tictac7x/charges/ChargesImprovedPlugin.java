@@ -75,7 +75,8 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Gem bag added.<br>" +
-		"<colHIGHLIGHT>* Seed box added.";
+		"<colHIGHLIGHT>* Seed box added.<br>" +
+		"<colHIGHLIGHT>* Crystal armor added.";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -180,6 +181,11 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
+			// Armour sets
+			new A_CrystalBody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new A_CrystalHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new A_CrystalLegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+
 			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new BarrowsAhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -209,11 +215,6 @@ public class ChargesImprovedPlugin extends Plugin {
 			new BarrowsVeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-
-			//Armour sets
-			new A_CrystalBody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new A_CrystalHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new A_CrystalLegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(client, config, infoboxes_charged_items);
 
