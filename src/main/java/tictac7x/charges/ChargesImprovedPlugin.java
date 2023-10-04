@@ -71,11 +71,11 @@ import java.util.Arrays;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.3.1";
+	private final String plugin_version = "v0.3.2";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Fixes for compost bucket, magic cape, gricollers can, charges daily resets.<br>" +
-		"<colHIGHLIGHT>* Fungicide spray added.";
+		"<colHIGHLIGHT>* Gem bag added.<br>" +
+		"<colHIGHLIGHT>* Seed box added.";
 
 	private final int VARBIT_MINUTES = 8354;
 

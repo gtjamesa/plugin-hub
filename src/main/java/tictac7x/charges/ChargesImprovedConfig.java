@@ -57,8 +57,6 @@ public interface ChargesImprovedConfig extends Config {
     String log_basket = "log_basket";
     String ardougne_cloak = "ardougne_cloak";
     String magic_cape = "magic_cape";
-    String gem_bag = "gem_bag";
-    String seed_box = "seed_box";
 
     @ConfigSection(
         name = "Colors",

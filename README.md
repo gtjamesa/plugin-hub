@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.3.1
+# Item Charges Improved - v0.3.2
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
@@ -59,9 +59,11 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bonecrusher
 - [x] Bottomless compost bucket
 - [x] Fish barrel
+- [x] Gem bag
 - [x] Gricoller's can
 - [x] Log basket
 - [x] Ogre bellows
+- [x] Seed box
 - [x] Soul bearer
 - [x] Teleport crystal
 - [x] Waterskins
