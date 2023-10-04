@@ -1,7 +1,6 @@
 package tictac7x.charges.infoboxes;
 
 import net.runelite.api.Client;
-import net.runelite.api.InventoryID;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -17,6 +16,8 @@ import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
+
+import static tictac7x.charges.store.InventoryType.INVENTORY;
 
 public class C_Coffin extends ChargedItemInfoBox {
     private final int SIZE_BRONZE_COFFIN = 3;
@@ -67,16 +68,16 @@ public class C_Coffin extends ChargedItemInfoBox {
         };
 
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Steel coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open steel coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Black coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open black coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Silver coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open silver coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Gold coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryID.INVENTORY.getId()).menuTarget("Open gold coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Open bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Steel coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Open steel coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Black coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Open black coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Silver coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Open silver coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Gold coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(INVENTORY).menuTarget("Open gold coffin").menuOption("Fill").increaseByInventoryDifference(),
         };
     }
 }
