@@ -1,6 +1,6 @@
 package tictac7x.charges.store;
 
-public enum ChargesItem {
+public enum ItemKey {
     ARCLIGHT,
     ARDOUGNE_CLOAK,
     ASH_SANCTIFIER,

@@ -25,7 +25,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.ItemStatus;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -43,11 +44,12 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChargedItem extends InfoBox {
-    public final ChargesItem infobox_id;
+    public final ItemKey infobox_id;
     public int item_id;
     protected final Client client;
     protected final ClientThread client_thread;
@@ -84,7 +86,7 @@ public class ChargedItem extends InfoBox {
     public boolean zero_charges_is_positive = false;
 
     public ChargedItem(
-        final ChargesItem infobox_id,
+        final ItemKey infobox_id,
         final int item_id,
         final Client client,
         final ClientThread client_thread,
@@ -719,13 +721,13 @@ public class ChargedItem extends InfoBox {
     }
 
     public boolean isDeactivated() {
-        @Nullable final String configStatus = configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status");
+        final Optional<String> configStatus = Optional.ofNullable(configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status"));
 
-        if (configStatus == null) {
+        if (!configStatus.isPresent()) {
             return false;
         }
 
-        return config_key != null && configStatus.equals(ChargesImprovedConfig.Status.DEACTIVATED.toString());
+        return configStatus.get().equals(ItemStatus.DEACTIVATED.toString());
     }
 
     public String getConfigStatusKey() {

@@ -11,14 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.InventoryType;
+import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
-
-import static tictac7x.charges.store.InventoryType.BANK;
-import static tictac7x.charges.store.InventoryType.INVENTORY;
 
 public class U_FishBarrel extends ChargedItem {
     private final int FISH_BARREL_SIZE = 28;
@@ -35,7 +33,7 @@ public class U_FishBarrel extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ItemKey.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
 
         this.config_key = ChargesImprovedConfig.fish_barrel;
         this.zero_charges_is_positive = true;
@@ -52,10 +50,10 @@ public class U_FishBarrel extends ChargedItem {
             new TriggerChatMessage("The barrel contains:").onItemClick().multipleCharges()
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(INVENTORY).menuTarget("Fish barrel").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Open fish barrel").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(BANK).menuTarget("Fish barrel").menuOption("Empty").decreaseByBankDifference(),
-            new TriggerItemContainer(BANK).menuTarget("Open fish barrel").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Fish barrel").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open fish barrel").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.BANK).menuTarget("Fish barrel").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(InventoryType.BANK).menuTarget("Open fish barrel").menuOption("Empty").decreaseByBankDifference(),
         };
     }
 }

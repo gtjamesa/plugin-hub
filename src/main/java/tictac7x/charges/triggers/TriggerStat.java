@@ -1,7 +1,7 @@
 package tictac7x.charges.triggers;
 
 import net.runelite.api.Skill;
-import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.store.ItemStatus;
 import java.util.Optional;
 
 public class TriggerStat {
@@ -18,7 +18,7 @@ public class TriggerStat {
         return this;
     }
 
-    public TriggerStat extraConfig(final String key, final ChargesImprovedConfig.Status status) {
+    public TriggerStat extraConfig(final String key, final ItemStatus status) {
         extra_config = Optional.of(new String[]{key, status.toString()});
         return this;
     }

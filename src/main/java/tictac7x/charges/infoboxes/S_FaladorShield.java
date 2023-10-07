@@ -11,7 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerGraphic;
@@ -31,7 +31,7 @@ public class S_FaladorShield extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ItemKey.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.falador_shield;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.FALADOR_SHIELD_3),

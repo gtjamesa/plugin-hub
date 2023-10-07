@@ -2,8 +2,6 @@ package tictac7x.charges.triggers;
 
 import net.runelite.api.HitsplatID;
 
-import javax.annotation.Nullable;
-
 public class TriggerHitsplat {
     public final int hitsplat_id;
     public final int discharges;

@@ -12,7 +12,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedStatusItem;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.ItemStatus;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
@@ -31,7 +32,7 @@ public class U_BoneCrusher extends ChargedStatusItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BONE_CRUSHER, ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ItemKey.BONE_CRUSHER, ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.bone_crusher;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.BONECRUSHER),
@@ -54,7 +55,7 @@ public class U_BoneCrusher extends ChargedStatusItem {
             new TriggerChatMessage("The bonecrusher( necklace)? is active").extraConsumer(message -> activate()),
         };
         this.triggers_stats = new TriggerStat[]{
-            new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ChargesImprovedConfig.Status.ACTIVATED),
+            new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ItemStatus.ACTIVATED),
         };
     }
 }

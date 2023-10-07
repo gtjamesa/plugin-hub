@@ -11,13 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.InventoryType;
+import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
-
-import static tictac7x.charges.store.InventoryType.INVENTORY;
 
 public class C_Coffin extends ChargedItem {
     private final int SIZE_BRONZE_COFFIN = 3;
@@ -38,7 +37,7 @@ public class C_Coffin extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.COFFIN, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ItemKey.COFFIN, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.coffin;
         this.zero_charges_is_positive = true;
 
@@ -68,16 +67,16 @@ public class C_Coffin extends ChargedItem {
         };
 
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(INVENTORY).menuTarget("Bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Open bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Steel coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Open steel coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Black coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Open black coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Silver coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Open silver coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Gold coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(INVENTORY).menuTarget("Open gold coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Steel coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open steel coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Black coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open black coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Silver coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open silver coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Gold coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open gold coffin").menuOption("Fill").increaseByInventoryDifference(),
         };
     }
 }

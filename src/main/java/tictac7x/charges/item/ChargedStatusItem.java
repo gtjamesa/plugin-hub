@@ -9,12 +9,13 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.ItemStatus;
 import tictac7x.charges.store.Store;
 
 public class ChargedStatusItem extends ChargedItem {
     public ChargedStatusItem(
-        final ChargesItem infobox_id,
+        final ItemKey infobox_id,
         final int item_id, Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -43,14 +44,14 @@ public class ChargedStatusItem extends ChargedItem {
     }
 
     protected void deactivate() {
-        setActivity(ChargesImprovedConfig.Status.DEACTIVATED);
+        setActivity(ItemStatus.DEACTIVATED);
     }
 
     protected void activate() {
-        setActivity(ChargesImprovedConfig.Status.ACTIVATED);
+        setActivity(ItemStatus.ACTIVATED);
     }
 
-    private void setActivity(final ChargesImprovedConfig.Status status) {
+    private void setActivity(final ItemStatus status) {
         configs.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey(), status);
     }
 }

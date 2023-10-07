@@ -1,7 +1,8 @@
 package tictac7x.charges;
 
 import net.runelite.client.config.*;
-import tictac7x.charges.store.ChargesItem;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.ItemStatus;
 
 import java.awt.Color;
 import java.util.EnumSet;
@@ -66,11 +67,6 @@ public interface ChargesImprovedConfig extends Config {
     String crystal_body = "crystal_body";
     String crystal_legs = "crystal_legs";
 
-    enum Status {
-        DEACTIVATED,
-        ACTIVATED,
-    }
-
     @ConfigSection(
         name = "Colors",
         description = "Colors of item overlays",
@@ -127,8 +123,8 @@ public interface ChargesImprovedConfig extends Config {
             description = "Select items to hide infoboxes for (use ctrl + click to select multiple items)",
             position = 2,
             section = infoboxes
-        ) default Set<ChargesItem> getHiddenInfoboxes() {
-            return EnumSet.noneOf(ChargesItem.class);
+        ) default Set<ItemKey> getHiddenInfoboxes() {
+            return EnumSet.noneOf(ItemKey.class);
         }
 
     @ConfigSection(
@@ -154,8 +150,8 @@ public interface ChargesImprovedConfig extends Config {
             description = "Select items to hide item overlays for (use ctrl + click to select multiple items)",
             position = 2,
             section = item_overlays
-        ) default Set<ChargesItem> getHiddenItemOverlays() {
-        return EnumSet.noneOf(ChargesItem.class);
+        ) default Set<ItemKey> getHiddenItemOverlays() {
+        return EnumSet.noneOf(ItemKey.class);
     }
 
     @ConfigSection(
@@ -200,7 +196,7 @@ public interface ChargesImprovedConfig extends Config {
                 name = ash_sanctifier_status,
                 description = ash_sanctifier_status,
                 section = debug
-            ) default Status getAshSanctifierStatus() { return Status.ACTIVATED; }
+            ) default ItemStatus getAshSanctifierStatus() { return ItemStatus.ACTIVATED; }
 
         @ConfigItem(
             keyName = bone_crusher,
@@ -214,7 +210,7 @@ public interface ChargesImprovedConfig extends Config {
                 name = bone_crusher_status,
                 description = bone_crusher_status,
                 section = debug
-            ) default Status getBoneCrusherStatus() { return Status.ACTIVATED; }
+            ) default ItemStatus getBoneCrusherStatus() { return ItemStatus.ACTIVATED; }
 
         @ConfigItem(
             keyName = kharedsts_memoirs,
