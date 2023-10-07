@@ -103,6 +103,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Gem bag added.<br>" +
 		"<colHIGHLIGHT>* Seed box added.<br>" +
+		"<colHIGHLIGHT>* Ring of shadows added.<br>" +
 		"<colHIGHLIGHT>* Crystal armor added.<br>" +
 		"<colHIGHLIGHT>* Crystal halberd added.";
 

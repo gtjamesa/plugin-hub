@@ -11,7 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.InventoryType;
+import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -50,8 +50,8 @@ public class U_LogBasket extends ChargedItem {
             new TriggerChatMessage("(You get some.* logs.|The nature offerings enabled you to chop an extra log.)").specificItem(ItemID.OPEN_LOG_BASKET).specificItem(ItemID.OPEN_FORESTRY_BASKET).increaseCharges(1),
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open log basket").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Log basket").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open log basket").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Log basket").menuOption("Fill").increaseByInventoryDifference(),
         };
     }
 }

@@ -11,7 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.InventoryType;
+import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -50,10 +50,10 @@ public class U_FishBarrel extends ChargedItem {
             new TriggerChatMessage("The barrel contains:").onItemClick().multipleCharges()
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Fish barrel").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open fish barrel").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryType.BANK).menuTarget("Fish barrel").menuOption("Empty").decreaseByBankDifference(),
-            new TriggerItemContainer(InventoryType.BANK).menuTarget("Open fish barrel").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Fish barrel").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open fish barrel").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Fish barrel").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Open fish barrel").menuOption("Empty").decreaseByBankDifference(),
         };
     }
 }

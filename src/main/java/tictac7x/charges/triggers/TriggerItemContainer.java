@@ -1,7 +1,7 @@
 package tictac7x.charges.triggers;
 
 import net.runelite.api.InventoryID;
-import tictac7x.charges.store.InventoryType;
+import tictac7x.charges.store.ItemContainerType;
 
 import javax.annotation.Nullable;
 
@@ -15,8 +15,8 @@ public class TriggerItemContainer {
     @Nullable public String menu_option;
     @Nullable public Integer fixed_charges;
 
-    public TriggerItemContainer(final InventoryType inventory_type) {
-        this.inventory_id = inventory_type == InventoryType.INVENTORY ? InventoryID.INVENTORY.getId() : InventoryID.BANK.getId();
+    public TriggerItemContainer(final ItemContainerType inventory_type) {
+        this.inventory_id = inventory_type == ItemContainerType.INVENTORY ? InventoryID.INVENTORY.getId() : InventoryID.BANK.getId();
     }
 
     public TriggerItemContainer menuTarget(final String menu_target) {

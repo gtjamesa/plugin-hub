@@ -11,7 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.InventoryType;
+import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -44,10 +44,10 @@ public class U_GemBag extends ChargedItem {
             new TriggerChatMessage("You just (found|mined) (a|an) (Sapphire|Ruby|Emerald|Diamond)").specificItem(ItemID.OPEN_GEM_BAG).increaseCharges(1),
         };
         this.triggers_item_containers = new TriggerItemContainer[]{
-            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Gem bag").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryType.INVENTORY).menuTarget("Open gem bag").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(InventoryType.BANK).menuTarget("Gem bag").menuOption("Empty").decreaseByBankDifference(),
-            new TriggerItemContainer(InventoryType.BANK).menuTarget("Open gem bag").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Gem bag").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open gem bag").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Gem bag").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Open gem bag").menuOption("Empty").decreaseByBankDifference(),
         };
     }
 }
