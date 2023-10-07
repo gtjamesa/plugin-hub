@@ -44,6 +44,7 @@ public interface ChargesImprovedConfig extends Config {
     String ibans_staff = "ibans_staff";
     String pharaohs_sceptre = "pharaohs_sceptre";
     String ring_of_suffering = "ring_of_suffering";
+    String ring_of_suffering_status = "ring_of_suffering_status";
     String sanguinesti_staff = "sanguinesti_staff";
     String skull_sceptre = "skull_sceptre";
     String soul_bearer = "soul_bearer";
@@ -324,6 +325,13 @@ public interface ChargesImprovedConfig extends Config {
             description = ring_of_suffering,
             section = debug
         ) default int getRingOfSufferingCharges() { return CHARGES_UNKNOWN; }
+
+            @ConfigItem(
+                keyName = ring_of_suffering_status,
+                name = ring_of_suffering_status,
+                description = ring_of_suffering_status,
+                section = debug
+            ) default ItemStatus getRingOfSufferingStatus() { return ItemStatus.ACTIVATED; }
 
         @ConfigItem(
             keyName = sanguinesti_staff,

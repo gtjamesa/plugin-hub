@@ -1,6 +1,9 @@
 package tictac7x.charges.triggers;
 
 import net.runelite.api.HitsplatID;
+import tictac7x.charges.store.ItemStatus;
+
+import java.util.Optional;
 
 public class TriggerHitsplat {
     public final int hitsplat_id;
@@ -9,6 +12,7 @@ public class TriggerHitsplat {
     public boolean self;
     public boolean equipped;
     public boolean non_zero;
+    public Optional<String[]> extra_config = Optional.empty();
 
     public TriggerHitsplat(final int discharges) {
         this.hitsplat_id = HitsplatID.DAMAGE_ME;
@@ -32,6 +36,11 @@ public class TriggerHitsplat {
 
     public TriggerHitsplat nonZero() {
         this.non_zero = true;
+        return this;
+    }
+
+    public TriggerHitsplat extraConfig(final String key, final ItemStatus status) {
+        extra_config = Optional.of(new String[]{key, status.toString()});
         return this;
     }
 }

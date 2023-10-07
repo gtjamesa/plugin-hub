@@ -9,15 +9,16 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedStatusItem;
 import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.ItemStatus;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class J_RingOfSuffering extends ChargedItem {
+public class J_RingOfSuffering extends ChargedStatusItem {
     public J_RingOfSuffering(
         final Client client,
         final ClientThread client_thread,
@@ -43,11 +44,14 @@ public class J_RingOfSuffering extends ChargedItem {
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_26762),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining.").onItemClick(),
+            // Check
+            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick().extraConsumer(message -> activate()),
+            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").onItemClick().extraConsumer(message -> deactivate()),
+            // Charge
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onSelf()
+            new TriggerHitsplat(1).equipped().onSelf().extraConfig(getConfigStatusKey(), ItemStatus.ACTIVATED),
         };
     }
 }
