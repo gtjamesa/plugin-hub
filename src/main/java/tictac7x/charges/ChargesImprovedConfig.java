@@ -66,6 +66,7 @@ public interface ChargesImprovedConfig extends Config {
     String crystal_helm = "crystal_helm";
     String crystal_body = "crystal_body";
     String crystal_legs = "crystal_legs";
+    String ring_of_shadows = "ring_of_shadows";
 
     @ConfigSection(
         name = "Colors",
@@ -457,10 +458,17 @@ public interface ChargesImprovedConfig extends Config {
             section = debug
         ) default int getCrystalLegsCharges() { return CHARGES_UNKNOWN; }
 
-    @ConfigItem(
+        @ConfigItem(
             keyName = crystal_halberd,
             name = crystal_halberd,
             description = crystal_halberd,
             section = debug
-    ) default int getCrystalHalberdCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalHalberdCharges() { return CHARGES_UNKNOWN; }
+
+        @ConfigItem(
+            keyName = ring_of_shadows,
+            name = ring_of_shadows,
+            description = ring_of_shadows,
+            section = debug
+        ) default int getRingOfShadowsCharges() { return CHARGES_UNKNOWN; }
 }

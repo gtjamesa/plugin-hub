@@ -54,6 +54,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Ring of Suffering
 - [x] Slayer ring
 - [x] Xeric's talisman
+- [x] Ring of shadows
 
 ### Unwearables
 - [x] Ash sanctifier
