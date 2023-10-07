@@ -1,15 +1,15 @@
 package tictac7x.charges;
 
 import net.runelite.client.config.*;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemStatus;
+import tictac7x.charges.store.ItemActivity;
 
 import java.awt.Color;
 import java.util.EnumSet;
 import java.util.Set;
 
 import static tictac7x.charges.ChargesImprovedConfig.group;
-import static tictac7x.charges.ChargesImprovedPlugin.CHARGES_UNKNOWN;
 
 @ConfigGroup(group)
 public interface ChargesImprovedConfig extends Config {
@@ -184,49 +184,49 @@ public interface ChargesImprovedConfig extends Config {
             name = arclight,
             description = arclight,
             section = debug
-        ) default int getArclightCharges() { return CHARGES_UNKNOWN; }
+        ) default int getArclightCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = ash_sanctifier,
             name = ash_sanctifier,
             description = ash_sanctifier,
             section = debug
-        ) default int getAshSanctifierCharges() { return CHARGES_UNKNOWN; }
+        ) default int getAshSanctifierCharges() { return Charges.UNKNOWN; }
 
             @ConfigItem(
                 keyName = ash_sanctifier_status,
                 name = ash_sanctifier_status,
                 description = ash_sanctifier_status,
                 section = debug
-            ) default ItemStatus getAshSanctifierStatus() { return ItemStatus.ACTIVATED; }
+            ) default ItemActivity getAshSanctifierStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
             keyName = bone_crusher,
             name = bone_crusher,
             description = bone_crusher,
             section = debug
-        ) default int getBoneCrusherCharges() { return CHARGES_UNKNOWN; }
+        ) default int getBoneCrusherCharges() { return Charges.UNKNOWN; }
 
             @ConfigItem(
                 keyName = bone_crusher_status,
                 name = bone_crusher_status,
                 description = bone_crusher_status,
                 section = debug
-            ) default ItemStatus getBoneCrusherStatus() { return ItemStatus.ACTIVATED; }
+            ) default ItemActivity getBoneCrusherStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
             keyName = kharedsts_memoirs,
             name = kharedsts_memoirs,
             description = kharedsts_memoirs,
             section = debug
-        ) default int getKharedstsMemoirsCharges() { return CHARGES_UNKNOWN; }
+        ) default int getKharedstsMemoirsCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket,
             name = bottomless_compost_bucket,
             description = bottomless_compost_bucket,
             section = debug
-        ) default int getBottomlessCompostBucketCharges() { return CHARGES_UNKNOWN; }
+        ) default int getBottomlessCompostBucketCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket_type,
@@ -240,243 +240,243 @@ public interface ChargesImprovedConfig extends Config {
             name = bracelet_of_slaughter,
             description = bracelet_of_slaughter,
             section = debug
-        ) default int getBraceletOfSlaughterCharges() { return CHARGES_UNKNOWN; }
+        ) default int getBraceletOfSlaughterCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = bryophytas_staff,
             name = bryophytas_staff,
             description = bryophytas_staff,
             section = debug
-        ) default int getBryophytasStaffCharges() { return CHARGES_UNKNOWN; }
+        ) default int getBryophytasStaffCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = celestial_ring,
             name = celestial_ring,
             description = celestial_ring,
             section = debug
-        ) default int getCelestialRingCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCelestialRingCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = chronicle,
             name = chronicle,
             description = chronicle,
             section = debug
-        ) default int getChronicleCharges() { return CHARGES_UNKNOWN; }
+        ) default int getChronicleCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_shield,
             name = crystal_shield,
             description = crystal_shield,
             section = debug
-        ) default int getCrystalShieldCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalShieldCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_bow,
             name = crystal_bow,
             description = crystal_bow,
             section = debug
-        ) default int getCrystalBowCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalBowCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = expeditious_bracelet,
             name = expeditious_bracelet,
             description = expeditious_bracelet,
             section = debug
-        ) default int getBraceletOfExpeditiousCharges() { return CHARGES_UNKNOWN; }
+        ) default int getBraceletOfExpeditiousCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = falador_shield,
             name = falador_shield,
             description = falador_shield,
             section = debug
-        ) default int getFaladorShieldCharges() { return CHARGES_UNKNOWN; }
+        ) default int getFaladorShieldCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = fish_barrel,
             name = fish_barrel,
             description = fish_barrel,
             section = debug
-        ) default int getFishBarrelCharges() { return CHARGES_UNKNOWN; }
+        ) default int getFishBarrelCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = gricollers_can,
             name = gricollers_can,
             description = gricollers_can,
             section = debug
-        ) default int getGricollersCanCharges() { return CHARGES_UNKNOWN; }
+        ) default int getGricollersCanCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = ibans_staff,
             name = ibans_staff,
             description = ibans_staff,
             section = debug
-        ) default int getIbansStaffCharges() { return CHARGES_UNKNOWN; }
+        ) default int getIbansStaffCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = pharaohs_sceptre,
             name = pharaohs_sceptre,
             description = pharaohs_sceptre,
             section = debug
-        ) default int getPharaohsSceptreCharges() { return CHARGES_UNKNOWN; }
+        ) default int getPharaohsSceptreCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_suffering,
             name = ring_of_suffering,
             description = ring_of_suffering,
             section = debug
-        ) default int getRingOfSufferingCharges() { return CHARGES_UNKNOWN; }
+        ) default int getRingOfSufferingCharges() { return Charges.UNKNOWN; }
 
             @ConfigItem(
                 keyName = ring_of_suffering_status,
                 name = ring_of_suffering_status,
                 description = ring_of_suffering_status,
                 section = debug
-            ) default ItemStatus getRingOfSufferingStatus() { return ItemStatus.ACTIVATED; }
+            ) default ItemActivity getRingOfSufferingStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
             keyName = sanguinesti_staff,
             name = sanguinesti_staff,
             description = sanguinesti_staff,
             section = debug
-        ) default int getSanguinestiStaffCharges() { return CHARGES_UNKNOWN; }
+        ) default int getSanguinestiStaffCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = skull_sceptre,
             name = skull_sceptre,
             description = skull_sceptre,
             section = debug
-        ) default int getSkullSceptreCharges() { return CHARGES_UNKNOWN; }
+        ) default int getSkullSceptreCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = soul_bearer,
             name = soul_bearer,
             description = soul_bearer,
             section = debug
-        ) default int getSoulBearerCharges() { return CHARGES_UNKNOWN; }
+        ) default int getSoulBearerCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = trident_of_the_seas,
             name = trident_of_the_seas,
             description = trident_of_the_seas,
             section = debug
-        ) default int getTridentOfTheSeasCharges() { return CHARGES_UNKNOWN; }
+        ) default int getTridentOfTheSeasCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = xerics_talisman,
             name = xerics_talisman,
             description = xerics_talisman,
             section = debug
-        ) default int getXericsTalismanCharges() { return CHARGES_UNKNOWN; }
+        ) default int getXericsTalismanCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = dragonfire_shield,
             name = dragonfire_shield,
             description = dragonfire_shield,
             section = debug
-        ) default int getDragonfireShieldCharges() { return CHARGES_UNKNOWN; }
+        ) default int getDragonfireShieldCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = camulet,
             name = camulet,
             description = camulet,
             section = debug
-        ) default int getCamuletCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCamuletCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = circlet_of_water,
             name = circlet_of_water,
             description = circlet_of_water,
             section = debug
-        ) default int getCircletOfWaterCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCircletOfWaterCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = teleport_crystal,
             name = teleport_crystal,
             description = teleport_crystal,
             section = debug
-        ) default int getTeleportCrystalCharges() { return CHARGES_UNKNOWN; }
+        ) default int getTeleportCrystalCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = bracelet_of_clay,
             name = bracelet_of_clay,
             description = bracelet_of_clay,
             section = debug
-        ) default int getBraceletOfClayCharges() { return CHARGES_UNKNOWN; }
+        ) default int getBraceletOfClayCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = coffin,
             name = coffin,
             description = coffin,
             section = debug
-        ) default int getCoffinCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCoffinCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = log_basket,
             name = log_basket,
             description = log_basket,
             section = debug
-        ) default int getLogBasketCharges() { return CHARGES_UNKNOWN; }
+        ) default int getLogBasketCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = ardougne_cloak,
             name = ardougne_cloak,
             description = ardougne_cloak,
             section = debug
-        ) default int getArdougneCloakCharges() { return CHARGES_UNKNOWN; }
+        ) default int getArdougneCloakCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = magic_cape,
             name = magic_cape,
             description = magic_cape,
             section = debug
-        ) default int getMagicCapeCharges() { return CHARGES_UNKNOWN; }
+        ) default int getMagicCapeCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = gem_bag,
             name = gem_bag,
             description = gem_bag,
             section = debug
-        ) default int getGemBagCharges() { return CHARGES_UNKNOWN; }
+        ) default int getGemBagCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = seed_box,
             name = seed_box,
             description = seed_box,
             section = debug
-        ) default int getSeedBoxCharges() { return CHARGES_UNKNOWN; }
+        ) default int getSeedBoxCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_helm,
             name = crystal_helm,
             description = crystal_helm,
             section = debug
-        ) default int getCrystalHelmCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalHelmCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_body,
             name = crystal_body,
             description = crystal_body,
             section = debug
-        ) default int getCrystalBodyCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalBodyCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_legs,
             name = crystal_legs,
             description = crystal_legs,
             section = debug
-        ) default int getCrystalLegsCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalLegsCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_halberd,
             name = crystal_halberd,
             description = crystal_halberd,
             section = debug
-        ) default int getCrystalHalberdCharges() { return CHARGES_UNKNOWN; }
+        ) default int getCrystalHalberdCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_shadows,
             name = ring_of_shadows,
             description = ring_of_shadows,
             section = debug
-        ) default int getRingOfShadowsCharges() { return CHARGES_UNKNOWN; }
+        ) default int getRingOfShadowsCharges() { return Charges.UNKNOWN; }
 }

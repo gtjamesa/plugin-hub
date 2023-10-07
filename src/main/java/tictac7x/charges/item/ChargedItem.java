@@ -25,8 +25,9 @@ import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemStatus;
+import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerAnimation;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -78,7 +79,7 @@ public class ChargedItem extends InfoBox {
     protected boolean needs_to_be_equipped_for_infobox;
     private boolean is_negative;
 
-    protected int charges = ChargesImprovedPlugin.CHARGES_UNKNOWN;
+    protected int charges = Charges.UNKNOWN;
 
     private String tooltip;
     private boolean render = false;
@@ -136,9 +137,7 @@ public class ChargedItem extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        @Nullable final String config_status = configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status");
-
-        if (charges == ChargesImprovedPlugin.CHARGES_UNKNOWN) {
+        if (charges == Charges.UNKNOWN) {
             return config.getColorUnknown();
         }
 
@@ -177,7 +176,7 @@ public class ChargedItem extends InfoBox {
 
     @Override
     public boolean render() {
-        return config.showInfoboxes() && isAllowed() && render && charges != ChargesImprovedPlugin.CHARGES_UNLIMITED;
+        return config.showInfoboxes() && isAllowed() && render && charges != Charges.UNLIMITED;
     }
 
     public int getCharges() {
@@ -533,7 +532,7 @@ public class ChargedItem extends InfoBox {
         if (event.getActor() != client.getLocalPlayer()) return;
 
         // No animations to check.
-        if (store.inventory == null || store.equipment == null || triggers_animations == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (store.inventory == null || store.equipment == null || triggers_animations == null || charges == Charges.UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         animationTriggerLooper: for (final TriggerAnimation trigger_animation : triggers_animations) {
@@ -574,7 +573,7 @@ public class ChargedItem extends InfoBox {
         if (event.getActor() != client.getLocalPlayer()) return;
 
         // No animations to check.
-        if (store.equipment == null || triggers_graphics == null || charges == ChargesImprovedPlugin.CHARGES_UNKNOWN || triggers_items == null) return;
+        if (store.equipment == null || triggers_graphics == null || charges == Charges.UNKNOWN || triggers_items == null) return;
 
         // Check all animation triggers.
         for (final TriggerGraphic trigger_graphic : triggers_graphics) {
@@ -727,7 +726,7 @@ public class ChargedItem extends InfoBox {
             return false;
         }
 
-        return configStatus.get().equals(ItemStatus.DEACTIVATED.toString());
+        return configStatus.get().equals(ItemActivity.DEACTIVATED.toString());
     }
 
     public String getConfigStatusKey() {

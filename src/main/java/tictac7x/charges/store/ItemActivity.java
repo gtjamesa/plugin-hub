@@ -1,6 +1,6 @@
 package tictac7x.charges.store;
 
-public enum ItemStatus {
+public enum ItemActivity {
     DEACTIVATED,
     ACTIVATED
 }

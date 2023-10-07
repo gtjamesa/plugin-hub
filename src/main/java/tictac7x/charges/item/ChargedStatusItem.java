@@ -10,7 +10,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemStatus;
+import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 
 public class ChargedStatusItem extends ChargedItem {
@@ -44,14 +44,14 @@ public class ChargedStatusItem extends ChargedItem {
     }
 
     protected void deactivate() {
-        setActivity(ItemStatus.DEACTIVATED);
+        setActivity(ItemActivity.DEACTIVATED);
     }
 
     protected void activate() {
-        setActivity(ItemStatus.ACTIVATED);
+        setActivity(ItemActivity.ACTIVATED);
     }
 
-    private void setActivity(final ItemStatus status) {
+    private void setActivity(final ItemActivity status) {
         configs.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey(), status);
     }
 }

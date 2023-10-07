@@ -11,13 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerReset;
-
-import static tictac7x.charges.ChargesImprovedPlugin.CHARGES_UNLIMITED;
 
 public class C_ArdougneCloak extends ChargedItem {
     public C_ArdougneCloak(
@@ -38,7 +37,7 @@ public class C_ArdougneCloak extends ChargedItem {
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_2),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_3),
-            new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(CHARGES_UNLIMITED)
+            new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(Charges.UNLIMITED)
         };
 
         this.triggers_chat_messages = new TriggerChatMessage[]{

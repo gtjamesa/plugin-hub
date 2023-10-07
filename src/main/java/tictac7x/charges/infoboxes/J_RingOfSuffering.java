@@ -12,7 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedStatusItem;
 import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemStatus;
+import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
@@ -51,7 +51,7 @@ public class J_RingOfSuffering extends ChargedStatusItem {
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onSelf().extraConfig(getConfigStatusKey(), ItemStatus.ACTIVATED),
+            new TriggerHitsplat(1).equipped().onSelf().extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),
         };
     }
 }

@@ -1,7 +1,7 @@
 package tictac7x.charges.triggers;
 
 import net.runelite.api.HitsplatID;
-import tictac7x.charges.store.ItemStatus;
+import tictac7x.charges.store.ItemActivity;
 
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public class TriggerHitsplat {
         return this;
     }
 
-    public TriggerHitsplat extraConfig(final String key, final ItemStatus status) {
+    public TriggerHitsplat extraConfig(final String key, final ItemActivity status) {
         extra_config = Optional.of(new String[]{key, status.toString()});
         return this;
     }

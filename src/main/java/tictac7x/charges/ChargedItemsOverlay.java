@@ -6,6 +6,7 @@ import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.triggers.TriggerItem;
 
 import java.awt.Graphics2D;
@@ -42,7 +43,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
         if (!config.showItemOverlays()) return;
 
         for (final ChargedItem infobox : infoboxes_charged_items) {
-            if (infobox.getTriggersItems() == null || config.getHiddenItemOverlays().contains(infobox.infobox_id) || infobox.getCharges() == ChargesImprovedPlugin.CHARGES_UNLIMITED) continue;
+            if (infobox.getTriggersItems() == null || config.getHiddenItemOverlays().contains(infobox.infobox_id) || infobox.getCharges() == Charges.UNLIMITED) continue;
 
             TriggerItem trigger_item_to_use = null;
             for (final TriggerItem trigger_item : infobox.getTriggersItems()) {

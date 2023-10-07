@@ -52,6 +52,7 @@ import tictac7x.charges.infoboxes.barrows.VeracsFlail;
 import tictac7x.charges.infoboxes.barrows.VeracsHelm;
 import tictac7x.charges.infoboxes.barrows.VeracsPlateskirt;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
@@ -106,9 +107,6 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>* Crystal halberd added.";
 
 	private final int VARBIT_MINUTES = 8354;
-
-	public static final int CHARGES_UNKNOWN = -1;
-	public static final int CHARGES_UNLIMITED = -2;
 
 	@Inject
 	private Client client;
@@ -413,8 +411,8 @@ public class ChargesImprovedPlugin extends Plugin {
 	}
 
 	public static String getChargesMinified(final int charges) {
-		if (charges == CHARGES_UNLIMITED) return "∞";
-		if (charges == CHARGES_UNKNOWN) return "?";
+		if (charges == Charges.UNLIMITED) return "∞";
+		if (charges == Charges.UNKNOWN) return "?";
 		if (charges < 1000) return String.valueOf(charges);
 		if (charges >= 1000000) return charges / 1000000 + "M";
 

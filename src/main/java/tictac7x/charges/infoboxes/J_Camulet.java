@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
@@ -39,7 +40,7 @@ public class J_Camulet extends ChargedItem {
             new TriggerChatMessage("Your Camulet has (?<charges>.+) charges? left."),
             new TriggerChatMessage("You recharge the Camulet using camel dung. Yuck!").fixedCharges(4),
             new TriggerChatMessage("The Camulet is already fully charged.").fixedCharges(4),
-            new TriggerChatMessage("The Camulet has unlimited charges.").fixedCharges(ChargesImprovedPlugin.CHARGES_UNLIMITED),
+            new TriggerChatMessage("The Camulet has unlimited charges.").fixedCharges(Charges.UNLIMITED),
         };
     }
 }
