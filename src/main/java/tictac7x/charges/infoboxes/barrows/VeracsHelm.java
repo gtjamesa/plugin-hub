@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -13,11 +13,10 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsKarilsLeatherskirt extends ChargedItemInfoBox {
-    public BarrowsKarilsLeatherskirt(
+public class VeracsHelm extends ChargedItemInfoBox {
+    public VeracsHelm(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -29,17 +28,14 @@ public class BarrowsKarilsLeatherskirt extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_LEATHERSKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.VERACS_HELM, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT).fixedCharges(100),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_100).fixedCharges(100),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_75).fixedCharges(75),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_50).fixedCharges(50),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_25).fixedCharges(25),
-            new TriggerItem(ItemID.KARILS_LEATHERSKIRT_0).fixedCharges(0)
-        };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Karil's skirt has broken!").notification()
+            new TriggerItem(ItemID.VERACS_HELM).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_HELM_100).fixedCharges(100),
+            new TriggerItem(ItemID.VERACS_HELM_75).fixedCharges(75),
+            new TriggerItem(ItemID.VERACS_HELM_50).fixedCharges(50),
+            new TriggerItem(ItemID.VERACS_HELM_25).fixedCharges(25),
+            new TriggerItem(ItemID.VERACS_HELM_0).fixedCharges(0)
         };
     }
 }

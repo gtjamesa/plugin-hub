@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -15,8 +15,8 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsVeracsFlail extends ChargedItemInfoBox {
-    public BarrowsVeracsFlail(
+public class ToragsHelm extends ChargedItemInfoBox {
+    public ToragsHelm(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -28,14 +28,14 @@ public class BarrowsVeracsFlail extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.VERACS_FLAIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.TORAGS_HELM, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.VERACS_FLAIL).fixedCharges(100),
-            new TriggerItem(ItemID.VERACS_FLAIL_100).fixedCharges(100),
-            new TriggerItem(ItemID.VERACS_FLAIL_75).fixedCharges(75),
-            new TriggerItem(ItemID.VERACS_FLAIL_50).fixedCharges(50),
-            new TriggerItem(ItemID.VERACS_FLAIL_25).fixedCharges(25),
-            new TriggerItem(ItemID.VERACS_FLAIL_0).fixedCharges(0)
+            new TriggerItem(ItemID.TORAGS_HELM).fixedCharges(100),
+            new TriggerItem(ItemID.TORAGS_HELM_100).fixedCharges(100),
+            new TriggerItem(ItemID.TORAGS_HELM_75).fixedCharges(75),
+            new TriggerItem(ItemID.TORAGS_HELM_50).fixedCharges(50),
+            new TriggerItem(ItemID.TORAGS_HELM_25).fixedCharges(25),
+            new TriggerItem(ItemID.TORAGS_HELM_0).fixedCharges(0)
         };
     }
 }

@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -15,8 +15,8 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsAhrimsHood extends ChargedItemInfoBox {
-    public BarrowsAhrimsHood(
+public class AhrimsHood extends ChargedItemInfoBox {
+    public AhrimsHood(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,

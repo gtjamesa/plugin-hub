@@ -19,6 +19,7 @@ public enum ChargesItem {
     COFFIN,
     CRYSTAL_BODY,
     CRYSTAL_BOW,
+    CRYSTAL_HALBERD,
     CRYSTAL_HELM,
     CRYSTAL_LEGS,
     CRYSTAL_SHIELD,

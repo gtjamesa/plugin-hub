@@ -29,7 +29,6 @@ public class U_Waterskin extends ChargedItemInfoBox {
         final Plugin plugin
     ) {
         super(ChargesItem.WATERSKIN, ItemID.WATERSKIN0, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.config_key = ChargesImprovedConfig.waterskin;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.WATERSKIN0).fixedCharges(0),
             new TriggerItem(ItemID.WATERSKIN1).fixedCharges(1),

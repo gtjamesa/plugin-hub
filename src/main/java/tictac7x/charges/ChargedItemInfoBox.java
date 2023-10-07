@@ -2,6 +2,7 @@ package tictac7x.charges;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
+import net.runelite.api.Hitsplat;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.events.AnimationChanged;
@@ -552,6 +553,7 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public void onHitsplatApplied(final HitsplatApplied event) {
         if (triggers_hitsplats == null || store.equipment == null) return;
+        final Hitsplat hitsplat = event.getHitsplat();
 
         // Check all hitsplat triggers.
         for (final TriggerHitsplat trigger_hitsplat : triggers_hitsplats) {
@@ -559,13 +561,16 @@ public class ChargedItemInfoBox extends InfoBox {
             if (trigger_hitsplat.self && event.getActor() != client.getLocalPlayer()) continue;
 
             // Enemy check.
-            if (!trigger_hitsplat.self && (event.getActor() == client.getLocalPlayer() || event.getHitsplat().isOthers())) continue;
+            if (!trigger_hitsplat.self && (event.getActor() == client.getLocalPlayer() || hitsplat.isOthers())) continue;
 
             // Hitsplat type check.
-            if (trigger_hitsplat.hitsplat_id != event.getHitsplat().getHitsplatType()) continue;
+            if (trigger_hitsplat.hitsplat_id != hitsplat.getHitsplatType()) continue;
 
             // Equipped check.
             if (trigger_hitsplat.equipped && !in_equipment) continue;
+
+            // Non zero check.
+            if (trigger_hitsplat.non_zero && hitsplat.getAmount() == 0) continue;
 
             // Valid hitsplat, modify charges.
             decreaseCharges(trigger_hitsplat.discharges);

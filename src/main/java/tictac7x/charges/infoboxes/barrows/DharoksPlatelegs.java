@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -15,8 +15,8 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsDharoksGreataxe extends ChargedItemInfoBox {
-    public BarrowsDharoksGreataxe(
+public class DharoksPlatelegs extends ChargedItemInfoBox {
+    public DharoksPlatelegs(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -28,14 +28,14 @@ public class BarrowsDharoksGreataxe extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.DHAROKS_GREATAXE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.DHAROKS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.DHAROKS_GREATAXE).fixedCharges(100),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_100).fixedCharges(100),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_75).fixedCharges(75),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_50).fixedCharges(50),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_25).fixedCharges(25),
-            new TriggerItem(ItemID.DHAROKS_GREATAXE_0).fixedCharges(0)
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_100).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_75).fixedCharges(75),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_50).fixedCharges(50),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_25).fixedCharges(25),
+            new TriggerItem(ItemID.DHAROKS_PLATELEGS_0).fixedCharges(0)
         };
     }
 }

@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -15,8 +15,8 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsToragsHammers extends ChargedItemInfoBox {
-    public BarrowsToragsHammers(
+public class GuthansWarspear extends ChargedItemInfoBox {
+    public GuthansWarspear(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -28,14 +28,14 @@ public class BarrowsToragsHammers extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.TORAGS_HAMMERS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.TORAGS_HAMMERS).fixedCharges(100),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_100).fixedCharges(100),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_75).fixedCharges(75),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_50).fixedCharges(50),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_25).fixedCharges(25),
-            new TriggerItem(ItemID.TORAGS_HAMMERS_0).fixedCharges(0)
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR).fixedCharges(100),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_100).fixedCharges(100),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_75).fixedCharges(75),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_50).fixedCharges(50),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_25).fixedCharges(25),
+            new TriggerItem(ItemID.GUTHANS_WARSPEAR_0).fixedCharges(0)
         };
     }
 }

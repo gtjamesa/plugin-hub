@@ -10,7 +10,7 @@ public class TriggerHitsplat {
 
     public boolean self;
     public boolean equipped;
-
+    public boolean non_zero;
 
     public TriggerHitsplat(final int discharges) {
         this.hitsplat_id = HitsplatID.DAMAGE_ME;
@@ -32,7 +32,8 @@ public class TriggerHitsplat {
         return this;
     }
 
-    public TriggerHitsplat onAnimations(final int[] animations) {
+    public TriggerHitsplat nonZero() {
+        this.non_zero = true;
         return this;
     }
 }

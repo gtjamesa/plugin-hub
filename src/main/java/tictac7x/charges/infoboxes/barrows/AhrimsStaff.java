@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -15,8 +15,8 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsKarilsCrossbow extends ChargedItemInfoBox {
-    public BarrowsKarilsCrossbow(
+public class AhrimsStaff extends ChargedItemInfoBox {
+    public AhrimsStaff(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -28,14 +28,14 @@ public class BarrowsKarilsCrossbow extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_CROSSBOW, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.AHRIMS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.KARILS_CROSSBOW).fixedCharges(100),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_100).fixedCharges(100),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_75).fixedCharges(75),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_50).fixedCharges(50),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_25).fixedCharges(25),
-            new TriggerItem(ItemID.KARILS_CROSSBOW_0).fixedCharges(0)
+            new TriggerItem(ItemID.AHRIMS_STAFF).fixedCharges(100),
+            new TriggerItem(ItemID.AHRIMS_STAFF_100).fixedCharges(100),
+            new TriggerItem(ItemID.AHRIMS_STAFF_75).fixedCharges(75),
+            new TriggerItem(ItemID.AHRIMS_STAFF_50).fixedCharges(50),
+            new TriggerItem(ItemID.AHRIMS_STAFF_25).fixedCharges(25),
+            new TriggerItem(ItemID.AHRIMS_STAFF_0).fixedCharges(0)
         };
     }
 }

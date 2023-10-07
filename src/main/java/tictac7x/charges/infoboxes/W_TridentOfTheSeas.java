@@ -42,8 +42,8 @@ public class W_TridentOfTheSeas extends ChargedItemInfoBox {
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has run out of charges.").fixedCharges(0).notification(),
-                new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
-                new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification(),
+            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
+            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification(),
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))? has (?<charges>.+) charges?( left)?."),
             new TriggerChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)")
         };

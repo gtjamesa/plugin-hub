@@ -57,7 +57,6 @@ public class W_PharaohsSceptre extends ChargedItemInfoBox {
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.").onItemClick(),
             new TriggerChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way."),
-            new TriggerChatMessage("Right, you already had (?<charges>.+) charges?, and I don't give discounts. That means .+ artefacts gives you .+ charges?. Now be on your way."),
             new TriggerChatMessage("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically()
         };
         this.triggers_animations = new TriggerAnimation[]{

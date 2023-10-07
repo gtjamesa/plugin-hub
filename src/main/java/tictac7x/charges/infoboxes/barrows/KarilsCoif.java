@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -15,8 +15,8 @@ import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsToragsPlatelegs extends ChargedItemInfoBox {
-    public BarrowsToragsPlatelegs(
+public class KarilsCoif extends ChargedItemInfoBox {
+    public KarilsCoif(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -28,14 +28,14 @@ public class BarrowsToragsPlatelegs extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.TORAGS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_COIF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.TORAGS_PLATELEGS).fixedCharges(100),
-            new TriggerItem(ItemID.TORAGS_PLATELEGS_100).fixedCharges(100),
-            new TriggerItem(ItemID.TORAGS_PLATELEGS_75).fixedCharges(75),
-            new TriggerItem(ItemID.TORAGS_PLATELEGS_50).fixedCharges(50),
-            new TriggerItem(ItemID.TORAGS_PLATELEGS_25).fixedCharges(25),
-            new TriggerItem(ItemID.TORAGS_PLATELEGS_0).fixedCharges(0)
+            new TriggerItem(ItemID.KARILS_COIF).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_COIF_100).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_COIF_75).fixedCharges(75),
+            new TriggerItem(ItemID.KARILS_COIF_50).fixedCharges(50),
+            new TriggerItem(ItemID.KARILS_COIF_25).fixedCharges(25),
+            new TriggerItem(ItemID.KARILS_COIF_0).fixedCharges(0)
         };
     }
 }

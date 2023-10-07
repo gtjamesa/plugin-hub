@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -13,11 +13,10 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsAhrimsRobeskirt extends ChargedItemInfoBox {
-    public BarrowsAhrimsRobeskirt(
+public class DharoksPlatebody extends ChargedItemInfoBox {
+    public DharoksPlatebody(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -29,17 +28,14 @@ public class BarrowsAhrimsRobeskirt extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.DHAROKS_PLATEBODY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT).fixedCharges(100),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100).fixedCharges(100),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_75).fixedCharges(75),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_50).fixedCharges(50),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_25).fixedCharges(25),
-            new TriggerItem(ItemID.AHRIMS_ROBESKIRT_0).fixedCharges(0)
-        };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Ahrim's skirt has broken!").notification()
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_100).fixedCharges(100),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_75).fixedCharges(75),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_50).fixedCharges(50),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_25).fixedCharges(25),
+            new TriggerItem(ItemID.DHAROKS_PLATEBODY_0).fixedCharges(0)
         };
     }
 }

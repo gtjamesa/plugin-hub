@@ -41,7 +41,7 @@ public class W_IbansStaff extends ChargedItemInfoBox {
             new TriggerChatMessage("You have (?<charges>.+) charges left on the staff."),
         };
         this.triggers_animations = new TriggerAnimation[]{
-            new TriggerAnimation(708).decreaseCharges(1).equipped()
+            new TriggerAnimation(708).equipped().decreaseCharges(1)
         };
     }
 }

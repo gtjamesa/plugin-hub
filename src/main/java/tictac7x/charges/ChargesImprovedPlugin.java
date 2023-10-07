@@ -26,6 +26,30 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.infoboxes.*;
+import tictac7x.charges.infoboxes.barrows.AhrimsHood;
+import tictac7x.charges.infoboxes.barrows.AhrimsRobeskirt;
+import tictac7x.charges.infoboxes.barrows.AhrimsRobetop;
+import tictac7x.charges.infoboxes.barrows.AhrimsStaff;
+import tictac7x.charges.infoboxes.barrows.DharoksGreataxe;
+import tictac7x.charges.infoboxes.barrows.DharoksHelm;
+import tictac7x.charges.infoboxes.barrows.DharoksPlatebody;
+import tictac7x.charges.infoboxes.barrows.DharoksPlatelegs;
+import tictac7x.charges.infoboxes.barrows.GuthansChainskirt;
+import tictac7x.charges.infoboxes.barrows.GuthansHelm;
+import tictac7x.charges.infoboxes.barrows.GuthansPlatebody;
+import tictac7x.charges.infoboxes.barrows.GuthansWarspear;
+import tictac7x.charges.infoboxes.barrows.KarilsCoif;
+import tictac7x.charges.infoboxes.barrows.KarilsCrossbow;
+import tictac7x.charges.infoboxes.barrows.KarilsLeatherskirt;
+import tictac7x.charges.infoboxes.barrows.KarilsLeathertop;
+import tictac7x.charges.infoboxes.barrows.ToragsHammers;
+import tictac7x.charges.infoboxes.barrows.ToragsHelm;
+import tictac7x.charges.infoboxes.barrows.ToragsPlatebody;
+import tictac7x.charges.infoboxes.barrows.ToragsPlatelegs;
+import tictac7x.charges.infoboxes.barrows.VeracsBrassard;
+import tictac7x.charges.infoboxes.barrows.VeracsFlail;
+import tictac7x.charges.infoboxes.barrows.VeracsHelm;
+import tictac7x.charges.infoboxes.barrows.VeracsPlateskirt;
 import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
@@ -76,7 +100,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Gem bag added.<br>" +
 		"<colHIGHLIGHT>* Seed box added.<br>" +
-		"<colHIGHLIGHT>* Crystal armor added.";
+		"<colHIGHLIGHT>* Crystal armor added.<br>" +
+		"<colHIGHLIGHT>* Crystal halberd added.";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -186,35 +211,35 @@ public class ChargesImprovedPlugin extends Plugin {
 			new A_CrystalHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new A_CrystalLegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			new BarrowsAhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsAhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsAhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsAhrimsStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new AhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new AhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new AhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new AhrimsStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			new BarrowsDharoksHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsDharoksPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsDharoksPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsDharoksGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new DharoksHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new DharoksPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new DharoksPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new DharoksGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			new BarrowsGuthansHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsGuthansPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsGuthansChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsGuthansWarspear(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new GuthansHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new GuthansPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new GuthansChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new GuthansWarspear(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			new BarrowsKarilsCoif(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsKarilsLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsKarilsLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsKarilsCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new KarilsCoif(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new KarilsLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new KarilsLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new KarilsCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			new BarrowsToragsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsToragsPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsToragsPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsToragsHammers(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new ToragsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new ToragsPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new ToragsPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new ToragsHammers(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			new BarrowsVeracsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsVeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsVeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new BarrowsVeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new VeracsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new VeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new VeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new VeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 		};
 		overlay_charged_items = new ChargedItemsOverlay(client, config, infoboxes_charged_items);
 
@@ -317,12 +342,12 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		store.onMenuOptionClicked(event);
 
-//		System.out.println("MENU OPTION | " +
-//				"option: " + event.getMenuOption() +
-//				", target: " + event.getMenuTarget() +
-//				", action name: " + event.getMenuAction().name() +
-//				", action id: " + event.getMenuAction().getId()
-//		);
+		System.out.println("MENU OPTION | " +
+				"option: " + event.getMenuOption() +
+				", target: " + event.getMenuTarget() +
+				", action name: " + event.getMenuAction().name() +
+				", action id: " + event.getMenuAction().getId()
+		);
 	}
 
 	@Subscribe

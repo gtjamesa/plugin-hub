@@ -33,6 +33,7 @@ public interface ChargesImprovedConfig extends Config {
     String chronicle = "chronicle";
     String crystal_shield = "crystal_shield";
     String crystal_bow = "crystal_bow";
+    String crystal_halberd = "crystal_halberd";
     String expeditious_bracelet = "expeditious_bracelet";
     String falador_shield = "falador_shield";
     String fish_barrel = "fish_barrel";
@@ -176,274 +177,274 @@ public interface ChargesImprovedConfig extends Config {
 
         @ConfigItem(
             keyName = arclight,
-            name = "Arclight",
-            description = "Arclight charges",
+            name = arclight,
+            description = arclight,
             section = debug
         ) default int getArclightCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ash_sanctifier,
-            name = "Ash sanctifier",
-            description = "Ash sanctifier charges",
+            name = ash_sanctifier,
+            description = ash_sanctifier,
             section = debug
         ) default int getAshSanctifierCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bone_crusher,
-            name = "Bone crusher",
-            description = "Bone crusher charges",
+            name = bone_crusher,
+            description = bone_crusher,
             section = debug
         ) default int getBoneCrusherCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = kharedsts_memoirs,
-            name = "Kharedst's memoirs",
-            description = "Kharedst's memoirs charges",
+            name = kharedsts_memoirs,
+            description = kharedsts_memoirs,
             section = debug
         ) default int getKharedstsMemoirsCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket,
-            name = "Bottomless compost bucket",
-            description = "Bottomless compost bucket charges",
+            name = bottomless_compost_bucket,
+            description = bottomless_compost_bucket,
             section = debug
         ) default int getBottomlessCompostBucketCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bottomless_compost_bucket_type,
-            name = "Bottomless compost bucket type",
-            description = "Bottomless compost bucket type",
+            name = bottomless_compost_bucket_type,
+            description = bottomless_compost_bucket_type,
             section = debug
         ) default String getBottomlessCompostBucketType() { return ""; }
 
         @ConfigItem(
             keyName = bracelet_of_slaughter,
-            name = "Bracelet of slaughter",
-            description = "Bracelet of slaughter charges",
+            name = bracelet_of_slaughter,
+            description = bracelet_of_slaughter,
             section = debug
         ) default int getBraceletOfSlaughterCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = bryophytas_staff,
-            name = "Bryophyta's Staff",
-            description = "Bryophyta's Staff charges",
+            name = bryophytas_staff,
+            description = bryophytas_staff,
             section = debug
         ) default int getBryophytasStaffCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = celestial_ring,
-            name = "Celestial Ring",
-            description = "Celestial Ring charges",
+            name = celestial_ring,
+            description = celestial_ring,
             section = debug
         ) default int getCelestialRingCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = chronicle,
-            name = "Chronicle",
-            description = "Chronicle charges",
+            name = chronicle,
+            description = chronicle,
             section = debug
         ) default int getChronicleCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_shield,
-            name = "Crystal shield",
-            description = "Crystal shield charges",
+            name = crystal_shield,
+            description = crystal_shield,
             section = debug
         ) default int getCrystalShieldCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_bow,
-            name = "Crystal bow",
-            description = "Crystal bow charges",
+            name = crystal_bow,
+            description = crystal_bow,
             section = debug
         ) default int getCrystalBowCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = expeditious_bracelet,
-            name = "Expeditious bracelet",
-            description = "Expeditious bracelet charges",
+            name = expeditious_bracelet,
+            description = expeditious_bracelet,
             section = debug
         ) default int getBraceletOfExpeditiousCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = falador_shield,
-            name = "Falador shield",
-            description = "Falador shield charges",
+            name = falador_shield,
+            description = falador_shield,
             section = debug
         ) default int getFaladorShieldCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = fish_barrel,
-            name = "Fish barrel",
-            description = "Fish barrel charges",
+            name = fish_barrel,
+            description = fish_barrel,
             section = debug
         ) default int getFishBarrelCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = gricollers_can,
-            name = "Gricoller's can",
-            description = "Gricoller's can charges",
+            name = gricollers_can,
+            description = gricollers_can,
             section = debug
         ) default int getGricollersCanCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ibans_staff,
-            name = "Iban's staff",
-            description = "Iban's staff charges",
+            name = ibans_staff,
+            description = ibans_staff,
             section = debug
         ) default int getIbansStaffCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = pharaohs_sceptre,
-            name = "Pharaoh's sceptre",
-            description = "Pharaoh's sceptre charges",
+            name = pharaohs_sceptre,
+            description = pharaohs_sceptre,
             section = debug
         ) default int getPharaohsSceptreCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ring_of_suffering,
-            name = "Ring of Suffering",
-            description = "Ring of suffering charges",
+            name = ring_of_suffering,
+            description = ring_of_suffering,
             section = debug
         ) default int getRingOfSufferingCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = sanguinesti_staff,
-            name = "Sanguinesti staff",
-            description = "Sanguinesti staff charges",
+            name = sanguinesti_staff,
+            description = sanguinesti_staff,
             section = debug
         ) default int getSanguinestiStaffCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = skull_sceptre,
-            name = "Skull sceptre",
-            description = "Skull sceptre charges",
+            name = skull_sceptre,
+            description = skull_sceptre,
             section = debug
         ) default int getSkullSceptreCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = soul_bearer,
-            name = "Soul bearer",
-            description = "Soul bearer charges",
+            name = soul_bearer,
+            description = soul_bearer,
             section = debug
         ) default int getSoulBearerCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = trident_of_the_seas,
-            name = "Trident of the seas",
-            description = "Trident of the seas charges",
+            name = trident_of_the_seas,
+            description = trident_of_the_seas,
             section = debug
         ) default int getTridentOfTheSeasCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = xerics_talisman,
-            name = "Xeric's talisman",
-            description = "Xeric's talisman charges",
+            name = xerics_talisman,
+            description = xerics_talisman,
             section = debug
         ) default int getXericsTalismanCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = dragonfire_shield,
-            name = "Dragonfire shield",
-            description = "Dragonfire shield charges",
+            name = dragonfire_shield,
+            description = dragonfire_shield,
             section = debug
         ) default int getDragonfireShieldCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = camulet,
-            name = "Camulet",
-            description = "Camulet charges",
+            name = camulet,
+            description = camulet,
             section = debug
         ) default int getCamuletCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = circlet_of_water,
-            name = "Circlet of water",
-            description = "Circlet of water charges",
+            name = circlet_of_water,
+            description = circlet_of_water,
             section = debug
         ) default int getCircletOfWaterCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = teleport_crystal,
-            name = "Teleport crystal",
-            description = "Teleport crystal charges",
+            name = teleport_crystal,
+            description = teleport_crystal,
             section = debug
         ) default int getTeleportCrystalCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
-            keyName = waterskin,
-            name = "Waterskin",
-            description = "Waterskin charges",
-            section = debug
-        ) default int getWaterskinCharges() { return CHARGES_UNKNOWN; }
-
-        @ConfigItem(
             keyName = bracelet_of_clay,
-            name = "Bracelet of clay",
-            description = "Bracelet of clay charges",
+            name = bracelet_of_clay,
+            description = bracelet_of_clay,
             section = debug
         ) default int getBraceletOfClayCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = coffin,
-            name = "Coffin",
-            description = "Coffin charges",
+            name = coffin,
+            description = coffin,
             section = debug
         ) default int getCoffinCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = log_basket,
-            name = "Log basket",
-            description = "Log basket charges",
+            name = log_basket,
+            description = log_basket,
             section = debug
         ) default int getLogBasketCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = ardougne_cloak,
-            name = "Ardougne cloak",
-            description = "Ardougle cloak charges",
+            name = ardougne_cloak,
+            description = ardougne_cloak,
             section = debug
         ) default int getArdougneCloakCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = magic_cape,
-            name = "Magic cape",
-            description = "Magic cape charges",
+            name = magic_cape,
+            description = magic_cape,
             section = debug
         ) default int getMagicCapeCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = gem_bag,
-            name = "Gem bag",
-            description = "Gem bag charges",
+            name = gem_bag,
+            description = gem_bag,
             section = debug
         ) default int getGemBagCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = seed_box,
-            name = "Seed box",
-            description = "Seed box charges",
+            name = seed_box,
+            description = seed_box,
             section = debug
         ) default int getSeedBoxCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_helm,
-            name = "Crystal helm",
-            description = "Crystal helm charges",
+            name = crystal_helm,
+            description = crystal_helm,
             section = debug
         ) default int getCrystalHelmCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_body,
-            name = "Crystal body",
-            description = "Crystal body charges",
+            name = crystal_body,
+            description = crystal_body,
             section = debug
         ) default int getCrystalBodyCharges() { return CHARGES_UNKNOWN; }
 
         @ConfigItem(
             keyName = crystal_legs,
-            name = "Crystal legs",
-            description = "Crystal legs charges",
+            name = crystal_legs,
+            description = crystal_legs,
             section = debug
         ) default int getCrystalLegsCharges() { return CHARGES_UNKNOWN; }
+
+    @ConfigItem(
+            keyName = crystal_halberd,
+            name = crystal_halberd,
+            description = crystal_halberd,
+            section = debug
+    ) default int getCrystalHalberdCharges() { return CHARGES_UNKNOWN; }
 }

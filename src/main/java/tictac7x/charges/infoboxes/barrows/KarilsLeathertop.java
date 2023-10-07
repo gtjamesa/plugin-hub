@@ -1,4 +1,4 @@
-package tictac7x.charges.infoboxes;
+package tictac7x.charges.infoboxes.barrows;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
@@ -13,10 +13,11 @@ import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
+import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class BarrowsDharoksHelm extends ChargedItemInfoBox {
-    public BarrowsDharoksHelm(
+public class KarilsLeathertop extends ChargedItemInfoBox {
+    public KarilsLeathertop(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -28,14 +29,17 @@ public class BarrowsDharoksHelm extends ChargedItemInfoBox {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesItem.BARROWS_GEAR, ItemID.DHAROKS_HELM, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        super(ChargesItem.BARROWS_GEAR, ItemID.KARILS_LEATHERTOP, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.DHAROKS_HELM).fixedCharges(100),
-            new TriggerItem(ItemID.DHAROKS_HELM_100).fixedCharges(100),
-            new TriggerItem(ItemID.DHAROKS_HELM_75).fixedCharges(75),
-            new TriggerItem(ItemID.DHAROKS_HELM_50).fixedCharges(50),
-            new TriggerItem(ItemID.DHAROKS_HELM_25).fixedCharges(25),
-            new TriggerItem(ItemID.DHAROKS_HELM_0).fixedCharges(0)
+            new TriggerItem(ItemID.KARILS_LEATHERTOP).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_100).fixedCharges(100),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_75).fixedCharges(75),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_50).fixedCharges(50),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_25).fixedCharges(25),
+            new TriggerItem(ItemID.KARILS_LEATHERTOP_0).fixedCharges(0)
+        };
+        this.triggers_chat_messages = new TriggerChatMessage[]{
+            new TriggerChatMessage("Karil's body has broken!").notification()
         };
     }
 }
