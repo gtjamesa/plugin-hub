@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -17,7 +17,7 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class S_CrystalShield extends ChargedItemInfoBox {
+public class S_CrystalShield extends ChargedItem {
     public S_CrystalShield(
         final Client client,
         final ClientThread client_thread,
@@ -34,33 +34,33 @@ public class S_CrystalShield extends ChargedItemInfoBox {
         this.config_key = ChargesImprovedConfig.crystal_shield;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_SHIELD),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_24127),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_110),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_110_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_210),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_210_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_310),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_310_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_410),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_410_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_510),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_510_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_610),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_610_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_710),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_710_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_810),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_810_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_910),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_910_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_FULL),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_FULL_I),
-                new TriggerItem(ItemID.CRYSTAL_SHIELD_INACTIVE).fixedCharges(0),
-                new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD),
-                new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_4235),
-                new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_16890),
-                new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_I_16891),
-                new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_24127),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_110),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_110_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_210),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_210_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_310),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_310_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_410),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_410_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_510),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_510_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_610),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_610_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_710),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_710_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_810),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_810_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_910),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_910_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_FULL),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_FULL_I),
+            new TriggerItem(ItemID.CRYSTAL_SHIELD_INACTIVE).fixedCharges(0),
+            new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD),
+            new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_4235),
+            new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_16890),
+            new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_I_16891),
+            new TriggerItem(ItemID.NEW_CRYSTAL_SHIELD_I),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal shield has (?<charges>.+) charges? remaining.")

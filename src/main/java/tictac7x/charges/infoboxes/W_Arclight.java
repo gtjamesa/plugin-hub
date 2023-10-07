@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -17,10 +17,7 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class W_Arclight extends ChargedItemInfoBox {
-    private final int ARCLIGHT_ATTACK_STAB = 386;
-    private final int ARCLIGHT_ATTACK_SLASH = 390;
-
+public class W_Arclight extends ChargedItem {
     public W_Arclight(
         final Client client,
         final ClientThread client_thread,
@@ -39,13 +36,12 @@ public class W_Arclight extends ChargedItemInfoBox {
             new TriggerItem(ItemID.ARCLIGHT),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your arclight has (?<charges>.+) charges? left."),
+            new TriggerChatMessage("Your arclight has (?<charges>.+) charges?( left)?."),
             new TriggerChatMessage("Your arclight can perform (?<charges>.+) more attacks."),
             new TriggerChatMessage("Your arclight has degraded.").fixedCharges(0).notification(),
-            new TriggerChatMessage("You combine Darklight with the shards and it seems to glow in your hands creating Arclight. Your Arclight has (?<charges>.+) charges.")
         };
         this.triggers_hitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onEnemy().onAnimations(new int[]{ARCLIGHT_ATTACK_STAB, ARCLIGHT_ATTACK_SLASH})
+            new TriggerHitsplat(1).equipped().onEnemy()
         };
     }
 }

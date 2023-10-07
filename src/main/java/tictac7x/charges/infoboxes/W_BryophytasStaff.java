@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -17,7 +17,7 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerGraphic;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class W_BryophytasStaff extends ChargedItemInfoBox {
+public class W_BryophytasStaff extends ChargedItem {
     public W_BryophytasStaff(
         final Client client,
         final ClientThread client_thread,

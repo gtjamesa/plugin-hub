@@ -10,15 +10,15 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedStatusItem;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerXPDrop;
+import tictac7x.charges.triggers.TriggerStat;
 
-public class U_AshSanctifier extends ChargedItemInfoBox {
+public class U_AshSanctifier extends ChargedStatusItem {
     public U_AshSanctifier(
         final Client client,
         final ClientThread client_thread,
@@ -37,11 +37,16 @@ public class U_AshSanctifier extends ChargedItemInfoBox {
             new TriggerItem(ItemID.ASH_SANCTIFIER),
         };
         this.triggers_chat_messages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your ash sanctifier has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("The ash sanctifier has (?<charges>.+) charges?.").onItemClick(),
+            // Check
+            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").extraConsumer(message -> deactivate()),
+            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").extraConsumer(message -> activate()),
+            // Activate
+            new TriggerChatMessage("The ash sanctifier is active and ready to scatter ashes.").extraConsumer(message -> activate()),
+            // Deactivate
+            new TriggerChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").extraConsumer(message -> deactivate()),
         };
-        this.triggers_xp_drops = new TriggerXPDrop[]{
-            new TriggerXPDrop(Skill.PRAYER).decreaseCharges(1),
+        this.triggers_stats = new TriggerStat[]{
+            new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ChargesImprovedConfig.Status.ACTIVATED),
         };
     }
 }

@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -20,7 +20,7 @@ import tictac7x.charges.triggers.TriggerItemContainer;
 import static tictac7x.charges.store.InventoryType.BANK;
 import static tictac7x.charges.store.InventoryType.INVENTORY;
 
-public class U_GemBag extends ChargedItemInfoBox {
+public class U_GemBag extends ChargedItem {
     public U_GemBag(
         final Client client,
         final ClientThread client_thread,

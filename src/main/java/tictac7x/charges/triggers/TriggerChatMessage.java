@@ -20,7 +20,7 @@ public class TriggerChatMessage {
 
     public List<Integer> specific_items = new ArrayList<>();
     @Nullable public Pattern ignore_message;
-    @Nullable public Consumer<String> consumer;
+    @Nullable public Consumer<String> extra_consumer;
     @Nullable public Integer fixed_charges;
     @Nullable public Integer decrease_charges;
     @Nullable public Integer increase_charges;
@@ -98,5 +98,8 @@ public class TriggerChatMessage {
         return this;
     }
 
-
+    public TriggerChatMessage extraConsumer(Consumer<String> extra_consumer) {
+        this.extra_consumer = extra_consumer;
+        return this;
+    }
 }

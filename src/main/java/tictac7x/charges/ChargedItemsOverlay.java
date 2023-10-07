@@ -1,26 +1,23 @@
 package tictac7x.charges;
 
 import net.runelite.api.Client;
-import net.runelite.api.widgets.WidgetID;
 import net.runelite.api.widgets.WidgetItem;
-import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.triggers.TriggerItem;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ChargedItemsOverlay extends WidgetItemOverlay {
     private final Client client;
     private final ChargesImprovedConfig config;
-    private final ChargedItemInfoBox[] infoboxes_charged_items;
+    private final ChargedItem[] infoboxes_charged_items;
 
-    public ChargedItemsOverlay(final Client client, final ChargesImprovedConfig config, final ChargedItemInfoBox[] infoboxes_charged_items) {
+    public ChargedItemsOverlay(final Client client, final ChargesImprovedConfig config, final ChargedItem[] infoboxes_charged_items) {
         this.client = client;
         this.config = config;
         this.infoboxes_charged_items = infoboxes_charged_items;
@@ -44,11 +41,11 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
         if (!config.showItemOverlays()) return;
 
-        for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
-            if (infobox.triggers_items == null || config.getHiddenItemOverlays().contains(infobox.infobox_id) || infobox.charges == ChargesImprovedPlugin.CHARGES_UNLIMITED) continue;
+        for (final ChargedItem infobox : infoboxes_charged_items) {
+            if (infobox.getTriggersItems() == null || config.getHiddenItemOverlays().contains(infobox.infobox_id) || infobox.getCharges() == ChargesImprovedPlugin.CHARGES_UNLIMITED) continue;
 
             TriggerItem trigger_item_to_use = null;
-            for (final TriggerItem trigger_item : infobox.triggers_items) {
+            for (final TriggerItem trigger_item : infobox.getTriggersItems()) {
                 if (trigger_item.item_id == item_id && !trigger_item.hide_overlay) {
                     trigger_item_to_use = trigger_item;
                     break;
@@ -74,11 +71,12 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
 
             if (charges.equals("?")) {
                 charges_component.setColor(config.getColorUnknown());
-            } else if (!isBankWidget(item_widget) && (infobox.isNegative() || infobox.needsToBeEquipped() && !infobox.in_equipment)) {
-                charges_component.setColor(config.getColorEmpty());
-            } else if (charges.equals("0") && !infobox.zero_charges_is_positive) {
-                charges_component.setColor(config.getColorEmpty());
-            } else if (infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges) {
+            } else if (
+                !isBankWidget(item_widget) && (infobox.needsToBeEquipped() && !infobox.inEquipment()) ||
+                charges.equals("0") && !infobox.zero_charges_is_positive ||
+                infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges ||
+                infobox.isDeactivated()
+            ) {
                 charges_component.setColor(config.getColorEmpty());
             } else {
                 charges_component.setColor(config.getColorDefault());

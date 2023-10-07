@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -19,7 +19,7 @@ import tictac7x.charges.triggers.TriggerItem;
 
 import javax.annotation.Nullable;
 
-public class U_BottomlessCompostBucket extends ChargedItemInfoBox {
+public class U_BottomlessCompostBucket extends ChargedItem {
     @Nullable private String tooltip_extra;
 
     public U_BottomlessCompostBucket(

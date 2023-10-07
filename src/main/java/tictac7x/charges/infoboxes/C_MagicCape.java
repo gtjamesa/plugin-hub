@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -18,7 +18,7 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerReset;
 import tictac7x.charges.triggers.TriggerWidget;
 
-public class C_MagicCape extends ChargedItemInfoBox {
+public class C_MagicCape extends ChargedItem {
     private final int MAGIC_CAPE_T = 9763;
     private final String regex_used = "You have changed your spellbook (?<used>.+)/(?<total>.+) times today.";
 

@@ -9,7 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargedItemInfoBox;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
@@ -19,7 +19,7 @@ import tictac7x.charges.triggers.TriggerReset;
 
 import static tictac7x.charges.ChargesImprovedPlugin.CHARGES_UNLIMITED;
 
-public class C_ArdougneCloak extends ChargedItemInfoBox {
+public class C_ArdougneCloak extends ChargedItem {
     public C_ArdougneCloak(
         final Client client,
         final ClientThread client_thread,

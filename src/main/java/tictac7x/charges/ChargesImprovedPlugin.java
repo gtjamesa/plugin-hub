@@ -11,6 +11,7 @@ import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.Notifier;
@@ -50,6 +51,7 @@ import tictac7x.charges.infoboxes.barrows.VeracsBrassard;
 import tictac7x.charges.infoboxes.barrows.VeracsFlail;
 import tictac7x.charges.infoboxes.barrows.VeracsHelm;
 import tictac7x.charges.infoboxes.barrows.VeracsPlateskirt;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
@@ -144,7 +146,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	private ChargedItemsOverlay overlay_charged_items;
 
-	private ChargedItemInfoBox[] infoboxes_charged_items;
+	private ChargedItem[] infoboxes_charged_items;
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
 
@@ -152,7 +154,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	protected void startUp() {
 		store = new Store();
 
-		infoboxes_charged_items = new ChargedItemInfoBox[]{
+		infoboxes_charged_items = new ChargedItem[]{
 			// Weapons
 			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -162,6 +164,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new W_CrystalBow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new W_CrystalHalberd(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Shields
 			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -257,7 +260,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onItemContainerChanged(final ItemContainerChanged event) {
 		store.onItemContainerChanged(event);
 
-		for (final ChargedItemInfoBox infobox : infoboxes_charged_items) {
+		for (final ChargedItem infobox : infoboxes_charged_items) {
 			infobox.onItemContainersChanged(event);
 		}
 
@@ -334,7 +337,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onWidgetLoaded(event));
 
 //		System.out.println("WIDGET | " +
-//				"group: " + event.getGroupId()
+//			"group: " + event.getGroupId()
 //		);
 	}
 
@@ -342,12 +345,12 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		store.onMenuOptionClicked(event);
 
-		System.out.println("MENU OPTION | " +
-				"option: " + event.getMenuOption() +
-				", target: " + event.getMenuTarget() +
-				", action name: " + event.getMenuAction().name() +
-				", action id: " + event.getMenuAction().getId()
-		);
+//		System.out.println("MENU OPTION | " +
+//			"option: " + event.getMenuOption() +
+//			", target: " + event.getMenuTarget() +
+//			", action name: " + event.getMenuAction().name() +
+//			", action id: " + event.getMenuAction().getId()
+//		);
 	}
 
 	@Subscribe
@@ -367,6 +370,17 @@ public class ChargesImprovedPlugin extends Plugin {
 				.build()
 			);
 		}
+	}
+
+	@Subscribe
+	public void onStatChanged(final StatChanged event) {
+		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onStatChanged(event));
+
+//		System.out.println("STAT CHANGED | " +
+//			event.getSkill().getName() +
+//			", level: " + event.getLevel() +
+//			", xp: " + event.getXp()
+//		);
 	}
 
 	@Subscribe

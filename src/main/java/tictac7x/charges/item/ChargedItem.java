@@ -1,4 +1,4 @@
-package tictac7x.charges;
+package tictac7x.charges.item;
 
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
@@ -10,6 +10,7 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
@@ -22,6 +23,8 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
+import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.store.ChargesItem;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.TriggerAnimation;
@@ -32,7 +35,7 @@ import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerItemContainer;
 import tictac7x.charges.triggers.TriggerReset;
 import tictac7x.charges.triggers.TriggerWidget;
-import tictac7x.charges.triggers.TriggerXPDrop;
+import tictac7x.charges.triggers.TriggerStat;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -43,7 +46,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ChargedItemInfoBox extends InfoBox {
+public class ChargedItem extends InfoBox {
     public final ChargesItem infobox_id;
     public int item_id;
     protected final Client client;
@@ -66,7 +69,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable protected TriggerWidget[] triggers_widgets;
     @Nullable protected TriggerReset[] triggers_resets;
     @Nullable protected TriggerItemContainer[] triggers_item_containers;
-    @Nullable protected TriggerXPDrop[] triggers_xp_drops;
+    @Nullable protected TriggerStat[] triggers_stats;
 
     protected boolean in_equipment = false;
     private boolean in_inventory = false;
@@ -80,7 +83,7 @@ public class ChargedItemInfoBox extends InfoBox {
     @Nullable public Integer negative_full_charges;
     public boolean zero_charges_is_positive = false;
 
-    public ChargedItemInfoBox(
+    public ChargedItem(
         final ChargesItem infobox_id,
         final int item_id,
         final Client client,
@@ -131,14 +134,31 @@ public class ChargedItemInfoBox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        return (
-            charges == ChargesImprovedPlugin.CHARGES_UNKNOWN ? config.getColorUnknown() :
-            charges == 0 && !zero_charges_is_positive ? config.getColorEmpty() :
-            negative_full_charges != null && charges == negative_full_charges ? config.getColorEmpty() :
-            needs_to_be_equipped_for_infobox && !in_equipment ? config.getColorEmpty() :
-            is_negative ? config.getColorEmpty() :
-            config.getColorDefault()
-        );
+        @Nullable final String config_status = configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status");
+
+        if (charges == ChargesImprovedPlugin.CHARGES_UNKNOWN) {
+            return config.getColorUnknown();
+        }
+
+        if (
+            charges == 0 && !zero_charges_is_positive ||
+            negative_full_charges != null && charges == negative_full_charges ||
+            needs_to_be_equipped_for_infobox && !in_equipment ||
+            is_negative ||
+            isDeactivated()
+        ) {
+            return config.getColorEmpty();
+        }
+
+        return config.getColorDefault();
+    }
+
+    public TriggerItem[] getTriggersItems() {
+        return triggers_items;
+    }
+
+    public boolean inEquipment() {
+        return in_equipment;
     }
 
     private boolean isAllowed() {
@@ -160,6 +180,25 @@ public class ChargedItemInfoBox extends InfoBox {
 
     public int getCharges() {
         return charges;
+    }
+
+    public void onStatChanged(final StatChanged event) {
+        if (triggers_stats == null) return;
+
+        for (final TriggerStat triggerStat : triggers_stats) {
+            // Skill check.
+            if (triggerStat.skill != event.getSkill()) continue;
+
+            // Extra config check.
+            if (
+                triggerStat.extra_config.isPresent() &&
+                !configs.getConfiguration(ChargesImprovedConfig.group, triggerStat.extra_config.get()[0]).equals(triggerStat.extra_config.get()[1])
+            ) continue;
+
+            if (triggerStat.discharges.isPresent()) {
+                decreaseCharges(triggerStat.discharges.get());
+            }
+        }
     }
 
     public void onVarbitChanged(final VarbitChanged event) {
@@ -400,10 +439,6 @@ public class ChargedItemInfoBox extends InfoBox {
                 final int total = Integer.parseInt(matcher.group("total"));
                 setCharges(total - used);
 
-            // Custom consumer.
-            } else if (chat_message.consumer != null) {
-                chat_message.consumer.accept(message);
-
             // Set charges dynamically from the chat message.
             } else {
                 try {
@@ -420,6 +455,11 @@ public class ChargedItemInfoBox extends InfoBox {
                     }
                 } catch (final Exception ignored) {}
             }
+
+            // Extra consumer.
+             if (chat_message.extra_consumer != null) {
+                 chat_message.extra_consumer.accept(message);
+             }
 
             // Check extra matches groups.
             if (extra_config_keys != null) {
@@ -651,7 +691,13 @@ public class ChargedItemInfoBox extends InfoBox {
         tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
     }
 
-    protected void onChargesUpdated() {}
+    protected void onChargesUpdated() {
+//        chat_messages.queue(QueuedMessage.builder()
+//            .type(ChatMessageType.CONSOLE)
+//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+//            .build()
+//        );
+    }
 
     private int itemsDifference(final Item[] items_before, final Item[] items_after) {
         final int items_before_count = (int) Arrays.stream(items_before).filter(item -> item.getId() != -1).count();
@@ -670,6 +716,22 @@ public class ChargedItemInfoBox extends InfoBox {
 
     private String getItemName() {
         return items.getItemComposition(item_id).getName();
+    }
+
+    public boolean isDeactivated() {
+        @Nullable final String configStatus = configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status");
+
+        if (configStatus == null) {
+            return false;
+        }
+
+        return config_key != null && configStatus.equals(ChargesImprovedConfig.Status.DEACTIVATED.toString());
+    }
+
+    public String getConfigStatusKey() {
+        if (config_key == null) return null;
+
+        return config_key + "_status";
     }
 }
 

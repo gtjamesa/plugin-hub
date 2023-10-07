@@ -22,7 +22,9 @@ public interface ChargesImprovedConfig extends Config {
 
     String arclight = "arclight";
     String ash_sanctifier = "ash_sanctifier";
+    String ash_sanctifier_status = "ash_sanctifier_status";
     String bone_crusher = "bone_crusher";
+    String bone_crusher_status = "bone_crusher_status";
     String kharedsts_memoirs = "kharedsts_memoirs";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
     String bottomless_compost_bucket_type = "bottomless_compost_bucket_type";
@@ -51,7 +53,6 @@ public interface ChargesImprovedConfig extends Config {
     String camulet = "camulet";
     String circlet_of_water = "circlet_of_water";
     String teleport_crystal = "teleport_crystal";
-    String waterskin = "waterskin";
     String bracelet_of_clay = "bracelet_of_clay";
     String coffin = "coffin";
     String bracelet_of_flamtaer = "bracelet_of_flamtaer";
@@ -64,6 +65,11 @@ public interface ChargesImprovedConfig extends Config {
     String crystal_helm = "crystal_helm";
     String crystal_body = "crystal_body";
     String crystal_legs = "crystal_legs";
+
+    enum Status {
+        DEACTIVATED,
+        ACTIVATED,
+    }
 
     @ConfigSection(
         name = "Colors",
@@ -189,12 +195,26 @@ public interface ChargesImprovedConfig extends Config {
             section = debug
         ) default int getAshSanctifierCharges() { return CHARGES_UNKNOWN; }
 
+            @ConfigItem(
+                keyName = ash_sanctifier_status,
+                name = ash_sanctifier_status,
+                description = ash_sanctifier_status,
+                section = debug
+            ) default Status getAshSanctifierStatus() { return Status.ACTIVATED; }
+
         @ConfigItem(
             keyName = bone_crusher,
             name = bone_crusher,
             description = bone_crusher,
             section = debug
         ) default int getBoneCrusherCharges() { return CHARGES_UNKNOWN; }
+
+            @ConfigItem(
+                keyName = bone_crusher_status,
+                name = bone_crusher_status,
+                description = bone_crusher_status,
+                section = debug
+            ) default Status getBoneCrusherStatus() { return Status.ACTIVATED; }
 
         @ConfigItem(
             keyName = kharedsts_memoirs,
