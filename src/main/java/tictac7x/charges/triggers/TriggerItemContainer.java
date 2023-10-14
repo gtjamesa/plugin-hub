@@ -9,6 +9,7 @@ public class TriggerItemContainer {
     public final int inventory_id;
 
     public boolean increase_by_inventory_difference;
+    public boolean decrease_by_inventory_difference;
     public boolean decrease_by_bank_difference;
 
     @Nullable public String menu_target;
@@ -36,6 +37,11 @@ public class TriggerItemContainer {
 
     public TriggerItemContainer increaseByInventoryDifference() {
         this.increase_by_inventory_difference = true;
+        return this;
+    }
+
+    public TriggerItemContainer decreaseByInventoryDifference() {
+        this.decrease_by_inventory_difference = true;
         return this;
     }
 

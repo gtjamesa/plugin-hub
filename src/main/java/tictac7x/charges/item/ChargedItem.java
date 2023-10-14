@@ -299,6 +299,11 @@ public class ChargedItem extends InfoBox {
                     break;
                 }
 
+                if (trigger_item_container.decrease_by_inventory_difference) {
+                    decreaseCharges(inventory_items_difference);
+                    break;
+                }
+
                 // Decrease by difference of amount of items.
                 if (trigger_item_container.decrease_by_bank_difference) {
                     decreaseCharges(bank_items_difference);
@@ -687,11 +692,11 @@ public class ChargedItem extends InfoBox {
     }
 
     protected void onChargesUpdated() {
-        chat_messages.queue(QueuedMessage.builder()
-            .type(ChatMessageType.CONSOLE)
-            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
-            .build()
-        );
+//        chat_messages.queue(QueuedMessage.builder()
+//            .type(ChatMessageType.CONSOLE)
+//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+//            .build()
+//        );
     }
 
     private int itemsDifference(final Item[] items_before, final Item[] items_after) {

@@ -141,7 +141,8 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
-		"<colHIGHLIGHT>* Coal bag added.";
+		"<colHIGHLIGHT>* Coal bag added.<br>" +
+		"<colHIGHLIGHT>* Herb sack added.";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -245,6 +246,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_CoalBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_HerbSack(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Armour sets
 			new A_CrystalBody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),

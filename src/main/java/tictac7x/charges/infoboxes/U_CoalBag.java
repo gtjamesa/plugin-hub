@@ -29,12 +29,11 @@ public class U_CoalBag extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.GEM_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.config_key = ChargesImprovedConfig.gem_bag;
+        super(ItemKey.COAL_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
+        this.config_key = ChargesImprovedConfig.coal_bag;
         this.negative_full_charges = 27;
         this.zero_charges_is_positive = true;
         this.triggers_items = new TriggerItem[]{
-            new TriggerItem(ItemID.COAL_BAG),
             new TriggerItem(ItemID.COAL_BAG_12019),
             new TriggerItem(ItemID.OPEN_COAL_BAG),
         };

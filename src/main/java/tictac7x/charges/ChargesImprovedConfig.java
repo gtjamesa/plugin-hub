@@ -68,6 +68,8 @@ public interface ChargesImprovedConfig extends Config {
     String crystal_body = "crystal_body";
     String crystal_legs = "crystal_legs";
     String ring_of_shadows = "ring_of_shadows";
+    String coal_bag = "coal_bag";
+    String herb_sack = "herb_sack";
 
     @ConfigSection(
         name = "General",
@@ -493,4 +495,18 @@ public interface ChargesImprovedConfig extends Config {
             description = ring_of_shadows,
             section = debug
         ) default int getRingOfShadowsCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = coal_bag,
+            name = coal_bag,
+            description = coal_bag,
+            section = debug
+        ) default int getCoalBagCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = herb_sack,
+            name = herb_sack,
+            description = herb_sack,
+            section = debug
+        ) default int getHerbSackCharges() { return Charges.UNKNOWN; }
 }
