@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.3.2
+# Item Charges Improved - v0.3.3
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
@@ -56,10 +56,11 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Xeric's talisman
 - [x] Ring of shadows
 
-### Unwearables
+### Utilities
 - [x] Ash sanctifier
 - [x] Bonecrusher
 - [x] Bottomless compost bucket
+- [x] Coal bag
 - [x] Fish barrel
 - [x] Gem bag
 - [x] Gricoller's can

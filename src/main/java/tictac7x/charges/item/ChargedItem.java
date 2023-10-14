@@ -17,6 +17,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
@@ -618,9 +619,6 @@ public class ChargedItem extends InfoBox {
         }
     }
 
-
-
-
     public void resetCharges() {
         if (triggers_resets == null) return;
 
@@ -648,24 +646,20 @@ public class ChargedItem extends InfoBox {
     }
 
     public void setCharges(final int charges) {
-        if (this.negative_full_charges != null && charges > this.negative_full_charges) return;
-
-        this.charges = charges;
+        this.charges = negative_full_charges != null ? Math.min(Math.max(0, charges), negative_full_charges) : Math.max(0, charges);
         onChargesUpdated();
 
         if (config_key != null) {
-            setConfiguration(config_key, charges);
+            setConfiguration(config_key, this.charges);
         }
     }
 
     private void decreaseCharges(final int charges) {
-        if (this.charges - charges < 0) return;
-        setCharges(this.charges - charges);
+        setCharges(Math.max(0, this.charges - charges));
     }
 
     public void increaseCharges(final int charges) {
-        if (this.charges < 0) return;
-        setCharges(this.charges + charges);
+        setCharges(Math.max(1, this.charges + charges));
     }
 
     private void setConfiguration(final String key, @Nonnull final String value) {
@@ -693,11 +687,11 @@ public class ChargedItem extends InfoBox {
     }
 
     protected void onChargesUpdated() {
-//        chat_messages.queue(QueuedMessage.builder()
-//            .type(ChatMessageType.CONSOLE)
-//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
-//            .build()
-//        );
+        chat_messages.queue(QueuedMessage.builder()
+            .type(ChatMessageType.CONSOLE)
+            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+            .build()
+        );
     }
 
     private int itemsDifference(final Item[] items_before, final Item[] items_after) {

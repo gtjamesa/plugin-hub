@@ -10,7 +10,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedStatusItem;
+import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
@@ -18,7 +18,7 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerHitsplat;
 import tictac7x.charges.triggers.TriggerItem;
 
-public class J_RingOfSuffering extends ChargedStatusItem {
+public class J_RingOfSuffering extends ChargedItemWithStatus {
     public J_RingOfSuffering(
         final Client client,
         final ClientThread client_thread,

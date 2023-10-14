@@ -13,8 +13,8 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 
-public class ChargedStatusItem extends ChargedItem {
-    public ChargedStatusItem(
+public class ChargedItemWithStatus extends ChargedItem {
+    public ChargedItemWithStatus(
         final ItemKey infobox_id,
         final int item_id, Client client,
         final ClientThread client_thread,

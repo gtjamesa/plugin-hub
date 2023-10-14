@@ -11,7 +11,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedStatusItem;
+import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
@@ -19,7 +19,7 @@ import tictac7x.charges.triggers.TriggerChatMessage;
 import tictac7x.charges.triggers.TriggerItem;
 import tictac7x.charges.triggers.TriggerStat;
 
-public class U_BoneCrusher extends ChargedStatusItem {
+public class U_BoneCrusher extends ChargedItemWithStatus {
     public U_BoneCrusher(
         final Client client,
         final ClientThread client_thread,

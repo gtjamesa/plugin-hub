@@ -1,11 +1,12 @@
-package tictac7x.charges;
+package tictac7x.charges.item;
 
 import net.runelite.api.Client;
 import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
-import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.triggers.TriggerItem;
 
@@ -13,15 +14,15 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-public class ChargedItemsOverlay extends WidgetItemOverlay {
+public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
     private final ChargesImprovedConfig config;
-    private final ChargedItem[] infoboxes_charged_items;
+    private final ChargedItem[] charged_items;
 
-    public ChargedItemsOverlay(final Client client, final ChargesImprovedConfig config, final ChargedItem[] infoboxes_charged_items) {
+    public ChargedItemOverlay(final Client client, final ChargesImprovedConfig config, final ChargedItem[] charged_items) {
         this.client = client;
         this.config = config;
-        this.infoboxes_charged_items = infoboxes_charged_items;
+        this.charged_items = charged_items;
         showOnInventory();
         showOnEquipment();
         showOnInterfaces(84);
@@ -42,11 +43,16 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
     public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
         if (!config.showItemOverlays()) return;
 
-        for (final ChargedItem infobox : infoboxes_charged_items) {
-            if (infobox.getTriggersItems() == null || config.getHiddenItemOverlays().contains(infobox.infobox_id) || infobox.getCharges() == Charges.UNLIMITED) continue;
+        for (final ChargedItem charged_item : charged_items) {
+            if (
+                charged_item.getTriggersItems() == null ||
+                config.getHiddenItemOverlays().contains(charged_item.infobox_id) ||
+                charged_item.getCharges() == Charges.UNLIMITED ||
+                !config.showBankOverlays() && isBankWidget(item_widget)
+            ) continue;
 
             TriggerItem trigger_item_to_use = null;
-            for (final TriggerItem trigger_item : infobox.getTriggersItems()) {
+            for (final TriggerItem trigger_item : charged_item.getTriggersItems()) {
                 if (trigger_item.item_id == item_id && !trigger_item.hide_overlay) {
                     trigger_item_to_use = trigger_item;
                     break;
@@ -55,7 +61,7 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
             if (trigger_item_to_use == null) continue;
 
             // Charges from infobox.
-            String charges = ChargesImprovedPlugin.getChargesMinified(infobox.getCharges());
+            String charges = ChargesImprovedPlugin.getChargesMinified(charged_item.getCharges());
 
             graphics.setFont(FontManager.getRunescapeSmallFont());
 
@@ -73,10 +79,10 @@ public class ChargedItemsOverlay extends WidgetItemOverlay {
             if (charges.equals("?")) {
                 charges_component.setColor(config.getColorUnknown());
             } else if (
-                !isBankWidget(item_widget) && (infobox.needsToBeEquipped() && !infobox.inEquipment()) ||
-                charges.equals("0") && !infobox.zero_charges_is_positive ||
-                infobox.negative_full_charges != null && infobox.getCharges() == infobox.negative_full_charges ||
-                infobox.isDeactivated()
+                !isBankWidget(item_widget) && (charged_item.needsToBeEquipped() && !charged_item.inEquipment()) ||
+                charges.equals("0") && !charged_item.zero_charges_is_positive ||
+                charged_item.negative_full_charges != null && charged_item.getCharges() == charged_item.negative_full_charges ||
+                charged_item.isDeactivated()
             ) {
                 charges_component.setColor(config.getColorEmpty());
             } else {

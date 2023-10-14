@@ -52,6 +52,7 @@ import tictac7x.charges.infoboxes.barrows.VeracsFlail;
 import tictac7x.charges.infoboxes.barrows.VeracsHelm;
 import tictac7x.charges.infoboxes.barrows.VeracsPlateskirt;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemOverlay;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
@@ -68,44 +69,79 @@ import java.util.Arrays;
 	tags = {
 		"charges",
 		"barrows",
+		"crystal",
+		"ardougne",
+		"coffing",
+		"magic",
+		"cape",
+		"circlet",
 		"bracelet",
+		"clay",
+		"expeditious",
+		"flamtaer",
+		"slaughter",
+		"camulet",
+		"celestial",
 		"ring",
+		"escape",
+		"recoil",
+		"shadow",
+		"suffering",
+		"slayer",
 		"xeric",
 		"talisman",
-		"book",
 		"chronicle",
-		"shield",
+		"dragonfire",
+		"falador",
+		"kharedst",
+		"memoirs",
 		"ash",
+		"sanctifier",
 		"bone",
+		"crusher",
 		"bottomless",
+		"compost",
 		"bucket",
+		"coal",
+		"bag",
 		"fish",
+		"barrel",
+		"fungicide",
+		"spray",
+		"gem",
 		"gricoller",
 		"can",
+		"log",
+		"basket",
+		"ogre",
+		"bellows",
+		"seed",
+		"box",
 		"soul",
+		"bearer",
+		"teleport",
+		"waterskin",
 		"arclight",
 		"bryophyta",
 		"staff",
+		"bow",
+		"halberd",
 		"iban",
 		"pharaoh",
 		"sceptre",
-		"skull",
 		"sanguinesti",
+		"skull",
 		"trident",
-		"dragonfire",
-		"circlet",
-		"camulet"
+		"sea",
+		"toxic",
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.3.2";
+	private final String plugin_version = "v0.3.3";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
-		"<colHIGHLIGHT>* Gem bag added.<br>" +
-		"<colHIGHLIGHT>* Seed box added.<br>" +
-		"<colHIGHLIGHT>* Ring of shadows added.<br>" +
-		"<colHIGHLIGHT>* Crystal armor added.<br>" +
-		"<colHIGHLIGHT>* Crystal halberd added.";
+		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
+		"<colHIGHLIGHT>* Coal bag added.";
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -143,7 +179,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	private Store store;
 
-	private ChargedItemsOverlay overlay_charged_items;
+	private ChargedItemOverlay overlay_charged_items;
 
 	private ChargedItem[] infoboxes_charged_items;
 
@@ -208,6 +244,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_CoalBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Armour sets
 			new A_CrystalBody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -244,7 +281,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new VeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new VeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 		};
-		overlay_charged_items = new ChargedItemsOverlay(client, config, infoboxes_charged_items);
+		overlay_charged_items = new ChargedItemOverlay(client, config, infoboxes_charged_items);
 
 		overlays.add(overlay_charged_items);
 		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));

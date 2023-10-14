@@ -34,9 +34,9 @@ public class U_FishBarrel extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-
         this.config_key = ChargesImprovedConfig.fish_barrel;
         this.zero_charges_is_positive = true;
+        this.negative_full_charges = FISH_BARREL_SIZE;
         this.triggers_items = new TriggerItem[]{
             new TriggerItem(ItemID.FISH_BARREL),
             new TriggerItem(ItemID.OPEN_FISH_BARREL),

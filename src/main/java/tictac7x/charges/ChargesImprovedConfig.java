@@ -70,9 +70,23 @@ public interface ChargesImprovedConfig extends Config {
     String ring_of_shadows = "ring_of_shadows";
 
     @ConfigSection(
+        name = "General",
+        description = "General settings",
+        position = 1
+    ) String general = "general";
+
+        @ConfigItem(
+            keyName = "bank_overlays",
+            name = "Show in bank",
+            description = "Show charges of the items in bank",
+            position = 1,
+            section = general
+        ) default boolean showBankOverlays() { return true; }
+
+    @ConfigSection(
         name = "Colors",
         description = "Colors of item overlays",
-        position = 1
+        position = 2
     ) String colors = "colors";
 
         @Alpha
@@ -105,7 +119,7 @@ public interface ChargesImprovedConfig extends Config {
     @ConfigSection(
         name = "Infoboxes",
         description = "Select items to hide infoboxes for",
-        position = 2,
+        position = 3,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
 
@@ -132,7 +146,7 @@ public interface ChargesImprovedConfig extends Config {
     @ConfigSection(
         name = "Item Overlays",
         description = "Select items to hide item overlays for",
-        position = 3,
+        position = 4,
         closedByDefault = true
     ) String item_overlays = "item_overlays";
 
