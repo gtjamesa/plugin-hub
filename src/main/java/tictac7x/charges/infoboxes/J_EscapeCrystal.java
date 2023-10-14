@@ -13,7 +13,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_EscapeCrystal extends ChargedItem {
     final private int VARBIT_ESCAPE_CRYSTAL_ACTIVATED = 14838;
@@ -33,7 +33,7 @@ public class J_EscapeCrystal extends ChargedItem {
         super(ItemKey.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.escape_crystal;
 
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).quantityCharges().isNegative().hideOverlay(),
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).varbitChecker(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 1).quantityCharges().hideOverlay()
         };

@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerHitsplat;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerHitsplat;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class A_CrystalHelm extends ChargedItem {
     public A_CrystalHelm(
@@ -32,7 +32,7 @@ public class A_CrystalHelm extends ChargedItem {
     ) {
         super(ItemKey.CRYSTAL_HELM, ItemID.CRYSTAL_HELM, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.crystal_helm;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_HELM),
             new TriggerItem(ItemID.CRYSTAL_HELM_27705),
             new TriggerItem(ItemID.CRYSTAL_HELM_27717),
@@ -50,10 +50,10 @@ public class A_CrystalHelm extends ChargedItem {
             new TriggerItem(ItemID.CRYSTAL_HELM_INACTIVE_27767).fixedCharges(0),
             new TriggerItem(ItemID.CRYSTAL_HELM_INACTIVE_27779).fixedCharges(0)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal helm has (?<charges>.+) charges? remaining").onItemClick()
         };
-        this.triggers_hitsplats = new TriggerHitsplat[]{
+        this.triggersHitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).equipped().onSelf()
         };
     }

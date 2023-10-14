@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerHitsplat;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerHitsplat;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_CrystalHalberd extends ChargedItem {
     public W_CrystalHalberd(
@@ -32,7 +32,7 @@ public class W_CrystalHalberd extends ChargedItem {
     ) {
         super(ItemKey.CRYSTAL_HALBERD, ItemID.CRYSTAL_HALBERD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.crystal_halberd;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_HALBERD),
             new TriggerItem(ItemID.CRYSTAL_HALBERD_24125),
             new TriggerItem(ItemID.CRYSTAL_HALBERD_110),
@@ -64,10 +64,10 @@ public class W_CrystalHalberd extends ChargedItem {
             new TriggerItem(ItemID.NEW_CRYSTAL_HALBERD_FULL_16893),
             new TriggerItem(ItemID.NEW_CRYSTAL_HALBERD_FULL_I_16892),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal halberd has (?<charges>.+) charges? remaining.")
         };
-        this.triggers_hitsplats = new TriggerHitsplat[]{
+        this.triggersHitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).onEnemy().equipped()
         };
     }

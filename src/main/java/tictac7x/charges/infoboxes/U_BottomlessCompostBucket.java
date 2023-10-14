@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerAnimation;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 import javax.annotation.Nullable;
 
@@ -37,15 +37,15 @@ public class U_BottomlessCompostBucket extends ChargedItem {
         super(ItemKey.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.bottomless_compost_bucket;
         this.extra_config_keys = new String[]{"type"};
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET).fixedCharges(0),
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };
-        this.triggers_animations = new TriggerAnimation[]{
+        this.triggersAnimations = new TriggerAnimation[]{
             new TriggerAnimation(832).onMenuTarget("Big Compost Bin").onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET}).increaseCharges(2),
             new TriggerAnimation(832).onMenuTarget("Compost Bin").onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET}).increaseCharges(1),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You treat the .*").onItemClick().decreaseCharges(1),
             new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
             new TriggerChatMessage("Your bottomless compost bucket has (?<charges>.+) uses of (?<type>.+) ?compost remaining."),

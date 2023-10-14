@@ -1,4 +1,4 @@
-package tictac7x.charges.triggers;
+package tictac7x.charges.item.triggers;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 public class TriggerChatMessage {
-    @Nonnull public final Pattern message;
+    public final Pattern message;
 
     public boolean menu_target;
     public boolean equipped;

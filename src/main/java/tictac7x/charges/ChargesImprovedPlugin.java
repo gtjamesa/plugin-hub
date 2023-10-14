@@ -111,6 +111,8 @@ import java.util.Arrays;
 		"gem",
 		"gricoller",
 		"can",
+		"herb",
+		"sack",
 		"log",
 		"basket",
 		"ogre",
@@ -142,7 +144,9 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
 		"<colHIGHLIGHT>* Coal bag added.<br>" +
-		"<colHIGHLIGHT>* Herb sack added.";
+		"<colHIGHLIGHT>* Herb sack added.<br>" +
+		"<colHIGHLIGHT>* Able to hide item charges in bank."
+	;
 
 	private final int VARBIT_MINUTES = 8354;
 
@@ -188,7 +192,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void startUp() {
-		store = new Store();
+		store = new Store(items);
 
 		infoboxes_charged_items = new ChargedItem[]{
 			// Weapons
@@ -214,14 +218,14 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_BraceletOfExpeditious(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_EscapeCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_RingOfShadows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_RingOfShadows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Helms
 			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -235,24 +239,25 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_CoalBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_GemBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_HerbSack(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_FungicideSpray(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_SeedBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_CoalBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_HerbSack(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
-			// Armour sets
+			// Crystal armor set
 			new A_CrystalBody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new A_CrystalHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new A_CrystalLegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
+			// Barrows armor sets
 			new AhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new AhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new AhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -300,7 +305,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		store.onItemContainerChanged(event);
 
 		for (final ChargedItem infobox : infoboxes_charged_items) {
-			infobox.onItemContainersChanged(event);
+			infobox.onItemContainerChanged(event);
 		}
 
 		store.onInventoryItemsChanged(event);

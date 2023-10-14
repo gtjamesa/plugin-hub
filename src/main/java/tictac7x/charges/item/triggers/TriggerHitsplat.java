@@ -1,4 +1,4 @@
-package tictac7x.charges.triggers;
+package tictac7x.charges.item.triggers;
 
 import net.runelite.api.HitsplatID;
 import tictac7x.charges.store.ItemActivity;

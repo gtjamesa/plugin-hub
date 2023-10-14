@@ -15,9 +15,9 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerStat;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerStat;
 
 public class U_BoneCrusher extends ChargedItemWithStatus {
     public U_BoneCrusher(
@@ -34,11 +34,11 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
     ) {
         super(ItemKey.BONE_CRUSHER, ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.bone_crusher;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BONECRUSHER),
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             // Check
             new TriggerChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
             new TriggerChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
@@ -54,7 +54,7 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             // Deactivate
             new TriggerChatMessage("The bonecrusher( necklace)? is active").extraConsumer(message -> activate()),
         };
-        this.triggers_stats = new TriggerStat[]{
+        this.triggersStat = new TriggerStat[]{
             new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),
         };
     }

@@ -14,9 +14,9 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerItemContainer;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class U_LogBasket extends ChargedItem {
     private final int MAX_CHARGES = 28;
@@ -35,7 +35,7 @@ public class U_LogBasket extends ChargedItem {
     ) {
         super(ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.log_basket;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.LOG_BASKET),
             new TriggerItem(ItemID.OPEN_LOG_BASKET),
             new TriggerItem(ItemID.FORESTRY_BASKET),
@@ -43,13 +43,13 @@ public class U_LogBasket extends ChargedItem {
         };
         this.zero_charges_is_positive = true;
         this.negative_full_charges = MAX_CHARGES;
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("(Your|The) basket is empty.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("You bank all your logs.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("The basket contains:").onItemClick().multipleCharges(),
             new TriggerChatMessage("(You get some.* logs.|The nature offerings enabled you to chop an extra log.)").specificItem(ItemID.OPEN_LOG_BASKET).specificItem(ItemID.OPEN_FORESTRY_BASKET).increaseCharges(1),
         };
-        this.triggers_item_containers = new TriggerItemContainer[]{
+        this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open log basket").menuOption("Fill").increaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Log basket").menuOption("Fill").increaseByInventoryDifference(),
         };

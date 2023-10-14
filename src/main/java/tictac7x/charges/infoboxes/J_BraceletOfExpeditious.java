@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_BraceletOfExpeditious extends ChargedItem {
     public J_BraceletOfExpeditious(
@@ -32,10 +32,10 @@ public class J_BraceletOfExpeditious extends ChargedItem {
         super(ItemKey.BRACELET_OF_EXPEDITIOUS, ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.expeditious_bracelet;
         this.needs_to_be_equipped_for_infobox = true;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.EXPEDITIOUS_BRACELET),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The bracelet shatters. Your next expeditious bracelet will start afresh from 30 charges.").fixedCharges(30),
             new TriggerChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your expeditious bracelet crumbles to dust."),
             new TriggerChatMessage("Your expeditious bracelet has (?<charges>.+) charges? left."),

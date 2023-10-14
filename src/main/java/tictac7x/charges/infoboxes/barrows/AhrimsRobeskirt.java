@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class AhrimsRobeskirt extends ChargedItem {
     public AhrimsRobeskirt(
@@ -30,7 +30,7 @@ public class AhrimsRobeskirt extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_75).fixedCharges(75),
@@ -38,7 +38,7 @@ public class AhrimsRobeskirt extends ChargedItem {
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_25).fixedCharges(25),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_0).fixedCharges(0)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Ahrim's skirt has broken!").notification()
         };
     }

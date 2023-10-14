@@ -14,9 +14,9 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerItemContainer;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class U_GemBag extends ChargedItem {
     public U_GemBag(
@@ -34,16 +34,16 @@ public class U_GemBag extends ChargedItem {
         super(ItemKey.GEM_BAG, ItemID.GEM_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.gem_bag;
         this.zero_charges_is_positive = true;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GEM_BAG_12020),
             new TriggerItem(ItemID.OPEN_GEM_BAG),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The gem bag is empty.").fixedCharges(0),
             new TriggerChatMessage("Sapphires: (.+) / Emeralds: (.+) / Rubies: (.+) Diamonds: (.+) / Dragonstones: (.+)").multipleCharges(),
             new TriggerChatMessage("You just (found|mined) (a|an) (Sapphire|Ruby|Emerald|Diamond)").specificItem(ItemID.OPEN_GEM_BAG).increaseCharges(1),
         };
-        this.triggers_item_containers = new TriggerItemContainer[]{
+        this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Gem bag").menuOption("Fill").increaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open gem bag").menuOption("Fill").increaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Gem bag").menuOption("Empty").decreaseByBankDifference(),

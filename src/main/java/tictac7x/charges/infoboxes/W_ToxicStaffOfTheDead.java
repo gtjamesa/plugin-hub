@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_ToxicStaffOfTheDead extends ChargedItem {
     public W_ToxicStaffOfTheDead(
@@ -31,11 +31,11 @@ public class W_ToxicStaffOfTheDead extends ChargedItem {
     ) {
         super(ItemKey.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.toxic_staff_of_the_dead;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.TOXIC_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.TOXIC_STAFF_OF_THE_DEAD)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Scales: (?<charges>.+)"),
         };
     }

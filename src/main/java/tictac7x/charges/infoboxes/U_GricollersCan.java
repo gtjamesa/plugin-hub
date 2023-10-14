@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerAnimation;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_GricollersCan extends ChargedItem {
     public U_GricollersCan(
@@ -32,10 +32,10 @@ public class U_GricollersCan extends ChargedItem {
     ) {
         super(ItemKey.GRICOLLERS_CAN, ItemID.GRICOLLERS_CAN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.gricollers_can;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
-        this.triggers_animations = new TriggerAnimation[]{
+        this.triggersAnimations = new TriggerAnimation[]{
             new TriggerAnimation(2293).unallowedItems(new int[]{
                 ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
                 ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
@@ -44,7 +44,7 @@ public class U_GricollersCan extends ChargedItem {
                 ItemID.WATERING_CAN8
             }).decreaseCharges(1),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Watering can charges remaining: (?<charges>.+)%").onItemClick(),
             new TriggerChatMessage("You water").onItemClick().decreaseCharges(1),
             new TriggerChatMessage("You fill the watering can").onItemClick().fixedCharges(1000),

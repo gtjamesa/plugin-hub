@@ -1,4 +1,4 @@
-package tictac7x.charges.triggers;
+package tictac7x.charges.item.triggers;
 
 import javax.annotation.Nullable;
 

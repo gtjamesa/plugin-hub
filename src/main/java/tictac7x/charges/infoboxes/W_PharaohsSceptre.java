@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerAnimation;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_PharaohsSceptre extends ChargedItem {
     public W_PharaohsSceptre(
@@ -32,7 +32,7 @@ public class W_PharaohsSceptre extends ChargedItem {
     ) {
         super(ItemKey.PHARAOHS_SCEPTRE, ItemID.PHARAOHS_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.pharaohs_sceptre;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_9045),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_9046),
@@ -54,12 +54,12 @@ public class W_PharaohsSceptre extends ChargedItem {
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_26950),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_UNCHARGED).fixedCharges(0),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.").onItemClick(),
             new TriggerChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way."),
             new TriggerChatMessage("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically()
         };
-        this.triggers_animations = new TriggerAnimation[]{
+        this.triggersAnimations = new TriggerAnimation[]{
             new TriggerAnimation(2881).decreaseCharges(1)
         };
     }

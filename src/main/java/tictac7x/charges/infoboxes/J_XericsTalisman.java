@@ -13,10 +13,10 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerWidget;
+import tictac7x.charges.item.triggers.TriggerAnimation;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerWidget;
 
 public class J_XericsTalisman extends ChargedItem {
     public J_XericsTalisman(
@@ -33,20 +33,20 @@ public class J_XericsTalisman extends ChargedItem {
     ) {
         super(ItemKey.XERICS_TALISMAN, ItemID.XERICS_TALISMAN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.xerics_talisman;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.XERICS_TALISMAN_INERT).fixedCharges(0),
             new TriggerItem(ItemID.XERICS_TALISMAN),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The talisman has one charge.").onItemClick(),
             new TriggerChatMessage("The talisman has (?<charges>.+) charges.").onItemClick(),
             new TriggerChatMessage("Your talisman now has one charge.").onItemClick(),
             new TriggerChatMessage("Your talisman now has (?<charges>.+) charges?.").onItemClick(),
         };
-        this.triggers_animations = new TriggerAnimation[]{
+        this.triggersAnimations = new TriggerAnimation[]{
             new TriggerAnimation(3865).decreaseCharges(1)
         };
-        this.triggers_widgets = new TriggerWidget[]{
+        this.triggersWidgets = new TriggerWidget[]{
             new TriggerWidget(187, 0, 1, "The talisman has (?<charges>.+) charges.")
         };
     }

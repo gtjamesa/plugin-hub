@@ -8,7 +8,7 @@ import net.runelite.client.ui.overlay.components.TextComponent;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -45,14 +45,13 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
         for (final ChargedItem charged_item : charged_items) {
             if (
-                charged_item.getTriggersItems() == null ||
                 config.getHiddenItemOverlays().contains(charged_item.infobox_id) ||
                 charged_item.getCharges() == Charges.UNLIMITED ||
                 !config.showBankOverlays() && isBankWidget(item_widget)
             ) continue;
 
             TriggerItem trigger_item_to_use = null;
-            for (final TriggerItem trigger_item : charged_item.getTriggersItems()) {
+            for (final TriggerItem trigger_item : charged_item.triggersItems) {
                 if (trigger_item.item_id == item_id && !trigger_item.hide_overlay) {
                     trigger_item_to_use = trigger_item;
                     break;

@@ -6,12 +6,18 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.client.game.ItemManager;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Store {
+    private final ItemManager items;
+
     private int gametick = 0;
     private int gametick_before = 0;
 
@@ -23,7 +29,11 @@ public class Store {
 
     @Nullable public  Item[] bank_items = null;
 
-    public final List<String[]> menu_entries = new ArrayList<>();
+    public final List<MenuEntry> menu_entries = new ArrayList<>();
+
+    public Store(final ItemManager items) {
+        this.items = items;
+    }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
@@ -65,10 +75,59 @@ public class Store {
         }
 
         // Save menu option and target for other triggers to use.
-        menu_entries.add(new String[]{menu_target, menu_option});
+        menu_entries.add(new MenuEntry(menu_target, menu_option));
     }
 
     public void onGameTick(final GameTick ignored) {
         gametick++;
+    }
+
+    public boolean inMenuTargets(final String target) {
+        return menu_entries.stream().anyMatch(entry -> entry.target.contains(target));
+    }
+
+    public boolean inMenuOptions(final String option) {
+        return menu_entries.stream().anyMatch(entry -> entry.option.equals(option));
+    }
+
+    public int getInventoryItemsDifference(final ItemContainerChanged event) {
+        if (event.getItemContainer().getId() != InventoryID.INVENTORY.getId() || inventory_items == null) return 0;
+
+        return itemsDifference(inventory_items, event.getItemContainer().getItems());
+    }
+
+    public int getBankItemsDifference(final ItemContainerChanged event) {
+        int difference = 0;
+
+        if (event.getContainerId() == InventoryID.BANK.getId() && bank_items != null) {
+            Map<Integer, Integer> differences = new HashMap<>();
+
+            // New bank items.
+            for (final Item new_item : event.getItemContainer().getItems()) {
+                differences.put(new_item.getId(), new_item.getQuantity());
+                items.getItemComposition(0).getPlaceholderId();
+            }
+
+            // Previous bank items.
+            for (final Item old_item : bank_items) {
+                differences.put(old_item.getId(), differences.getOrDefault(old_item.getId(), 0) - old_item.getQuantity());
+            }
+
+            // Find differences between all items.
+            for (final Map.Entry<Integer, Integer> item_difference : differences.entrySet()) {
+                if (item_difference.getValue() > 0) {
+                    difference += item_difference.getValue();
+                }
+            }
+        }
+
+        return difference;
+    }
+
+    private int itemsDifference(final Item[] items_before, final Item[] items_after) {
+        final int items_before_count = (int) Arrays.stream(items_before).filter(item -> item.getId() != -1).count();
+        final int items_after_count = (int) Arrays.stream(items_after).filter(item -> item.getId() != -1).count();
+
+        return Math.abs(items_before_count - items_after_count);
     }
 }

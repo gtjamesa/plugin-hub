@@ -13,7 +13,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class VeracsPlateskirt extends ChargedItem {
     public VeracsPlateskirt(
@@ -29,7 +29,7 @@ public class VeracsPlateskirt extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.VERACS_PLATESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_PLATESKIRT).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_PLATESKIRT_100).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_PLATESKIRT_75).fixedCharges(75),

@@ -13,7 +13,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class ToragsHammers extends ChargedItem {
     public ToragsHammers(
@@ -29,7 +29,7 @@ public class ToragsHammers extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.TORAGS_HAMMERS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_HAMMERS).fixedCharges(100),
             new TriggerItem(ItemID.TORAGS_HAMMERS_100).fixedCharges(100),
             new TriggerItem(ItemID.TORAGS_HAMMERS_75).fixedCharges(75),

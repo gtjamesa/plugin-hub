@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerHitsplat;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerHitsplat;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_Arclight extends ChargedItem {
     public W_Arclight(
@@ -32,15 +32,15 @@ public class W_Arclight extends ChargedItem {
     ) {
         super(ItemKey.ARCLIGHT, ItemID.ARCLIGHT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.arclight;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ARCLIGHT),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your arclight has (?<charges>.+) charges?( left)?."),
             new TriggerChatMessage("Your arclight can perform (?<charges>.+) more attacks."),
             new TriggerChatMessage("Your arclight has degraded.").fixedCharges(0).notification(),
         };
-        this.triggers_hitsplats = new TriggerHitsplat[]{
+        this.triggersHitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).equipped().onEnemy()
         };
     }

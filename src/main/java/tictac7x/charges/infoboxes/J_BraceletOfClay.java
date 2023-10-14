@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_BraceletOfClay extends ChargedItem {
     public J_BraceletOfClay(
@@ -32,10 +32,10 @@ public class J_BraceletOfClay extends ChargedItem {
         super(ItemKey.BRACELET_OF_CLAY, ItemID.BRACELET_OF_CLAY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.bracelet_of_clay;
         this.needs_to_be_equipped_for_infobox = true;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BRACELET_OF_CLAY),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust."),
             new TriggerChatMessage("You manage to mine some( soft)? clay.").equipped().decreaseCharges(1),
             new TriggerChatMessage("Your bracelet of clay crumbles to dust.").fixedCharges(28).notification("Your clay bracelet crumbles to dust.")

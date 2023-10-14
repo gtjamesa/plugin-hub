@@ -14,9 +14,9 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerItemContainer;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class C_Coffin extends ChargedItem {
     private final int SIZE_BRONZE_COFFIN = 3;
@@ -41,7 +41,7 @@ public class C_Coffin extends ChargedItem {
         this.config_key = ChargesImprovedConfig.coffin;
         this.zero_charges_is_positive = true;
 
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BROKEN_COFFIN).fixedCharges(0),
             new TriggerItem(ItemID.BRONZE_COFFIN).maxCharges(SIZE_BRONZE_COFFIN),
             new TriggerItem(ItemID.OPEN_BRONZE_COFFIN).maxCharges(SIZE_BRONZE_COFFIN),
@@ -55,7 +55,7 @@ public class C_Coffin extends ChargedItem {
             new TriggerItem(ItemID.OPEN_GOLD_COFFIN).maxCharges(SIZE_GOLD_COFFIN),
         };
 
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You put the .+ remains into your open coffin.").increaseCharges(1),
             new TriggerChatMessage("Loar (.+) / Phrin (.+) / Riyl (.+) / Asyn (.+) / Fiyr (.+) / Urium (.+)").multipleCharges(),
             new TriggerChatMessage("Your coffin is empty.").fixedCharges(0),
@@ -66,7 +66,7 @@ public class C_Coffin extends ChargedItem {
             new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.GOLD_COFFIN, ItemID.OPEN_GOLD_COFFIN).fixedCharges(SIZE_GOLD_COFFIN),
         };
 
-        this.triggers_item_containers = new TriggerItemContainer[]{
+        this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Steel coffin").menuOption("Fill").increaseByInventoryDifference(),

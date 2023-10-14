@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerHitsplat;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerHitsplat;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_CrystalBow extends ChargedItem {
     public W_CrystalBow(
@@ -32,7 +32,7 @@ public class W_CrystalBow extends ChargedItem {
     ) {
         super(ItemKey.CRYSTAL_BOW, ItemID.CRYSTAL_BOW, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.crystal_bow;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_BOW),
             new TriggerItem(ItemID.CRYSTAL_BOW_24123),
             new TriggerItem(ItemID.CRYSTAL_BOW_110),
@@ -65,10 +65,10 @@ public class W_CrystalBow extends ChargedItem {
             new TriggerItem(ItemID.NEW_CRYSTAL_BOW_I),
             new TriggerItem(ItemID.NEW_CRYSTAL_BOW_I_16889),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.")
         };
-        this.triggers_hitsplats = new TriggerHitsplat[]{
+        this.triggersHitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).onEnemy().equipped()
         };
     }

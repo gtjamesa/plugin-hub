@@ -1,4 +1,4 @@
-package tictac7x.charges.triggers;
+package tictac7x.charges.item.triggers;
 
 public class TriggerGraphic {
     public final int graphic_id;

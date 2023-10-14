@@ -11,12 +11,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_Camulet extends ChargedItem {
     public J_Camulet(
@@ -33,10 +32,10 @@ public class J_Camulet extends ChargedItem {
     ) {
         super(ItemKey.CAMULET, ItemID.CAMULET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.camulet;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CAMULET),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Camulet has (?<charges>.+) charges? left."),
             new TriggerChatMessage("You recharge the Camulet using camel dung. Yuck!").fixedCharges(4),
             new TriggerChatMessage("The Camulet is already fully charged.").fixedCharges(4),

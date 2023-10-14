@@ -13,10 +13,10 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerReset;
-import tictac7x.charges.triggers.TriggerWidget;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerReset;
+import tictac7x.charges.item.triggers.TriggerWidget;
 
 public class C_MagicCape extends ChargedItem {
     private final int MAGIC_CAPE_T = 9763;
@@ -37,16 +37,16 @@ public class C_MagicCape extends ChargedItem {
         super(ItemKey.MAGIC_CAPE, ItemID.MAGIC_CAPE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.magic_cape;
 
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.MAGIC_CAPE),
             new TriggerItem(MAGIC_CAPE_T)
         };
 
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage(regex_used).useDifference(),
         };
 
-        this.triggers_widgets = new TriggerWidget[]{
+        this.triggersWidgets = new TriggerWidget[]{
             new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/5 left\\)")
         };
 

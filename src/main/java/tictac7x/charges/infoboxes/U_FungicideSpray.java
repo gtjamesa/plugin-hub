@@ -13,7 +13,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_FungicideSpray extends ChargedItem {
     public U_FungicideSpray(
@@ -29,7 +29,7 @@ public class U_FungicideSpray extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.FUNGICIDE_SPRAY, ItemID.FUNGICIDE_SPRAY_0, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.FUNGICIDE_SPRAY_0).fixedCharges(0),
             new TriggerItem(ItemID.FUNGICIDE_SPRAY_1).fixedCharges(1),
             new TriggerItem(ItemID.FUNGICIDE_SPRAY_2).fixedCharges(2),

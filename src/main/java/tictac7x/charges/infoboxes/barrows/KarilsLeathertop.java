@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class KarilsLeathertop extends ChargedItem {
     public KarilsLeathertop(
@@ -30,7 +30,7 @@ public class KarilsLeathertop extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.KARILS_LEATHERTOP, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_LEATHERTOP).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_LEATHERTOP_100).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_LEATHERTOP_75).fixedCharges(75),
@@ -38,7 +38,7 @@ public class KarilsLeathertop extends ChargedItem {
             new TriggerItem(ItemID.KARILS_LEATHERTOP_25).fixedCharges(25),
             new TriggerItem(ItemID.KARILS_LEATHERTOP_0).fixedCharges(0)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Karil's body has broken!").notification()
         };
     }

@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerAnimation;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_IbansStaff extends ChargedItem {
     public W_IbansStaff(
@@ -32,15 +32,15 @@ public class W_IbansStaff extends ChargedItem {
     ) {
         super(ItemKey.IBANS_STAFF, ItemID.IBANS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.ibans_staff;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.IBANS_STAFF),
             new TriggerItem(ItemID.IBANS_STAFF_1410),
             new TriggerItem(ItemID.IBANS_STAFF_U),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You have (?<charges>.+) charges left on the staff."),
         };
-        this.triggers_animations = new TriggerAnimation[]{
+        this.triggersAnimations = new TriggerAnimation[]{
             new TriggerAnimation(708).equipped().decreaseCharges(1)
         };
     }

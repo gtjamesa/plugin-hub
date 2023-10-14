@@ -14,9 +14,9 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerReset;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerReset;
 
 public class C_ArdougneCloak extends ChargedItem {
     public C_ArdougneCloak(
@@ -34,13 +34,13 @@ public class C_ArdougneCloak extends ChargedItem {
         super(ItemKey.ARDOUGNE_CLOAK, ItemID.ARDOUGNE_CLOAK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.ardougne_cloak;
 
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_2),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_3),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(Charges.UNLIMITED)
         };
 
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference()
         };
 

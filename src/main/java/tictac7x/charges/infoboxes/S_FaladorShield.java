@@ -13,10 +13,10 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerGraphic;
-import tictac7x.charges.triggers.TriggerItem;
-import tictac7x.charges.triggers.TriggerReset;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerGraphic;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerReset;
 
 public class S_FaladorShield extends ChargedItem {
     public S_FaladorShield(
@@ -33,17 +33,17 @@ public class S_FaladorShield extends ChargedItem {
     ) {
         super(ItemKey.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.falador_shield;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.FALADOR_SHIELD_3),
             new TriggerItem(ItemID.FALADOR_SHIELD_4),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),
             new TriggerChatMessage("You have two remaining charges for today.").onItemClick().fixedCharges(2),
             new TriggerChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0)
         };
-        this.triggers_graphics = new TriggerGraphic[]{
+        this.triggersGraphics = new TriggerGraphic[]{
             new TriggerGraphic(321).decreaseCharges(1)
         };
         this.triggers_resets = new TriggerReset[]{

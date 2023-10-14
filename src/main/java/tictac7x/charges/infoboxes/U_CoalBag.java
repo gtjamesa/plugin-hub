@@ -13,8 +13,8 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_CoalBag extends ChargedItem {
     public U_CoalBag(
@@ -33,11 +33,11 @@ public class U_CoalBag extends ChargedItem {
         this.config_key = ChargesImprovedConfig.coal_bag;
         this.negative_full_charges = 27;
         this.zero_charges_is_positive = true;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.COAL_BAG_12019),
             new TriggerItem(ItemID.OPEN_COAL_BAG),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The coal bag is( now)? empty.").fixedCharges(0),
             new TriggerChatMessage("The coal bag( still)? contains one piece of coal.").fixedCharges(1),
             new TriggerChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal."),

@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_BraceletOfFlamtaer extends ChargedItem {
     public J_BraceletOfFlamtaer(
@@ -32,10 +32,10 @@ public class J_BraceletOfFlamtaer extends ChargedItem {
         super(ItemKey.BRACELET_OF_FLAMTAER, ItemID.FLAMTAER_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.bracelet_of_flamtaer;
         this.needs_to_be_equipped_for_infobox = true;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.FLAMTAER_BRACELET),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80).notification("Your flamtaer bracelet crumbles to dust."),

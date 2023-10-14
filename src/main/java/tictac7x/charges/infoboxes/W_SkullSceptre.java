@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_SkullSceptre extends ChargedItem {
     public W_SkullSceptre(
@@ -31,11 +31,11 @@ public class W_SkullSceptre extends ChargedItem {
     ) {
         super(ItemKey.SKULL_SCEPTRE, ItemID.SKULL_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.skull_sceptre;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.SKULL_SCEPTRE),
             new TriggerItem(ItemID.SKULL_SCEPTRE_I)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left."),
             new TriggerChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left."),
             new TriggerChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.")

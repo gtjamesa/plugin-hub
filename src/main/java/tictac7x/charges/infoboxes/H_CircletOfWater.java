@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class H_CircletOfWater extends ChargedItem {
     public H_CircletOfWater(
@@ -31,11 +31,11 @@ public class H_CircletOfWater extends ChargedItem {
     ) {
         super(ItemKey.CIRCLET_OF_WATER, ItemID.CIRCLET_OF_WATER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.circlet_of_water;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CIRCLET_OF_WATER_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.CIRCLET_OF_WATER)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
                 new TriggerChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
                 new TriggerChatMessage("Your circlet has (?<charges>.+) charges? left."),
                 new TriggerChatMessage("You add (?<charges>.+) charges? to your circlet.$"),

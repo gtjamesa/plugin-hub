@@ -13,7 +13,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_TeleportCrystal extends ChargedItem {
     public U_TeleportCrystal(
@@ -30,7 +30,7 @@ public class U_TeleportCrystal extends ChargedItem {
     ) {
         super(ItemKey.TELEPORT_CRYSTAL, ItemID.TELEPORT_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.teleport_crystal;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.TELEPORT_CRYSTAL).fixedCharges(0),
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_1).fixedCharges(1),
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_2).fixedCharges(2),

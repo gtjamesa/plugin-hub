@@ -14,9 +14,9 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerHitsplat;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerHitsplat;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_RingOfSuffering extends ChargedItemWithStatus {
     public J_RingOfSuffering(
@@ -33,7 +33,7 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
     ) {
         super(ItemKey.RING_OF_SUFFERING, ItemID.RING_OF_SUFFERING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.ring_of_suffering;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_SUFFERING).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SUFFERING_I).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SUFFERING_I_25246).fixedCharges(0),
@@ -43,14 +43,14 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_25248),
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_26762),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             // Check
             new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick().extraConsumer(message -> activate()),
             new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").onItemClick().extraConsumer(message -> deactivate()),
             // Charge
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
         };
-        this.triggers_hitsplats = new TriggerHitsplat[]{
+        this.triggersHitsplats = new TriggerHitsplat[]{
             new TriggerHitsplat(1).equipped().onSelf().extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),
         };
     }

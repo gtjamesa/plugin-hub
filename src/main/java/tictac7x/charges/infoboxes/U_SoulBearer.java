@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_SoulBearer extends ChargedItem {
     public U_SoulBearer(
@@ -31,11 +31,11 @@ public class U_SoulBearer extends ChargedItem {
     ) {
         super(ItemKey.SOUL_BEARER, ItemID.SOUL_BEARER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.soul_bearer;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.SOUL_BEARER),
             new TriggerItem(ItemID.DAMAGED_SOUL_BEARER).fixedCharges(0),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You remove the runes from the soul bearer.").fixedCharges(0),
             new TriggerChatMessage("(The|Your) soul bearer( now)? has one charge.").fixedCharges(1),
             new TriggerChatMessage("Your soul bearer carries the ensouled heads to your bank. It has run out of charges.").fixedCharges(0).notification(),

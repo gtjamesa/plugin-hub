@@ -11,6 +11,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerGraphic;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.triggers.*;
@@ -30,7 +33,7 @@ public class W_TridentOfTheSeas extends ChargedItem {
     ) {
         super(ItemKey.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.trident_of_the_seas;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.UNCHARGED_TRIDENT).fixedCharges(0),
             new TriggerItem(ItemID.UNCHARGED_TRIDENT_E).fixedCharges(0),
             new TriggerItem(ItemID.UNCHARGED_TOXIC_TRIDENT).fixedCharges(0),
@@ -40,14 +43,14 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP_E),
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has run out of charges.").fixedCharges(0).notification(),
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification(),
             new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))? has (?<charges>.+) charges?( left)?."),
             new TriggerChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)")
         };
-        this.triggers_graphics = new TriggerGraphic[]{
+        this.triggersGraphics = new TriggerGraphic[]{
             new TriggerGraphic(1251).decreaseCharges(1).equipped()
         };
     }

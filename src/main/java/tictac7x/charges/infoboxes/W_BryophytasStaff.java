@@ -13,9 +13,9 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerGraphic;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerGraphic;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_BryophytasStaff extends ChargedItem {
     public W_BryophytasStaff(
@@ -32,16 +32,16 @@ public class W_BryophytasStaff extends ChargedItem {
     ) {
         super(ItemKey.BRYOPHYTAS_STAFF, ItemID.BRYOPHYTAS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.bryophytas_staff;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The nature staff has (?<charges>.+) charges?."),
             new TriggerChatMessage("Your staff saved you a nature rune.").increaseCharges(1),
             new TriggerChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.")
         };
-        this.triggers_graphics = new TriggerGraphic[]{
+        this.triggersGraphics = new TriggerGraphic[]{
             new TriggerGraphic(112).decreaseCharges(1).equipped(),
             new TriggerGraphic(113).decreaseCharges(1).equipped(),
         };

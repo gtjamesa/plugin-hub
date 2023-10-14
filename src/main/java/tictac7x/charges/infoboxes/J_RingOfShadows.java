@@ -13,9 +13,9 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerAnimation;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerAnimation;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_RingOfShadows extends ChargedItem {
     public J_RingOfShadows(
@@ -32,16 +32,16 @@ public class J_RingOfShadows extends ChargedItem {
     ) {
         super(ItemKey.RING_OF_SHADOWS, ItemID.RING_OF_SHADOWS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.ring_of_shadows;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_SHADOWS_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SHADOWS)
         };
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining."),
             new TriggerChatMessage("You add (?<charges>.+) charges? to the ring of shadows.$"),
             new TriggerChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?."),
         };
-        this.triggers_animations = new TriggerAnimation[]{
+        this.triggersAnimations = new TriggerAnimation[]{
             new TriggerAnimation(10134).decreaseCharges(1),
         };
     }

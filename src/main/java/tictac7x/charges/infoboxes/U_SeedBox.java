@@ -13,8 +13,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.triggers.TriggerChatMessage;
-import tictac7x.charges.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_SeedBox extends ChargedItem {
     public U_SeedBox(
@@ -31,12 +31,12 @@ public class U_SeedBox extends ChargedItem {
     ) {
         super(ItemKey.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, plugin);
         this.config_key = ChargesImprovedConfig.seed_box;
-        this.triggers_items = new TriggerItem[]{
+        this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.SEED_BOX),
             new TriggerItem(ItemID.OPEN_SEED_BOX),
         };
         this.zero_charges_is_positive = true;
-        this.triggers_chat_messages = new TriggerChatMessage[]{
+        this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("(The|Your) seed box is( now| already)? empty.").fixedCharges(0),
             new TriggerChatMessage("Stored (?<charges>.+) x .* seed in your seed box.").increaseDynamically(),
             new TriggerChatMessage("You put (?<charges>.+) x .* seed straight into your open seed box.").increaseDynamically(),
