@@ -32,10 +32,9 @@ public class U_SeedBox extends ChargedItem {
         super(ItemKey.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.seed_box;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.SEED_BOX),
-            new TriggerItem(ItemID.OPEN_SEED_BOX),
+            new TriggerItem(ItemID.SEED_BOX).zeroChargesIsPositive(),
+            new TriggerItem(ItemID.OPEN_SEED_BOX).zeroChargesIsPositive(),
         };
-        this.zero_charges_is_positive = true;
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("(The|Your) seed box is( now| already)? empty.").fixedCharges(0),
             new TriggerChatMessage("Stored (?<charges>.+) x .* seed in your seed box.").increaseDynamically(),

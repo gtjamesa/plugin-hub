@@ -84,8 +84,8 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
                 charges_component.setColor(config.getColorActivated());
             } else if (
                 !isBankWidget(item_widget) && (trigger_item_to_use.needsToBeEquipped && !charged_item.isEquipped()) ||
-                charges.equals("0") && !charged_item.zero_charges_is_positive ||
-                charged_item.negative_full_charges != null && charged_item.getCharges() == charged_item.negative_full_charges ||
+                charges.equals("0") && !trigger_item_to_use.zeroChargesIsPositive ||
+                charged_item.negativeFullCharges().isPresent() && charged_item.getCharges() == charged_item.negativeFullCharges().get() ||
                 charged_item.isDeactivated()
             ) {
                 charges_component.setColor(config.getColorEmpty());

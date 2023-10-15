@@ -45,7 +45,7 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
             // Deactivate
             new TriggerChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").deactivate(),
         };
-        this.triggersStat = new TriggerStat[]{
+        this.triggersStats = new TriggerStat[]{
             new TriggerStat(Skill.PRAYER).decreaseCharges(1).isActivated(),
         };
     }

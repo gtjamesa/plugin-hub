@@ -70,10 +70,10 @@ public class ChargedItemInfobox extends InfoBox {
 
         if (
             // 0 charges is positive.
-            charges == 0 && !chargedItem.zero_charges_is_positive ||
+            charges == 0 && !chargedItem.isZeroChargesPositive() ||
 
             // X charges is negative.
-            chargedItem.negative_full_charges != null && charges == chargedItem.negative_full_charges ||
+            chargedItem.negativeFullCharges().isPresent() && charges == chargedItem.negativeFullCharges().get() ||
 
             // Item needs to be equipped, but is not.
             chargedItem.needsToBeEquipped() && !chargedItem.isEquipped() ||

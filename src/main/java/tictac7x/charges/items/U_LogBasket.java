@@ -2,6 +2,7 @@ package tictac7x.charges.items;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -11,6 +12,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.TriggerStat;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -36,13 +38,11 @@ public class U_LogBasket extends ChargedItem {
         super(ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.log_basket;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.LOG_BASKET),
-            new TriggerItem(ItemID.OPEN_LOG_BASKET),
-            new TriggerItem(ItemID.FORESTRY_BASKET),
-            new TriggerItem(ItemID.OPEN_FORESTRY_BASKET),
+            new TriggerItem(ItemID.LOG_BASKET).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.OPEN_LOG_BASKET).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.FORESTRY_BASKET).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.OPEN_FORESTRY_BASKET).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
         };
-        this.zero_charges_is_positive = true;
-        this.negative_full_charges = MAX_CHARGES;
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("(Your|The) basket is empty.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("You bank all your logs.").onItemClick().fixedCharges(0),
@@ -51,6 +51,9 @@ public class U_LogBasket extends ChargedItem {
         };
         this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Open log basket", "Fill").menuEntry("Log basket", "Fill").increaseByInventoryDifference(),
+        };
+        this.triggersStats = new TriggerStat[]{
+            new TriggerStat(Skill.FIREMAKING).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).menuEntry(".*", "Chop down").belowCharges(MAX_CHARGES).decreaseCharges(1),
         };
     }
 }

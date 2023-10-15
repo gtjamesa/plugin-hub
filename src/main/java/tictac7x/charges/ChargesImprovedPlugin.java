@@ -149,6 +149,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
 		"<colHIGHLIGHT>* Coal bag added.<br>" +
 		"<colHIGHLIGHT>* Herb sack added.<br>" +
+		"<colHIGHLIGHT>* Strange old lockpick added.<br>" +
 		"<colHIGHLIGHT>* Able to hide item charges in bank.<br>" +
 		"<colHIGHLIGHT>* Activateable items have configurable positive/negative colors."
 	;
@@ -255,6 +256,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_SeedBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_StrangeOldLockpick(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 

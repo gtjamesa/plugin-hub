@@ -35,10 +35,9 @@ public class U_HerbSack extends ChargedItem {
     ) {
         super(ItemKey.HERB_SACK, ItemID.HERB_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.herb_sack;
-        this.zero_charges_is_positive = true;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.HERB_SACK),
-            new TriggerItem(ItemID.OPEN_HERB_SACK),
+            new TriggerItem(ItemID.HERB_SACK).zeroChargesIsPositive(),
+            new TriggerItem(ItemID.OPEN_HERB_SACK).zeroChargesIsPositive(),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The herb sack is empty.").fixedCharges(0),
@@ -53,7 +52,7 @@ public class U_HerbSack extends ChargedItem {
             // Edge case where herb sack is open, but there is not enough space for it in herb sack.
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herbs", "Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
         };
-        this.triggersStat = new TriggerStat[]{
+        this.triggersStats = new TriggerStat[]{
             new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Herbs", "Pick").increaseCharges(1),
         };
     }

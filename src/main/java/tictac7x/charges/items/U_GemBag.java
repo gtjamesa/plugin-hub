@@ -33,10 +33,9 @@ public class U_GemBag extends ChargedItem {
     ) {
         super(ItemKey.GEM_BAG, ItemID.GEM_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.gem_bag;
-        this.zero_charges_is_positive = true;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.GEM_BAG_12020),
-            new TriggerItem(ItemID.OPEN_GEM_BAG),
+            new TriggerItem(ItemID.GEM_BAG_12020).zeroChargesIsPositive(),
+            new TriggerItem(ItemID.OPEN_GEM_BAG).zeroChargesIsPositive(),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The gem bag is empty.").fixedCharges(0),

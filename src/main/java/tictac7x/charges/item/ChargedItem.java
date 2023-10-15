@@ -1,6 +1,5 @@
 package tictac7x.charges.item;
 
-import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
@@ -13,7 +12,6 @@ import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
-import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
@@ -69,16 +67,13 @@ public class ChargedItem {
     public TriggerWidget[] triggersWidgets = new TriggerWidget[]{};
     public TriggerDailyReset[] triggersResetsDaily = new TriggerDailyReset[]{};
     public TriggerItemContainer[] triggersItemContainers = new TriggerItemContainer[]{};
-    public TriggerStat[] triggersStat = new TriggerStat[]{};
+    public TriggerStat[] triggersStats = new TriggerStat[]{};
     public TriggerVarbit[] triggersVarbits = new TriggerVarbit[]{};
 
     private boolean inEquipment = false;
     private boolean inInventory = false;
 
     public int charges = Charges.UNKNOWN;
-
-    @Nullable public Integer negative_full_charges;
-    public boolean zero_charges_is_positive = false;
 
     final OnStatChanged onStatChanged;
     final OnChatMessage onChatMessage;
@@ -160,10 +155,10 @@ public class ChargedItem {
     }
 
     public void setCharges(final int charges) {
-        final int newCharges = negative_full_charges != null ? Math.min(Math.max(0, charges), negative_full_charges) : Math.max(0, charges);
+        final int newCharges = negativeFullCharges().isPresent() ? Math.min(Math.max(0, charges), negativeFullCharges().get()) : Math.max(0, charges);
 
         if (newCharges != this.charges) {
-            this.charges = negative_full_charges != null ? Math.min(Math.max(0, charges), negative_full_charges) : Math.max(0, charges);
+            this.charges = negativeFullCharges().isPresent() ? Math.min(Math.max(0, charges), negativeFullCharges().get()) : Math.max(0, charges);
             onChargesUpdated();
 
             if (config_key != null) {
@@ -225,6 +220,40 @@ public class ChargedItem {
         return "";
     }
 
+    private Optional<TriggerItem> getCurrentTriggerItem() {
+        for (final TriggerItem triggerItem : triggersItems) {
+            if (triggerItem.item_id == item_id) {
+                return Optional.of(triggerItem);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    public boolean needsToBeEquipped() {
+        if (getCurrentTriggerItem().isPresent()) {
+            return getCurrentTriggerItem().get().needsToBeEquipped;
+        }
+
+        return false;
+    }
+
+    public boolean isZeroChargesPositive() {
+        if (getCurrentTriggerItem().isPresent()) {
+            return getCurrentTriggerItem().get().zeroChargesIsPositive;
+        }
+
+        return false;
+    }
+
+    public Optional<Integer> negativeFullCharges() {
+        if (getCurrentTriggerItem().isPresent()) {
+            return getCurrentTriggerItem().get().negativeFullCharges;
+        }
+
+        return Optional.empty();
+    }
+
     public void activityCallback(final ItemActivity ignored) {}
 
     public void onChatMessage(final ChatMessage event) {
@@ -263,16 +292,6 @@ public class ChargedItem {
 
     public void onResetDaily() {
         onResetDaily.trigger();
-    }
-
-    public boolean needsToBeEquipped() {
-        for (final TriggerItem triggerItem : triggersItems) {
-            if (triggerItem.item_id == item_id && triggerItem.needsToBeEquipped) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
 

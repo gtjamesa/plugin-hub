@@ -71,6 +71,7 @@ public interface ChargesImprovedConfig extends Config {
     String ring_of_shadows = "ring_of_shadows";
     String coal_bag = "coal_bag";
     String herb_sack = "herb_sack";
+    String strange_old_lockpick = "strange_old_lockpick";
 
     @ConfigSection(
         name = "General",
@@ -526,4 +527,11 @@ public interface ChargesImprovedConfig extends Config {
             description = escape_crystal_status,
             section = debug
         ) default ItemActivity getEscapeCrystalStatus() { return ItemActivity.DEACTIVATED; }
+
+        @ConfigItem(
+            keyName = strange_old_lockpick,
+            name = strange_old_lockpick,
+            description = strange_old_lockpick,
+            section = debug
+        ) default int getStrangeOldLockCharges() { return Charges.UNKNOWN; }
 }

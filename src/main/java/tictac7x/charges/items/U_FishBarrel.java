@@ -19,7 +19,7 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class U_FishBarrel extends ChargedItem {
-    private final int FISH_BARREL_SIZE = 28;
+    private final int MAX_CHARGES = 28;
 
     public U_FishBarrel(
         final Client client,
@@ -35,17 +35,15 @@ public class U_FishBarrel extends ChargedItem {
     ) {
         super(ItemKey.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.fish_barrel;
-        this.zero_charges_is_positive = true;
-        this.negative_full_charges = FISH_BARREL_SIZE;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.FISH_BARREL),
-            new TriggerItem(ItemID.OPEN_FISH_BARREL),
-            new TriggerItem(ItemID.FISH_SACK_BARREL),
-            new TriggerItem(ItemID.OPEN_FISH_SACK_BARREL)
+            new TriggerItem(ItemID.FISH_BARREL).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.OPEN_FISH_BARREL).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.FISH_SACK_BARREL).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.OPEN_FISH_SACK_BARREL).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("(Your|The) barrel is empty.").onItemClick().fixedCharges(0),
-            new TriggerChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(FISH_BARREL_SIZE),
+            new TriggerChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(MAX_CHARGES),
             new TriggerChatMessage("(You catch .*)|(.* enabled you to catch an extra fish.)").specificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).increaseCharges(1),
             new TriggerChatMessage("The barrel contains:").onItemClick().multipleCharges()
         };

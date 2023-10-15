@@ -15,7 +15,7 @@ public class OnStatChanged {
     }
 
     public void trigger(final StatChanged event) {
-        for (final TriggerStat trigger : chargedItem.triggersStat) {
+        for (final TriggerStat trigger : chargedItem.triggersStats) {
             if (!isValidTrigger(event, trigger)) continue;
 
             // Increase charges.
@@ -44,6 +44,9 @@ public class OnStatChanged {
 
         // Specific item check.
         if (!trigger.specificItems.isEmpty() && !trigger.specificItems.contains(chargedItem.item_id)) return false;
+
+        // Below charges check.
+        if (trigger.belowCharges.isPresent() && chargedItem.getCharges() >= trigger.belowCharges.get()) return false;
 
         return true;
     }

@@ -11,15 +11,13 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.Store;
 
-public class U_CoalBag extends ChargedItem {
-    private final int MAX_CHARGES = 27;
-
-    public U_CoalBag(
+public class U_StrangeOldLockpick extends ChargedItem {
+    public U_StrangeOldLockpick(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -31,17 +29,15 @@ public class U_CoalBag extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.COAL_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.coal_bag;
+        super(ItemKey.STRANGE_OLD_LOCKPICK, ItemID.STRANGE_OLD_LOCKPICK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        this.config_key = ChargesImprovedConfig.strange_old_lockpick;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.COAL_BAG_12019).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
-            new TriggerItem(ItemID.OPEN_COAL_BAG).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK),
+            new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK_FULL).fixedCharges(50)
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The coal bag is( now)? empty.").fixedCharges(0),
-            new TriggerChatMessage("The coal bag( still)? contains one piece of coal.").fixedCharges(1),
-            new TriggerChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal."),
-            new TriggerChatMessage("You manage to mine some coal.").specificItem(ItemID.OPEN_COAL_BAG).increaseCharges(1),
+            new TriggerChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining."),
+            new TriggerChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.").notification("Your strange old lockpick crumbles to dust."),
         };
     }
 }
