@@ -1,5 +1,6 @@
 package tictac7x.charges.item;
 
+import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
@@ -12,6 +13,7 @@ import net.runelite.api.events.WidgetLoaded;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
@@ -47,7 +49,7 @@ import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.Optional;
 
-public class ChargedItem extends InfoBox {
+public class ChargedItem {
     public final ItemKey infobox_id;
     public int item_id;
     protected final Client client;
@@ -60,17 +62,15 @@ public class ChargedItem extends InfoBox {
     protected final ChargesImprovedConfig config;
     public final Store store;
 
-    @Nullable
-    public String config_key;
-    @Nullable
-    public String[] extra_config_keys;
+    @Nullable public String config_key;
+    @Nullable public String[] extra_config_keys;
     public TriggerChatMessage[] triggersChatMessages = new TriggerChatMessage[]{};
     public TriggerAnimation[] triggersAnimations = new TriggerAnimation[]{};
     public TriggerGraphic[] triggersGraphics = new TriggerGraphic[]{};
     public TriggerHitsplat[] triggersHitsplats = new TriggerHitsplat[]{};
     public TriggerItem[] triggersItems = new TriggerItem[]{};
     public TriggerWidget[] triggersWidgets = new TriggerWidget[]{};
-    @Nullable protected TriggerReset[] triggers_resets;
+    public TriggerReset[] triggers_resets = new TriggerReset[]{};
     public TriggerItemContainer[] triggersItemContainers = new TriggerItemContainer[]{};
     public TriggerStat[] triggersStat = new TriggerStat[]{};
 
@@ -81,8 +81,6 @@ public class ChargedItem extends InfoBox {
 
     public int charges = Charges.UNKNOWN;
 
-    private String tooltip;
-    public boolean render = false;
     @Nullable public Integer negative_full_charges;
     public boolean zero_charges_is_positive = false;
 
@@ -106,10 +104,8 @@ public class ChargedItem extends InfoBox {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
-        final Store store,
-        final Plugin plugin
+        final Store store
     ) {
-        super(items.getImage(item_id), plugin);
         this.infobox_id = infobox_id;
         this.item_id = item_id;
         this.client = client;
@@ -132,93 +128,27 @@ public class ChargedItem extends InfoBox {
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
 
 
-        client_thread.invokeLater(() -> {
-            loadChargesFromConfig();
-            updateTooltip();
-            onChargesUpdated();
-        });
-    }
 
-    @Override
-    public String getName() {
-        return super.getName() + "_" + item_id;
-    }
-
-    @Override
-    public String getText() {
-        return ChargesImprovedPlugin.getChargesMinified(charges);
-    }
-
-    @Override
-    public String getTooltip() {
-        return tooltip;
-    }
-
-    @Override
-    public Color getTextColor() {
-        if (charges == Charges.UNKNOWN) {
-            return config.getColorUnknown();
-        }
-
-        if (
-            charges == 0 && !zero_charges_is_positive ||
-            negative_full_charges != null && charges == negative_full_charges ||
-            needs_to_be_equipped_for_infobox && !in_equipment ||
-            is_negative ||
-            isDeactivated()
-        ) {
-            return config.getColorEmpty();
-        }
-
-        return config.getColorDefault();
+        client_thread.invokeLater(this::loadChargesFromConfig);
     }
 
     public boolean inEquipment() {
         return in_equipment;
     }
 
-    private boolean isAllowed() {
-        return !config.getHiddenInfoboxes().contains(infobox_id);
-    }
-
-    public boolean isNegative() {
-        return is_negative;
-    }
-
     public boolean needsToBeEquipped() {
         return needs_to_be_equipped_for_infobox;
-    }
-
-    @Override
-    public boolean render() {
-        return config.showInfoboxes() && isAllowed() && render && charges != Charges.UNLIMITED;
     }
 
     public int getCharges() {
         return charges;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     public void onConfigChanged(final ConfigChanged event) {
         if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
             charges = Integer.parseInt(event.getNewValue());
         }
     }
-
-
-
-
 
     public void resetCharges() {
         if (triggers_resets == null) return;
@@ -239,11 +169,9 @@ public class ChargedItem extends InfoBox {
     }
 
     private void loadChargesFromConfig() {
-        if (config_key == null) return;
         try {
             charges = Integer.parseInt(configs.getConfiguration(ChargesImprovedConfig.group, config_key));
         } catch (final Exception ignored) {}
-
     }
 
     public void setCharges(final int charges) {
@@ -271,28 +199,28 @@ public class ChargedItem extends InfoBox {
         configs.setConfiguration(ChargesImprovedConfig.group, key, value);
     }
 
-    public void updateInfobox(final int item_id) {
-        // Item id.
-        this.item_id = item_id;
+//    public void updateInfobox(final int item_id) {
+//        // Item id.
+//        this.item_id = item_id;
+//
+//        // Tooltip.
+//        updateTooltip();
+//
+//        // Image.
+//        setImage(items.getImage(item_id));
+//        infoboxes.updateInfoBoxImage(this);
+//    }
 
-        // Tooltip.
-        updateTooltip();
-
-        // Image.
-        setImage(items.getImage(item_id));
-        infoboxes.updateInfoBoxImage(this);
-    }
-
-    public void updateTooltip() {
-        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
-    }
+//    public void updateTooltip() {
+//        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
+//    }
 
     protected void onChargesUpdated() {
-//        chat_messages.queue(QueuedMessage.builder()
-//            .type(ChatMessageType.CONSOLE)
-//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
-//            .build()
-//        );
+        chat_messages.queue(QueuedMessage.builder()
+            .type(ChatMessageType.CONSOLE)
+            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+            .build()
+        );
     }
 
 

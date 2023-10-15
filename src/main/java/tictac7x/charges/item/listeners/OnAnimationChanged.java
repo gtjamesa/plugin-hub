@@ -26,7 +26,7 @@ public class OnAnimationChanged {
             // Unallowed items check.
             if (trigger_animation.unallowed_items != null) {
                 for (final int item_id : trigger_animation.unallowed_items) {
-                    if (chargedItem.store.inventory.contains(item_id) || chargedItem.store.equipment.contains(item_id)) {
+                    if (chargedItem.store.inventoryContainsItem(item_id) || chargedItem.store.equipmentContainsItem(item_id)) {
                         continue animationTriggerLooper;
                     }
                 }
@@ -36,10 +36,10 @@ public class OnAnimationChanged {
             if (trigger_animation.equipped && !chargedItem.in_equipment) continue;
 
             // Menu target check.
-            if (trigger_animation.menu_target != null && !chargedItem.store.inMenuTargets(trigger_animation.menu_target)) continue;
+            if (trigger_animation.menu_target != null && chargedItem.store.notInMenuTargets(trigger_animation.menu_target)) continue;
 
             // Menu option check.
-            if (trigger_animation.menu_option != null && !chargedItem.store.inMenuOptions(trigger_animation.menu_option)) continue;
+            if (trigger_animation.menu_option != null && chargedItem.store.notInMenuOptions(trigger_animation.menu_option)) continue;
 
             // Valid trigger, modify charges.
             if (trigger_animation.decrease_charges) {

@@ -46,7 +46,7 @@ public class OnChatMessage {
             if (!matcher.find()) continue;
 
             // Menu target check.
-            if (trigger.menu_target && !chargedItem.store.inMenuTargets(chargedItem.getItemName())) continue;
+            if (trigger.menu_target && chargedItem.store.notInMenuTargets(chargedItem.getItemName())) continue;
 
             // Item needs to be equipped.
             if (trigger.equipped && !chargedItem.in_equipment) continue;

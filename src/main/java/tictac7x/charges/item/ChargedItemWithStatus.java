@@ -24,8 +24,7 @@ public class ChargedItemWithStatus extends ChargedItem {
         final ChatMessageManager chat_messages,
         final Notifier notifier,
         final ChargesImprovedConfig config,
-        final Store store,
-        final Plugin plugin
+        final Store store
     ) {
         super(
             infobox_id,
@@ -38,8 +37,7 @@ public class ChargedItemWithStatus extends ChargedItem {
             chat_messages,
             notifier,
             config,
-            store,
-            plugin
+            store
         );
     }
 

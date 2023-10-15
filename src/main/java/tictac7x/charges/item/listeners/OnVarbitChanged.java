@@ -23,15 +23,15 @@ public class OnVarbitChanged {
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
                 int charges = 0;
-                charges += chargedItem.store.inventory != null ? chargedItem.store.inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                charges += chargedItem.store.equipment != null ? chargedItem.store.equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
+                charges += chargedItem.store.getInventoryItemCount(trigger_item.item_id) * trigger_item.fixed_charges;
+                charges += chargedItem.store.getEquipmentItemCount(trigger_item.item_id) * trigger_item.fixed_charges;
                 chargedItem.setCharges(charges);
 
-                // Find out charges based on the amount of item.
+            // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 int charges = 0;
-                charges += chargedItem.store.inventory != null ? chargedItem.store.inventory.count(trigger_item.item_id) : 0;
-                charges += chargedItem.store.equipment != null ? chargedItem.store.equipment.count(trigger_item.item_id) : 0;
+                charges += chargedItem.store.getInventoryItemCount(trigger_item.item_id);
+                charges += chargedItem.store.getEquipmentItemCount(trigger_item.item_id);
                 chargedItem.setCharges(charges);
             }
 

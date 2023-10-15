@@ -6,7 +6,6 @@ import tictac7x.charges.store.ItemActivity;
 import java.util.Optional;
 
 public class TriggerHitsplat {
-    public final int hitsplat_id;
     public final int discharges;
 
     public boolean self;
@@ -15,7 +14,6 @@ public class TriggerHitsplat {
     public Optional<String[]> extra_config = Optional.empty();
 
     public TriggerHitsplat(final int discharges) {
-        this.hitsplat_id = HitsplatID.DAMAGE_ME;
         this.discharges = discharges;
     }
 

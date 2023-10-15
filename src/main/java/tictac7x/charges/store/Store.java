@@ -8,26 +8,22 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.game.ItemManager;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class Store {
     private final ItemManager items;
-
     private int gametick = 0;
     private int gametick_before = 0;
 
-    @Nullable public ItemContainer inventory = null;
-
-    @Nullable public ItemContainer equipment = null;
-
-    @Nullable public Item[] inventory_items = null;
-
-    @Nullable public  Item[] bank_items = null;
+    public Optional<ItemContainer> inventory = Optional.empty();
+    public Optional<ItemContainer> equipment = Optional.empty();
+    public Optional<Item[]> inventory_items = Optional.empty();
+    public Optional<Item[]> bank_items = Optional.empty();
 
     public final List<MenuEntry> menu_entries = new ArrayList<>();
 
@@ -37,21 +33,23 @@ public class Store {
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
-            inventory = event.getItemContainer();
-        } else if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
-            equipment = event.getItemContainer();
+            inventory = Optional.of(event.getItemContainer());
+        }
+
+        if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
+            equipment = Optional.of(event.getItemContainer());
         }
     }
 
     public void onInventoryItemsChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
-            inventory_items = event.getItemContainer().getItems();
+            inventory_items = Optional.of(event.getItemContainer().getItems());
         }
     }
 
     public void onBankItemsChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.BANK.getId()) {
-            bank_items = event.getItemContainer().getItems();
+            bank_items = Optional.of(event.getItemContainer().getItems());
         }
     }
 
@@ -82,42 +80,46 @@ public class Store {
         gametick++;
     }
 
-    public boolean inMenuTargets(final String target) {
-        return menu_entries.stream().anyMatch(entry -> entry.target.contains(target));
+    public boolean notInMenuTargets(final String target) {
+        return menu_entries.stream().noneMatch(entry -> entry.target.contains(target));
     }
 
-    public boolean inMenuOptions(final String option) {
-        return menu_entries.stream().anyMatch(entry -> entry.option.equals(option));
+    public boolean notInMenuOptions(final String option) {
+        return menu_entries.stream().noneMatch(entry -> entry.option.equals(option));
     }
 
     public int getInventoryItemsDifference(final ItemContainerChanged event) {
-        if (event.getItemContainer().getId() != InventoryID.INVENTORY.getId() || inventory_items == null) return 0;
+        if (
+            event.getItemContainer().getId() != InventoryID.INVENTORY.getId() ||
+            !inventory_items.isPresent()
+        ) return 0;
 
-        return itemsDifference(inventory_items, event.getItemContainer().getItems());
+        return itemsDifference(inventory_items.get(), event.getItemContainer().getItems());
     }
 
     public int getBankItemsDifference(final ItemContainerChanged event) {
+        if (event.getContainerId() != InventoryID.BANK.getId() || !bank_items.isPresent()) {
+            return 0;
+        }
+
         int difference = 0;
+        final Map<Integer, Integer> differences = new HashMap<>();
 
-        if (event.getContainerId() == InventoryID.BANK.getId() && bank_items != null) {
-            Map<Integer, Integer> differences = new HashMap<>();
+        // New bank items.
+        for (final Item new_item : event.getItemContainer().getItems()) {
+            differences.put(new_item.getId(), new_item.getQuantity());
+            items.getItemComposition(0).getPlaceholderId();
+        }
 
-            // New bank items.
-            for (final Item new_item : event.getItemContainer().getItems()) {
-                differences.put(new_item.getId(), new_item.getQuantity());
-                items.getItemComposition(0).getPlaceholderId();
-            }
+        // Previous bank items.
+        for (final Item old_item : bank_items.get()) {
+            differences.put(old_item.getId(), differences.getOrDefault(old_item.getId(), 0) - old_item.getQuantity());
+        }
 
-            // Previous bank items.
-            for (final Item old_item : bank_items) {
-                differences.put(old_item.getId(), differences.getOrDefault(old_item.getId(), 0) - old_item.getQuantity());
-            }
-
-            // Find differences between all items.
-            for (final Map.Entry<Integer, Integer> item_difference : differences.entrySet()) {
-                if (item_difference.getValue() > 0) {
-                    difference += item_difference.getValue();
-                }
+        // Find differences between all items.
+        for (final Map.Entry<Integer, Integer> item_difference : differences.entrySet()) {
+            if (item_difference.getValue() > 0) {
+                difference += item_difference.getValue();
             }
         }
 
@@ -129,5 +131,21 @@ public class Store {
         final int items_after_count = (int) Arrays.stream(items_after).filter(item -> item.getId() != -1).count();
 
         return Math.abs(items_before_count - items_after_count);
+    }
+
+    public int getInventoryItemCount(final int itemId) {
+        return inventory.map(itemContainer -> itemContainer.count(itemId)).orElse(0);
+    }
+
+    public int getEquipmentItemCount(final int itemId) {
+        return equipment.map(itemContainer -> itemContainer.count(itemId)).orElse(0);
+    }
+
+    public boolean inventoryContainsItem(final int itemId) {
+        return inventory.map(itemContainer -> itemContainer.contains(itemId)).orElse(false);
+    }
+
+    public boolean equipmentContainsItem(final int itemId) {
+        return equipment.map(itemContainer -> itemContainer.contains(itemId)).orElse(false);
     }
 }

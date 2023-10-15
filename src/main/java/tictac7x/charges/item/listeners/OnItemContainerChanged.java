@@ -5,6 +5,9 @@ import net.runelite.api.events.ItemContainerChanged;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemContainer;
+import tictac7x.charges.store.Charges;
+
+import java.util.Optional;
 
 public class OnItemContainerChanged {
     final ChargedItem chargedItem;
@@ -27,10 +30,10 @@ public class OnItemContainerChanged {
             if (trigger.inventory_id != event.getContainerId()) continue;
 
             // Menu target check.
-            if (trigger.menu_target != null && !chargedItem.store.inMenuTargets(trigger.menu_target)) continue;
+            if (trigger.menu_target != null && chargedItem.store.notInMenuTargets(trigger.menu_target)) continue;
 
             // Menu option check.
-            if (trigger.menu_option != null && !chargedItem.store.inMenuOptions(trigger.menu_option)) continue;
+            if (trigger.menu_option != null && chargedItem.store.notInMenuOptions(trigger.menu_option)) continue;
 
             // Fixed charges.
             if (trigger.fixed_charges != null) {
@@ -56,8 +59,7 @@ public class OnItemContainerChanged {
 
         boolean in_inventory = false;
         boolean in_equipment = false;
-        boolean render = false;
-        Integer charges = null;
+        Optional<Integer> charges = Optional.empty();
 
         for (final TriggerItem trigger_item : chargedItem.triggersItems) {
             // Item trigger has varbit check.
@@ -73,40 +75,39 @@ public class OnItemContainerChanged {
             chargedItem.is_negative = trigger_item.is_negative;
 
             // Find out if item is equipped.
-            final boolean in_inventory_item = chargedItem.store.inventory != null && chargedItem.store.inventory.contains(trigger_item.item_id);
-            final boolean in_equipment_item = chargedItem.store.equipment != null && chargedItem.store.equipment.contains(trigger_item.item_id);
+            final boolean in_inventory_item = chargedItem.store.inventoryContainsItem(trigger_item.item_id);
+            final boolean in_equipment_item = chargedItem.store.equipmentContainsItem(trigger_item.item_id);
 
             // Item not found, don't calculate charges.
             if (!in_equipment_item && !in_inventory_item) continue;
 
             // Item found.
-            render = true;
             if (in_inventory_item) in_inventory = true;
             if (in_equipment_item) in_equipment = true;
 
-            // Update infobox item picture and tooltip dynamically based on the items if use has different variant of it.
+            // Update item id.
             if (trigger_item.item_id != chargedItem.item_id) {
-                chargedItem.updateInfobox(trigger_item.item_id);
+                chargedItem.item_id = trigger_item.item_id;
             }
 
             // Find out charges for the item.
             if (trigger_item.fixed_charges != null) {
-                if (charges == null) charges = 0;
-                charges += chargedItem.store.inventory != null ? chargedItem.store.inventory.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                charges += chargedItem.store.equipment != null ? chargedItem.store.equipment.count(trigger_item.item_id) * trigger_item.fixed_charges : 0;
-                // Find out charges based on the amount of item.
+                charges = Optional.of(
+                    chargedItem.store.getEquipmentItemCount(trigger_item.item_id) * trigger_item.fixed_charges +
+                    chargedItem.store.getInventoryItemCount(trigger_item.item_id) * trigger_item.fixed_charges
+                );
+            // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
-                if (charges == null) charges = 0;
-                charges += chargedItem.store.inventory != null ? chargedItem.store.inventory.count(trigger_item.item_id) : 0;
-                charges += chargedItem.store.equipment != null ? chargedItem.store.equipment.count(trigger_item.item_id) : 0;
+                charges = Optional.of(
+                    chargedItem.store.getEquipmentItemCount(trigger_item.item_id) +
+                    chargedItem.store.getInventoryItemCount(trigger_item.item_id)
+                );
             }
         }
 
         // Update infobox variables for other triggers.
-        this.chargedItem.render = render;
-        this.chargedItem.in_inventory = in_inventory;
-        this.chargedItem.in_equipment = in_equipment;
-        if (charges != null) this.chargedItem.charges = charges;
-        chargedItem.updateTooltip();
+        chargedItem.in_inventory = in_inventory;
+        chargedItem.in_equipment = in_equipment;
+        charges.ifPresent(chargedItem::setCharges);
     }
 }

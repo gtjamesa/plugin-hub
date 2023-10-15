@@ -25,32 +25,34 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
+import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.infoboxes.*;
-import tictac7x.charges.infoboxes.barrows.AhrimsHood;
-import tictac7x.charges.infoboxes.barrows.AhrimsRobeskirt;
-import tictac7x.charges.infoboxes.barrows.AhrimsRobetop;
-import tictac7x.charges.infoboxes.barrows.AhrimsStaff;
-import tictac7x.charges.infoboxes.barrows.DharoksGreataxe;
-import tictac7x.charges.infoboxes.barrows.DharoksHelm;
-import tictac7x.charges.infoboxes.barrows.DharoksPlatebody;
-import tictac7x.charges.infoboxes.barrows.DharoksPlatelegs;
-import tictac7x.charges.infoboxes.barrows.GuthansChainskirt;
-import tictac7x.charges.infoboxes.barrows.GuthansHelm;
-import tictac7x.charges.infoboxes.barrows.GuthansPlatebody;
-import tictac7x.charges.infoboxes.barrows.GuthansWarspear;
-import tictac7x.charges.infoboxes.barrows.KarilsCoif;
-import tictac7x.charges.infoboxes.barrows.KarilsCrossbow;
-import tictac7x.charges.infoboxes.barrows.KarilsLeatherskirt;
-import tictac7x.charges.infoboxes.barrows.KarilsLeathertop;
-import tictac7x.charges.infoboxes.barrows.ToragsHammers;
-import tictac7x.charges.infoboxes.barrows.ToragsHelm;
-import tictac7x.charges.infoboxes.barrows.ToragsPlatebody;
-import tictac7x.charges.infoboxes.barrows.ToragsPlatelegs;
-import tictac7x.charges.infoboxes.barrows.VeracsBrassard;
-import tictac7x.charges.infoboxes.barrows.VeracsFlail;
-import tictac7x.charges.infoboxes.barrows.VeracsHelm;
-import tictac7x.charges.infoboxes.barrows.VeracsPlateskirt;
+import tictac7x.charges.item.ChargedItemInfobox;
+import tictac7x.charges.items.*;
+import tictac7x.charges.items.barrows.AhrimsHood;
+import tictac7x.charges.items.barrows.AhrimsRobeskirt;
+import tictac7x.charges.items.barrows.AhrimsRobetop;
+import tictac7x.charges.items.barrows.AhrimsStaff;
+import tictac7x.charges.items.barrows.DharoksGreataxe;
+import tictac7x.charges.items.barrows.DharoksHelm;
+import tictac7x.charges.items.barrows.DharoksPlatebody;
+import tictac7x.charges.items.barrows.DharoksPlatelegs;
+import tictac7x.charges.items.barrows.GuthansChainskirt;
+import tictac7x.charges.items.barrows.GuthansHelm;
+import tictac7x.charges.items.barrows.GuthansPlatebody;
+import tictac7x.charges.items.barrows.GuthansWarspear;
+import tictac7x.charges.items.barrows.KarilsCoif;
+import tictac7x.charges.items.barrows.KarilsCrossbow;
+import tictac7x.charges.items.barrows.KarilsLeatherskirt;
+import tictac7x.charges.items.barrows.KarilsLeathertop;
+import tictac7x.charges.items.barrows.ToragsHammers;
+import tictac7x.charges.items.barrows.ToragsHelm;
+import tictac7x.charges.items.barrows.ToragsPlatebody;
+import tictac7x.charges.items.barrows.ToragsPlatelegs;
+import tictac7x.charges.items.barrows.VeracsBrassard;
+import tictac7x.charges.items.barrows.VeracsFlail;
+import tictac7x.charges.items.barrows.VeracsHelm;
+import tictac7x.charges.items.barrows.VeracsPlateskirt;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemOverlay;
 import tictac7x.charges.store.Charges;
@@ -60,7 +62,9 @@ import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @PluginDescriptor(
@@ -186,7 +190,8 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	private ChargedItemOverlay overlay_charged_items;
 
-	private ChargedItem[] infoboxes_charged_items;
+	private ChargedItem[] chargedItems;
+	private List<InfoBox> chargedItemsInfoboxes = new ArrayList<>();
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
 
@@ -194,7 +199,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	protected void startUp() {
 		store = new Store(items);
 
-		infoboxes_charged_items = new ChargedItem[]{
+		chargedItems = new ChargedItem[]{
 			// Weapons
 			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -288,23 +293,24 @@ public class ChargesImprovedPlugin extends Plugin {
 			new VeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new VeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 		};
-		overlay_charged_items = new ChargedItemOverlay(client, config, infoboxes_charged_items);
+		overlay_charged_items = new ChargedItemOverlay(client, config, chargedItems);
 
 		overlays.add(overlay_charged_items);
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.addInfoBox(infobox));
+		Arrays.stream(chargedItems).forEach(chargedItem -> chargedItemsInfoboxes.add(new ChargedItemInfobox(chargedItem, items, infoboxes, client_thread, config, this)));
+		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoboxes.addInfoBox(chargedItemInfobox));
 	}
 
 	@Override
 	protected void shutDown() {
 		overlays.remove(overlay_charged_items);
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infoboxes.removeInfoBox(infobox));
+		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoboxes.removeInfoBox(chargedItemInfobox));
 	}
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
 		store.onItemContainerChanged(event);
 
-		for (final ChargedItem infobox : infoboxes_charged_items) {
+		for (final ChargedItem infobox : chargedItems) {
 			infobox.onItemContainerChanged(event);
 		}
 
@@ -319,7 +325,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onChatMessage(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
 //		System.out.println("MESSAGE | " +
 //			"type: " + event.getType().name() +
@@ -330,7 +336,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onAnimationChanged(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onAnimationChanged(event));
 
 //		if (event.getActor() == client.getLocalPlayer()) {
 //			System.out.println("ANIMATION | " +
@@ -341,7 +347,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onGraphicChanged(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
 //		if (event.getActor() == client.getLocalPlayer()) {
 //			System.out.println("GRAPHIC | " +
@@ -352,7 +358,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onConfigChanged(final ConfigChanged event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onConfigChanged(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
 
 //		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
 //			System.out.println("CONFIG | " +
@@ -365,7 +371,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onHitsplatApplied(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
 
 //		System.out.println("HITSPLAT | " +
 //			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
@@ -378,7 +384,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onWidgetLoaded(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onWidgetLoaded(event));
 
 //		System.out.println("WIDGET | " +
 //			"group: " + event.getGroupId()
@@ -418,7 +424,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onStatChanged(final StatChanged event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onStatChanged(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
 
 //		System.out.println("STAT CHANGED | " +
 //			event.getSkill().getName() +
@@ -429,7 +435,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onVarbitChanged(final VarbitChanged event) {
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.onVarbitChanged(event));
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onVarbitChanged(event));
 
 		// If server minutes are 0, it's a new day!
 		if (event.getVarbitId() == VARBIT_MINUTES && client.getGameState() == GameState.LOGGED_IN && event.getValue() == 0) {
@@ -452,7 +458,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (date.equals(config.getResetDate())) return;
 
 		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
-		Arrays.stream(infoboxes_charged_items).forEach(infobox -> infobox.resetCharges());
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.resetCharges());
 	}
 
 	public static String getChargesMinified(final int charges) {
