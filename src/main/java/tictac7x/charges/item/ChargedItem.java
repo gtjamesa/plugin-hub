@@ -226,11 +226,18 @@ public class ChargedItem {
             return false;
         }
 
-        return getConfigStatusKey().get().equals(ItemActivity.ACTIVATED.toString());
+        final Optional<String> status = Optional.ofNullable(configs.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get()));
+
+        if (!status.isPresent()) {
+            return false;
+        }
+
+        return status.get().equals(ItemActivity.ACTIVATED.toString());
     }
 
     public Optional<String> getConfigStatusKey() {
-        return Optional.ofNullable(configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status"));
+        if (config_key == null) return Optional.empty();
+        return Optional.of(config_key + "_status");
     }
 
     public String getTooltipExtra() {

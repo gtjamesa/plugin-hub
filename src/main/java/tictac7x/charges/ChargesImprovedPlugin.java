@@ -294,9 +294,13 @@ public class ChargesImprovedPlugin extends Plugin {
 			new VeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new VeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 		};
-		overlay_charged_items = new ChargedItemOverlay(client, config, chargedItems);
 
+		// Items overlays.
+		overlay_charged_items = new ChargedItemOverlay(client, config, chargedItems);
 		overlays.add(overlay_charged_items);
+
+		// Items infoboxes.
+		chargedItemsInfoboxes.clear();
 		Arrays.stream(chargedItems).forEach(chargedItem -> chargedItemsInfoboxes.add(new ChargedItemInfobox(chargedItem, items, infoboxes, client_thread, config, this)));
 		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoboxes.addInfoBox(chargedItemInfobox));
 	}
