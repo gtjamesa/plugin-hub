@@ -25,7 +25,7 @@ public class Store {
     public Optional<Item[]> inventory_items = Optional.empty();
     public Optional<Item[]> bank_items = Optional.empty();
 
-    public final List<MenuEntry> menu_entries = new ArrayList<>();
+    public final List<MenuEntry> menuEntries = new ArrayList<>();
 
     public Store(final ItemManager items) {
         this.items = items;
@@ -69,11 +69,11 @@ public class Store {
         // Gametick changed, clear previous menu entries since they are no longer valid.
         if (gametick >= gametick_before + 2) {
             gametick = 0; gametick_before = 0;
-            menu_entries.clear();
+            menuEntries.clear();
         }
 
         // Save menu option and target for other triggers to use.
-        menu_entries.add(new MenuEntry(menu_target, menu_option));
+        menuEntries.add(new MenuEntry(menu_target, menu_option));
     }
 
     public void onGameTick(final GameTick ignored) {
@@ -81,15 +81,19 @@ public class Store {
     }
 
     public boolean notInMenuTargets(final String target) {
-        return menu_entries.stream().noneMatch(entry -> entry.target.contains(target));
+        return menuEntries.stream().noneMatch(entry -> entry.target.contains(target));
     }
 
     public boolean notInMenuOptions(final String option) {
-        return menu_entries.stream().noneMatch(entry -> entry.option.equals(option));
+        return menuEntries.stream().noneMatch(entry -> entry.option.equals(option));
     }
 
     public boolean notInMenuEntries(final MenuEntry menuEntry) {
-        return menu_entries.stream().noneMatch(entry -> entry.target.equals(menuEntry.target) && entry.option.equals(menuEntry.option));
+        return !inMenuEntries(menuEntry);
+    }
+
+    public boolean inMenuEntries(final MenuEntry menuEntry) {
+        return menuEntries.stream().anyMatch(entry -> entry.target.equals(menuEntry.target) && entry.option.equals(menuEntry.option));
     }
 
     public int getInventoryItemsDifference(final ItemContainerChanged event) {

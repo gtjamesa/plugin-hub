@@ -47,14 +47,11 @@ public class U_HerbSack extends ChargedItem {
             new TriggerChatMessage("(?<charges>.+) x Grimy").increaseDynamically(),
         };
         this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Herb sack").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open herb sack").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Herb sack").menuOption("Empty").decreaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open herb sack").menuOption("Empty").decreaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Herb sack").menuOption("Empty").decreaseByBankDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Open herb sack").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herb sack", "Fill").menuEntry("Open herb sack", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herb sack", "Empty").menuEntry("Open herb sack", "Empty").decreaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Herb sack", "Empty").menuEntry("Open herb sack", "Empty").decreaseByBankDifference(),
             // Edge case where herb sack is open, but there is not enough space for it in herb sack.
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Herbs").menuOption("Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herbs", "Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
         };
         this.triggersStat = new TriggerStat[]{
             new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Herbs", "Pick").increaseCharges(1),

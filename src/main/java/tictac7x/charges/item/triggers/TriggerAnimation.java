@@ -1,7 +1,12 @@
 package tictac7x.charges.item.triggers;
 
+import tictac7x.charges.store.MenuEntry;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class TriggerAnimation {
     public final int animation_id;
@@ -9,10 +14,8 @@ public class TriggerAnimation {
     public int charges;
     public boolean decrease_charges;
     public boolean equipped;
-
-    @Nullable public int[] unallowed_items;
-    @Nullable public String menu_target;
-    @Nullable public String menu_option;
+    public Optional<MenuEntry> menuEntry = Optional.empty();
+    public List<Integer> unallowed_items = new ArrayList<>();
 
     public TriggerAnimation(final int animation_id) {
         this.animation_id = animation_id;
@@ -35,18 +38,15 @@ public class TriggerAnimation {
         return this;
     }
 
-    public TriggerAnimation unallowedItems(@Nonnull final int[] unallowed_items) {
-        this.unallowed_items = unallowed_items;
+    public TriggerAnimation unallowedItems(final int ...unallowedItemsIds) {
+        for (final int unallowedItemId : unallowedItemsIds) {
+            this.unallowed_items.add(unallowedItemId);
+        }
         return this;
     }
 
-    public TriggerAnimation onMenuTarget(@Nonnull final String menu_target) {
-        this.menu_target = menu_target;
-        return this;
-    }
-
-    public TriggerAnimation onMenuOption(@Nonnull final String menu_option) {
-        this.menu_option = menu_option;
+    public TriggerAnimation menuEntry(final String target, final String option) {
+        this.menuEntry = Optional.of(new MenuEntry(target, option));
         return this;
     }
 }

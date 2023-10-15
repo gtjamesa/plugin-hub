@@ -67,16 +67,11 @@ public class C_Coffin extends ChargedItem {
         };
 
         this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open bronze coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Steel coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open steel coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Black coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open black coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Silver coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open silver coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Gold coffin").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open gold coffin").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Bronze coffin", "Fill").menuEntry("Open bronze coffin", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Steel coffin", "Fill").menuEntry("Open steel coffin", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Black coffin", "Fill").menuEntry("Open black coffin", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Silver coffin", "Fill").menuEntry("Open silver coffin", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Gold coffin", "Fill").menuEntry("Open gold coffin", "Fill").increaseByInventoryDifference(),
         };
     }
 }

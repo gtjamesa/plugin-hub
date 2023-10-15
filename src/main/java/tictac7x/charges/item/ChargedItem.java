@@ -181,11 +181,11 @@ public class ChargedItem {
     }
 
     protected void onChargesUpdated() {
-        chat_messages.queue(QueuedMessage.builder()
-            .type(ChatMessageType.CONSOLE)
-            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
-            .build()
-        );
+//        chat_messages.queue(QueuedMessage.builder()
+//            .type(ChatMessageType.CONSOLE)
+//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+//            .build()
+//        );
     }
 
     public String getItemName() {

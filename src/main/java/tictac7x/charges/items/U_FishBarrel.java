@@ -50,10 +50,8 @@ public class U_FishBarrel extends ChargedItem {
             new TriggerChatMessage("The barrel contains:").onItemClick().multipleCharges()
         };
         this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Fish barrel").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open fish barrel").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Fish barrel").menuOption("Empty").decreaseByBankDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Open fish barrel").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Fish barrel", "Fill").menuEntry("Open fish barrel", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Fish barrel", "Empty").menuEntry("Open fish barrel", "Empty").decreaseByBankDifference(),
         };
     }
 }

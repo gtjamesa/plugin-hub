@@ -36,13 +36,13 @@ public class U_GricollersCan extends ChargedItem {
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
         this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(2293).unallowedItems(new int[]{
+            new TriggerAnimation(2293).unallowedItems(
                 ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
                 ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
                 ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
                 ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
                 ItemID.WATERING_CAN8
-            }).decreaseCharges(1),
+            ).decreaseCharges(1),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Watering can charges remaining: (?<charges>.+)%").onItemClick(),

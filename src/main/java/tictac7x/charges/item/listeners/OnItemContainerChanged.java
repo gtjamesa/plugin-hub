@@ -5,6 +5,7 @@ import net.runelite.api.events.ItemContainerChanged;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemContainer;
+import tictac7x.charges.store.MenuEntry;
 
 import java.util.Optional;
 
@@ -99,11 +100,17 @@ public class OnItemContainerChanged {
         // Item container is wrong.
         if (trigger.inventory_id != event.getContainerId()) return false;
 
-        // Menu target check.
-        if (trigger.menu_target != null && chargedItem.store.notInMenuTargets(trigger.menu_target)) return false;
-
-        // Menu option check.
-        if (trigger.menu_option != null && chargedItem.store.notInMenuOptions(trigger.menu_option)) return false;
+        // Menu entries check.
+        if (!trigger.menuEntries.isEmpty()) {
+            boolean menuEntryCheck = false;
+            for (final MenuEntry menuEntry : trigger.menuEntries) {
+                if (chargedItem.store.inMenuEntries(menuEntry)) {
+                    menuEntryCheck = true;
+                    break;
+                }
+            }
+            if (!menuEntryCheck) return false;
+        }
 
         // Specific item check.
         if (!trigger.specificItems.isEmpty() && !trigger.specificItems.contains(chargedItem.item_id)) return false;

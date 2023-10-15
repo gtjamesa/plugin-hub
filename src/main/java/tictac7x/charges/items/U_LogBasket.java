@@ -50,8 +50,7 @@ public class U_LogBasket extends ChargedItem {
             new TriggerChatMessage("(You get some.* logs.|The nature offerings enabled you to chop an extra log.)").specificItem(ItemID.OPEN_LOG_BASKET).specificItem(ItemID.OPEN_FORESTRY_BASKET).increaseCharges(1),
         };
         this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open log basket").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Log basket").menuOption("Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Open log basket", "Fill").menuEntry("Log basket", "Fill").increaseByInventoryDifference(),
         };
     }
 }

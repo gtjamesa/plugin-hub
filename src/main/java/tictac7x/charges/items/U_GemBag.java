@@ -44,10 +44,8 @@ public class U_GemBag extends ChargedItem {
             new TriggerChatMessage("You just (found|mined) (a|an) (Sapphire|Ruby|Emerald|Diamond)").specificItem(ItemID.OPEN_GEM_BAG).increaseCharges(1),
         };
         this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Gem bag").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open gem bag").menuOption("Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Gem bag").menuOption("Empty").decreaseByBankDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Open gem bag").menuOption("Empty").decreaseByBankDifference(),
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Gem bag", "Fill").menuEntry("Open gem bag", "Fill").increaseByInventoryDifference(),
+            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Gem bag", "Empty").menuEntry("Open gem bag", "Empty").decreaseByBankDifference(),
         };
     }
 }

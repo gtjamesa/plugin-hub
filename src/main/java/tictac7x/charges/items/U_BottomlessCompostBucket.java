@@ -9,16 +9,13 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.Store;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerAnimation;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.Store;
 
 public class U_BottomlessCompostBucket extends ChargedItem {
     public U_BottomlessCompostBucket(
@@ -41,8 +38,8 @@ public class U_BottomlessCompostBucket extends ChargedItem {
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };
         this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(832).onMenuTarget("Big Compost Bin").onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET}).increaseCharges(2),
-            new TriggerAnimation(832).onMenuTarget("Compost Bin").onMenuOption("Take").unallowedItems(new int[]{ItemID.BUCKET}).increaseCharges(1),
+            new TriggerAnimation(832).menuEntry("Big Compost Bin", "Take").unallowedItems(ItemID.BUCKET).increaseCharges(2),
+            new TriggerAnimation(832).menuEntry("Compost Bin", "Take").unallowedItems(ItemID.BUCKET).increaseCharges(1),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You treat the .*").onItemClick().decreaseCharges(1),

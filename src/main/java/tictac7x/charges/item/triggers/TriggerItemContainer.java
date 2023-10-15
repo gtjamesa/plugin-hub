@@ -2,6 +2,7 @@ package tictac7x.charges.item.triggers;
 
 import net.runelite.api.InventoryID;
 import tictac7x.charges.store.ItemContainerType;
+import tictac7x.charges.store.MenuEntry;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -16,22 +17,15 @@ public class TriggerItemContainer {
     public boolean decrease_by_bank_difference;
     public List<Integer> specificItems = new ArrayList<>();
     public Optional<Integer> decreaseCharges = Optional.empty();
-
-    @Nullable public String menu_target;
-    @Nullable public String menu_option;
+    public List<MenuEntry> menuEntries = new ArrayList<>();
     @Nullable public Integer fixed_charges;
 
     public TriggerItemContainer(final ItemContainerType inventory_type) {
         this.inventory_id = inventory_type == ItemContainerType.INVENTORY ? InventoryID.INVENTORY.getId() : InventoryID.BANK.getId();
     }
 
-    public TriggerItemContainer menuTarget(final String menu_target) {
-        this.menu_target = menu_target;
-        return this;
-    }
-
-    public TriggerItemContainer menuOption(final String menu_option) {
-        this.menu_option = menu_option;
+    public TriggerItemContainer menuEntry(final String target, final String option) {
+        this.menuEntries.add(new MenuEntry(target, option));
         return this;
     }
 
