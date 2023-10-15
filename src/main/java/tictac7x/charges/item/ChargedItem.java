@@ -17,11 +17,8 @@ import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.plugins.Plugin;
-import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.item.listeners.OnAnimationChanged;
 import tictac7x.charges.item.listeners.OnChatMessage;
 import tictac7x.charges.item.listeners.OnGraphicChanged;
@@ -46,7 +43,6 @@ import tictac7x.charges.item.triggers.TriggerStat;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.Color;
 import java.util.Optional;
 
 public class ChargedItem {
@@ -175,11 +171,15 @@ public class ChargedItem {
     }
 
     public void setCharges(final int charges) {
-        this.charges = negative_full_charges != null ? Math.min(Math.max(0, charges), negative_full_charges) : Math.max(0, charges);
-        onChargesUpdated();
+        final int newCharges = negative_full_charges != null ? Math.min(Math.max(0, charges), negative_full_charges) : Math.max(0, charges);
 
-        if (config_key != null) {
-            setConfiguration(config_key, this.charges);
+        if (newCharges != this.charges) {
+            this.charges = negative_full_charges != null ? Math.min(Math.max(0, charges), negative_full_charges) : Math.max(0, charges);
+            onChargesUpdated();
+
+            if (config_key != null) {
+                setConfiguration(config_key, this.charges);
+            }
         }
     }
 
@@ -199,22 +199,6 @@ public class ChargedItem {
         configs.setConfiguration(ChargesImprovedConfig.group, key, value);
     }
 
-//    public void updateInfobox(final int item_id) {
-//        // Item id.
-//        this.item_id = item_id;
-//
-//        // Tooltip.
-//        updateTooltip();
-//
-//        // Image.
-//        setImage(items.getImage(item_id));
-//        infoboxes.updateInfoBoxImage(this);
-//    }
-
-//    public void updateTooltip() {
-//        tooltip = items.getItemComposition(item_id).getName() + (needs_to_be_equipped_for_infobox && !in_equipment ? " - Needs to be equipped" : "");
-//    }
-
     protected void onChargesUpdated() {
         chat_messages.queue(QueuedMessage.builder()
             .type(ChatMessageType.CONSOLE)
@@ -222,10 +206,6 @@ public class ChargedItem {
             .build()
         );
     }
-
-
-
-
 
     public String getItemName() {
         return items.getItemComposition(item_id).getName();
@@ -246,6 +226,8 @@ public class ChargedItem {
 
         return config_key + "_status";
     }
+
+    public void activityCallback(final ItemActivity ignored) {}
 
     public void onChatMessage(final ChatMessage event) {
         onChatMessage.trigger(event);

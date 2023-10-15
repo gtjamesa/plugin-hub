@@ -42,17 +42,17 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             // Check
             new TriggerChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
             new TriggerChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
-            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").extraConsumer(message -> activate()),
-            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").extraConsumer(message -> deactivate()),
+            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").activate(),
+            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
             // Uncharge
             new TriggerChatMessage("You remove all the charges from the bonecrusher( necklace)?.").fixedCharges(0),
             new TriggerChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left."),
             // Ran out
             new TriggerChatMessage("Your bonecrusher( necklace)? has run out of charges.").fixedCharges(0).notification(),
             // Activate
-            new TriggerChatMessage("The bonecrusher( necklace)? has been deactivated").extraConsumer(message -> deactivate()),
+            new TriggerChatMessage("The bonecrusher( necklace)? has been deactivated").deactivate(),
             // Deactivate
-            new TriggerChatMessage("The bonecrusher( necklace)? is active").extraConsumer(message -> activate()),
+            new TriggerChatMessage("The bonecrusher( necklace)? is active").activate(),
         };
         this.triggersStat = new TriggerStat[]{
             new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),

@@ -15,40 +15,45 @@ public class OnAnimationChanged {
     }
 
     public void trigger(final AnimationChanged event) {
-        // Player check.
-        if (event.getActor() != client.getLocalPlayer()) return;
+        for (final TriggerAnimation trigger : chargedItem.triggersAnimations) {
+            if (!isValidTrigger(event, trigger)) continue;
 
-        // Check all animation triggers.
-        animationTriggerLooper: for (final TriggerAnimation trigger_animation : chargedItem.triggersAnimations) {
-            // Valid animation id check.
-            if (trigger_animation.animation_id != event.getActor().getAnimation()) continue;
-
-            // Unallowed items check.
-            if (trigger_animation.unallowed_items != null) {
-                for (final int item_id : trigger_animation.unallowed_items) {
-                    if (chargedItem.store.inventoryContainsItem(item_id) || chargedItem.store.equipmentContainsItem(item_id)) {
-                        continue animationTriggerLooper;
-                    }
-                }
-            }
-
-            // Equipped check.
-            if (trigger_animation.equipped && !chargedItem.in_equipment) continue;
-
-            // Menu target check.
-            if (trigger_animation.menu_target != null && chargedItem.store.notInMenuTargets(trigger_animation.menu_target)) continue;
-
-            // Menu option check.
-            if (trigger_animation.menu_option != null && chargedItem.store.notInMenuOptions(trigger_animation.menu_option)) continue;
-
-            // Valid trigger, modify charges.
-            if (trigger_animation.decrease_charges) {
-                chargedItem.decreaseCharges(trigger_animation.charges);
+            if (trigger.decrease_charges) {
+                chargedItem.decreaseCharges(trigger.charges);
             } else {
-                chargedItem.increaseCharges(trigger_animation.charges);
+                chargedItem.increaseCharges(trigger.charges);
             }
 
+            // Trigger used.
             return;
         }
+    }
+
+    private boolean isValidTrigger(final AnimationChanged event, final TriggerAnimation trigger) {
+        // Player check.
+        if (event.getActor() != client.getLocalPlayer()) return false;
+
+        // Valid animation id check.
+        if (trigger.animation_id != event.getActor().getAnimation()) return false;
+
+        // Unallowed items check.
+        if (trigger.unallowed_items != null) {
+            for (final int item_id : trigger.unallowed_items) {
+                if (chargedItem.store.inventoryContainsItem(item_id) || chargedItem.store.equipmentContainsItem(item_id)) {
+                    return false;
+                }
+            }
+        }
+
+        // Equipped check.
+        if (trigger.equipped && !chargedItem.in_equipment) return false;
+
+        // Menu target check.
+        if (trigger.menu_target != null && chargedItem.store.notInMenuTargets(trigger.menu_target)) return false;
+
+        // Menu option check.
+        if (trigger.menu_option != null && chargedItem.store.notInMenuOptions(trigger.menu_option)) return false;
+
+        return true;
     }
 }

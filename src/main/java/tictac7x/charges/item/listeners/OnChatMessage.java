@@ -5,6 +5,7 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.Notifier;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.store.ItemActivity;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,39 +20,17 @@ public class OnChatMessage {
     }
 
     public void trigger(final ChatMessage event) {
-        if (
-            // Message type that we are not interested in.
-            event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM && event.getType() != ChatMessageType.MESBOX ||
-            // No config to save charges to.
-            chargedItem.config_key == null ||
-            // Not in inventory or in equipment.
-            (!chargedItem.in_inventory && !chargedItem.in_equipment)
-        ) return;
-
-        final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
+        event.setMessage(event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " "));
+        final String message = event.getMessage();
 
         for (final TriggerChatMessage trigger : chargedItem.triggersChatMessages) {
+            if (!isValidTrigger(event, trigger)) continue;
+
+            // Check trigger message pattern here, because we need the matcher object to extract charges from the message.
             final Matcher matcher = trigger.message.matcher(message);
-
-            // Message should be ignored.
-            if (trigger.ignore_message != null) {
-                final Matcher ignore_matcher = trigger.ignore_message.matcher(message);
-                if (ignore_matcher.find()) return;
-            }
-
-            // Specific item check.
-            if (!trigger.specific_items.isEmpty() && !trigger.specific_items.contains(chargedItem.item_id)) continue;
-
-            // Message does not match the pattern.
             if (!matcher.find()) continue;
 
-            // Menu target check.
-            if (trigger.menu_target && chargedItem.store.notInMenuTargets(chargedItem.getItemName())) continue;
-
-            // Item needs to be equipped.
-            if (trigger.equipped && !chargedItem.in_equipment) continue;
-
-            // Notifications.
+            // Notification.
             if (trigger.notification) {
                 notifier.notify(trigger.notification_message != null ? trigger.notification_message : message);
             }
@@ -81,9 +60,11 @@ public class OnChatMessage {
 
             // Charges need to be calculated from total - used.
             } else if (trigger.use_difference) {
-                final int used = Integer.parseInt(matcher.group("used"));
-                final int total = Integer.parseInt(matcher.group("total"));
-                chargedItem.setCharges(total - used);
+                try {
+                    final int used = Integer.parseInt(matcher.group("used"));
+                    final int total = Integer.parseInt(matcher.group("total"));
+                    chargedItem.setCharges(total - used);
+                } catch (final Exception ignored) {}
 
             // Set charges dynamically from the chat message.
             } else {
@@ -93,18 +74,24 @@ public class OnChatMessage {
                     // Increase dynamically.
                     if (trigger.increase_dynamically) {
                         chargedItem.increaseCharges(charges);
-                        // Decrease dynamically.
+
+                    // Decrease dynamically.
                     } else if (trigger.decrease_dynamically) {
                         chargedItem.decreaseCharges(charges);
+
+                    // Set dynamically.
                     } else {
                         chargedItem.setCharges(charges);
                     }
                 } catch (final Exception ignored) {}
             }
 
-            // Extra consumer.
-            if (trigger.extra_consumer != null) {
-                trigger.extra_consumer.accept(message);
+            // Charged item needs to be set as activated.
+            if (trigger.activate) {
+                chargedItem.activityCallback(ItemActivity.ACTIVATED);
+            // Charged item needs to be set as deactivated.
+            } else if (trigger.deactivate) {
+                chargedItem.activityCallback(ItemActivity.DEACTIVATED);
             }
 
             // Check extra matches groups.
@@ -116,8 +103,38 @@ public class OnChatMessage {
                 }
             }
 
-            // Chat message used, no need to check other messages.
+            // Trigger used.
             return;
         }
+    }
+
+    private boolean isValidTrigger(final ChatMessage event, final TriggerChatMessage trigger) {
+        final String message = event.getMessage();
+
+        // Message type that we are not interested in.
+        if (event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM && event.getType() != ChatMessageType.MESBOX) return false;
+
+        // No config to save charges to.
+        if (chargedItem.config_key == null) return false;
+
+        // Not in inventory or in equipment.
+        if (!chargedItem.in_inventory && !chargedItem.in_equipment) return false;
+
+        // Message should be ignored.
+        if (trigger.ignore_message != null) {
+            final Matcher ignore_matcher = trigger.ignore_message.matcher(message);
+            if (ignore_matcher.find()) return false;
+        }
+
+        // Specific item check.
+        if (!trigger.specific_items.isEmpty() && !trigger.specific_items.contains(chargedItem.item_id)) return false;
+
+        // Menu target check.
+        if (trigger.menu_target && chargedItem.store.notInMenuTargets(chargedItem.getItemName())) return false;
+
+        // Item needs to be equipped.
+        if (trigger.equipped && !chargedItem.in_equipment) return false;
+
+        return true;
     }
 }

@@ -6,7 +6,6 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemKey;
@@ -51,5 +50,16 @@ public class ChargedItemWithStatus extends ChargedItem {
 
     private void setActivity(final ItemActivity status) {
         configs.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey(), status);
+    }
+
+    @Override
+    public void activityCallback(final ItemActivity activity) {
+        super.activityCallback(activity);
+
+        if (activity == ItemActivity.ACTIVATED) {
+            activate();
+        } else if (activity == ItemActivity.DEACTIVATED) {
+            deactivate();
+        }
     }
 }

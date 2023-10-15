@@ -39,12 +39,12 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             // Check
-            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").extraConsumer(message -> deactivate()),
-            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").extraConsumer(message -> activate()),
+            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
+            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").activate(),
             // Activate
-            new TriggerChatMessage("The ash sanctifier is active and ready to scatter ashes.").extraConsumer(message -> activate()),
+            new TriggerChatMessage("The ash sanctifier is active and ready to scatter ashes.").activate(),
             // Deactivate
-            new TriggerChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").extraConsumer(message -> deactivate()),
+            new TriggerChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").deactivate(),
         };
         this.triggersStat = new TriggerStat[]{
             new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),

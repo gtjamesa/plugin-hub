@@ -15,23 +15,30 @@ public class OnGraphicChanged {
     }
 
     public void trigger(final GraphicChanged event) {
-        // Player check.
-        if (event.getActor() != client.getLocalPlayer()) return;
+        for (final TriggerGraphic trigger : chargedItem.triggersGraphics) {
+            if (!isValidTrigger(event, trigger)) continue;
 
-        // Check all animation triggers.
-        for (final TriggerGraphic trigger_graphic : chargedItem.triggersGraphics) {
-            // Valid animation id check.
-            if (!event.getActor().hasSpotAnim(trigger_graphic.graphic_id)) continue;
-
-            // Equipped check.
-            if (trigger_graphic.equipped && !chargedItem.in_equipment) continue;
-
-            // Valid trigger, modify charges.
-            if (trigger_graphic.decrease_charges) {
-                chargedItem.decreaseCharges(trigger_graphic.charges);
+            if (trigger.decrease_charges) {
+                chargedItem.decreaseCharges(trigger.charges);
             } else {
-                chargedItem.increaseCharges(trigger_graphic.charges);
+                chargedItem.increaseCharges(trigger.charges);
             }
+
+            // Trigger used.
+            return;
         }
+    }
+
+    private boolean isValidTrigger(final GraphicChanged event, final TriggerGraphic trigger) {
+        // Player check.
+        if (event.getActor() != client.getLocalPlayer()) return false;
+
+        // Valid animation id check.
+        if (!event.getActor().hasSpotAnim(trigger.graphic_id)) return false;
+
+        // Equipped check.
+        if (trigger.equipped && !chargedItem.in_equipment) return false;
+
+        return true;
     }
 }

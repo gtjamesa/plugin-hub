@@ -26,14 +26,7 @@ public class OnItemContainerChanged {
         final int bank_items_difference = chargedItem.store.getBankItemsDifference(event);
 
         for (final TriggerItemContainer trigger : chargedItem.triggersItemContainers) {
-            // Item container is wrong.
-            if (trigger.inventory_id != event.getContainerId()) continue;
-
-            // Menu target check.
-            if (trigger.menu_target != null && chargedItem.store.notInMenuTargets(trigger.menu_target)) continue;
-
-            // Menu option check.
-            if (trigger.menu_option != null && chargedItem.store.notInMenuOptions(trigger.menu_option)) continue;
+            if (!isValidTrigger(event, trigger)) continue;
 
             // Fixed charges.
             if (trigger.fixed_charges != null) {
@@ -96,6 +89,7 @@ public class OnItemContainerChanged {
                     chargedItem.store.getEquipmentItemCount(trigger_item.item_id) * trigger_item.fixed_charges +
                     chargedItem.store.getInventoryItemCount(trigger_item.item_id) * trigger_item.fixed_charges
                 );
+                
             // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 charges = Optional.of(
@@ -109,5 +103,18 @@ public class OnItemContainerChanged {
         chargedItem.in_inventory = in_inventory;
         chargedItem.in_equipment = in_equipment;
         charges.ifPresent(chargedItem::setCharges);
+    }
+
+    private boolean isValidTrigger(final ItemContainerChanged event, final TriggerItemContainer trigger) {
+        // Item container is wrong.
+        if (trigger.inventory_id != event.getContainerId()) return false;
+
+        // Menu target check.
+        if (trigger.menu_target != null && chargedItem.store.notInMenuTargets(trigger.menu_target)) return false;
+
+        // Menu option check.
+        if (trigger.menu_option != null && chargedItem.store.notInMenuOptions(trigger.menu_option)) return false;
+
+        return true;
     }
 }

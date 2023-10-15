@@ -3,9 +3,10 @@ package tictac7x.charges.item.triggers;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 public class TriggerWidget {
-    @Nonnull public final String message;
+    public final Pattern message;
 
     public int group_id;
     public int child_id;
@@ -20,7 +21,7 @@ public class TriggerWidget {
         this.group_id = group_id;
         this.child_id = child_id;
         this.sub_child_id = sub_child_id;
-        this.message = message;
+        this.message = Pattern.compile(message);
     }
 
     public TriggerWidget fixedCharges(final int charges) {

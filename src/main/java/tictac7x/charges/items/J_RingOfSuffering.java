@@ -45,8 +45,8 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             // Check
-            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick().extraConsumer(message -> activate()),
-            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").onItemClick().extraConsumer(message -> deactivate()),
+            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick().activate(),
+            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").onItemClick().deactivate(),
             // Charge
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
         };

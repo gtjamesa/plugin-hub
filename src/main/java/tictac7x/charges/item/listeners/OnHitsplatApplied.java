@@ -21,6 +21,9 @@ public class OnHitsplatApplied {
             if (!isValidTrigger(event, trigger)) continue;
 
             chargedItem.decreaseCharges(trigger.discharges);
+
+            // Trigger used.
+            return;
         }
     }
     

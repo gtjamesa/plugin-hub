@@ -24,30 +24,35 @@ public class OnWidgetLoaded {
     public void trigger(final WidgetLoaded event) {
         clientThread.invokeLater(() -> {
             for (final TriggerWidget trigger : chargedItem.triggersWidgets) {
-                if (event.getGroupId() != trigger.group_id) continue;
+                if (!isValidTrigger(event, trigger)) continue;
 
+                // Find correct widget.
                 Widget widget = client.getWidget(trigger.group_id, trigger.child_id);
                 if (trigger.sub_child_id != null && widget != null) widget = widget.getChild(trigger.sub_child_id);
                 if (widget == null) continue;
 
+                // Widget text does not match trigger message.
                 final String message = widget.getText().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
-                final Pattern regex = Pattern.compile(trigger.message);
-                final Matcher matcher = regex.matcher(message);
+                final Matcher matcher = trigger.message.matcher(message);
                 if (!matcher.find()) continue;
 
                 // Charges amount is fixed.
                 if (trigger.charges != null) {
                     chargedItem.setCharges(trigger.charges);
-                    // Charges amount has custom logic.
+
+                // Charges amount has custom logic.
                 } else if (trigger.consumer != null) {
                     trigger.consumer.accept(message);
-                    // Charges amount is dynamic.
+
+                // Charges amount is dynamic.
                 } else if (matcher.group("charges") != null) {
                     final int charges = Integer.parseInt(matcher.group("charges").replaceAll(",", ""));
 
                     // Charges increased dynamically.
                     if (trigger.increase_dynamically) {
                         chargedItem.increaseCharges(charges);
+
+                    // Charges set dynamically.
                     } else {
                         chargedItem.setCharges(charges);
                     }
@@ -62,5 +67,12 @@ public class OnWidgetLoaded {
                 }
             }
         });
+    }
+
+    private boolean isValidTrigger(final WidgetLoaded event, final TriggerWidget trigger) {
+        // Wrong widget group.
+        if (event.getGroupId() != trigger.group_id) return false;
+
+        return true;
     }
 }
