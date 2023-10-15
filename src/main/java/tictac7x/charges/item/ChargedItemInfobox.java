@@ -52,7 +52,9 @@ public class ChargedItemInfobox extends InfoBox {
     private final ItemManager items;
     private final InfoBoxManager infoboxes;
     private final ChargesImprovedConfig config;
+
     private int itemId;
+    private String tooltip = "";
 
     public ChargedItemInfobox(
         final ChargedItem chargedItem,
@@ -77,16 +79,12 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public String getText() {
-//        System.out.println("get text");
-
         return ChargesImprovedPlugin.getChargesMinified(chargedItem.getCharges());
     }
 
     @Override
     public String getTooltip() {
-//        System.out.println("get tooltip");
-
-        return "";
+        return tooltip;
     }
 
     @Override
@@ -98,10 +96,23 @@ public class ChargedItemInfobox extends InfoBox {
         }
 
         if (
+            // Is activated.
+            charges > 0 && chargedItem.isActivated()
+        ) {
+            return config.getColorActivated();
+        }
+
+        if (
+            // 0 charges is positive.
             charges == 0 && !chargedItem.zero_charges_is_positive ||
+
+            // X charges is negative.
             chargedItem.negative_full_charges != null && charges == chargedItem.negative_full_charges ||
+
+            // Item needs to be equipped, but is not.
             chargedItem.needs_to_be_equipped_for_infobox && !chargedItem.in_equipment ||
-            chargedItem.is_negative ||
+
+            // Item is deactivated.
             chargedItem.isDeactivated()
         ) {
             return config.getColorEmpty();
@@ -112,11 +123,8 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public boolean render() {
-        if (itemId != chargedItem.item_id) {
-            this.itemId = chargedItem.item_id;
-            setImage(items.getImage(itemId));
-            infoboxes.updateInfoBoxImage(this);
-        }
+        updateInfobox();
+
 
         return (
             config.showInfoboxes() &&
@@ -124,6 +132,23 @@ public class ChargedItemInfobox extends InfoBox {
             chargedItem.getCharges() != Charges.UNLIMITED &&
             (chargedItem.in_inventory || chargedItem.in_equipment)
         );
+    }
+
+    private void updateInfobox() {
+        if (itemId != chargedItem.item_id) {
+            // Update infobox id to keep track of correct item.
+            itemId = chargedItem.item_id;
+
+            // Update infobox image.
+            setImage(items.getImage(itemId));
+            infoboxes.updateInfoBoxImage(this);
+        }
+
+        // Update tooltip.
+        tooltip =
+            chargedItem.getItemName() +
+            (chargedItem.needs_to_be_equipped_for_infobox && !chargedItem.in_equipment ? " (needs to be equipped)" : "") +
+            chargedItem.getTooltipExtra();
     }
 }
 

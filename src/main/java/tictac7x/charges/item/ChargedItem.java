@@ -27,6 +27,7 @@ import tictac7x.charges.item.listeners.OnItemContainerChanged;
 import tictac7x.charges.item.listeners.OnStatChanged;
 import tictac7x.charges.item.listeners.OnVarbitChanged;
 import tictac7x.charges.item.listeners.OnWidgetLoaded;
+import tictac7x.charges.item.triggers.TriggerVarbit;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
@@ -69,11 +70,11 @@ public class ChargedItem {
     public TriggerReset[] triggers_resets = new TriggerReset[]{};
     public TriggerItemContainer[] triggersItemContainers = new TriggerItemContainer[]{};
     public TriggerStat[] triggersStat = new TriggerStat[]{};
+    public TriggerVarbit[] triggersVarbits = new TriggerVarbit[]{};
 
     public boolean in_equipment = false;
     public boolean in_inventory = false;
     protected boolean needs_to_be_equipped_for_infobox;
-    public boolean is_negative;
 
     public int charges = Charges.UNKNOWN;
 
@@ -84,7 +85,7 @@ public class ChargedItem {
     final OnChatMessage onChatMessage;
     final OnHitsplatApplied onHitsplatApplied;
     final OnWidgetLoaded onWidgetLoaded;
-    final OnVarbitChanged onVarbitChanged;
+    @Nullable OnVarbitChanged onVarbitChanged;
     final OnAnimationChanged onAnimationChanged;
     final OnGraphicChanged onGraphicChanged;
     final OnItemContainerChanged onItemContainerChanged;
@@ -118,7 +119,6 @@ public class ChargedItem {
         this.onChatMessage = new OnChatMessage(this, notifier);
         this.onHitsplatApplied = new OnHitsplatApplied(this, client);
         this.onWidgetLoaded = new OnWidgetLoaded(this, client, client_thread);
-        this.onVarbitChanged = new OnVarbitChanged(this);
         this.onAnimationChanged = new OnAnimationChanged(this, client);
         this.onGraphicChanged = new OnGraphicChanged(this, client);
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
@@ -200,11 +200,11 @@ public class ChargedItem {
     }
 
     protected void onChargesUpdated() {
-        chat_messages.queue(QueuedMessage.builder()
-            .type(ChatMessageType.CONSOLE)
-            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
-            .build()
-        );
+//        chat_messages.queue(QueuedMessage.builder()
+//            .type(ChatMessageType.CONSOLE)
+//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+//            .build()
+//        );
     }
 
     public String getItemName() {
@@ -221,10 +221,23 @@ public class ChargedItem {
         return configStatus.get().equals(ItemActivity.DEACTIVATED.toString());
     }
 
-    public String getConfigStatusKey() {
-        if (config_key == null) return null;
+    public boolean isActivated() {
+        final Optional<String> configStatus = Optional.ofNullable(configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status"));
 
-        return config_key + "_status";
+        if (!configStatus.isPresent()) {
+            return false;
+        }
+
+        return configStatus.get().equals(ItemActivity.ACTIVATED.toString());
+    }
+
+    public Optional<String> getConfigStatusKey() {
+        if (config_key == null) return Optional.empty();
+        return Optional.of(config_key + "_status");
+    }
+
+    public String getTooltipExtra() {
+        return "";
     }
 
     public void activityCallback(final ItemActivity ignored) {}
@@ -242,7 +255,9 @@ public class ChargedItem {
     }
 
     public void onVarbitChanged(final VarbitChanged event) {
-        onVarbitChanged.trigger(event);
+        if (onVarbitChanged != null) {
+            onVarbitChanged.trigger(event);
+        }
     }
 
     public void onAnimationChanged(final AnimationChanged event) {

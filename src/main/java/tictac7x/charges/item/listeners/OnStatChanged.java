@@ -2,7 +2,6 @@ package tictac7x.charges.item.listeners;
 
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.config.ConfigManager;
-import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerStat;
 
@@ -32,11 +31,8 @@ public class OnStatChanged {
         // Skill check.
         if (trigger.skill != event.getSkill()) return false;
 
-        // Extra config check.
-        if (
-            trigger.extra_config.isPresent() &&
-            !configs.getConfiguration(ChargesImprovedConfig.group, trigger.extra_config.get().key).equals(trigger.extra_config.get().activity.toString())
-        ) return false;
+        // Activated check.
+        if (trigger.isActivated && !chargedItem.isActivated()) return false;
 
         return true;
     }

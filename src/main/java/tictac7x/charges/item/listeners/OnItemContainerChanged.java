@@ -5,7 +5,6 @@ import net.runelite.api.events.ItemContainerChanged;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemContainer;
-import tictac7x.charges.store.Charges;
 
 import java.util.Optional;
 
@@ -55,18 +54,6 @@ public class OnItemContainerChanged {
         Optional<Integer> charges = Optional.empty();
 
         for (final TriggerItem trigger_item : chargedItem.triggersItems) {
-            // Item trigger has varbit check.
-            if (
-                trigger_item.varbit_id != null &&
-                trigger_item.varbit_value != null &&
-                client.getVarbitValue(trigger_item.varbit_id) != trigger_item.varbit_value
-            ) {
-                continue;
-            }
-
-            // Negative item check.
-            chargedItem.is_negative = trigger_item.is_negative;
-
             // Find out if item is equipped.
             final boolean in_inventory_item = chargedItem.store.inventoryContainsItem(trigger_item.item_id);
             final boolean in_equipment_item = chargedItem.store.equipmentContainsItem(trigger_item.item_id);
@@ -89,7 +76,7 @@ public class OnItemContainerChanged {
                     chargedItem.store.getEquipmentItemCount(trigger_item.item_id) * trigger_item.fixed_charges +
                     chargedItem.store.getInventoryItemCount(trigger_item.item_id) * trigger_item.fixed_charges
                 );
-                
+
             // Find out charges based on the amount of item.
             } else if (trigger_item.quantity_charges) {
                 charges = Optional.of(

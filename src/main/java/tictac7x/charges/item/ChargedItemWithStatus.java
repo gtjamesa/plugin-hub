@@ -8,6 +8,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.listeners.OnVarbitChanged;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
@@ -38,18 +39,21 @@ public class ChargedItemWithStatus extends ChargedItem {
             config,
             store
         );
+        this.onVarbitChanged = new OnVarbitChanged(this);
     }
 
-    protected void deactivate() {
+    public void deactivate() {
         setActivity(ItemActivity.DEACTIVATED);
     }
 
-    protected void activate() {
+    public void activate() {
         setActivity(ItemActivity.ACTIVATED);
     }
 
     private void setActivity(final ItemActivity status) {
-        configs.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey(), status);
+        if (getConfigStatusKey().isPresent()) {
+            configs.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get(), status);
+        }
     }
 
     @Override

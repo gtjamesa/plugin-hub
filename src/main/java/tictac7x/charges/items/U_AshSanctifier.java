@@ -12,12 +12,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
-import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemActivity;
-import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerStat;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.Store;
 
 public class U_AshSanctifier extends ChargedItemWithStatus {
     public U_AshSanctifier(
@@ -47,7 +46,7 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
             new TriggerChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").deactivate(),
         };
         this.triggersStat = new TriggerStat[]{
-            new TriggerStat(Skill.PRAYER).decreaseCharges(1).extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),
+            new TriggerStat(Skill.PRAYER).decreaseCharges(1).isActivated(),
         };
     }
 }

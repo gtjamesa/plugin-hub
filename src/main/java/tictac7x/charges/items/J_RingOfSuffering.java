@@ -51,7 +51,7 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
             new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
         };
         this.triggersHitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onSelf().extraConfig(getConfigStatusKey(), ItemActivity.ACTIVATED),
+            new TriggerHitsplat(1).equipped().onSelf().extraConfig(getConfigStatusKey().get(), ItemActivity.ACTIVATED),
         };
     }
 }

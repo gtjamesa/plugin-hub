@@ -1,48 +1,40 @@
 package tictac7x.charges.item.listeners;
 
 import net.runelite.api.events.VarbitChanged;
-import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.ChargedItemWithStatus;
+import tictac7x.charges.item.triggers.TriggerVarbit;
 
 public class OnVarbitChanged {
-    final ChargedItem chargedItem;
+    final ChargedItemWithStatus chargedItem;
 
-    public OnVarbitChanged(final ChargedItem chargedItem) {
+    public OnVarbitChanged(final ChargedItemWithStatus chargedItem) {
         this.chargedItem = chargedItem;
     }
 
     public void trigger(final VarbitChanged event) {
-        for (final TriggerItem trigger : chargedItem.triggersItems) {
+        for (final TriggerVarbit trigger : chargedItem.triggersVarbits) {
             if (!isValidTrigger(event, trigger)) continue;
 
-            // Find out charges for the item.
-            if (trigger.fixed_charges != null) {
-                int charges = 0;
-                charges += chargedItem.store.getInventoryItemCount(trigger.item_id) * trigger.fixed_charges;
-                charges += chargedItem.store.getEquipmentItemCount(trigger.item_id) * trigger.fixed_charges;
-                chargedItem.setCharges(charges);
+            // Activate item.
+            if (trigger.activate) {
+                chargedItem.activate();
 
-            // Find out charges based on the amount of item.
-            } else if (trigger.quantity_charges) {
-                int charges = 0;
-                charges += chargedItem.store.getInventoryItemCount(trigger.item_id);
-                charges += chargedItem.store.getEquipmentItemCount(trigger.item_id);
-                chargedItem.setCharges(charges);
+            // Deactivate item.
+            } else if (trigger.deactivate) {
+                chargedItem.deactivate();
             }
-
-            chargedItem.is_negative = trigger.is_negative;
 
             // Trigger used.
             return;
         }
     }
 
-    private boolean isValidTrigger(final VarbitChanged event, final TriggerItem trigger) {
-        // Item trigger does not use varbits.
-        if (trigger.varbit_id == null || trigger.varbit_value == null) return false;
+    private boolean isValidTrigger(final VarbitChanged event, final TriggerVarbit trigger) {
+        // Wrong varbit id.
+        if (event.getVarbitId() != trigger.varbitId) return false;
 
-        // Varbit does not match the trigger item required varbit.
-        if (event.getVarbitId() != trigger.varbit_id || event.getValue() != trigger.varbit_value) return false;
+        // Wrong varbit value.
+        if (event.getValue() != trigger.varbitValue) return false;
 
         return true;
     }

@@ -33,6 +33,7 @@ public interface ChargesImprovedConfig extends Config {
     String bryophytas_staff = "bryophytas_staff";
     String celestial_ring = "celestial_ring";
     String escape_crystal = "escape_crystal";
+    String escape_crystal_status = "escape_crystal_status";
     String chronicle = "chronicle";
     String crystal_shield = "crystal_shield";
     String crystal_bow = "crystal_bow";
@@ -117,6 +118,15 @@ public interface ChargesImprovedConfig extends Config {
             position = 3,
             section = colors
         ) default Color getColorEmpty() { return Color.red; }
+
+        @Alpha
+        @ConfigItem(
+            keyName = "colors_activated",
+            name = "Activated",
+            description = "Color of activated charges",
+            position = 4,
+            section = colors
+        ) default Color getColorActivated() { return Color.green; }
 
     @ConfigSection(
         name = "Infoboxes",
@@ -509,4 +519,11 @@ public interface ChargesImprovedConfig extends Config {
             description = herb_sack,
             section = debug
         ) default int getHerbSackCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = escape_crystal_status,
+            name = escape_crystal_status,
+            description = escape_crystal_status,
+            section = debug
+        ) default ItemActivity getEscapeCrystalStatus() { return ItemActivity.DEACTIVATED; }
 }

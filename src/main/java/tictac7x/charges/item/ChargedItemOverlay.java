@@ -77,6 +77,8 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
             if (charges.equals("?")) {
                 charges_component.setColor(config.getColorUnknown());
+            } else if (!isBankWidget(item_widget) && charged_item.isActivated() && charged_item.getCharges() > 0) {
+                charges_component.setColor(config.getColorActivated());
             } else if (
                 !isBankWidget(item_widget) && (charged_item.needsToBeEquipped() && !charged_item.inEquipment()) ||
                 charges.equals("0") && !charged_item.zero_charges_is_positive ||

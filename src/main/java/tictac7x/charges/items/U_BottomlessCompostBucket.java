@@ -18,10 +18,9 @@ import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class U_BottomlessCompostBucket extends ChargedItem {
-    @Nullable private String tooltip_extra;
-
     public U_BottomlessCompostBucket(
         final Client client,
         final ClientThread client_thread,
@@ -57,20 +56,24 @@ public class U_BottomlessCompostBucket extends ChargedItem {
         };
     }
 
-//    @Override
-//    public String getTooltip() {
-//        return super.getTooltip() + tooltip_extra;
-//    }
+    @Override
+    public String getTooltipExtra() {
+        if (super.getCharges() == 0) {
+            return " (empty)";
+        }
+
+        if (super.getCharges() > 0) {
+            if (getCompostType().isEmpty()) {
+                return " (unknown)";
+            }
+
+            return " (" + getCompostType() + ")";
+        }
+
+        return super.getTooltipExtra();
+    }
     
     private String getCompostType() {
         return configs.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.bottomless_compost_bucket_type);
-    }
-
-    @Override
-    protected void onChargesUpdated() {
-        super.onChargesUpdated();
-
-        final @Nullable String type = getCompostType();
-        this.tooltip_extra = super.getCharges() == 0 ? " (empty)" : super.getCharges() > 0 && type != null && !type.isEmpty() ? " (" + type + ")" : " (unknown)";
     }
 }

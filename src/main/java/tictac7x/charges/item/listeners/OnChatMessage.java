@@ -20,8 +20,7 @@ public class OnChatMessage {
     }
 
     public void trigger(final ChatMessage event) {
-        event.setMessage(event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " "));
-        final String message = event.getMessage();
+        final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
 
         for (final TriggerChatMessage trigger : chargedItem.triggersChatMessages) {
             if (!isValidTrigger(event, trigger)) continue;

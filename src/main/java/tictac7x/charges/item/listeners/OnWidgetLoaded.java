@@ -8,7 +8,6 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerWidget;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class OnWidgetLoaded {
     final ChargedItem chargedItem;

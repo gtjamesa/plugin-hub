@@ -1,6 +1,5 @@
 package tictac7x.charges.item.triggers;
 
-import net.runelite.api.HitsplatID;
 import tictac7x.charges.store.ItemActivity;
 
 import java.util.Optional;

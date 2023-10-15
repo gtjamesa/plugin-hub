@@ -143,13 +143,14 @@ import java.util.List;
 	}
 )
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.3.3";
+	private final String plugin_version = "v0.4";
 	private final String plugin_message = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
 		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
 		"<colHIGHLIGHT>* Coal bag added.<br>" +
 		"<colHIGHLIGHT>* Herb sack added.<br>" +
-		"<colHIGHLIGHT>* Able to hide item charges in bank."
+		"<colHIGHLIGHT>* Able to hide item charges in bank.<br>" +
+		"<colHIGHLIGHT>* Activateable items have configurable positive/negative colors."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
