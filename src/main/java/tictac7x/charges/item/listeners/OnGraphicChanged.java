@@ -37,7 +37,7 @@ public class OnGraphicChanged {
         if (!event.getActor().hasSpotAnim(trigger.graphic_id)) return false;
 
         // Equipped check.
-        if (trigger.equipped && !chargedItem.in_equipment) return false;
+        if (trigger.equipped && !chargedItem.isEquipped()) return false;
 
         return true;
     }

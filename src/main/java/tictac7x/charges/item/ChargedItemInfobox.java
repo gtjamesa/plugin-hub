@@ -1,51 +1,14 @@
 package tictac7x.charges.item;
 
-import net.runelite.api.Client;
-import net.runelite.api.events.AnimationChanged;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.GraphicChanged;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.api.events.ItemContainerChanged;
-import net.runelite.api.events.StatChanged;
-import net.runelite.api.events.VarbitChanged;
-import net.runelite.api.events.WidgetLoaded;
-import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
-import net.runelite.client.chat.ChatMessageManager;
-import net.runelite.client.config.ConfigManager;
-import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
-import tictac7x.charges.item.listeners.OnAnimationChanged;
-import tictac7x.charges.item.listeners.OnChatMessage;
-import tictac7x.charges.item.listeners.OnGraphicChanged;
-import tictac7x.charges.item.listeners.OnHitsplatApplied;
-import tictac7x.charges.item.listeners.OnItemContainerChanged;
-import tictac7x.charges.item.listeners.OnStatChanged;
-import tictac7x.charges.item.listeners.OnVarbitChanged;
-import tictac7x.charges.item.listeners.OnWidgetLoaded;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
-import tictac7x.charges.item.triggers.TriggerHitsplat;
-import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerItemContainer;
-import tictac7x.charges.item.triggers.TriggerReset;
-import tictac7x.charges.item.triggers.TriggerStat;
-import tictac7x.charges.item.triggers.TriggerWidget;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemActivity;
-import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.Store;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.awt.Color;
-import java.util.Optional;
 
 public class ChargedItemInfobox extends InfoBox {
     private final ChargedItem chargedItem;
@@ -97,7 +60,10 @@ public class ChargedItemInfobox extends InfoBox {
 
         if (
             // Is activated.
-            charges > 0 && chargedItem.isActivated()
+            charges > 0 && chargedItem.isActivated() ||
+
+            // Needs to be equipped and is.
+            chargedItem.needsToBeEquipped() && chargedItem.isEquipped()
         ) {
             return config.getColorActivated();
         }
@@ -110,7 +76,7 @@ public class ChargedItemInfobox extends InfoBox {
             chargedItem.negative_full_charges != null && charges == chargedItem.negative_full_charges ||
 
             // Item needs to be equipped, but is not.
-            chargedItem.needs_to_be_equipped_for_infobox && !chargedItem.in_equipment ||
+            chargedItem.needsToBeEquipped() && !chargedItem.isEquipped() ||
 
             // Item is deactivated.
             chargedItem.isDeactivated()
@@ -130,7 +96,7 @@ public class ChargedItemInfobox extends InfoBox {
             config.showInfoboxes() &&
             !config.getHiddenInfoboxes().contains(chargedItem.infobox_id) &&
             chargedItem.getCharges() != Charges.UNLIMITED &&
-            (chargedItem.in_inventory || chargedItem.in_equipment)
+            (chargedItem.inInventory() || chargedItem.isEquipped())
         );
     }
 
@@ -147,7 +113,7 @@ public class ChargedItemInfobox extends InfoBox {
         // Update tooltip.
         tooltip =
             chargedItem.getItemName() +
-            (chargedItem.needs_to_be_equipped_for_infobox && !chargedItem.in_equipment ? " (needs to be equipped)" : "") +
+            (chargedItem.needsToBeEquipped() && !chargedItem.isEquipped() ? " (needs to be equipped)" : "") +
             chargedItem.getTooltipExtra();
     }
 }

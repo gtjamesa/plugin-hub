@@ -6,6 +6,7 @@ public class TriggerItem {
     public final int item_id;
     public boolean quantity_charges;
     public boolean hide_overlay;
+    public boolean needsToBeEquipped;
 
     @Nullable public Integer fixed_charges;
     @Nullable public Integer max_charges;
@@ -31,6 +32,11 @@ public class TriggerItem {
 
     public TriggerItem hideOverlay() {
         this.hide_overlay = true;
+        return this;
+    }
+
+    public TriggerItem needsToBeEquipped() {
+        this.needsToBeEquipped = true;
         return this;
     }
 }

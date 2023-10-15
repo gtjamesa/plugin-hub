@@ -2,6 +2,7 @@ package tictac7x.charges.items;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -11,6 +12,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.TriggerStat;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -51,6 +53,11 @@ public class U_HerbSack extends ChargedItem {
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Open herb sack").menuOption("Empty").decreaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Herb sack").menuOption("Empty").decreaseByBankDifference(),
             new TriggerItemContainer(ItemContainerType.BANK).menuTarget("Open herb sack").menuOption("Empty").decreaseByBankDifference(),
+            // Edge case where herb sack is open, but there is not enough space for it in herb sack.
+            new TriggerItemContainer(ItemContainerType.INVENTORY).menuTarget("Herbs").menuOption("Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
+        };
+        this.triggersStat = new TriggerStat[]{
+            new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Herbs", "Pick").increaseCharges(1),
         };
     }
 }

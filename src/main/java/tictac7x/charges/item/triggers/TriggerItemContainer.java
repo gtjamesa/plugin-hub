@@ -4,6 +4,9 @@ import net.runelite.api.InventoryID;
 import tictac7x.charges.store.ItemContainerType;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class TriggerItemContainer {
     public final int inventory_id;
@@ -11,6 +14,8 @@ public class TriggerItemContainer {
     public boolean increase_by_inventory_difference;
     public boolean decrease_by_inventory_difference;
     public boolean decrease_by_bank_difference;
+    public List<Integer> specificItems = new ArrayList<>();
+    public Optional<Integer> decreaseCharges = Optional.empty();
 
     @Nullable public String menu_target;
     @Nullable public String menu_option;
@@ -47,6 +52,18 @@ public class TriggerItemContainer {
 
     public TriggerItemContainer decreaseByBankDifference() {
         this.decrease_by_bank_difference = true;
+        return this;
+    }
+
+    public TriggerItemContainer specificItem(final int ...itemIds) {
+        for (final int itemId : itemIds) {
+            this.specificItems.add(itemId);
+        }
+        return this;
+    }
+
+    public TriggerItemContainer decreaseCharges(final int charges) {
+        this.decreaseCharges = Optional.of(charges);
         return this;
     }
 }

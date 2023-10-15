@@ -463,7 +463,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (date.equals(config.getResetDate())) return;
 
 		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.resetCharges());
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onResetDaily());
 	}
 
 	public static String getChargesMinified(final int charges) {

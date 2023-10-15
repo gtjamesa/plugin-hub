@@ -16,7 +16,7 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerReset;
+import tictac7x.charges.item.triggers.TriggerDailyReset;
 
 public class C_ArdougneCloak extends ChargedItem {
     public C_ArdougneCloak(
@@ -44,9 +44,9 @@ public class C_ArdougneCloak extends ChargedItem {
             new TriggerChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference()
         };
 
-        this.triggers_resets = new TriggerReset[]{
-            new TriggerReset(3).dynamicItem(ItemID.ARDOUGNE_CLOAK_2),
-            new TriggerReset(5).dynamicItem(ItemID.ARDOUGNE_CLOAK_3),
+        this.triggersResetsDaily = new TriggerDailyReset[]{
+            new TriggerDailyReset(3).specificItem(ItemID.ARDOUGNE_CLOAK_2),
+            new TriggerDailyReset(5).specificItem(ItemID.ARDOUGNE_CLOAK_3),
         };
     }
 }

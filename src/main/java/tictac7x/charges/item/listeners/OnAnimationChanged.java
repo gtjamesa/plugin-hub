@@ -46,7 +46,7 @@ public class OnAnimationChanged {
         }
 
         // Equipped check.
-        if (trigger.equipped && !chargedItem.in_equipment) return false;
+        if (trigger.equipped && !chargedItem.isEquipped()) return false;
 
         // Menu target check.
         if (trigger.menu_target != null && chargedItem.store.notInMenuTargets(trigger.menu_target)) return false;

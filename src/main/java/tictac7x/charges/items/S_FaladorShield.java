@@ -16,7 +16,7 @@ import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerGraphic;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerReset;
+import tictac7x.charges.item.triggers.TriggerDailyReset;
 
 public class S_FaladorShield extends ChargedItem {
     public S_FaladorShield(
@@ -46,9 +46,9 @@ public class S_FaladorShield extends ChargedItem {
         this.triggersGraphics = new TriggerGraphic[]{
             new TriggerGraphic(321).decreaseCharges(1)
         };
-        this.triggers_resets = new TriggerReset[]{
-            new TriggerReset(1).dynamicItem(ItemID.FALADOR_SHIELD_3),
-            new TriggerReset(2).dynamicItem(ItemID.FALADOR_SHIELD_4)
+        this.triggersResetsDaily = new TriggerDailyReset[]{
+            new TriggerDailyReset(1).specificItem(ItemID.FALADOR_SHIELD_3),
+            new TriggerDailyReset(2).specificItem(ItemID.FALADOR_SHIELD_4)
         };
     }
 }

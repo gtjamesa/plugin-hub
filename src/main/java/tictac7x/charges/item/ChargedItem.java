@@ -24,25 +24,25 @@ import tictac7x.charges.item.listeners.OnChatMessage;
 import tictac7x.charges.item.listeners.OnGraphicChanged;
 import tictac7x.charges.item.listeners.OnHitsplatApplied;
 import tictac7x.charges.item.listeners.OnItemContainerChanged;
+import tictac7x.charges.item.listeners.OnResetDaily;
 import tictac7x.charges.item.listeners.OnStatChanged;
 import tictac7x.charges.item.listeners.OnVarbitChanged;
 import tictac7x.charges.item.listeners.OnWidgetLoaded;
-import tictac7x.charges.item.triggers.TriggerVarbit;
-import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemActivity;
-import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerAnimation;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerGraphic;
 import tictac7x.charges.item.triggers.TriggerHitsplat;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemContainer;
-import tictac7x.charges.item.triggers.TriggerReset;
-import tictac7x.charges.item.triggers.TriggerWidget;
+import tictac7x.charges.item.triggers.TriggerDailyReset;
 import tictac7x.charges.item.triggers.TriggerStat;
+import tictac7x.charges.item.triggers.TriggerVarbit;
+import tictac7x.charges.item.triggers.TriggerWidget;
+import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ItemActivity;
+import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.Store;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
@@ -67,14 +67,13 @@ public class ChargedItem {
     public TriggerHitsplat[] triggersHitsplats = new TriggerHitsplat[]{};
     public TriggerItem[] triggersItems = new TriggerItem[]{};
     public TriggerWidget[] triggersWidgets = new TriggerWidget[]{};
-    public TriggerReset[] triggers_resets = new TriggerReset[]{};
+    public TriggerDailyReset[] triggersResetsDaily = new TriggerDailyReset[]{};
     public TriggerItemContainer[] triggersItemContainers = new TriggerItemContainer[]{};
     public TriggerStat[] triggersStat = new TriggerStat[]{};
     public TriggerVarbit[] triggersVarbits = new TriggerVarbit[]{};
 
-    public boolean in_equipment = false;
-    public boolean in_inventory = false;
-    protected boolean needs_to_be_equipped_for_infobox;
+    private boolean inEquipment = false;
+    private boolean inInventory = false;
 
     public int charges = Charges.UNKNOWN;
 
@@ -89,6 +88,7 @@ public class ChargedItem {
     final OnAnimationChanged onAnimationChanged;
     final OnGraphicChanged onGraphicChanged;
     final OnItemContainerChanged onItemContainerChanged;
+    final OnResetDaily onResetDaily;
 
     public ChargedItem(
         final ItemKey infobox_id,
@@ -116,24 +116,31 @@ public class ChargedItem {
         this.store = store;
 
         this.onStatChanged = new OnStatChanged(this, configs);
-        this.onChatMessage = new OnChatMessage(this, notifier);
+        this.onChatMessage = new OnChatMessage(this, configs, notifier);
         this.onHitsplatApplied = new OnHitsplatApplied(this, client);
-        this.onWidgetLoaded = new OnWidgetLoaded(this, client, client_thread);
+        this.onWidgetLoaded = new OnWidgetLoaded(this, configs, client, client_thread);
         this.onAnimationChanged = new OnAnimationChanged(this, client);
         this.onGraphicChanged = new OnGraphicChanged(this, client);
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
-
-
+        this.onResetDaily = new OnResetDaily(this);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
     }
 
-    public boolean inEquipment() {
-        return in_equipment;
+    public boolean inInventory() {
+        return inInventory;
     }
 
-    public boolean needsToBeEquipped() {
-        return needs_to_be_equipped_for_infobox;
+    public boolean isEquipped() {
+        return inEquipment;
+    }
+
+    public void setInInventory(final boolean inInventory) {
+        this.inInventory = inInventory;
+    }
+
+    public void setInEquipment(final boolean inEquipment) {
+        this.inEquipment = inEquipment;
     }
 
     public int getCharges() {
@@ -143,24 +150,6 @@ public class ChargedItem {
     public void onConfigChanged(final ConfigChanged event) {
         if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(config_key)) {
             charges = Integer.parseInt(event.getNewValue());
-        }
-    }
-
-    public void resetCharges() {
-        if (triggers_resets == null) return;
-
-        // Check for item resets.
-        for (final TriggerReset trigger_reset : triggers_resets) {
-            // Same item variations have different amount of charges.
-            if (trigger_reset.item_id != null) {
-                if (item_id == trigger_reset.item_id) {
-                    setCharges(trigger_reset.charges);
-                }
-
-            // All variants of the item reset to the same amount of charges.
-            } else {
-                setCharges(trigger_reset.charges);
-            }
         }
     }
 
@@ -178,7 +167,7 @@ public class ChargedItem {
             onChargesUpdated();
 
             if (config_key != null) {
-                setConfiguration(config_key, this.charges);
+                configs.setConfiguration(ChargesImprovedConfig.group, config_key, this.charges);
             }
         }
     }
@@ -191,20 +180,12 @@ public class ChargedItem {
         setCharges(Math.max(1, this.charges + charges));
     }
 
-    public void setConfiguration(final String key, @Nonnull final String value) {
-        configs.setConfiguration(ChargesImprovedConfig.group, key, value);
-    }
-
-    private void setConfiguration(final String key, final int value) {
-        configs.setConfiguration(ChargesImprovedConfig.group, key, value);
-    }
-
     protected void onChargesUpdated() {
-//        chat_messages.queue(QueuedMessage.builder()
-//            .type(ChatMessageType.CONSOLE)
-//            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
-//            .build()
-//        );
+        chat_messages.queue(QueuedMessage.builder()
+            .type(ChatMessageType.CONSOLE)
+            .runeLiteFormattedMessage(getItemName() + " charges changed: " + charges)
+            .build()
+        );
     }
 
     public String getItemName() {
@@ -278,6 +259,20 @@ public class ChargedItem {
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
         onItemContainerChanged.trigger(event);
+    }
+
+    public void onResetDaily() {
+        onResetDaily.trigger();
+    }
+
+    public boolean needsToBeEquipped() {
+        for (final TriggerItem triggerItem : triggersItems) {
+            if (triggerItem.item_id == item_id && triggerItem.needsToBeEquipped) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 

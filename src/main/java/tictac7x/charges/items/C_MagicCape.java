@@ -15,7 +15,7 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerReset;
+import tictac7x.charges.item.triggers.TriggerDailyReset;
 import tictac7x.charges.item.triggers.TriggerWidget;
 
 public class C_MagicCape extends ChargedItem {
@@ -50,8 +50,8 @@ public class C_MagicCape extends ChargedItem {
             new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/5 left\\)")
         };
 
-        this.triggers_resets = new TriggerReset[]{
-            new TriggerReset(5)
+        this.triggersResetsDaily = new TriggerDailyReset[]{
+            new TriggerDailyReset(5)
         };
     }
 }

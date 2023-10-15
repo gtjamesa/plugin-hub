@@ -1,25 +1,48 @@
 package tictac7x.charges.item.triggers;
 
 import net.runelite.api.Skill;
+import tictac7x.charges.store.MenuEntry;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class TriggerStat {
     public final Skill skill;
-    public Optional<Integer> discharges = Optional.empty();
+    public Optional<Integer> increaseCharges = Optional.empty();
+    public Optional<Integer> decreaseCharges = Optional.empty();
     public boolean isActivated;
+    public Optional<MenuEntry> menuEntry = Optional.empty();
+    public List<Integer> specificItems = new ArrayList<>();
 
     public TriggerStat(final Skill skill) {
         this.skill = skill;
     }
 
-    public TriggerStat decreaseCharges(final int discharges) {
-        this.discharges = Optional.of(discharges);
+    public TriggerStat increaseCharges(final int charges) {
+        this.increaseCharges = Optional.of(charges);
+        return this;
+    }
+
+    public TriggerStat decreaseCharges(final int charges) {
+        this.decreaseCharges = Optional.of(charges);
         return this;
     }
 
     public TriggerStat isActivated() {
         this.isActivated = true;
+        return this;
+    }
+
+    public TriggerStat menuEntry(final String target, final String option) {
+        this.menuEntry = Optional.of(new MenuEntry(target, option));
+        return this;
+    }
+
+    public TriggerStat specificItem(final int ...itemIds) {
+        for (final int itemId : itemIds) {
+            this.specificItems.add(itemId);
+        }
         return this;
     }
 }

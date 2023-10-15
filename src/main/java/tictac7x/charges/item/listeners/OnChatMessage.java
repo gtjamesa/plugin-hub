@@ -3,6 +3,8 @@ package tictac7x.charges.item.listeners;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.Notifier;
+import net.runelite.client.config.ConfigManager;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.store.ItemActivity;
@@ -12,10 +14,12 @@ import java.util.regex.Pattern;
 
 public class OnChatMessage {
     final ChargedItem chargedItem;
+    final ConfigManager configs;
     final Notifier notifier;
 
-    public OnChatMessage(final ChargedItem chargedItem, final Notifier notifier) {
+    public OnChatMessage(final ChargedItem chargedItem, final ConfigManager configs, final Notifier notifier) {
         this.chargedItem = chargedItem;
+        this.configs = configs;
         this.notifier = notifier;
     }
 
@@ -97,7 +101,7 @@ public class OnChatMessage {
             if (chargedItem.extra_config_keys != null) {
                 for (final String extra_group : chargedItem.extra_config_keys) {
                     try {
-                        chargedItem.setConfiguration(chargedItem.config_key + "_" + extra_group, matcher.group(extra_group).replaceAll(",", ""));
+                        configs.setConfiguration(ChargesImprovedConfig.group, chargedItem.config_key + "_" + extra_group, matcher.group(extra_group).replaceAll(",", ""));
                     } catch (final Exception ignored) {}
                 }
             }
@@ -116,9 +120,6 @@ public class OnChatMessage {
         // No config to save charges to.
         if (chargedItem.config_key == null) return false;
 
-        // Not in inventory or in equipment.
-        if (!chargedItem.in_inventory && !chargedItem.in_equipment) return false;
-
         // Message should be ignored.
         if (trigger.ignore_message != null) {
             final Matcher ignore_matcher = trigger.ignore_message.matcher(message);
@@ -132,7 +133,7 @@ public class OnChatMessage {
         if (trigger.menu_target && chargedItem.store.notInMenuTargets(chargedItem.getItemName())) return false;
 
         // Item needs to be equipped.
-        if (trigger.equipped && !chargedItem.in_equipment) return false;
+        if (trigger.equipped && !chargedItem.isEquipped()) return false;
 
         return true;
     }

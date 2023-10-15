@@ -31,9 +31,8 @@ public class J_BraceletOfClay extends ChargedItem {
     ) {
         super(ItemKey.BRACELET_OF_CLAY, ItemID.BRACELET_OF_CLAY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.bracelet_of_clay;
-        this.needs_to_be_equipped_for_infobox = true;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.BRACELET_OF_CLAY),
+            new TriggerItem(ItemID.BRACELET_OF_CLAY).needsToBeEquipped(),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust."),

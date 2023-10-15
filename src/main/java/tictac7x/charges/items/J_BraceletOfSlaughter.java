@@ -31,9 +31,8 @@ public class J_BraceletOfSlaughter extends ChargedItem {
     ) {
         super(ItemKey.BRACELET_OF_SLAUGHTER, ItemID.BRACELET_OF_SLAUGHTER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.bracelet_of_slaughter;
-        this.needs_to_be_equipped_for_infobox = true;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.BRACELET_OF_SLAUGHTER),
+            new TriggerItem(ItemID.BRACELET_OF_SLAUGHTER).needsToBeEquipped(),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left."),

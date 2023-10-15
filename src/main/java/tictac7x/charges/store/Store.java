@@ -88,6 +88,10 @@ public class Store {
         return menu_entries.stream().noneMatch(entry -> entry.option.equals(option));
     }
 
+    public boolean notInMenuEntries(final MenuEntry menuEntry) {
+        return menu_entries.stream().noneMatch(entry -> entry.target.equals(menuEntry.target) && entry.option.equals(menuEntry.option));
+    }
+
     public int getInventoryItemsDifference(final ItemContainerChanged event) {
         if (
             event.getItemContainer().getId() != InventoryID.INVENTORY.getId() ||

@@ -31,10 +31,9 @@ public class J_CelestialRing extends ChargedItem {
     ) {
         super(ItemKey.CELESTIAL_RING, ItemID.CELESTIAL_RING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.celestial_ring;
-        this.needs_to_be_equipped_for_infobox = true;
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CELESTIAL_RING_UNCHARGED).fixedCharges(0),
-            new TriggerItem(ItemID.CELESTIAL_RING)
+            new TriggerItem(ItemID.CELESTIAL_RING).needsToBeEquipped()
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("You add .+ charges? to your Celestial ring. It now has (?<charges>.+) charges?."),

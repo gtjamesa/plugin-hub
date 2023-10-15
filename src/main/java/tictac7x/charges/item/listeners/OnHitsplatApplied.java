@@ -40,7 +40,7 @@ public class OnHitsplatApplied {
         if (hitsplat.getHitsplatType() != HitsplatID.DAMAGE_ME) return false;
 
         // Equipped check.
-        if (trigger.equipped && !chargedItem.in_equipment) return false;
+        if (trigger.equipped && !chargedItem.isEquipped()) return false;
 
         // Non zero check.
         if (trigger.non_zero && hitsplat.getAmount() == 0) return false;

@@ -4,6 +4,8 @@ import net.runelite.api.Client;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerWidget;
 
@@ -12,11 +14,13 @@ import java.util.regex.Matcher;
 public class OnWidgetLoaded {
     final ChargedItem chargedItem;
     final Client client;
+    final ConfigManager configs;
     final ClientThread clientThread;
 
-    public OnWidgetLoaded(final ChargedItem chargedItem, final Client client, final ClientThread clientThread) {
+    public OnWidgetLoaded(final ChargedItem chargedItem, final ConfigManager configs, final Client client, final ClientThread clientThread) {
         this.chargedItem = chargedItem;
         this.client = client;
+        this.configs = configs;
         this.clientThread = clientThread;
     }
 
@@ -60,8 +64,10 @@ public class OnWidgetLoaded {
                 // Check extra matches groups.
                 if (chargedItem.extra_config_keys != null) {
                     for (final String extra_group : chargedItem.extra_config_keys) {
-                        final String extra = matcher.group(extra_group);
-                        if (extra != null) chargedItem.setConfiguration(chargedItem.config_key + "_" + extra_group, extra);
+                        try {
+                            final String extra = matcher.group(extra_group);
+                            if (extra != null) configs.setConfiguration(ChargesImprovedConfig.group, chargedItem.config_key + "_" + extra_group, extra);
+                        } catch (final Exception ignored) {}
                     }
                 }
             }

@@ -31,9 +31,8 @@ public class J_BraceletOfExpeditious extends ChargedItem {
     ) {
         super(ItemKey.BRACELET_OF_EXPEDITIOUS, ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.expeditious_bracelet;
-        this.needs_to_be_equipped_for_infobox = true;
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.EXPEDITIOUS_BRACELET),
+            new TriggerItem(ItemID.EXPEDITIOUS_BRACELET).needsToBeEquipped(),
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("The bracelet shatters. Your next expeditious bracelet will start afresh from 30 charges.").fixedCharges(30),

@@ -43,9 +43,9 @@ public class OnItemContainerChanged {
             } else if (trigger.decrease_by_bank_difference) {
                 chargedItem.decreaseCharges(bank_items_difference);
 
-            // Charges dynamically based on the items of the item container.
-            } else  {
-                chargedItem.setCharges(event.getItemContainer().count());
+            // Decrease charges by fixed amount.
+            } else if (trigger.decreaseCharges.isPresent()) {
+                chargedItem.decreaseCharges(trigger.decreaseCharges.get());
             }
         }
 
@@ -87,9 +87,12 @@ public class OnItemContainerChanged {
         }
 
         // Update infobox variables for other triggers.
-        chargedItem.in_inventory = in_inventory;
-        chargedItem.in_equipment = in_equipment;
-        charges.ifPresent(chargedItem::setCharges);
+        chargedItem.setInInventory(in_inventory);
+        chargedItem.setInEquipment(in_equipment);
+
+        if (charges.isPresent()) {
+            chargedItem.setCharges(charges.get());
+        }
     }
 
     private boolean isValidTrigger(final ItemContainerChanged event, final TriggerItemContainer trigger) {
@@ -101,6 +104,9 @@ public class OnItemContainerChanged {
 
         // Menu option check.
         if (trigger.menu_option != null && chargedItem.store.notInMenuOptions(trigger.menu_option)) return false;
+
+        // Specific item check.
+        if (!trigger.specificItems.isEmpty() && !trigger.specificItems.contains(chargedItem.item_id)) return false;
 
         return true;
     }

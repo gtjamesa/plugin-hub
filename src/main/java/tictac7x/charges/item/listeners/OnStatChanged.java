@@ -18,8 +18,13 @@ public class OnStatChanged {
         for (final TriggerStat trigger : chargedItem.triggersStat) {
             if (!isValidTrigger(event, trigger)) continue;
 
-            if (trigger.discharges.isPresent()) {
-                chargedItem.decreaseCharges(trigger.discharges.get());
+            // Increase charges.
+            if (trigger.increaseCharges.isPresent()) {
+                chargedItem.increaseCharges(trigger.increaseCharges.get());
+
+            // Decrease charges.
+            } else if (trigger.decreaseCharges.isPresent()) {
+                chargedItem.decreaseCharges(trigger.decreaseCharges.get());
             }
 
             // Trigger used.
@@ -33,6 +38,12 @@ public class OnStatChanged {
 
         // Activated check.
         if (trigger.isActivated && !chargedItem.isActivated()) return false;
+
+        // Menu entries check.
+        if (trigger.menuEntry.isPresent() && chargedItem.store.notInMenuEntries(trigger.menuEntry.get())) return false;
+
+        // Specific item check.
+        if (!trigger.specificItems.isEmpty() && !trigger.specificItems.contains(chargedItem.item_id)) return false;
 
         return true;
     }
