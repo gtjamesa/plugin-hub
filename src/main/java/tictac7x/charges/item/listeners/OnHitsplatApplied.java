@@ -45,6 +45,9 @@ public class OnHitsplatApplied {
         // Non zero check.
         if (trigger.non_zero && hitsplat.getAmount() == 0) return false;
 
+        // Activated check.
+        if (trigger.isActivated && !chargedItem.isActivated()) return false;
+
         return true;
     }
 }

@@ -10,7 +10,7 @@ public class TriggerHitsplat {
     public boolean self;
     public boolean equipped;
     public boolean non_zero;
-    public Optional<String[]> extra_config = Optional.empty();
+    public boolean isActivated;
 
     public TriggerHitsplat(final int discharges) {
         this.discharges = discharges;
@@ -36,8 +36,8 @@ public class TriggerHitsplat {
         return this;
     }
 
-    public TriggerHitsplat extraConfig(final String key, final ItemActivity status) {
-        extra_config = Optional.of(new String[]{key, status.toString()});
+    public TriggerHitsplat isActivated() {
+        this.isActivated = true;
         return this;
     }
 }

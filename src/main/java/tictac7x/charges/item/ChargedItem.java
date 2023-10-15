@@ -222,18 +222,15 @@ public class ChargedItem {
     }
 
     public boolean isActivated() {
-        final Optional<String> configStatus = Optional.ofNullable(configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status"));
-
-        if (!configStatus.isPresent()) {
+        if (!getConfigStatusKey().isPresent()) {
             return false;
         }
 
-        return configStatus.get().equals(ItemActivity.ACTIVATED.toString());
+        return getConfigStatusKey().get().equals(ItemActivity.ACTIVATED.toString());
     }
 
     public Optional<String> getConfigStatusKey() {
-        if (config_key == null) return Optional.empty();
-        return Optional.of(config_key + "_status");
+        return Optional.ofNullable(configs.getConfiguration(ChargesImprovedConfig.group, config_key + "_status"));
     }
 
     public String getTooltipExtra() {
