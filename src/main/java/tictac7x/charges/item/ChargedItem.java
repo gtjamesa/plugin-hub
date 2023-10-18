@@ -155,10 +155,16 @@ public class ChargedItem {
     }
 
     public void setCharges(final int charges) {
-        final int newCharges = negativeFullCharges().isPresent() ? Math.min(Math.max(0, charges), negativeFullCharges().get()) : Math.max(0, charges);
+        final int newCharges =
+            // Unlimited
+            charges == Charges.UNLIMITED ? charges :
+            // 0 -> max charges
+            negativeFullCharges().isPresent() ? Math.min(Math.max(0, charges), negativeFullCharges().get()) :
+            // 0 -> charges
+            Math.max(0, charges);
 
-        if (newCharges != this.charges) {
-            this.charges = negativeFullCharges().isPresent() ? Math.min(Math.max(0, charges), negativeFullCharges().get()) : Math.max(0, charges);
+        if (this.charges != newCharges) {
+            this.charges = newCharges;
             onChargesUpdated();
 
             if (config_key != null) {

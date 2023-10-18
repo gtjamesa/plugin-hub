@@ -29,6 +29,7 @@ public class OnChatMessage {
         for (final TriggerChatMessage trigger : chargedItem.triggersChatMessages) {
             if (!isValidTrigger(event, trigger)) continue;
 
+
             // Check trigger message pattern here, because we need the matcher object to extract charges from the message.
             final Matcher matcher = trigger.message.matcher(message);
             if (!matcher.find()) continue;
