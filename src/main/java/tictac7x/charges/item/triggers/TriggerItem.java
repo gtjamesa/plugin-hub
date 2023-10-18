@@ -9,7 +9,8 @@ public class TriggerItem {
     public boolean hide_overlay;
     public boolean needsToBeEquipped;
     public boolean zeroChargesIsPositive;
-    public Optional<Integer> negativeFullCharges = Optional.empty();
+    public boolean negativeMaxCharges;
+    public Optional<Integer> maxCharges = Optional.empty();
 
     @Nullable public Integer fixed_charges;
 
@@ -43,7 +44,12 @@ public class TriggerItem {
     }
 
     public TriggerItem negativeFullCharges(final int charges) {
-        this.negativeFullCharges = Optional.of(charges);
+        this.negativeMaxCharges = true;
+        return maxCharges(charges);
+    }
+
+    public TriggerItem maxCharges(final int charges) {
+        this.maxCharges = Optional.of(charges);
         return this;
     }
 }

@@ -247,8 +247,8 @@ public class ChargedItem {
     }
 
     public Optional<Integer> negativeFullCharges() {
-        if (getCurrentTriggerItem().isPresent()) {
-            return getCurrentTriggerItem().get().negativeFullCharges;
+        if (getCurrentTriggerItem().isPresent() && getCurrentTriggerItem().get().maxCharges.isPresent() && getCurrentTriggerItem().get().negativeMaxCharges) {
+            return getCurrentTriggerItem().get().maxCharges;
         }
 
         return Optional.empty();
