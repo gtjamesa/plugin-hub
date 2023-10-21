@@ -3,9 +3,11 @@ package tictac7x.charges.store;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
+import net.runelite.api.Skill;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
+import net.runelite.api.events.StatChanged;
 import net.runelite.client.game.ItemManager;
 
 import java.util.ArrayList;
@@ -26,9 +28,14 @@ public class Store {
     public Optional<Item[]> bank_items = Optional.empty();
 
     public final List<MenuEntry> menuEntries = new ArrayList<>();
+    public final Map<Skill, Integer> skillExperiences = new HashMap<>();
 
     public Store(final ItemManager items) {
         this.items = items;
+    }
+
+    public void onStatChanged(final StatChanged event) {
+        skillExperiences.put(event.getSkill(), event.getXp());
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
@@ -155,5 +162,13 @@ public class Store {
 
     public boolean equipmentContainsItem(final int itemId) {
         return equipment.map(itemContainer -> itemContainer.contains(itemId)).orElse(false);
+    }
+
+    public Optional<Integer> getSkillExperience(final Skill skill) {
+        if (skillExperiences.containsKey(skill)) {
+            return Optional.of(skillExperiences.get(skill));
+        } else {
+            return Optional.empty();
+        }
     }
 }

@@ -88,6 +88,22 @@ public interface ChargesImprovedConfig extends Config {
             section = general
         ) default boolean showBankOverlays() { return true; }
 
+        @ConfigItem(
+            keyName = "menu_replacements",
+            name = "Common menu entries",
+            description = "Use common menu entries like \"Teleport\" and \"Check\"",
+            position = 2,
+            section = general
+        ) default boolean useCommonMenuEntries() { return true; }
+
+        @ConfigItem(
+            keyName = "hide_destroy",
+            name = "Hide destroy menu entries",
+            description = "Hide destroy menu entry from items that make no sense to destroy",
+            position = 3,
+            section = general
+        ) default boolean hideDestroy() { return true; }
+
     @ConfigSection(
         name = "Colors",
         description = "Colors of item overlays",

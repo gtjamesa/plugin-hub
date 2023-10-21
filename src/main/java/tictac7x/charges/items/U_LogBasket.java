@@ -12,6 +12,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerStat;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
@@ -54,6 +55,9 @@ public class U_LogBasket extends ChargedItem {
         };
         this.triggersStats = new TriggerStat[]{
             new TriggerStat(Skill.FIREMAKING).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).menuEntry(".*", "Chop down").belowCharges(MAX_CHARGES).decreaseCharges(1),
+        };
+        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+            new TriggerMenuEntryAdded("Destroy").hide(),
         };
     }
 }

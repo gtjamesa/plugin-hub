@@ -11,6 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
@@ -42,6 +43,9 @@ public class U_SeedBox extends ChargedItem {
             new TriggerChatMessage("Emptied (?<charges>.+) x .* seed to your inventory.").decreaseDynamically(),
             new TriggerChatMessage("The seed box contains:").fixedCharges(0),
             new TriggerChatMessage("(?<charges>.+) x .* seed.").increaseDynamically(),
+        };
+        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+            new TriggerMenuEntryAdded("Destroy").hide(),
         };
     }
 }

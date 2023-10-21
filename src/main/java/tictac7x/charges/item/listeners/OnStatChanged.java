@@ -48,6 +48,9 @@ public class OnStatChanged {
         // Below charges check.
         if (trigger.belowCharges.isPresent() && chargedItem.getCharges() >= trigger.belowCharges.get()) return false;
 
+        // XP drop check.
+        if (trigger.onXpDrop && (!chargedItem.store.getSkillExperience(trigger.skill).isPresent() || event.getXp() == chargedItem.store.getSkillExperience(trigger.skill).get())) return false;
+
         return true;
     }
 }

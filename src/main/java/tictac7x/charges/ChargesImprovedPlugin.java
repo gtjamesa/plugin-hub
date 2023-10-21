@@ -10,6 +10,7 @@ import net.runelite.api.events.GameTick;
 import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
@@ -230,6 +231,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_DesertAmulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_EscapeCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_NecklaceOfPassage(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_PhoenixNecklace(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfShadows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -242,6 +244,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			// Capes
 			new C_ArdougneCloak(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new C_ForestryKit(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new C_MagicCape(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Utilities
@@ -259,6 +262,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_SeedBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_StrangeOldLockpick(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_TackleBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
@@ -434,10 +438,12 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onStatChanged(final StatChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
+		store.onStatChanged(event);
 
 //		System.out.println("STAT CHANGED | " +
 //			event.getSkill().getName() +
 //			", level: " + event.getLevel() +
+//			", " + event.
 //			", xp: " + event.getXp()
 //		);
 	}
@@ -455,6 +461,18 @@ public class ChargesImprovedPlugin extends Plugin {
 //			"id: " + event.getVarbitId() +
 //			", value: " + event.getValue()
 //		);
+	}
+
+	@Subscribe
+	public void onMenuEntryAdded(final MenuEntryAdded event) {
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuEntryAdded(event));
+
+//		if (event.getMenuEntry().getItemId() != -1) {
+//			System.out.println("MENU ENTRY ADDED | " +
+//					"item id: " + event.getMenuEntry().getItemId() +
+//					" , option: " + event.getOption()
+//			);
+//		}
 	}
 
 	@Subscribe

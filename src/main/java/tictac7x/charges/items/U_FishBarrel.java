@@ -11,6 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -50,6 +51,9 @@ public class U_FishBarrel extends ChargedItem {
         this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Fish barrel", "Fill").menuEntry("Open fish barrel", "Fill").increaseByInventoryDifference(),
             new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Fish barrel", "Empty").menuEntry("Open fish barrel", "Empty").decreaseByBankDifference(),
+        };
+        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+            new TriggerMenuEntryAdded("Destroy").hide(),
         };
     }
 }

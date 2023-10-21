@@ -1,7 +1,6 @@
 package tictac7x.charges.item.triggers;
 
 import net.runelite.api.Skill;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.store.MenuEntry;
 
 import java.util.ArrayList;
@@ -10,9 +9,10 @@ import java.util.Optional;
 
 public class TriggerStat {
     public final Skill skill;
+    public boolean isActivated;
+    public boolean onXpDrop;
     public Optional<Integer> increaseCharges = Optional.empty();
     public Optional<Integer> decreaseCharges = Optional.empty();
-    public boolean isActivated;
     public Optional<MenuEntry> menuEntry = Optional.empty();
     public List<Integer> specificItems = new ArrayList<>();
     public Optional<Integer> belowCharges = Optional.empty();
@@ -50,6 +50,11 @@ public class TriggerStat {
 
     public TriggerStat belowCharges(final int charges) {
         this.belowCharges = Optional.of(charges);
+        return this;
+    }
+
+    public TriggerStat onXpDrop() {
+        this.onXpDrop = true;
         return this;
     }
 }

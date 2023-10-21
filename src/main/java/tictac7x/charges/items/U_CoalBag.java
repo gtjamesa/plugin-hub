@@ -11,6 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
@@ -42,6 +43,9 @@ public class U_CoalBag extends ChargedItem {
             new TriggerChatMessage("The coal bag( still)? contains one piece of coal.").fixedCharges(1),
             new TriggerChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal."),
             new TriggerChatMessage("You manage to mine some coal.").specificItem(ItemID.OPEN_COAL_BAG).increaseCharges(1),
+        };
+        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+            new TriggerMenuEntryAdded("Destroy").hide(),
         };
     }
 }

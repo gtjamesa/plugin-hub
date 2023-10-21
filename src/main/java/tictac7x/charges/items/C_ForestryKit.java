@@ -9,16 +9,16 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerItem;
 
-public class W_SkullSceptre extends ChargedItem {
-    public W_SkullSceptre(
+public class C_ForestryKit extends ChargedItem {
+    public C_ForestryKit(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -30,20 +30,12 @@ public class W_SkullSceptre extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.SKULL_SCEPTRE, ItemID.SKULL_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.skull_sceptre;
+        super(ItemKey.FORESTRY_KIT, ItemID.FORESTRY_KIT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.SKULL_SCEPTRE),
-            new TriggerItem(ItemID.SKULL_SCEPTRE_I)
-        };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.")
+            new TriggerItem(ItemID.FORESTRY_KIT).fixedCharges(Charges.UNLIMITED),
         };
         this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Divine").replace("Check"),
-            new TriggerMenuEntryAdded("Invoke").replace("Teleport"),
+            new TriggerMenuEntryAdded("Destroy").hide(),
         };
     }
 }

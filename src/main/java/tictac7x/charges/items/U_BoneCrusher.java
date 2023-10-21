@@ -54,7 +54,7 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             new TriggerChatMessage("The bonecrusher( necklace)? is active").activate(),
         };
         this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.PRAYER).decreaseCharges(1).isActivated(),
+            new TriggerStat(Skill.PRAYER).decreaseCharges(1).isActivated().onXpDrop(),
         };
     }
 }
