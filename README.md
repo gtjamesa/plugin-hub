@@ -33,6 +33,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Dragonfire shield / ward
 - [x] Falador shield
 - [x] Kharedst's Memoirs / Book of the Dead
+- [x] Tome of fire
 
 ### Helms
 - [x] Circlet of water
@@ -49,7 +50,10 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bracelet of slaughter
 - [x] Camulet
 - [x] Celestial Ring
+- [x] Desert amulet
 - [x] Escape crystal
+- [x] Necklace of passage
+- [x] Phoenix necklace
 - [x] Ring of Recoil
 - [x] Ring of Suffering
 - [x] Slayer ring
@@ -68,6 +72,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Ogre bellows
 - [x] Seed box
 - [x] Soul bearer
+- [x] Strange old lockpick
 - [x] Teleport crystal
 - [x] Waterskins
 
