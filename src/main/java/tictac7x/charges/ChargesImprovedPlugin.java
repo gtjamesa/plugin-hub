@@ -443,7 +443,6 @@ public class ChargesImprovedPlugin extends Plugin {
 //		System.out.println("STAT CHANGED | " +
 //			event.getSkill().getName() +
 //			", level: " + event.getLevel() +
-//			", " + event.
 //			", xp: " + event.getXp()
 //		);
 	}

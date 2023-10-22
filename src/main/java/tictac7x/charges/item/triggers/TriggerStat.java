@@ -10,7 +10,6 @@ import java.util.Optional;
 public class TriggerStat {
     public final Skill skill;
     public boolean isActivated;
-    public boolean onXpDrop;
     public Optional<Integer> increaseCharges = Optional.empty();
     public Optional<Integer> decreaseCharges = Optional.empty();
     public Optional<MenuEntry> menuEntry = Optional.empty();
@@ -50,11 +49,6 @@ public class TriggerStat {
 
     public TriggerStat belowCharges(final int charges) {
         this.belowCharges = Optional.of(charges);
-        return this;
-    }
-
-    public TriggerStat onXpDrop() {
-        this.onXpDrop = true;
         return this;
     }
 }
