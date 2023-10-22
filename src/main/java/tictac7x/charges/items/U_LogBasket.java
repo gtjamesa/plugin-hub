@@ -53,9 +53,9 @@ public class U_LogBasket extends ChargedItem {
         this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Open log basket", "Fill").menuEntry("Log basket", "Fill").increaseByInventoryDifference(),
         };
-        this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.FIREMAKING).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).menuEntry(".*", "Chop down").belowCharges(MAX_CHARGES).decreaseCharges(1),
-        };
+//        this.triggersStats = new TriggerStat[]{
+//            new TriggerStat(Skill.FIREMAKING).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).menuEntry(".*", "Chop down").belowCharges(MAX_CHARGES).decreaseCharges(1),
+//        };
         this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
             new TriggerMenuEntryAdded("Destroy").hide(),
         };
