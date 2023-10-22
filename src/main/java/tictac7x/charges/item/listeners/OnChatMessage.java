@@ -116,7 +116,12 @@ public class OnChatMessage {
         final String message = event.getMessage();
 
         // Message type that we are not interested in.
-        if (event.getType() != ChatMessageType.GAMEMESSAGE && event.getType() != ChatMessageType.SPAM && event.getType() != ChatMessageType.MESBOX) return false;
+        if (
+            event.getType() != ChatMessageType.GAMEMESSAGE &&
+            event.getType() != ChatMessageType.SPAM &&
+            event.getType() != ChatMessageType.MESBOX &&
+            event.getType() != ChatMessageType.DIALOG
+        ) return false;
 
         // No config to save charges to.
         if (chargedItem.config_key == null) return false;
