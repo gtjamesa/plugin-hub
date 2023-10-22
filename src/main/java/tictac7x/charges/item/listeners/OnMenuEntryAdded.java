@@ -3,6 +3,7 @@ package tictac7x.charges.item.listeners;
 import net.runelite.api.Client;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.MenuEntryAdded;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 
@@ -12,10 +13,12 @@ import java.util.List;
 public class OnMenuEntryAdded {
     final ChargedItem chargedItem;
     final Client client;
+    final ChargesImprovedConfig config;
 
-    public OnMenuEntryAdded(final ChargedItem chargedItem, final Client client) {
+    public OnMenuEntryAdded(final ChargedItem chargedItem, final Client client, final ChargesImprovedConfig config) {
         this.chargedItem = chargedItem;
         this.client = client;
+        this.config = config;
     }
 
     public void trigger(final MenuEntryAdded event) {
@@ -23,11 +26,11 @@ public class OnMenuEntryAdded {
             if (!isValidTrigger(event, trigger)) continue;
 
             // Replace option.
-            if (trigger.replace.isPresent()) {
+            if (config.useCommonMenuEntries() && trigger.replace.isPresent()) {
                 event.getMenuEntry().setOption(trigger.replace.get());
 
             // Hide option.
-            } else if (trigger.hide.isPresent()) {
+            } else if (config.hideDestroy() && trigger.hide.isPresent()) {
                 final List<MenuEntry> newMenuEntries = new ArrayList<>();
 
                 for (final MenuEntry entry : client.getMenuEntries()) {

@@ -151,6 +151,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>* Coal bag added.<br>" +
 		"<colHIGHLIGHT>* Herb sack added.<br>" +
 		"<colHIGHLIGHT>* Strange old lockpick added.<br>" +
+		"<colHIGHLIGHT>* Phoenix necklace added.<br>" +
+		"<colHIGHLIGHT>* Tome of fire added.<br>" +
 		"<colHIGHLIGHT>* Able to hide item charges in bank.<br>" +
 		"<colHIGHLIGHT>* Activateable items have configurable positive/negative colors."
 	;
@@ -220,6 +222,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new S_TomeOfFire(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Jewellery
 			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),

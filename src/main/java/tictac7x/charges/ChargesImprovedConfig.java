@@ -73,6 +73,7 @@ public interface ChargesImprovedConfig extends Config {
     String herb_sack = "herb_sack";
     String strange_old_lockpick = "strange_old_lockpick";
     String desert_amulet = "desert_amulet";
+    String tome_of_fire = "tome_of_fire";
 
     @ConfigSection(
         name = "General",
@@ -558,4 +559,11 @@ public interface ChargesImprovedConfig extends Config {
             description = desert_amulet,
             section = debug
         ) default int getDesertAmuletCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = tome_of_fire,
+            name = tome_of_fire,
+            description = tome_of_fire,
+            section = debug
+        ) default int getTomeOfFireCharges() { return Charges.UNKNOWN; }
 }

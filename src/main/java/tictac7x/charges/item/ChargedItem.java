@@ -122,7 +122,7 @@ public class ChargedItem {
         this.onAnimationChanged = new OnAnimationChanged(this, client);
         this.onGraphicChanged = new OnGraphicChanged(this, client);
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
-        this.onMenuEntryAdded = new OnMenuEntryAdded(this, client);
+        this.onMenuEntryAdded = new OnMenuEntryAdded(this, client, config);
         this.onResetDaily = new OnResetDaily(this);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
@@ -303,9 +303,7 @@ public class ChargedItem {
     }
 
     public void onMenuEntryAdded(final MenuEntryAdded event) {
-        if (config.useCommonMenuEntries()) {
-            onMenuEntryAdded.trigger(event);
-        }
+        onMenuEntryAdded.trigger(event);
     }
 
     public void onResetDaily() {

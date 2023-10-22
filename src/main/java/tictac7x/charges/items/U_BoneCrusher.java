@@ -14,6 +14,7 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerStat;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -55,6 +56,9 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
         };
         this.triggersStats = new TriggerStat[]{
             new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
+        };
+        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+            new TriggerMenuEntryAdded("Destroy").hide(),
         };
     }
 }
