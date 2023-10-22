@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class Store {
     private final ItemManager items;
@@ -100,7 +101,7 @@ public class Store {
     }
 
     public boolean inMenuEntries(final MenuEntry menuEntry) {
-        return menuEntries.stream().anyMatch(entry -> entry.target.equals(menuEntry.target) && entry.option.equals(menuEntry.option));
+        return menuEntries.stream().anyMatch(entry -> Pattern.compile(menuEntry.target).matcher(entry.target).find() && entry.option.equals(menuEntry.option));
     }
 
     public int getInventoryItemsDifference(final ItemContainerChanged event) {
