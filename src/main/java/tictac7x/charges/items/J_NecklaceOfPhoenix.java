@@ -11,14 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerHitsplat;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
-public class J_PhoenixNecklace extends ChargedItem {
-    public J_PhoenixNecklace(
+public class J_NecklaceOfPhoenix extends ChargedItem {
+    public J_NecklaceOfPhoenix(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,

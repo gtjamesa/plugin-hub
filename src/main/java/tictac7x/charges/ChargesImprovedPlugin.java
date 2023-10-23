@@ -152,6 +152,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>* Herb sack added.<br>" +
 		"<colHIGHLIGHT>* Strange old lockpick added.<br>" +
 		"<colHIGHLIGHT>* Phoenix necklace added.<br>" +
+		"<colHIGHLIGHT>* Dodgy necklace added.<br>" +
 		"<colHIGHLIGHT>* Tome of fire added.<br>" +
 		"<colHIGHLIGHT>* Able to hide item charges in bank.<br>" +
 		"<colHIGHLIGHT>* Activateable items have configurable positive/negative colors."
@@ -234,7 +235,8 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_DesertAmulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_EscapeCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_NecklaceOfPassage(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_PhoenixNecklace(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_NecklaceOfPhoenix(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_NecklaceOfDodgy(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfShadows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
