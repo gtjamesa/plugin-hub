@@ -77,6 +77,7 @@ public interface ChargesImprovedConfig extends Config {
     String tome_of_fire = "tome_of_fire";
     String dodgy_necklace = "dodgy_necklace";
     String kandarin_headgear = "kandarin_headgear";
+    String fremennik_sea_boots = "fremennik_sea_boots";
 
     @ConfigSection(
         name = "General",
@@ -591,4 +592,11 @@ public interface ChargesImprovedConfig extends Config {
             description = kandarin_headgear,
             section = debug
         ) default int getKandarinHeadgearCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = fremennik_sea_boots,
+            name = fremennik_sea_boots,
+            description = fremennik_sea_boots,
+            section = debug
+        ) default int getFremennikSeaBootsCharges() { return Charges.UNKNOWN; }
 }

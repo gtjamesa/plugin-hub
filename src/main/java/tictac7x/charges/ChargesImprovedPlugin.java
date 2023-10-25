@@ -225,6 +225,9 @@ public class ChargesImprovedPlugin extends Plugin {
 			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new S_TomeOfFire(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
+			// Boots
+			new B_FremennikSeaBoots(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+
 			// Jewellery
 			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_BraceletOfExpeditious(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -412,6 +415,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuOptionClicked(event));
 		store.onMenuOptionClicked(event);
 
 //		System.out.println("MENU OPTION | " +
