@@ -46,7 +46,7 @@ public class U_LogBasket extends ChargedItem {
         };
         this.triggersChatMessages = new TriggerChatMessage[]{
             new TriggerChatMessage("(Your|The) basket is empty.").onItemClick().fixedCharges(0),
-            new TriggerChatMessage("You bank all your logs.").onItemClick().fixedCharges(0),
+            new TriggerChatMessage("You empty your basket into the bank.").onItemClick().fixedCharges(0),
             new TriggerChatMessage("The basket contains:").onItemClick().multipleCharges(),
             new TriggerChatMessage("(You get some.* logs.|The nature offerings enabled you to chop an extra log.)").specificItem(ItemID.OPEN_LOG_BASKET).specificItem(ItemID.OPEN_FORESTRY_BASKET).increaseCharges(1),
         };

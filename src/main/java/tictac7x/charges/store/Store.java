@@ -8,18 +8,24 @@ import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.StatChanged;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
+import tictac7x.charges.ChargesImprovedConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Store {
     private final ItemManager items;
+    private final ConfigManager configs;
+
     private int gametick = 0;
     private int gametick_before = 0;
 
@@ -31,8 +37,9 @@ public class Store {
     public final List<MenuEntry> menuEntries = new ArrayList<>();
     public final Map<Skill, Integer> skillExperiences = new HashMap<>();
 
-    public Store(final ItemManager items) {
+    public Store(final ItemManager items, final ConfigManager configs) {
         this.items = items;
+        this.configs = configs;
     }
 
     public void onStatChanged(final StatChanged event) {
@@ -47,6 +54,8 @@ public class Store {
         if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
             equipment = Optional.of(event.getItemContainer());
         }
+
+        updateStorage(event);
     }
 
     public void onInventoryItemsChanged(final ItemContainerChanged event) {
@@ -171,5 +180,37 @@ public class Store {
         } else {
             return Optional.empty();
         }
+    }
+
+    private void updateStorage(final ItemContainerChanged event) {
+        if (
+            event.getContainerId() != InventoryID.INVENTORY.getId() &&
+            event.getContainerId() == InventoryID.BANK.getId() &&
+            event.getContainerId() == InventoryID.EQUIPMENT.getId()
+        ) {
+            return;
+        }
+
+        final String storageString = configs.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage);
+        final Set<Integer> items = new HashSet<>();
+
+        for (final String itemString : storageString.split(",")) {
+            try {
+                items.add(Integer.parseInt(itemString));
+            } catch (final Exception ignored) {}
+        }
+
+        for (final Item item : event.getItemContainer().getItems()) {
+            if (item.getId() != -1) {
+                items.add(item.getId());
+            }
+        }
+
+        final StringBuilder storage = new StringBuilder();
+        for (final Integer item : items) {
+            storage.append(item).append(",");
+        }
+
+        configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage, storage.toString().replaceAll(",$", ""));
     }
 }

@@ -123,7 +123,7 @@ public class ChargedItem {
         this.onGraphicChanged = new OnGraphicChanged(this, client);
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
         this.onMenuEntryAdded = new OnMenuEntryAdded(this, client, config);
-        this.onResetDaily = new OnResetDaily(this);
+        this.onResetDaily = new OnResetDaily(this, config);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
     }

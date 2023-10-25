@@ -15,6 +15,7 @@ import static tictac7x.charges.ChargesImprovedConfig.group;
 public interface ChargesImprovedConfig extends Config {
     String group = "tictac7x-charges";
     String version = "version";
+    String storage = "storage";
     String date = "date";
     String infoboxes_show = "infoboxes_show";
     String infoboxes_hidden = "infoboxes_hidden";
@@ -75,6 +76,7 @@ public interface ChargesImprovedConfig extends Config {
     String desert_amulet = "desert_amulet";
     String tome_of_fire = "tome_of_fire";
     String dodgy_necklace = "dodgy_necklace";
+    String kandarin_headgear = "kandarin_headgear";
 
     @ConfigSection(
         name = "General",
@@ -211,18 +213,26 @@ public interface ChargesImprovedConfig extends Config {
 
         @ConfigItem(
             keyName = version,
-            name = "Version",
+            name = version,
             description = "Version of the plugin for update message",
             section = debug,
-            position = 1
+            position = 2
         ) default String getVersion() { return ""; }
+
+        @ConfigItem(
+            keyName = storage,
+            name = storage,
+            description = "All player items to check for daily resets",
+            section = debug,
+            position = 1
+        ) default String getStorage() { return ""; }
 
         @ConfigItem(
             keyName = date,
             name = "Date",
             description = "Date to check for charges reset when logging in",
             section = debug,
-            position = 2
+            position = 3
         ) default String getResetDate() { return ""; }
 
         @ConfigItem(
@@ -574,4 +584,11 @@ public interface ChargesImprovedConfig extends Config {
             description = dodgy_necklace,
             section = debug
         ) default int getDodgyNecklaceCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = kandarin_headgear,
+            name = kandarin_headgear,
+            description = kandarin_headgear,
+            section = debug
+        ) default int getKandarinHeadgearCharges() { return Charges.UNKNOWN; }
 }

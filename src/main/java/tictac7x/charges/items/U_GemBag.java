@@ -42,6 +42,7 @@ public class U_GemBag extends ChargedItem {
             new TriggerChatMessage("The gem bag is empty.").fixedCharges(0),
             new TriggerChatMessage("Sapphires: (.+) / Emeralds: (.+) / Rubies: (.+) Diamonds: (.+) / Dragonstones: (.+)").multipleCharges(),
             new TriggerChatMessage("You put it straight into your open gem bag.").increaseCharges(1),
+            new TriggerChatMessage("The following stolen loot gets added to your gem bag: .* x (?<charges>.+)").increaseDynamically(),
         };
         this.triggersItemContainers = new TriggerItemContainer[]{
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Gem bag", "Fill").menuEntry("Open gem bag", "Fill").increaseByInventoryDifference(),

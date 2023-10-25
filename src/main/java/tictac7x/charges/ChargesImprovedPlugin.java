@@ -203,7 +203,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void startUp() {
-		store = new Store(items);
+		store = new Store(items, configs);
 
 		chargedItems = new ChargedItem[]{
 			// Weapons
@@ -245,6 +245,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 			// Helms
 			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new H_KandarinHeadgear(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Capes
 			new C_ArdougneCloak(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
