@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class TriggerChatMessage {
@@ -12,7 +13,7 @@ public class TriggerChatMessage {
     public boolean menu_target;
     public boolean equipped;
     public boolean multiple_charges;
-    public boolean increase_dynamically;
+    public Optional<Boolean> increaseDynamically = Optional.empty();
     public boolean decrease_dynamically;
     public boolean use_difference;
     public boolean notification;
@@ -61,7 +62,7 @@ public class TriggerChatMessage {
     }
 
     public TriggerChatMessage increaseDynamically() {
-        this.increase_dynamically = true;
+        this.increaseDynamically = Optional.of(true);
         return this;
     }
 
