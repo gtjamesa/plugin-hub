@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 public class Store {
-    private final ItemManager items;
-    private final ConfigManager configs;
+    private final ItemManager itemManager;
+    private final ConfigManager configManager;
 
     private int gametick = 0;
     private int gametick_before = 0;
@@ -37,9 +37,9 @@ public class Store {
     public final List<MenuEntry> menuEntries = new ArrayList<>();
     public final Map<Skill, Integer> skillExperiences = new HashMap<>();
 
-    public Store(final ItemManager items, final ConfigManager configs) {
-        this.items = items;
-        this.configs = configs;
+    public Store(final ItemManager itemManager, final ConfigManager configManager) {
+        this.itemManager = itemManager;
+        this.configManager = configManager;
     }
 
     public void onStatChanged(final StatChanged event) {
@@ -101,6 +101,20 @@ public class Store {
         return menuEntries.stream().noneMatch(entry -> entry.target.contains(target));
     }
 
+    public boolean inMenuTargets(final int itemId) {
+        return menuEntries.stream().anyMatch(entry -> entry.target.contains(itemManager.getItemComposition(itemId).getName()));
+    }
+
+    public boolean inMenuTargets(final String ...targets) {
+        for (final String target : targets) {
+            if (menuEntries.stream().anyMatch(entry -> entry.target.contains(target))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean notInMenuOptions(final String option) {
         return menuEntries.stream().noneMatch(entry -> entry.option.equals(option));
     }
@@ -133,7 +147,7 @@ public class Store {
         // New bank items.
         for (final Item new_item : event.getItemContainer().getItems()) {
             differences.put(new_item.getId(), new_item.getQuantity());
-            items.getItemComposition(0).getPlaceholderId();
+            itemManager.getItemComposition(0).getPlaceholderId();
         }
 
         // Previous bank items.
@@ -191,7 +205,7 @@ public class Store {
             return;
         }
 
-        final String storageString = configs.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage);
+        final String storageString = configManager.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage);
         final Set<Integer> items = new HashSet<>();
 
         for (final String itemString : storageString.split(",")) {
@@ -211,6 +225,6 @@ public class Store {
             storage.append(item).append(",");
         }
 
-        configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage, storage.toString().replaceAll(",$", ""));
+        configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage, storage.toString().replaceAll(",$", ""));
     }
 }

@@ -89,6 +89,11 @@ public class OnChatMessage {
                 } catch (final Exception ignored) {}
             }
 
+            // Consumer
+            if (trigger.consumer.isPresent()) {
+                trigger.consumer.get().accept(matcher);
+            }
+
             // Charged item needs to be set as activated.
             if (trigger.activate) {
                 chargedItem.activityCallback(ItemActivity.ACTIVATED);

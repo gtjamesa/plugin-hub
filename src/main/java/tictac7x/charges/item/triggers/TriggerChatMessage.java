@@ -5,6 +5,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TriggerChatMessage {
@@ -26,6 +28,8 @@ public class TriggerChatMessage {
     @Nullable public Integer decrease_charges;
     @Nullable public Integer increase_charges;
     @Nullable public String notification_message;
+
+    public Optional<Consumer<Matcher>> consumer = Optional.empty();
 
     public TriggerChatMessage(@Nonnull final String message) {
         this.message = Pattern.compile(message);
@@ -106,6 +110,11 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage deactivate() {
         this.deactivate = true;
+        return this;
+    }
+
+    public TriggerChatMessage consumer(final Consumer<Matcher> consumer) {
+        this.consumer = Optional.of(consumer);
         return this;
     }
 }

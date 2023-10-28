@@ -9,9 +9,20 @@ public class TriggerMenuOptionClicked {
     public Optional<String> target = Optional.empty();
     public Optional<Integer> decreaseCharges = Optional.empty();
     public Optional<Boolean> equipped = Optional.empty();
+    public Optional<Runnable> consumer = Optional.empty();
+    public Optional<Boolean> atBank = Optional.empty();
+    public Optional<String[][]> useMenuTargets = Optional.empty();
 
     public TriggerMenuOptionClicked(final String option) {
         this.option = option;
+    }
+
+    public TriggerMenuOptionClicked use(final String[] targets1, final String[] targets2) {
+        this.useMenuTargets = Optional.of(new String[][]{
+            targets1,
+            targets2
+        });
+        return this;
     }
 
     public TriggerMenuOptionClicked target(final String target) {
@@ -31,6 +42,16 @@ public class TriggerMenuOptionClicked {
 
     public TriggerMenuOptionClicked equipped() {
         this.equipped = Optional.of(true);
+        return this;
+    }
+
+    public TriggerMenuOptionClicked consumer(final Runnable consumer) {
+        this.consumer = Optional.of(consumer);
+        return this;
+    }
+
+    public TriggerMenuOptionClicked atBank() {
+        this.atBank = Optional.of(true);
         return this;
     }
 }

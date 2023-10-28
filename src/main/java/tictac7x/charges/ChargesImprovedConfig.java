@@ -496,6 +496,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getGemBagCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
+            keyName = gem_bag + "_storage",
+            name = gem_bag + "_storage",
+            description = gem_bag + "_storage",
+            section = debug
+        ) default String getGemBagStorageCharges() { return ""; }
+
+        @ConfigItem(
             keyName = seed_box,
             name = seed_box,
             description = seed_box,

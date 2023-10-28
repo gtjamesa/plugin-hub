@@ -6,6 +6,7 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.ItemDespawned;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.StatChanged;
@@ -24,6 +25,7 @@ import tictac7x.charges.item.listeners.OnChatMessage;
 import tictac7x.charges.item.listeners.OnGraphicChanged;
 import tictac7x.charges.item.listeners.OnHitsplatApplied;
 import tictac7x.charges.item.listeners.OnItemContainerChanged;
+import tictac7x.charges.item.listeners.OnItemDespawned;
 import tictac7x.charges.item.listeners.OnMenuEntryAdded;
 import tictac7x.charges.item.listeners.OnMenuOptionClicked;
 import tictac7x.charges.item.listeners.OnResetDaily;
@@ -37,6 +39,7 @@ import tictac7x.charges.item.triggers.TriggerHitsplat;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemContainer;
 import tictac7x.charges.item.triggers.TriggerDailyReset;
+import tictac7x.charges.item.triggers.TriggerItemDespawned;
 import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
 import tictac7x.charges.item.triggers.TriggerStat;
@@ -77,6 +80,7 @@ public class ChargedItem {
     public TriggerVarbit[] triggersVarbits = new TriggerVarbit[]{};
     public TriggerMenuEntryAdded[] triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{};
     public TriggerMenuOptionClicked[] triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{};
+    public TriggerItemDespawned[] triggersItemDespawned = new TriggerItemDespawned[]{};
 
     private boolean inEquipment = false;
     private boolean inInventory = false;
@@ -93,6 +97,7 @@ public class ChargedItem {
     final OnItemContainerChanged onItemContainerChanged;
     final OnMenuEntryAdded onMenuEntryAdded;
     final OnMenuOptionClicked onMenuOptionClicked;
+    final OnItemDespawned onItemDespawned;
     final OnResetDaily onResetDaily;
 
     public ChargedItem(
@@ -128,7 +133,8 @@ public class ChargedItem {
         this.onGraphicChanged = new OnGraphicChanged(this, client);
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
         this.onMenuEntryAdded = new OnMenuEntryAdded(this, client, config);
-        this.onMenuOptionClicked = new OnMenuOptionClicked(this, client_thread);
+        this.onMenuOptionClicked = new OnMenuOptionClicked(this, client, client_thread);
+        this.onItemDespawned = new OnItemDespawned(this, client);
         this.onResetDaily = new OnResetDaily(this, config);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
@@ -314,6 +320,10 @@ public class ChargedItem {
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
         onMenuOptionClicked.trigger(event);
+    }
+
+    public void onItemDespawned(final ItemDespawned event) {
+        onItemDespawned.trigger(event);
     }
 
     public void onResetDaily() {

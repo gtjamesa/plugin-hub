@@ -10,6 +10,7 @@ import net.runelite.api.events.GameTick;
 import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.api.events.ItemContainerChanged;
+import net.runelite.api.events.ItemDespawned;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.StatChanged;
@@ -351,7 +352,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 //		System.out.println("MESSAGE | " +
 //			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "") +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
 //			", sender: " + event.getSender()
 //		);
 	}
@@ -415,8 +416,8 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuOptionClicked(event));
 		store.onMenuOptionClicked(event);
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuOptionClicked(event));
 
 //		System.out.println("MENU OPTION | " +
 //			"option: " + event.getMenuOption() +
@@ -455,6 +456,16 @@ public class ChargesImprovedPlugin extends Plugin {
 //			event.getSkill().getName() +
 //			", level: " + event.getLevel() +
 //			", xp: " + event.getXp()
+//		);
+	}
+
+	@Subscribe
+	public void onItemDespawned(final ItemDespawned event) {
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemDespawned(event));
+
+//		System.out.println("ITEM DESPAWNED | " +
+//			event.getItem().getId() +
+//			", quantity: " + event.getItem().getQuantity()
 //		);
 	}
 
