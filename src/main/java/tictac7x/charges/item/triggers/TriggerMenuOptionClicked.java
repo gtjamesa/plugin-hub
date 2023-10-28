@@ -5,9 +5,10 @@ import java.util.Optional;
 public class TriggerMenuOptionClicked {
     public final String option;
 
-    public Optional<Integer> itemId = Optional.empty();
+    public Optional<int[]> itemId = Optional.empty();
     public Optional<String> target = Optional.empty();
     public Optional<Integer> decreaseCharges = Optional.empty();
+    public Optional<Boolean> equipped = Optional.empty();
 
     public TriggerMenuOptionClicked(final String option) {
         this.option = option;
@@ -18,13 +19,18 @@ public class TriggerMenuOptionClicked {
         return this;
     }
 
-    public TriggerMenuOptionClicked itemId(final int itemId) {
+    public TriggerMenuOptionClicked itemId(final int ...itemId) {
         this.itemId = Optional.of(itemId);
         return this;
     }
 
     public TriggerMenuOptionClicked decreaseCharges(final int charges) {
         this.decreaseCharges = Optional.of(charges);
+        return this;
+    }
+
+    public TriggerMenuOptionClicked equipped() {
+        this.equipped = Optional.of(true);
         return this;
     }
 }

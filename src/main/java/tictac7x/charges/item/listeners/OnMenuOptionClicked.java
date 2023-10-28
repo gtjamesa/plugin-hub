@@ -1,11 +1,8 @@
 package tictac7x.charges.item.listeners;
 
-import net.runelite.api.Client;
-import net.runelite.api.events.GraphicChanged;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.client.callback.ClientThread;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerGraphic;
 import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
 
 public class OnMenuOptionClicked {
@@ -37,10 +34,21 @@ public class OnMenuOptionClicked {
         if (!event.getMenuOption().equals(trigger.option)) return false;
 
         // Target check.
-        if (trigger.target.isPresent() && !event.getMenuTarget().equals(trigger.target.get())) return false;
+        if (trigger.target.isPresent() && !event.getMenuTarget().contains(trigger.target.get())) return false;
 
         // Item ID check.
-        if (trigger.itemId.isPresent() && event.getItemId() != trigger.itemId.get()) return false;
+        itemIdCheck: if (trigger.itemId.isPresent()) {
+            for (final int itemId : trigger.itemId.get()) {
+                if (event.getItemId() == itemId) {
+                    break itemIdCheck;
+                }
+            }
+
+            return false;
+        }
+
+        // Equipped check.
+        if (trigger.equipped.isPresent() && !chargedItem.store.equipmentContainsItem(chargedItem.item_id)) return false;
 
         return true;
     }

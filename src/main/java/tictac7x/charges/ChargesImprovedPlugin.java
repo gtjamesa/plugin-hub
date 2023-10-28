@@ -422,7 +422,8 @@ public class ChargesImprovedPlugin extends Plugin {
 //			"option: " + event.getMenuOption() +
 //			", target: " + event.getMenuTarget() +
 //			", action name: " + event.getMenuAction().name() +
-//			", action id: " + event.getMenuAction().getId()
+//			", action id: " + event.getMenuAction().getId() +
+//			", item id: " + event.getItemId()
 //		);
 	}
 

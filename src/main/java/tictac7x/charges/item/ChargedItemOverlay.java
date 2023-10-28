@@ -57,7 +57,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
                     break;
                 }
             }
-            if (trigger_item_to_use == null) continue;
+            if (trigger_item_to_use == null || trigger_item_to_use.fixed_charges != null && trigger_item_to_use.fixed_charges == Charges.UNLIMITED) continue;
 
             // Charges from infobox.
             String charges = ChargesImprovedPlugin.getChargesMinified(charged_item.getCharges());
