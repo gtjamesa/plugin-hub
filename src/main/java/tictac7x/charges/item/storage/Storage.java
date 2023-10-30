@@ -136,8 +136,6 @@ public class Storage {
 
     private void save() {
         configManager.setConfiguration(ChargesImprovedConfig.group, storageConfigKey, gson.toJson(storage));
-
-        System.out.println(storage.size());
     }
 
     private List<StorageItem> getNewStorage() {

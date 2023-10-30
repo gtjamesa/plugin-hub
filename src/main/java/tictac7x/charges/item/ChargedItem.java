@@ -125,7 +125,7 @@ public class ChargedItem {
         this.config = config;
         this.store = store;
 
-        this.onStatChanged = new OnStatChanged(this, configs);
+        this.onStatChanged = new OnStatChanged(this);
         this.onChatMessage = new OnChatMessage(this, configs, notifier);
         this.onHitsplatApplied = new OnHitsplatApplied(this, client);
         this.onWidgetLoaded = new OnWidgetLoaded(this, configs, client, client_thread);

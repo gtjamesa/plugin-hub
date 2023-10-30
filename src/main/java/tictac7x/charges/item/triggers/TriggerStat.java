@@ -12,9 +12,11 @@ public class TriggerStat {
     public boolean isActivated;
     public Optional<Integer> increaseCharges = Optional.empty();
     public Optional<Integer> decreaseCharges = Optional.empty();
-    public Optional<MenuEntry> menuEntry = Optional.empty();
     public List<Integer> specificItems = new ArrayList<>();
     public Optional<Integer> belowCharges = Optional.empty();
+    public Optional<Boolean> isEquipped = Optional.empty();
+    public Optional<String[]> menuOption = Optional.empty();
+    public Optional<String[]> menuTarget = Optional.empty();
 
     public TriggerStat(final Skill skill) {
         this.skill = skill;
@@ -35,8 +37,9 @@ public class TriggerStat {
         return this;
     }
 
-    public TriggerStat menuEntry(final String target, final String option) {
-        this.menuEntry = Optional.of(new MenuEntry(target, option));
+    public TriggerStat menuEntry(final String option, final String target) {
+        this.menuOption = Optional.of(new String[]{option});
+        this.menuTarget = Optional.of(new String[]{target});
         return this;
     }
 
@@ -49,6 +52,21 @@ public class TriggerStat {
 
     public TriggerStat belowCharges(final int charges) {
         this.belowCharges = Optional.of(charges);
+        return this;
+    }
+
+    public TriggerStat isEquipped() {
+        this.isEquipped = Optional.of(true);
+        return this;
+    }
+
+    public TriggerStat menuOption(final String ...menuOption) {
+        this.menuOption = Optional.of(menuOption);
+        return this;
+    }
+
+    public TriggerStat menuTarget(final String ...menuTarget) {
+        this.menuTarget = Optional.of(menuTarget);
         return this;
     }
 }

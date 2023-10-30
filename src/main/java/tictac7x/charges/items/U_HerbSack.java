@@ -54,7 +54,7 @@ public class U_HerbSack extends ChargedItem {
             new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herbs", "Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
         };
         this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Herbs", "Pick").increaseCharges(1),
+            new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Pick", "Herbs").increaseCharges(1),
         };
         this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
             new TriggerMenuEntryAdded("Destroy").hide(),

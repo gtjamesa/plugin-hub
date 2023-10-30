@@ -4,14 +4,15 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.config.ConfigManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerStat;
+import tictac7x.charges.store.Store;
 
 public class OnStatChanged {
-    final ChargedItem chargedItem;
-    final ConfigManager configs;
+    private final ChargedItem chargedItem;
+    private final Store store;
 
-    public OnStatChanged(final ChargedItem chargedItem, final ConfigManager configs) {
+    public OnStatChanged(final ChargedItem chargedItem) {
         this.chargedItem = chargedItem;
-        this.configs = configs;
+        this.store = chargedItem.store;
     }
 
     public void trigger(final StatChanged event) {
@@ -42,7 +43,7 @@ public class OnStatChanged {
         // Activated check.
         if (trigger.isActivated && !chargedItem.isActivated()) return false;
 
-        // Menu entries check.
+        // Menu option check.
         if (trigger.menuEntry.isPresent() && chargedItem.store.notInMenuEntries(trigger.menuEntry.get())) return false;
 
         // Specific item check.
@@ -50,6 +51,9 @@ public class OnStatChanged {
 
         // Below charges check.
         if (trigger.belowCharges.isPresent() && chargedItem.getCharges() >= trigger.belowCharges.get()) return false;
+
+        // Is equipped check.
+        if (trigger.isEquipped.isPresent() && !store.equipmentContainsItem(chargedItem.item_id)) return false;
 
         return true;
     }
