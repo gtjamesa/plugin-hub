@@ -8,10 +8,12 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.listeners.OnVarbitChanged;
-import tictac7x.charges.store.ItemActivity;
+import tictac7x.charges.item.storage.Storage;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
+
+import java.util.List;
 
 public class ChargedItemWithStorage extends ChargedItem {
     protected final Storage storage;
@@ -42,11 +44,16 @@ public class ChargedItemWithStorage extends ChargedItem {
             config,
             store
         );
+        this.config_key = configKey;
         this.storage = new Storage(configKey, configs, client_thread, store);
     }
 
     @Override
     public int getCharges() {
         return storage.getCharges();
+    }
+
+    public List<StorageItem> getStorage() {
+        return this.storage.getStorage();
     }
 }

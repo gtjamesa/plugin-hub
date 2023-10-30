@@ -133,7 +133,7 @@ public class ChargedItem {
         this.onGraphicChanged = new OnGraphicChanged(this, client);
         this.onItemContainerChanged = new OnItemContainerChanged(this, client);
         this.onMenuEntryAdded = new OnMenuEntryAdded(this, client, config);
-        this.onMenuOptionClicked = new OnMenuOptionClicked(this, client, client_thread);
+        this.onMenuOptionClicked = new OnMenuOptionClicked(this, client, client_thread, items);
         this.onItemDespawned = new OnItemDespawned(this, client);
         this.onResetDaily = new OnResetDaily(this, config);
 

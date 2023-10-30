@@ -101,8 +101,14 @@ public class Store {
         return menuEntries.stream().noneMatch(entry -> entry.target.contains(target));
     }
 
-    public boolean inMenuTargets(final int itemId) {
-        return menuEntries.stream().anyMatch(entry -> entry.target.contains(itemManager.getItemComposition(itemId).getName()));
+    public boolean inMenuTargets(final int ...itemIds) {
+        for (final int itemId : itemIds) {
+            if (menuEntries.stream().anyMatch(entry -> entry.target.contains(itemManager.getItemComposition(itemId).getName()))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean inMenuTargets(final String ...targets) {

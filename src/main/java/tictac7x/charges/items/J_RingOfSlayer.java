@@ -15,8 +15,8 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
 
-public class J_SlayerRing extends ChargedItem {
-    public J_SlayerRing(
+public class J_RingOfSlayer extends ChargedItem {
+    public J_RingOfSlayer(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,

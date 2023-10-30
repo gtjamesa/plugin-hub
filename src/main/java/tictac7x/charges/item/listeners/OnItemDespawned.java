@@ -21,7 +21,10 @@ public class OnItemDespawned {
             if (!isValidTrigger(event, trigger)) continue;
 
             if (trigger.pickUpToStorage.isPresent()) {
-                trigger.pickUpToStorage.get().add(event.getItem().getId(), event.getItem().getQuantity());
+                trigger.pickUpToStorage.get().add(
+                    event.getItem().getId(),
+                    event.getItem().getQuantity()
+                );
             }
 
             // Trigger used.

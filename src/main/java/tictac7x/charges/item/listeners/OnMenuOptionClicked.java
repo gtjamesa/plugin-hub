@@ -4,6 +4,7 @@ import net.runelite.api.Client;
 import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
 
@@ -11,24 +12,26 @@ public class OnMenuOptionClicked {
     final ChargedItem chargedItem;
     final Client client;
     final ClientThread clientThread;
+    final ItemManager itemManager;
 
-    public OnMenuOptionClicked(final ChargedItem chargedItem, final Client client, final ClientThread clientThread) {
+    public OnMenuOptionClicked(final ChargedItem chargedItem, final Client client, final ClientThread clientThread, final ItemManager itemManager) {
         this.chargedItem = chargedItem;
         this.client = client;
         this.clientThread = clientThread;
+        this.itemManager = itemManager;
     }
 
     public void trigger(final MenuOptionClicked event) {
         for (final TriggerMenuOptionClicked trigger : chargedItem.triggersMenuOptionClicked) {
             if (!isValidTrigger(event, trigger)) continue;
 
-            clientThread.invokeAtTickEnd(() -> {
-                if (trigger.decreaseCharges.isPresent()) {
-                    chargedItem.decreaseCharges(trigger.decreaseCharges.get());
-                } else if (trigger.consumer.isPresent()) {
-                    trigger.consumer.get().run();
-                }
-            });
+            if (trigger.decreaseCharges.isPresent()) {
+                chargedItem.decreaseCharges(trigger.decreaseCharges.get());
+            } else if (trigger.fillStorageFromInventory.isPresent()) {
+                trigger.fillStorageFromInventory.get().fillFromInventory();
+            } else if (trigger.consumer.isPresent()) {
+                trigger.consumer.get().run();
+            }
 
             // Trigger used.
             return;
@@ -53,18 +56,25 @@ public class OnMenuOptionClicked {
             return false;
         }
 
+        // Non-specific item check.
+        if (!trigger.target.isPresent() && !trigger.itemId.isPresent()) {
+            if (event.getItemId() != chargedItem.item_id) {
+                return false;
+            }
+        }
+
         // Equipped check.
         if (trigger.equipped.isPresent() && !chargedItem.store.equipmentContainsItem(chargedItem.item_id)) return false;
 
         // At bank check.
         if (trigger.atBank.isPresent() && client.getWidget(WidgetInfo.BANK_CONTAINER) == null && client.getWidget(WidgetInfo.DEPOSIT_BOX_INVENTORY_ITEMS_CONTAINER) == null) return false;
 
-        // Use targets check.
-        if (trigger.useMenuTargets.isPresent()) {
-            boolean target1Check = chargedItem.store.inMenuTargets(trigger.useMenuTargets.get()[0]);
-            boolean target2Check = chargedItem.store.inMenuTargets(trigger.useMenuTargets.get()[1]);
+        // Use check.
+        if (trigger.use.isPresent()) {
+            boolean mainItemCheck = chargedItem.store.inMenuTargets(itemManager.getItemComposition(chargedItem.item_id).getName());
+            boolean useItemCheck = chargedItem.store.inMenuTargets(trigger.use.get());
 
-            if (!target1Check || !target2Check) {
+            if (!mainItemCheck || !useItemCheck) {
                 return false;
             }
 

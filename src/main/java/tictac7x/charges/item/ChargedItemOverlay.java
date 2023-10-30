@@ -2,25 +2,43 @@ package tictac7x.charges.item;
 
 import net.runelite.api.Client;
 import net.runelite.api.widgets.WidgetItem;
+import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.FontManager;
+import net.runelite.client.ui.JagexColors;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
+import net.runelite.client.ui.overlay.tooltip.Tooltip;
+import net.runelite.client.ui.overlay.tooltip.TooltipManager;
+import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.item.triggers.TriggerItem;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Map;
 
 public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
+    private final TooltipManager tooltipManager;
+    private final ItemManager itemManager;
     private final ChargesImprovedConfig config;
     private final ChargedItem[] charged_items;
 
-    public ChargedItemOverlay(final Client client, final ChargesImprovedConfig config, final ChargedItem[] charged_items) {
+    public ChargedItemOverlay(
+        final Client client,
+        final TooltipManager tooltipManager,
+        final ItemManager itemManager,
+        final ChargesImprovedConfig config,
+        final ChargedItem[] charged_items
+    ) {
         this.client = client;
+        this.tooltipManager = tooltipManager;
+        this.itemManager = itemManager;
         this.config = config;
         this.charged_items = charged_items;
         showOnInventory();
@@ -40,19 +58,19 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
 
     @Override
-    public void renderItemOverlay(final Graphics2D graphics, final int item_id, final WidgetItem item_widget) {
+    public void renderItemOverlay(final Graphics2D graphics, final int itemId, final WidgetItem widgetItem) {
         if (!config.showItemOverlays()) return;
 
         for (final ChargedItem charged_item : charged_items) {
             if (
                 config.getHiddenItemOverlays().contains(charged_item.infobox_id) ||
                 charged_item.getCharges() == Charges.UNLIMITED ||
-                !config.showBankOverlays() && isBankWidget(item_widget)
+                !config.showBankOverlays() && isBankWidget(widgetItem)
             ) continue;
 
             TriggerItem trigger_item_to_use = null;
             for (final TriggerItem trigger_item : charged_item.triggersItems) {
-                if (trigger_item.item_id == item_id && !trigger_item.hide_overlay) {
+                if (trigger_item.item_id == itemId && !trigger_item.hide_overlay) {
                     trigger_item_to_use = trigger_item;
                     break;
                 }
@@ -69,7 +87,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
                 charges = ChargesImprovedPlugin.getChargesMinified(trigger_item_to_use.fixed_charges);
             }
 
-            final Rectangle bounds = item_widget.getCanvasBounds();
+            final Rectangle bounds = widgetItem.getCanvasBounds();
             final TextComponent charges_component = new TextComponent();
 
             charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
@@ -78,15 +96,16 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             if (charges.equals("?")) {
                 charges_component.setColor(config.getColorUnknown());
             } else if (
-                !isBankWidget(item_widget) && charged_item.isActivated() && charged_item.getCharges() > 0 ||
-                !isBankWidget(item_widget) && charged_item.needsToBeEquipped() && charged_item.isEquipped() && charged_item.getCharges() > 0
+                !isBankWidget(widgetItem) && charged_item.isActivated() && charged_item.getCharges() > 0 ||
+                !isBankWidget(widgetItem) && charged_item.needsToBeEquipped() && charged_item.isEquipped() && charged_item.getCharges() > 0
             ) {
                 charges_component.setColor(config.getColorActivated());
             } else if (
-                !isBankWidget(item_widget) && (trigger_item_to_use.needsToBeEquipped && !charged_item.isEquipped()) ||
-                charges.equals("0") && !trigger_item_to_use.zeroChargesIsPositive ||
+                !isBankWidget(widgetItem) && (trigger_item_to_use.needsToBeEquipped && !charged_item.isEquipped()) ||
+                charges.equals("0") && !trigger_item_to_use.zeroChargesIsPositive && !(charged_item instanceof ChargedItemWithStorage) ||
                 charged_item.negativeFullCharges().isPresent() && charged_item.getCharges() == charged_item.negativeFullCharges().get() ||
-                charged_item.isDeactivated()
+                charged_item.isDeactivated() ||
+                charged_item instanceof ChargedItemWithStorage && ((ChargedItemWithStorage) charged_item).storage.maximumTotalQuantity.isPresent() && charged_item.getCharges() == ((ChargedItemWithStorage) charged_item).storage.maximumTotalQuantity.get()
             ) {
                 charges_component.setColor(config.getColorEmpty());
             } else {
@@ -94,7 +113,37 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             }
 
             charges_component.render(graphics);
+
+            // Charged item with storage
+            renderTooltip(charged_item, widgetItem);
+
             return;
+        }
+    }
+
+    private void renderTooltip(final ChargedItem chargedItem, final WidgetItem widgetItem) {
+        // Config, not storage item, empty storage checks.
+        if (
+            !config.showStorageTooltips() ||
+            !(chargedItem instanceof ChargedItemWithStorage) ||
+            chargedItem.getCharges() == 0
+        ) return;
+
+        // Mouse position check.
+        final net.runelite.api.Point mousePosition = client.getMouseCanvasPosition();
+        if (!widgetItem.getCanvasBounds().contains(mousePosition.getX(), mousePosition.getY())) return;
+
+        String tooltip = "";
+        for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+            if (storageItem.getQuantity() > 0) {
+                tooltip += itemManager.getItemComposition(storageItem.itemId).getName() + ": ";
+                tooltip += ColorUtil.wrapWithColorTag(String.valueOf(storageItem.getQuantity()), JagexColors.MENU_TARGET) + "</br>";
+            }
+        }
+        tooltip = tooltip.replaceAll("</br>$", "");
+
+        if (!tooltip.isEmpty()) {
+            tooltipManager.addFront(new Tooltip(tooltip));
         }
     }
 }

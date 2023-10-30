@@ -1,6 +1,6 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.item.Storage;
+import tictac7x.charges.item.storage.Storage;
 
 import java.util.Optional;
 

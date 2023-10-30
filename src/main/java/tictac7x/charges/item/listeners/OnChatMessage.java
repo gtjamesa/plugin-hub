@@ -24,7 +24,7 @@ public class OnChatMessage {
     }
 
     public void trigger(final ChatMessage event) {
-        final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
+        final String message = event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("&nbsp;", "");
 
         for (final TriggerChatMessage trigger : chargedItem.triggersChatMessages) {
             if (!isValidTrigger(event, trigger)) continue;
@@ -67,7 +67,12 @@ public class OnChatMessage {
                     final int used = Integer.parseInt(matcher.group("used"));
                     final int total = Integer.parseInt(matcher.group("total"));
                     chargedItem.setCharges(total - used);
-                } catch (final Exception ignored) {}
+                } catch (final Exception ignored) {
+                }
+
+            // Empty storage.
+            } else if (trigger.emptyStorage.isPresent()) {
+                trigger.emptyStorage.get().empty();
 
             // Set charges dynamically from the chat message.
             } else {
@@ -92,6 +97,11 @@ public class OnChatMessage {
             // Consumer
             if (trigger.consumer.isPresent()) {
                 trigger.consumer.get().accept(matcher);
+            }
+
+            // String consumer.
+            if (trigger.stringConsumer.isPresent()) {
+                trigger.stringConsumer.get().accept(message);
             }
 
             // Charged item needs to be set as activated.

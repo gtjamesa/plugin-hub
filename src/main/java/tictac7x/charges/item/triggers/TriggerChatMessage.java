@@ -1,5 +1,7 @@
 package tictac7x.charges.item.triggers;
 
+import tictac7x.charges.item.storage.Storage;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ public class TriggerChatMessage {
     @Nullable public String notification_message;
 
     public Optional<Consumer<Matcher>> consumer = Optional.empty();
+    public Optional<Consumer<String>> stringConsumer = Optional.empty();
+    public Optional<Storage> emptyStorage = Optional.empty();
 
     public TriggerChatMessage(@Nonnull final String message) {
         this.message = Pattern.compile(message);
@@ -115,6 +119,16 @@ public class TriggerChatMessage {
 
     public TriggerChatMessage consumer(final Consumer<Matcher> consumer) {
         this.consumer = Optional.of(consumer);
+        return this;
+    }
+
+    public TriggerChatMessage stringConsumer(final Consumer<String> consumer) {
+        this.stringConsumer = Optional.of(consumer);
+        return this;
+    }
+
+    public TriggerChatMessage emptyStorage(final Storage storage) {
+        this.emptyStorage = Optional.of(storage);
         return this;
     }
 }

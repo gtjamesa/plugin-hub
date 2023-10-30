@@ -16,8 +16,8 @@ import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
-public class J_CelestialRing extends ChargedItem {
-    public J_CelestialRing(
+public class J_RingOfCelestial extends ChargedItem {
+    public J_RingOfCelestial(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,

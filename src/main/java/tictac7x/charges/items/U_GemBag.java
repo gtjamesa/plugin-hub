@@ -21,6 +21,14 @@ import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_GemBag extends ChargedItemWithStorage {
+    private final int[] storeableItems = new int[]{
+        ItemID.UNCUT_SAPPHIRE,
+        ItemID.UNCUT_EMERALD,
+        ItemID.UNCUT_RUBY,
+        ItemID.UNCUT_DIAMOND,
+        ItemID.UNCUT_DRAGONSTONE
+    };
+
     public U_GemBag(
         final Client client,
         final ClientThread client_thread,
@@ -34,23 +42,16 @@ public class U_GemBag extends ChargedItemWithStorage {
         final Plugin plugin
     ) {
         super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.gem_bag;
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GEM_BAG_12020).zeroChargesIsPositive(),
             new TriggerItem(ItemID.OPEN_GEM_BAG).zeroChargesIsPositive(),
         };
 
-        storage.maximumIndividualAmount(60).specificItems(
-            ItemID.UNCUT_SAPPHIRE,
-            ItemID.UNCUT_EMERALD,
-            ItemID.UNCUT_RUBY,
-            ItemID.UNCUT_DIAMOND,
-            ItemID.UNCUT_DRAGONSTONE
-        );
+        storage.maximumIndividualQuantity(60).storeableItems(storeableItems);
 
         this.triggersChatMessages = new TriggerChatMessage[]{
             // Empty to bank or inventory.
-            new TriggerChatMessage("The gem bag is( now)? empty.").consumer(m -> storage.empty()),
+            new TriggerChatMessage("The gem bag is( now)? empty.").emptyStorage(storage),
             // Empty and Check.
             new TriggerChatMessage("(Left in bag: )?Sapphires: (?<sapphires>.+) / Emeralds: (?<emeralds>.+) / Rubies: (?<rubies>.+) Diamonds: (?<diamonds>.+) / Dragonstones: (?<dragonstones>.+)").consumer(m -> {
                 storage.put(ItemID.UNCUT_SAPPHIRE, Integer.parseInt(m.group("sapphires")));
@@ -61,41 +62,25 @@ public class U_GemBag extends ChargedItemWithStorage {
             }),
             // Mining.
             new TriggerChatMessage("You just mined (a|an) (?<gem>.+)!").consumer(m -> {
-                final int itemId = getItemIdFromGem(m.group("gem"));
+                final int itemId = getGemIdFromName(m.group("gem"));
                 storage.add(itemId, 1);
             }),
             // Pickpocketing.
             new TriggerChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<amount>.+)").consumer(m -> {
-                final int itemId = getItemIdFromGem(m.group("gem"));
+                final int itemId = getGemIdFromName(m.group("gem"));
                 final int amount = Integer.parseInt(m.group("amount"));
-
                 storage.add(itemId, amount);
             }),
         };
 
         this.triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{
-            new TriggerMenuOptionClicked("Fill").itemId(ItemID.GEM_BAG_12020, ItemID.OPEN_GEM_BAG).consumer(() -> {
-                storage.fillFromInventory();
-            }),
-            new TriggerMenuOptionClicked("Empty").atBank().itemId(ItemID.GEM_BAG_12020, ItemID.OPEN_GEM_BAG).consumer(() -> {
-                storage.empty();
-            }),
-            new TriggerMenuOptionClicked("Use").use(
-                new String[]{"Gem bag", "Open gem bag"},
-                new String[]{"Uncut sapphire", "Uncut emerald", "Uncut ruby", "Uncut diamond", "Uncut dragonstone"}
-            ).consumer(() -> {
-                storage.fillFromInventory();
-            })
+            new TriggerMenuOptionClicked("Fill").fillStorageFromInventory(storage),
+            new TriggerMenuOptionClicked("Empty").atBank().emptyStorage(storage),
+            new TriggerMenuOptionClicked("Use").use(storeableItems).fillStorageFromInventory(storage),
         };
 
         this.triggersItemDespawned = new TriggerItemDespawned[]{
-            new TriggerItemDespawned(
-                ItemID.UNCUT_SAPPHIRE,
-                ItemID.UNCUT_EMERALD,
-                ItemID.UNCUT_RUBY,
-                ItemID.UNCUT_DIAMOND,
-                ItemID.UNCUT_DRAGONSTONE
-            ).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(storage),
+            new TriggerItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(storage),
         };
 
         this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
@@ -103,7 +88,7 @@ public class U_GemBag extends ChargedItemWithStorage {
         };
     }
 
-    private int getItemIdFromGem(final String gem) {
+    private int getGemIdFromName(final String gem) {
         switch (gem.toLowerCase()) {
             case "sapphire":
                 return ItemID.UNCUT_SAPPHIRE;

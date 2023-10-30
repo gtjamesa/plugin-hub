@@ -94,10 +94,18 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean showBankOverlays() { return true; }
 
         @ConfigItem(
+            keyName = "storage_tooltips",
+            name = "Show storage tooltips",
+            description = "Show tooltips for items with storage",
+            position = 2,
+            section = general
+        ) default boolean showStorageTooltips() { return true; }
+
+        @ConfigItem(
             keyName = "menu_replacements",
             name = "Common menu entries",
             description = "Use common menu entries like \"Teleport\" and \"Check\"",
-            position = 2,
+            position = 3,
             section = general
         ) default boolean useCommonMenuEntries() { return true; }
 
@@ -105,7 +113,7 @@ public interface ChargesImprovedConfig extends Config {
             keyName = "hide_destroy",
             name = "Hide destroy menu entries",
             description = "Hide destroy menu entry from items that make no sense to destroy",
-            position = 3,
+            position = 4,
             section = general
         ) default boolean hideDestroy() { return true; }
 
@@ -473,6 +481,13 @@ public interface ChargesImprovedConfig extends Config {
             description = log_basket,
             section = debug
         ) default int getLogBasketCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = log_basket + "_storage",
+            name = log_basket + "_storage",
+            description = log_basket + "_storage",
+            section = debug
+        ) default String getLogBasketStorage() { return ""; }
 
         @ConfigItem(
             keyName = ardougne_cloak,

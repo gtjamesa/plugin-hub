@@ -1,5 +1,7 @@
 package tictac7x.charges.item.triggers;
 
+import tictac7x.charges.item.storage.Storage;
+
 import java.util.Optional;
 
 public class TriggerMenuOptionClicked {
@@ -11,17 +13,16 @@ public class TriggerMenuOptionClicked {
     public Optional<Boolean> equipped = Optional.empty();
     public Optional<Runnable> consumer = Optional.empty();
     public Optional<Boolean> atBank = Optional.empty();
-    public Optional<String[][]> useMenuTargets = Optional.empty();
+    public Optional<int[]> use = Optional.empty();
+    public Optional<Storage> fillStorageFromInventory = Optional.empty();
+    public Optional<Storage> emptyStorage = Optional.empty();
 
     public TriggerMenuOptionClicked(final String option) {
         this.option = option;
     }
 
-    public TriggerMenuOptionClicked use(final String[] targets1, final String[] targets2) {
-        this.useMenuTargets = Optional.of(new String[][]{
-            targets1,
-            targets2
-        });
+    public TriggerMenuOptionClicked use(final int ...targets) {
+        this.use = Optional.of(targets);
         return this;
     }
 
@@ -52,6 +53,16 @@ public class TriggerMenuOptionClicked {
 
     public TriggerMenuOptionClicked atBank() {
         this.atBank = Optional.of(true);
+        return this;
+    }
+
+    public TriggerMenuOptionClicked fillStorageFromInventory(final Storage storage) {
+        this.fillStorageFromInventory = Optional.of(storage);
+        return this;
+    }
+
+    public TriggerMenuOptionClicked emptyStorage(final Storage storage) {
+        this.emptyStorage = Optional.of(storage);
         return this;
     }
 }

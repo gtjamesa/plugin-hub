@@ -29,6 +29,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
+import net.runelite.client.ui.overlay.tooltip.TooltipManager;
 import tictac7x.charges.item.ChargedItemInfobox;
 import tictac7x.charges.items.*;
 import tictac7x.charges.items.barrows.AhrimsHood;
@@ -186,6 +187,9 @@ public class ChargesImprovedPlugin extends Plugin {
 	private ChatMessageManager chat_messages;
 
 	@Inject
+	private TooltipManager tooltipManager;
+
+	@Inject
 	private Notifier notifier;
 
 	@Provides
@@ -235,7 +239,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_CelestialRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_RingOfCelestial(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_DesertAmulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_EscapeCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_NecklaceOfPassage(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -244,7 +248,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfShadows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_SlayerRing(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_RingOfSlayer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 
 			// Helms
@@ -314,7 +318,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		};
 
 		// Items overlays.
-		overlay_charged_items = new ChargedItemOverlay(client, config, chargedItems);
+		overlay_charged_items = new ChargedItemOverlay(client, tooltipManager, items, config, chargedItems);
 		overlays.add(overlay_charged_items);
 
 		// Items infoboxes.
@@ -490,8 +494,9 @@ public class ChargesImprovedPlugin extends Plugin {
 
 //		if (event.getMenuEntry().getItemId() != -1) {
 //			System.out.println("MENU ENTRY ADDED | " +
-//					"item id: " + event.getMenuEntry().getItemId() +
-//					" , option: " + event.getOption()
+//				"item id: " + event.getMenuEntry().getItemId() +
+//				" , option: " + event.getOption() +
+//				", target: " + event.getTarget()
 //			);
 //		}
 	}
