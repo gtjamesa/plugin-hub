@@ -182,6 +182,20 @@ public class Store {
         return inventory.map(itemContainer -> itemContainer.count(itemId)).orElse(0);
     }
 
+    public int getPreviousInventoryItemCount(final int itemId) {
+        int count = 0;
+
+        if (inventory_items.isPresent()) {
+            for (final Item item : inventory_items.get()) {
+                if (item.getId() == itemId) {
+                    count += item.getQuantity();
+                }
+            }
+        }
+
+        return count;
+    }
+
     public int getEquipmentItemCount(final int itemId) {
         return equipment.map(itemContainer -> itemContainer.count(itemId)).orElse(0);
     }

@@ -95,7 +95,7 @@ public class Storage {
         if (!storeableItems.isPresent()) return;
 
         for (final int itemId : storeableItems.get()) {
-            add(itemId, store.getInventoryItemCount(itemId));
+            add(itemId, store.getPreviousInventoryItemCount(itemId));
         }
     }
 

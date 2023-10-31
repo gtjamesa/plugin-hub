@@ -39,7 +39,6 @@ public class ChargedItemWithStatus extends ChargedItem {
             config,
             store
         );
-        this.onVarbitChanged = new OnVarbitChanged(this);
     }
 
     public void deactivate() {

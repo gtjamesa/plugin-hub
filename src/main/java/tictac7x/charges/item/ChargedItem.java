@@ -20,18 +20,6 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.listeners.OnAnimationChanged;
-import tictac7x.charges.item.listeners.OnChatMessage;
-import tictac7x.charges.item.listeners.OnGraphicChanged;
-import tictac7x.charges.item.listeners.OnHitsplatApplied;
-import tictac7x.charges.item.listeners.OnItemContainerChanged;
-import tictac7x.charges.item.listeners.OnItemDespawned;
-import tictac7x.charges.item.listeners.OnMenuEntryAdded;
-import tictac7x.charges.item.listeners.OnMenuOptionClicked;
-import tictac7x.charges.item.listeners.OnResetDaily;
-import tictac7x.charges.item.listeners.OnStatChanged;
-import tictac7x.charges.item.listeners.OnVarbitChanged;
-import tictac7x.charges.item.listeners.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerAnimation;
 import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerGraphic;
@@ -87,18 +75,8 @@ public class ChargedItem {
 
     public int charges = Charges.UNKNOWN;
 
-    final OnStatChanged onStatChanged;
-    final OnChatMessage onChatMessage;
-    final OnHitsplatApplied onHitsplatApplied;
-    final OnWidgetLoaded onWidgetLoaded;
-    @Nullable OnVarbitChanged onVarbitChanged;
-    final OnAnimationChanged onAnimationChanged;
-    final OnGraphicChanged onGraphicChanged;
-    final OnItemContainerChanged onItemContainerChanged;
-    final OnMenuEntryAdded onMenuEntryAdded;
-    final OnMenuOptionClicked onMenuOptionClicked;
-    final OnItemDespawned onItemDespawned;
-    final OnResetDaily onResetDaily;
+    protected ChargedItemTrigger[] triggers = new ChargedItemTrigger[]{};
+    private final ChargedItemTriggerListener triggerListener = new ChargedItemTriggerListener(this);
 
     public ChargedItem(
         final ItemKey infobox_id,
@@ -124,18 +102,6 @@ public class ChargedItem {
         this.notifier = notifier;
         this.config = config;
         this.store = store;
-
-        this.onStatChanged = new OnStatChanged(this);
-        this.onChatMessage = new OnChatMessage(this, configs, notifier);
-        this.onHitsplatApplied = new OnHitsplatApplied(this, client);
-        this.onWidgetLoaded = new OnWidgetLoaded(this, configs, client, client_thread);
-        this.onAnimationChanged = new OnAnimationChanged(this, client);
-        this.onGraphicChanged = new OnGraphicChanged(this, client);
-        this.onItemContainerChanged = new OnItemContainerChanged(this, client);
-        this.onMenuEntryAdded = new OnMenuEntryAdded(this, client, config);
-        this.onMenuOptionClicked = new OnMenuOptionClicked(this, client, client_thread, items);
-        this.onItemDespawned = new OnItemDespawned(this, client);
-        this.onResetDaily = new OnResetDaily(this, config);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
     }
@@ -281,53 +247,53 @@ public class ChargedItem {
     public void activityCallback(final ItemActivity ignored) {}
 
     public void onChatMessage(final ChatMessage event) {
-        onChatMessage.trigger(event);
+        triggerListener.onChatMessage(event);
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
-        onHitsplatApplied.trigger(event);
+//        onHitsplatApplied.trigger(event);
     }
 
     public void onWidgetLoaded(final WidgetLoaded event) {
-        onWidgetLoaded.trigger(event);
+//        onWidgetLoaded.trigger(event);
     }
 
     public void onVarbitChanged(final VarbitChanged event) {
-        if (onVarbitChanged != null) {
-            onVarbitChanged.trigger(event);
-        }
+//        if (onVarbitChanged != null) {
+//            onVarbitChanged.trigger(event);
+//        }
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        onAnimationChanged.trigger(event);
+//        onAnimationChanged.trigger(event);
     }
 
     public void onStatChanged(final StatChanged event) {
-        onStatChanged.trigger(event);
+//        onStatChanged.trigger(event);
     }
 
     public void onGraphicChanged(final GraphicChanged event) {
-        onGraphicChanged.trigger(event);
+//        onGraphicChanged.trigger(event);
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
-        onItemContainerChanged.trigger(event);
+        triggerListener.onItemContainerChanged(event);
     }
 
     public void onMenuEntryAdded(final MenuEntryAdded event) {
-        onMenuEntryAdded.trigger(event);
+//        onMenuEntryAdded.trigger(event);
     }
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
-        onMenuOptionClicked.trigger(event);
+//        onMenuOptionClicked.trigger(event);
     }
 
     public void onItemDespawned(final ItemDespawned event) {
-        onItemDespawned.trigger(event);
+        triggerListener.onItemDespawned(event);
     }
 
     public void onResetDaily() {
-        onResetDaily.trigger();
+//        onResetDaily.trigger();
     }
 }
 

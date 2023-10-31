@@ -10,15 +10,19 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItemTrigger;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.item.triggers.TriggerItemDespawned;
 import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerItem;
+
+import static tictac7x.charges.store.ItemContainerType.BANK;
+import static tictac7x.charges.store.ItemContainerType.INVENTORY;
+
 
 public class U_GemBag extends ChargedItemWithStorage {
     private final int[] storeableItems = new int[]{
@@ -41,19 +45,17 @@ public class U_GemBag extends ChargedItemWithStorage {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GEM_BAG_12020).zeroChargesIsPositive(),
             new TriggerItem(ItemID.OPEN_GEM_BAG).zeroChargesIsPositive(),
         };
 
-        storage.maximumIndividualQuantity(60).storeableItems(storeableItems);
-
-        this.triggersChatMessages = new TriggerChatMessage[]{
+        this.triggers = new ChargedItemTrigger[]{
             // Empty to bank or inventory.
-            new TriggerChatMessage("The gem bag is( now)? empty.").emptyStorage(storage),
+            new ChargedItemTrigger().onChatMessage("The gem bag is( now)? empty.").emptyStorage(),
             // Empty and Check.
-            new TriggerChatMessage("(Left in bag: )?Sapphires: (?<sapphires>.+) / Emeralds: (?<emeralds>.+) / Rubies: (?<rubies>.+) Diamonds: (?<diamonds>.+) / Dragonstones: (?<dragonstones>.+)").consumer(m -> {
+            new ChargedItemTrigger().onChatMessage("(Left in bag: )?Sapphires: (?<sapphires>.+) / Emeralds: (?<emeralds>.+) / Rubies: (?<rubies>.+) Diamonds: (?<diamonds>.+) / Dragonstones: (?<dragonstones>.+)").consumer(m -> {
                 storage.put(ItemID.UNCUT_SAPPHIRE, Integer.parseInt(m.group("sapphires")));
                 storage.put(ItemID.UNCUT_EMERALD, Integer.parseInt(m.group("emeralds")));
                 storage.put(ItemID.UNCUT_RUBY, Integer.parseInt(m.group("rubies")));
@@ -61,27 +63,35 @@ public class U_GemBag extends ChargedItemWithStorage {
                 storage.put(ItemID.UNCUT_DRAGONSTONE, Integer.parseInt(m.group("dragonstones")));
             }),
             // Mining.
-            new TriggerChatMessage("You just mined (a|an) (?<gem>.+)!").consumer(m -> {
+            new ChargedItemTrigger().onChatMessage("You just mined (a|an) (?<gem>.+)!").specificItem(ItemID.OPEN_GEM_BAG).consumer(m -> {
                 final int itemId = getGemIdFromName(m.group("gem"));
                 storage.add(itemId, 1);
             }),
             // Pickpocketing.
-            new TriggerChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<amount>.+)").consumer(m -> {
+            new ChargedItemTrigger().onChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<amount>.+)").consumer(m -> {
                 final int itemId = getGemIdFromName(m.group("gem"));
                 final int amount = Integer.parseInt(m.group("amount"));
                 storage.add(itemId, amount);
             }),
+            // Fill from inventory.
+            new ChargedItemTrigger().onItemContainerChanged(INVENTORY).onMenuOption("Fill").fillStorageFromInventory(),
+            // Empty to bank.
+            new ChargedItemTrigger().onItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
+            // Pick up.
+            new ChargedItemTrigger().onItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage()
         };
 
+        storage.maximumIndividualQuantity(60).storeableItems(storeableItems);
+
         this.triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{
-            new TriggerMenuOptionClicked("Fill").fillStorageFromInventory(storage),
-            new TriggerMenuOptionClicked("Empty").atBank().emptyStorage(storage),
+//            new TriggerMenuOptionClicked("Fill").fillStorageFromInventory(storage),
+//            new TriggerMenuOptionClicked("Empty").atBank().emptyStorage(storage),
             new TriggerMenuOptionClicked("Use").use(storeableItems).fillStorageFromInventory(storage),
         };
 
-        this.triggersItemDespawned = new TriggerItemDespawned[]{
-            new TriggerItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(storage),
-        };
+//        this.triggersItemDespawned = new TriggerItemDespawned[]{
+//            new TriggerItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(storage),
+//        };
 
         this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
             new TriggerMenuEntryAdded("Destroy").hide(),

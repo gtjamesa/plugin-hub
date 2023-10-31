@@ -16,7 +16,7 @@ import tictac7x.charges.store.Store;
 import java.util.List;
 
 public class ChargedItemWithStorage extends ChargedItem {
-    protected final Storage storage;
+    public final Storage storage;
 
     public ChargedItemWithStorage(
         final String configKey,

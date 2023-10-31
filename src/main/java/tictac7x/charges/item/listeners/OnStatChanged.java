@@ -43,8 +43,8 @@ public class OnStatChanged {
         // Activated check.
         if (trigger.isActivated && !chargedItem.isActivated()) return false;
 
-        // Menu option check.
-        if (trigger.menuEntry.isPresent() && chargedItem.store.notInMenuEntries(trigger.menuEntry.get())) return false;
+//        // Menu option check.
+//        if (trigger.menuEntry.isPresent() && chargedItem.store.notInMenuEntries(trigger.menuEntry.get())) return false;
 
         // Specific item check.
         if (!trigger.specificItems.isEmpty() && !trigger.specificItems.contains(chargedItem.item_id)) return false;
