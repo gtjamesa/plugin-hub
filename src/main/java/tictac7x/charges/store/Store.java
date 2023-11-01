@@ -28,6 +28,7 @@ public class Store {
 
     private int gametick = 0;
     private int gametick_before = 0;
+    private int inventoryEmptySlots = 0;
 
     public Optional<ItemContainer> inventory = Optional.empty();
     public Optional<ItemContainer> equipment = Optional.empty();
@@ -42,6 +43,10 @@ public class Store {
         this.configManager = configManager;
     }
 
+    public int getPreviouslyInventoryEmptySlots() {
+        return inventoryEmptySlots;
+    }
+
     public void onStatChanged(final StatChanged event) {
         skillExperiences.put(event.getSkill(), event.getXp());
     }
@@ -49,6 +54,7 @@ public class Store {
     public void onItemContainerChanged(final ItemContainerChanged event) {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             inventory = Optional.of(event.getItemContainer());
+            inventoryEmptySlots = 28 - event.getItemContainer().count();
         }
 
         if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {

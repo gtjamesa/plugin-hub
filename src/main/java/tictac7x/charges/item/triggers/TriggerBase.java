@@ -20,7 +20,6 @@ public abstract class TriggerBase {
 
     // Storage.
     public Optional<Boolean> emptyStorage = Optional.empty();
-    public Optional<Boolean> fillStorageFromInventory = Optional.empty();
     public Optional<Boolean> pickUpToStorage = Optional.empty();
 
     public TriggerBase fixedCharges(final int charges) {
@@ -42,13 +41,6 @@ public abstract class TriggerBase {
         this.emptyStorage = Optional.of(true);
         return this;
     }
-
-    public TriggerBase fillStorageFromInventory() {
-        this.fillStorageFromInventory = Optional.of(true);
-        return this;
-    }
-
-
 
     public TriggerBase specificItem(final int ...itemIds) {
         this.specificItem = Optional.of(itemIds);

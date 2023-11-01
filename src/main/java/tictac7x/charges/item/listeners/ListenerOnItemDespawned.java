@@ -43,6 +43,6 @@ public class ListenerOnItemDespawned extends ListenerBase {
         // Pick up to storage check.
         if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) return false;
 
-        return true;
+        return super.isValidTrigger(trigger);
     }
 }

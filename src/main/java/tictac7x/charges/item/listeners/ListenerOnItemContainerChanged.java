@@ -5,6 +5,7 @@ import net.runelite.api.ItemContainer;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.Notifier;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemContainerType;
@@ -17,11 +18,26 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
     public void trigger(final ItemContainerChanged event) {
         for (final TriggerBase triggerBase : chargedItem.triggers) {
             if (!isValidTrigger(triggerBase, event)) continue;
+            boolean triggerUsed = false;
             final OnItemContainerChanged trigger = (OnItemContainerChanged) triggerBase;
 
-            if (super.trigger(trigger)) {
-                return;
+            // Fill storage from inventory.
+            if (trigger.fillStorageFromInventory.isPresent()) {
+                ((ChargedItemWithStorage) chargedItem).storage.fillFromInventory();
+                triggerUsed = true;
             }
+
+            // Empty storage to inventory.
+            if (trigger.emptyStorageToInventory.isPresent()) {
+                ((ChargedItemWithStorage) chargedItem).storage.emptyToInventory();
+                triggerUsed = true;
+            }
+
+            if (super.trigger(trigger)) {
+                triggerUsed = true;
+            }
+
+            if (triggerUsed) return;
         }
     }
 
@@ -39,6 +55,11 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
             return false;
         }
 
-        return true;
+        // Fill storage from inventory check.
+        if (trigger.fillStorageFromInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
+            return false;
+        }
+
+        return super.isValidTrigger(trigger);
     }
 }

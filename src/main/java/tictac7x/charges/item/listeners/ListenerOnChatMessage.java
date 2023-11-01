@@ -72,7 +72,7 @@ public class ListenerOnChatMessage extends ListenerBase {
             return false;
         }
 
-        return true;
+        return super.isValidTrigger(trigger);
     }
 
     private String getCleanMessage(final ChatMessage event) {

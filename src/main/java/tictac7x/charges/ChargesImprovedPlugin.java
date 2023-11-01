@@ -335,12 +335,11 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
-		store.onItemContainerChanged(event);
-
 		for (final ChargedItem infobox : chargedItems) {
 			infobox.onItemContainerChanged(event);
 		}
 
+		store.onItemContainerChanged(event);
 		store.onInventoryItemsChanged(event);
 		store.onBankItemsChanged(event);
 

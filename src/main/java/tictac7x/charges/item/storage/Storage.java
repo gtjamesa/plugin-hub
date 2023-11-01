@@ -99,6 +99,21 @@ public class Storage {
         }
     }
 
+    public void emptyToInventory() {
+        if (!store.inventory.isPresent()) return;
+
+        int inventoryEmptySlots = store.getPreviouslyInventoryEmptySlots();
+
+        for (final StorageItem storageItem : storage) {
+            // Empty storage until 0 inventory slots left.
+            if (inventoryEmptySlots == 0) break;
+
+            final int toEmptyStorageSlots = Math.min(inventoryEmptySlots, storageItem.getQuantity());
+            put(storageItem.itemId, storageItem.getQuantity() - toEmptyStorageSlots);
+            inventoryEmptySlots -= toEmptyStorageSlots;
+        }
+    }
+
     public int getCharges() {
         int charges = 0;
 

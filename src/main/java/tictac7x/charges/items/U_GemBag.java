@@ -76,11 +76,11 @@ public class U_GemBag extends ChargedItemWithStorage {
                 storage.add(itemId, amount);
             }),
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).onMenuOption("Fill").fillStorageFromInventory(),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
             // Empty to bank.
             new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
             // Use gem on bag
-            new OnItemContainerChanged(INVENTORY).use(storeableItems).fillStorageFromInventory(),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storeableItems),
             // Pick up.
             new OnItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
         };

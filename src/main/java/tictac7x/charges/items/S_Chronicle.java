@@ -30,7 +30,7 @@ public class S_Chronicle extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CHRONICLE, ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        super(ItemKey.CHRONICLE, ItemID.CHRONICLE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.config_key = ChargesImprovedConfig.chronicle;
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CHRONICLE),

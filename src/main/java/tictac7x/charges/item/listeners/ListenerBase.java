@@ -16,7 +16,6 @@ public abstract class ListenerBase {
     }
 
     boolean trigger(final TriggerBase trigger) {
-        if (!isValidTrigger(trigger)) return false;
         boolean triggerUsed = false;
 
         // Fixed charges.
@@ -43,12 +42,6 @@ public abstract class ListenerBase {
             triggerUsed = true;
         }
 
-        // Fill storage from inventory.
-        if (trigger.fillStorageFromInventory.isPresent()) {
-            ((ChargedItemWithStorage) chargedItem).storage.fillFromInventory();
-            triggerUsed = true;
-        }
-
         // Activate.
         if (trigger.activate.isPresent()) {
             ((ChargedItemWithStatus) chargedItem).activate();
@@ -70,7 +63,7 @@ public abstract class ListenerBase {
         return triggerUsed;
     }
 
-    private boolean isValidTrigger(final TriggerBase trigger) {
+    boolean isValidTrigger(final TriggerBase trigger) {
         // Specific item check.
         specificItemCheck: if (trigger.specificItem.isPresent()) {
             for (final int itemId : trigger.specificItem.get()) {
@@ -92,6 +85,11 @@ public abstract class ListenerBase {
             return false;
         }
 
+        // Menu option without menu target check.
+        if (trigger.onMenuOption.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.item_id)) {
+            return false;
+        }
+
         // Equipped check.
         if (trigger.equipped.isPresent() && !chargedItem.store.equipmentContainsItem(chargedItem.item_id)) {
             return false;
@@ -104,11 +102,6 @@ public abstract class ListenerBase {
 
         // Empty storage check.
         if (trigger.emptyStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-            return false;
-        }
-
-        // Fill storage from inventory check.
-        if (trigger.fillStorageFromInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
             return false;
         }
 
