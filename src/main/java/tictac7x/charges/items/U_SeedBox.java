@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_SeedBox extends ChargedItem {
@@ -36,16 +36,18 @@ public class U_SeedBox extends ChargedItem {
             new TriggerItem(ItemID.SEED_BOX).zeroChargesIsPositive(),
             new TriggerItem(ItemID.OPEN_SEED_BOX).zeroChargesIsPositive(),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("(The|Your) seed box is( now| already)? empty.").fixedCharges(0),
-            new TriggerChatMessage("Stored (?<charges>.+) x .* seed in your seed box.").increaseDynamically(),
-            new TriggerChatMessage("You put (?<charges>.+) x .* seed straight into your open seed box.").increaseDynamically(),
-            new TriggerChatMessage("Emptied (?<charges>.+) x .* seed to your inventory.").decreaseDynamically(),
-            new TriggerChatMessage("The seed box contains:").fixedCharges(0),
-            new TriggerChatMessage("(?<charges>.+) x .* seed.").increaseDynamically(),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("(The|Your) seed box is( now| already)? empty.").fixedCharges(0),
+            new OnChatMessage("Stored (?<charges>.+) x .* seed in your seed box.").increaseDynamically(),
+            new OnChatMessage("You put (?<charges>.+) x .* seed straight into your open seed box.").increaseDynamically(),
+            new OnChatMessage("Emptied (?<charges>.+) x .* seed to your inventory.").decreaseDynamically(),
+            new OnChatMessage("The seed box contains:").fixedCharges(0),
+            new OnChatMessage("(?<charges>.+) x .* seed.").increaseDynamically(),
         };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+
+        // TODO
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

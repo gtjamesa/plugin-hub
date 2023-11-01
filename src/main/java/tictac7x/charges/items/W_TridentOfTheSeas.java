@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -42,15 +42,16 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP_E),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has run out of charges.").fixedCharges(0).notification(),
-            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
-            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification(),
-            new TriggerChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))? has (?<charges>.+) charges?( left)?."),
-            new TriggerChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)")
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has run out of charges.").notification().fixedCharges(0),
+            new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
+            new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification().setDynamically(),
+            new OnChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))? has (?<charges>.+) charges?( left)?.").setDynamically(),
+            new OnChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)").setDynamically()
         };
-        this.triggersGraphics = new TriggerGraphic[]{
-            new TriggerGraphic(1251).decreaseCharges(1).equipped()
-        };
+        // TODO
+//        this.triggersGraphics = new TriggerGraphic[]{
+//            new TriggerGraphic(1251).decreaseCharges(1).equipped()
+//        };
     }
 }

@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class AhrimsRobetop extends ChargedItem {
@@ -38,8 +39,8 @@ public class AhrimsRobetop extends ChargedItem {
             new TriggerItem(ItemID.AHRIMS_ROBETOP_25).fixedCharges(25),
             new TriggerItem(ItemID.AHRIMS_ROBETOP_0).fixedCharges(0)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Ahrim's body has broken!").notification()
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("Ahrim's body has broken!").notification(),
         };
     }
 }

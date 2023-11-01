@@ -11,12 +11,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerDailyReset;
 
 public class S_FaladorShield extends ChargedItem {
     public S_FaladorShield(
@@ -37,18 +36,20 @@ public class S_FaladorShield extends ChargedItem {
             new TriggerItem(ItemID.FALADOR_SHIELD_3),
             new TriggerItem(ItemID.FALADOR_SHIELD_4),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),
-            new TriggerChatMessage("You have two remaining charges for today.").onItemClick().fixedCharges(2),
-            new TriggerChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().fixedCharges(0),
-            new TriggerChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0)
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),
+            new OnChatMessage("You have two remaining charges for today.").onItemClick().fixedCharges(2),
+            new OnChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().fixedCharges(0),
+            new OnChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0)
         };
-        this.triggersGraphics = new TriggerGraphic[]{
-            new TriggerGraphic(321).decreaseCharges(1)
-        };
-        this.triggersResetsDaily = new TriggerDailyReset[]{
-            new TriggerDailyReset(1).specificItem(ItemID.FALADOR_SHIELD_3),
-            new TriggerDailyReset(2).specificItem(ItemID.FALADOR_SHIELD_4)
-        };
+
+        // TODO
+//        this.triggersGraphics = new TriggerGraphic[]{
+//            new TriggerGraphic(321).decreaseCharges(1)
+//        };
+//        this.triggersResetsDaily = new TriggerDailyReset[]{
+//            new TriggerDailyReset(1).specificItem(ItemID.FALADOR_SHIELD_3),
+//            new TriggerDailyReset(2).specificItem(ItemID.FALADOR_SHIELD_4)
+//        };
     }
 }

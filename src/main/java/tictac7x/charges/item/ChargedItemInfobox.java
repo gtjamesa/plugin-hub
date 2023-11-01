@@ -91,7 +91,6 @@ public class ChargedItemInfobox extends InfoBox {
     public boolean render() {
         updateInfobox();
 
-
         return (
             config.showInfoboxes() &&
             !config.getHiddenInfoboxes().contains(chargedItem.infobox_id) &&

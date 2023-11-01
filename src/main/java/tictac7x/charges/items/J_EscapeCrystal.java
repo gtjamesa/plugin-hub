@@ -9,10 +9,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
-import tictac7x.charges.item.triggers.TriggerVarbit;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -38,9 +36,10 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).quantityCharges().hideOverlay(),
         };
-        this.triggersVarbits = new TriggerVarbit[]{
-            new TriggerVarbit(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).deactivate(),
-            new TriggerVarbit(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 1).activate(),
-        };
+        // TODO
+//        this.triggersVarbits = new TriggerVarbit[]{
+//            new TriggerVarbit(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).deactivate(),
+//            new TriggerVarbit(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 1).activate(),
+//        };
     }
 }

@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -37,19 +37,20 @@ public class U_BottomlessCompostBucket extends ChargedItem {
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET).fixedCharges(0),
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(832).menuEntry("Big Compost Bin", "Take").unallowedItems(ItemID.BUCKET).increaseCharges(2),
-            new TriggerAnimation(832).menuEntry("Compost Bin", "Take").unallowedItems(ItemID.BUCKET).increaseCharges(1),
-        };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You treat the .*").onItemClick().decreaseCharges(1),
-            new TriggerChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
-            new TriggerChatMessage("Your bottomless compost bucket has (?<charges>.+) uses of (?<type>.+) ?compost remaining."),
-            new TriggerChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)").fixedCharges(0),
-            new TriggerChatMessage("Your bottomless compost bucket is currently holding one use of (?<type>.+?) ?compost.").fixedCharges(1),
-            new TriggerChatMessage("Your bottomless compost bucket is currently holding (?<charges>.+) uses of (?<type>.+?) ?compost."),
-            new TriggerChatMessage("You discard the contents of your bottomless compost bucket.(?<type>.*)").fixedCharges(0),
-            new TriggerChatMessage("You fill your bottomless compost bucket with .* buckets? of (?<type>.+?) ?compost. Your bottomless compost bucket now contains a total of (?<charges>.+) uses.")
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(832).menuEntry("Big Compost Bin", "Take").unallowedItems(ItemID.BUCKET).increaseCharges(2),
+//            new TriggerAnimation(832).menuEntry("Compost Bin", "Take").unallowedItems(ItemID.BUCKET).increaseCharges(1),
+//        };
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You treat the .*").onItemClick().decreaseCharges(1),
+            new OnChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
+            new OnChatMessage("Your bottomless compost bucket has (?<charges>.+) uses of (?<type>.+) ?compost remaining.").setDynamically(),
+            new OnChatMessage("Your bottomless compost bucket doesn't currently have any compost in it!(?<type>.*)").fixedCharges(0),
+            new OnChatMessage("Your bottomless compost bucket is currently holding one use of (?<type>.+?) ?compost.").fixedCharges(1),
+            new OnChatMessage("Your bottomless compost bucket is currently holding (?<charges>.+) uses of (?<type>.+?) ?compost.").setDynamically(),
+            new OnChatMessage("You discard the contents of your bottomless compost bucket.(?<type>.*)").fixedCharges(0),
+            new OnChatMessage("You fill your bottomless compost bucket with .* buckets? of (?<type>.+?) ?compost. Your bottomless compost bucket now contains a total of (?<charges>.+) uses.").setDynamically()
         };
     }
 

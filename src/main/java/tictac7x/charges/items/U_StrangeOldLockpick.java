@@ -11,7 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -35,9 +36,9 @@ public class U_StrangeOldLockpick extends ChargedItem {
             new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK),
             new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK_FULL).fixedCharges(50)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining."),
-            new TriggerChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.").notification("Your strange old lockpick crumbles to dust."),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.").notification("Your strange old lockpick crumbles to dust."),
         };
     }
 }

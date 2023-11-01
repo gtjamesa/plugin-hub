@@ -11,10 +11,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_Camulet extends ChargedItem {
@@ -35,11 +36,11 @@ public class J_Camulet extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CAMULET),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Camulet has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("You recharge the Camulet using camel dung. Yuck!").fixedCharges(4),
-            new TriggerChatMessage("The Camulet is already fully charged.").fixedCharges(4),
-            new TriggerChatMessage("The Camulet has unlimited charges.").fixedCharges(Charges.UNLIMITED),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your Camulet has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("You recharge the Camulet using camel dung. Yuck!").fixedCharges(4),
+            new OnChatMessage("The Camulet is already fully charged.").fixedCharges(4),
+            new OnChatMessage("The Camulet has unlimited charges.").fixedCharges(Charges.UNLIMITED),
         };
     }
 }

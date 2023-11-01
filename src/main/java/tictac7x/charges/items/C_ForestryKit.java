@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -34,8 +33,9 @@ public class C_ForestryKit extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.FORESTRY_KIT).fixedCharges(Charges.UNLIMITED),
         };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+        // TODO
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

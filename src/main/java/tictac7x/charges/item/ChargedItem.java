@@ -1,6 +1,7 @@
 package tictac7x.charges.item;
 
 import net.runelite.api.Client;
+import net.runelite.api.Item;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GraphicChanged;
@@ -20,19 +21,14 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
-import tictac7x.charges.item.triggers.TriggerHitsplat;
+import tictac7x.charges.item.listeners.ListenerBase;
+import tictac7x.charges.item.listeners.ListenerOnChatMessage;
+import tictac7x.charges.item.listeners.ListenerOnItemContainerChanged;
+import tictac7x.charges.item.listeners.ListenerOnItemDespawned;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnItemContainerChanged;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerItemContainer;
-import tictac7x.charges.item.triggers.TriggerDailyReset;
-import tictac7x.charges.item.triggers.TriggerItemDespawned;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
-import tictac7x.charges.item.triggers.TriggerStat;
-import tictac7x.charges.item.triggers.TriggerVarbit;
-import tictac7x.charges.item.triggers.TriggerWidget;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.ItemKey;
@@ -56,27 +52,14 @@ public class ChargedItem {
 
     @Nullable public String config_key;
     @Nullable public String[] extra_config_keys;
-    public TriggerChatMessage[] triggersChatMessages = new TriggerChatMessage[]{};
-    public TriggerAnimation[] triggersAnimations = new TriggerAnimation[]{};
-    public TriggerGraphic[] triggersGraphics = new TriggerGraphic[]{};
-    public TriggerHitsplat[] triggersHitsplats = new TriggerHitsplat[]{};
     public TriggerItem[] triggersItems = new TriggerItem[]{};
-    public TriggerWidget[] triggersWidgets = new TriggerWidget[]{};
-    public TriggerDailyReset[] triggersResetsDaily = new TriggerDailyReset[]{};
-    public TriggerItemContainer[] triggersItemContainers = new TriggerItemContainer[]{};
-    public TriggerStat[] triggersStats = new TriggerStat[]{};
-    public TriggerVarbit[] triggersVarbits = new TriggerVarbit[]{};
-    public TriggerMenuEntryAdded[] triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{};
-    public TriggerMenuOptionClicked[] triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{};
-    public TriggerItemDespawned[] triggersItemDespawned = new TriggerItemDespawned[]{};
-
-    private boolean inEquipment = false;
-    private boolean inInventory = false;
 
     public int charges = Charges.UNKNOWN;
 
-    protected ChargedItemTrigger[] triggers = new ChargedItemTrigger[]{};
-    private final ChargedItemTriggerListener triggerListener = new ChargedItemTriggerListener(this);
+    public TriggerBase[] triggers = new TriggerBase[]{};
+    public final ListenerOnChatMessage listenerOnChatMessage;
+    public final ListenerOnItemContainerChanged listenerOnItemContainerChanged;
+    public final ListenerOnItemDespawned listenerOnItemDespawned;
 
     public ChargedItem(
         final ItemKey infobox_id,
@@ -103,23 +86,19 @@ public class ChargedItem {
         this.config = config;
         this.store = store;
 
+        listenerOnChatMessage = new ListenerOnChatMessage(this, notifier);
+        listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(this, notifier);
+        listenerOnItemDespawned = new ListenerOnItemDespawned(this, notifier);
+
         client_thread.invokeLater(this::loadChargesFromConfig);
     }
 
     public boolean inInventory() {
-        return inInventory;
+        return store.inventoryContainsItem(item_id);
     }
 
     public boolean isEquipped() {
-        return inEquipment;
-    }
-
-    public void setInInventory(final boolean inInventory) {
-        this.inInventory = inInventory;
-    }
-
-    public void setInEquipment(final boolean inEquipment) {
-        this.inEquipment = inEquipment;
+        return store.equipmentContainsItem(item_id);
     }
 
     public int getCharges() {
@@ -247,7 +226,7 @@ public class ChargedItem {
     public void activityCallback(final ItemActivity ignored) {}
 
     public void onChatMessage(final ChatMessage event) {
-        triggerListener.onChatMessage(event);
+        listenerOnChatMessage.trigger(event);
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
@@ -277,7 +256,16 @@ public class ChargedItem {
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
-        triggerListener.onItemContainerChanged(event);
+        chargedItemIdChecker: for (final Item item : event.getItemContainer().getItems()) {
+            for (final TriggerItem triggerItem : triggersItems) {
+                if (triggerItem.item_id == item.getId()) {
+                    this.item_id = item.getId();
+                    break chargedItemIdChecker;
+                }
+            }
+        }
+
+        listenerOnItemContainerChanged.trigger(event);
     }
 
     public void onMenuEntryAdded(final MenuEntryAdded event) {
@@ -289,7 +277,7 @@ public class ChargedItem {
     }
 
     public void onItemDespawned(final ItemDespawned event) {
-        triggerListener.onItemDespawned(event);
+        listenerOnItemDespawned.trigger(event);
     }
 
     public void onResetDaily() {

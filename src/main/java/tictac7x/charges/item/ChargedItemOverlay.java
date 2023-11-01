@@ -16,11 +16,9 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.item.triggers.TriggerItem;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.util.Map;
 
 public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;

@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_BraceletOfSlaughter extends ChargedItem {
@@ -34,10 +35,10 @@ public class J_BraceletOfSlaughter extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BRACELET_OF_SLAUGHTER).needsToBeEquipped(),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30).notification("Your slaughter bracelet crumbles to dust.")
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30).notification("Your slaughter bracelet crumbles to dust.")
         };
     }
 }

@@ -11,12 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerDailyReset;
 
 public class C_ArdougneCloak extends ChargedItem {
     public C_ArdougneCloak(
@@ -40,13 +40,13 @@ public class C_ArdougneCloak extends ChargedItem {
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(Charges.UNLIMITED)
         };
 
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference()
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference()
         };
-
-        this.triggersResetsDaily = new TriggerDailyReset[]{
-            new TriggerDailyReset(3).specificItem(ItemID.ARDOUGNE_CLOAK_2),
-            new TriggerDailyReset(5).specificItem(ItemID.ARDOUGNE_CLOAK_3),
-        };
+        // TODO
+//        this.triggersResetsDaily = new TriggerDailyReset[]{
+//            new TriggerDailyReset(3).specificItem(ItemID.ARDOUGNE_CLOAK_2),
+//            new TriggerDailyReset(5).specificItem(ItemID.ARDOUGNE_CLOAK_3),
+//        };
     }
 }

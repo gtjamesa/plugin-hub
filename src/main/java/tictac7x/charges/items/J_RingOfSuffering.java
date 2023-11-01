@@ -11,11 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
-import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerHitsplat;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_RingOfSuffering extends ChargedItemWithStatus {
@@ -43,15 +42,16 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_25248),
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_26762),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
+        this.triggers = new TriggerBase[]{
             // Check
-            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").onItemClick().activate(),
-            new TriggerChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").onItemClick().deactivate(),
+            new OnChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").setDynamically().onItemClick().activate(),
+            new OnChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").setDynamically().onItemClick().deactivate(),
             // Charge
-            new TriggerChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges."),
+            new OnChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges.").setDynamically(),
         };
-        this.triggersHitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onSelf().isActivated(),
-        };
+        // TODO
+//        this.triggersHitsplats = new TriggerHitsplat[]{
+//            new TriggerHitsplat(1).equipped().onSelf().isActivated(),
+//        };
     }
 }

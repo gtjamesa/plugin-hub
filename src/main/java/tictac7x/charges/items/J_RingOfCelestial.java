@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_RingOfCelestial extends ChargedItem {
@@ -35,13 +36,14 @@ public class J_RingOfCelestial extends ChargedItem {
             new TriggerItem(ItemID.CELESTIAL_RING_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.CELESTIAL_RING).needsToBeEquipped()
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You add .+ charges? to your Celestial ring. It now has (?<charges>.+) charges?."),
-            new TriggerChatMessage("You add (?<charges>.+) charges? to your Celestial ring."),
-            new TriggerChatMessage("You fully uncharge your Celestial ring.").fixedCharges(0),
-            new TriggerChatMessage("Your Celestial ring has (?<charges>.+) charges?."),
-            new TriggerChatMessage("Your Celestial ring has run out of charges").fixedCharges(0).notification(),
-            new TriggerChatMessage("You manage to mine").ignore("You manage to mine some pay-dirt.").equipped().decreaseCharges(1)
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You add .+ charges? to your Celestial ring. It now has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to your Celestial ring.").setDynamically(),
+            new OnChatMessage("You fully uncharge your Celestial ring.").fixedCharges(0),
+            new OnChatMessage("Your Celestial ring has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("Your Celestial ring has run out of charges").notification().fixedCharges(0),
+                // TODO
+//            new OnChatMessage("You manage to mine").ignore("You manage to mine some pay-dirt.").equipped().decreaseCharges(1)
         };
     }
 }

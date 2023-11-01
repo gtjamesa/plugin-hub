@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerHitsplat;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_RingOfRecoil extends ChargedItem {
@@ -35,13 +35,15 @@ public class J_RingOfRecoil extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_RECOIL),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You can inflict (?<charges>.+) more points? of damage before a ring will shatter"),
-            new TriggerChatMessage("Your Ring of Recoil has shattered.").fixedCharges(40).notification(),
-            new TriggerChatMessage("The ring is fully charged. There would be no point in breaking it.").fixedCharges(40)
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("You can inflict (?<charges>.+) more points? of damage before a ring will shatter"),
+            new OnChatMessage("Your Ring of Recoil has shattered.").notification().fixedCharges(40),
+            new OnChatMessage("The ring is fully charged. There would be no point in breaking it.").fixedCharges(40)
         };
-        this.triggersHitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onSelf()
-        };
+
+        // TODO
+//        this.triggersHitsplats = new TriggerHitsplat[]{
+//            new TriggerHitsplat(1).equipped().onSelf()
+//        };
     }
 }

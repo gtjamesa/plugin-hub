@@ -12,14 +12,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerStat;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class U_HerbSack extends ChargedItem {
     public U_HerbSack(
@@ -40,24 +38,26 @@ public class U_HerbSack extends ChargedItem {
             new TriggerItem(ItemID.HERB_SACK).zeroChargesIsPositive(),
             new TriggerItem(ItemID.OPEN_HERB_SACK).zeroChargesIsPositive(),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The herb sack is empty.").fixedCharges(0),
-            new TriggerChatMessage("You put the Grimy .* herb into your herb sack.").increaseCharges(1),
-            new TriggerChatMessage("You look in your herb sack and see:").fixedCharges(0),
-            new TriggerChatMessage("(?<charges>.+) x Grimy").increaseDynamically(),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("The herb sack is empty.").fixedCharges(0),
+            new OnChatMessage("You put the Grimy .* herb into your herb sack.").increaseCharges(1),
+            new OnChatMessage("You look in your herb sack and see:").fixedCharges(0),
+            new OnChatMessage("(?<charges>.+) x Grimy").increaseDynamically(),
         };
-        this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herb sack", "Fill").menuEntry("Open herb sack", "Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herb sack", "Empty").menuEntry("Open herb sack", "Empty").decreaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Herb sack", "Empty").menuEntry("Open herb sack", "Empty").decreaseByBankDifference(),
-            // Edge case where herb sack is open, but there is not enough space for it in herb sack.
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herbs", "Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
-        };
-        this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Pick", "Herbs").increaseCharges(1),
-        };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+
+        // TODO
+//        this.triggersItemContainers = new TriggerItemContainer[]{
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herb sack", "Fill").menuEntry("Open herb sack", "Fill").increaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herb sack", "Empty").menuEntry("Open herb sack", "Empty").decreaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Herb sack", "Empty").menuEntry("Open herb sack", "Empty").decreaseByBankDifference(),
+//            // Edge case where herb sack is open, but there is not enough space for it in herb sack.
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Herbs", "Pick").specificItem(ItemID.OPEN_HERB_SACK).decreaseCharges(1),
+//        };
+//        this.triggersStats = new TriggerStat[]{
+//            new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Pick", "Herbs").increaseCharges(1),
+//        };
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

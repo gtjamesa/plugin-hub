@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerDailyReset;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -35,11 +35,12 @@ public class J_DesertAmulet extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.DESERT_AMULET_3).maxCharges(1),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You have already used your available teleports for today.").fixedCharges(0),
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("You have already used your available teleports for today.").fixedCharges(0),
         };
-        this.triggersResetsDaily = new TriggerDailyReset[]{
-            new TriggerDailyReset(1).specificItem(ItemID.DESERT_AMULET_3),
-        };
+        // TODO
+//        this.triggersResetsDaily = new TriggerDailyReset[]{
+//            new TriggerDailyReset(1).specificItem(ItemID.DESERT_AMULET_3),
+//        };
     }
 }

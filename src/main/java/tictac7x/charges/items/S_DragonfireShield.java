@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class S_DragonfireShield extends ChargedItem {
@@ -38,14 +38,15 @@ public class S_DragonfireShield extends ChargedItem {
             new TriggerItem(ItemID.DRAGONFIRE_WARD_22003).fixedCharges(0),
             new TriggerItem(ItemID.DRAGONFIRE_WARD)
         };
-        this.triggersGraphics = new TriggerGraphic[]{
-                new TriggerGraphic(1165).decreaseCharges(1)
-        };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The shield has (?<charges>.+) charges?.").onItemClick(),
-            new TriggerChatMessage("You vent the shield's remaining charges harmlessly into the air.").fixedCharges(0),
-            new TriggerChatMessage("Your dragonfire (shield|ward) glows more brightly.").increaseCharges(1),
-            new TriggerChatMessage("Your dragonfire shield is already fully charged.").fixedCharges(50)
+        // TODO
+//        this.triggersGraphics = new TriggerGraphic[]{
+//                new TriggerGraphic(1165).decreaseCharges(1)
+//        };
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("The shield has (?<charges>.+) charges?.").setDynamically().onItemClick(),
+            new OnChatMessage("You vent the shield's remaining charges harmlessly into the air.").fixedCharges(0),
+            new OnChatMessage("Your dragonfire (shield|ward) glows more brightly.").increaseCharges(1),
+            new OnChatMessage("Your dragonfire shield is already fully charged.").fixedCharges(50)
         };
     }
 }

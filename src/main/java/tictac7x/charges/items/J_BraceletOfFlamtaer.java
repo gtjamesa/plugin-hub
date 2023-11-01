@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_BraceletOfFlamtaer extends ChargedItem {
@@ -34,11 +35,11 @@ public class J_BraceletOfFlamtaer extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.FLAMTAER_BRACELET).needsToBeEquipped(),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80).notification("Your flamtaer bracelet crumbles to dust."),
-            new TriggerChatMessage("The bracelet shatters. Your next Flamtaer bracelet will star afresh from 80 charges.").fixedCharges(80)
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left."),
+            new OnChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left."),
+            new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80).notification("Your flamtaer bracelet crumbles to dust."),
+            new OnChatMessage("The bracelet shatters. Your next Flamtaer bracelet will star afresh from 80 charges.").fixedCharges(80)
         };
     }
 }

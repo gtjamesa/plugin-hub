@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_SkullSceptre extends ChargedItem {
@@ -36,14 +36,15 @@ public class W_SkullSceptre extends ChargedItem {
             new TriggerItem(ItemID.SKULL_SCEPTRE),
             new TriggerItem(ItemID.SKULL_SCEPTRE_I)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.")
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.").setDynamically()
         };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Divine").replace("Check"),
-            new TriggerMenuEntryAdded("Invoke").replace("Teleport"),
-        };
+        // TODO
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Divine").replace("Check"),
+//            new TriggerMenuEntryAdded("Invoke").replace("Teleport"),
+//        };
     }
 }

@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_SanguinestiStaff extends ChargedItem {
@@ -38,14 +38,14 @@ public class W_SanguinestiStaff extends ChargedItem {
             new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF),
             new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining."),
-            new TriggerChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
-            new TriggerChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total."),
-            new TriggerChatMessage("You apply (?<charges>.+) charges to your Sanguinesti staff.")
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total.").setDynamically(),
+            new OnChatMessage("You apply (?<charges>.+) charges to your Sanguinesti staff.").setDynamically()
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(1167).decreaseCharges(1).equipped()
-        };
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(1167).decreaseCharges(1).equipped()
+//        };
     }
 }

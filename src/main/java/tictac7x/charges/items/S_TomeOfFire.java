@@ -11,8 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -36,15 +36,17 @@ public class S_TomeOfFire extends ChargedItem {
             new TriggerItem(ItemID.TOME_OF_FIRE_EMPTY).fixedCharges(0),
             new TriggerItem(ItemID.TOME_OF_FIRE).needsToBeEquipped(),
         };
-        this.triggersGraphics = new TriggerGraphic[]{
-            new TriggerGraphic(99).decreaseCharges(1),
-            new TriggerGraphic(126).decreaseCharges(1),
-            new TriggerGraphic(129).decreaseCharges(1),
-            new TriggerGraphic(155).decreaseCharges(1),
-            new TriggerGraphic(1464).decreaseCharges(1),
-        };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your tome currently holds (?<charges>.+) charges?.").onItemClick(),
+
+        // TODO
+//        this.triggersGraphics = new TriggerGraphic[]{
+//            new TriggerGraphic(99).decreaseCharges(1),
+//            new TriggerGraphic(126).decreaseCharges(1),
+//            new TriggerGraphic(129).decreaseCharges(1),
+//            new TriggerGraphic(155).decreaseCharges(1),
+//            new TriggerGraphic(1464).decreaseCharges(1),
+//        };
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").increaseDynamically().onItemClick(),
         };
     }
 }

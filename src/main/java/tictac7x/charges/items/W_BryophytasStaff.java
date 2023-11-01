@@ -12,12 +12,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
-import tictac7x.charges.item.triggers.TriggerStat;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerGraphic;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_BryophytasStaff extends ChargedItem {
@@ -39,20 +37,21 @@ public class W_BryophytasStaff extends ChargedItem {
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The nature staff has (?<charges>.+) charges?."),
-            new TriggerChatMessage("Your staff saved you a nature rune.").increaseCharges(1),
-            new TriggerChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.")
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("The nature staff has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("Your staff saved you a nature rune.").increaseCharges(1),
+            new OnChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.").setDynamically()
         };
-        this.triggersGraphics = new TriggerGraphic[]{
-            new TriggerGraphic(112).decreaseCharges(1).equipped(),
-            new TriggerGraphic(113).decreaseCharges(1).equipped(),
-        };
-        this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Basic Reanimation", "Expert Reanimation").decreaseCharges(2),
-            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Adept Reanimation", "Expert Reanimation").decreaseCharges(3),
-            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Adept Reanimation", "Master Reanimation").decreaseCharges(4),
-            new TriggerStat(Skill.MAGIC).isEquipped().menuEntry("Cast", "Spin Flax").decreaseCharges(2),
-        };
+        // TODO
+//        this.triggersGraphics = new TriggerGraphic[]{
+//            new TriggerGraphic(112).decreaseCharges(1).equipped(),
+//            new TriggerGraphic(113).decreaseCharges(1).equipped(),
+//        };
+//        this.triggersStats = new TriggerStat[]{
+//            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Basic Reanimation", "Expert Reanimation").decreaseCharges(2),
+//            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Adept Reanimation", "Expert Reanimation").decreaseCharges(3),
+//            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Adept Reanimation", "Master Reanimation").decreaseCharges(4),
+//            new TriggerStat(Skill.MAGIC).isEquipped().menuEntry("Cast", "Spin Flax").decreaseCharges(2),
+//        };
     }
 }

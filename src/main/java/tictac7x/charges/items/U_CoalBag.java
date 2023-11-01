@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_CoalBag extends ChargedItem {
@@ -38,14 +38,15 @@ public class U_CoalBag extends ChargedItem {
             new TriggerItem(ItemID.COAL_BAG_12019).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
             new TriggerItem(ItemID.OPEN_COAL_BAG).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The coal bag is( now)? empty.").fixedCharges(0),
-            new TriggerChatMessage("The coal bag( still)? contains one piece of coal.").fixedCharges(1),
-            new TriggerChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal."),
-            new TriggerChatMessage("You manage to mine some coal.").specificItem(ItemID.OPEN_COAL_BAG).increaseCharges(1),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("The coal bag is( now)? empty.").fixedCharges(0),
+            new OnChatMessage("The coal bag( still)? contains one piece of coal.").fixedCharges(1),
+            new OnChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal.").setDynamically(),
+            new OnChatMessage("You manage to mine some coal.").specificItem(ItemID.OPEN_COAL_BAG).increaseCharges(1),
         };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+        // TODO
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

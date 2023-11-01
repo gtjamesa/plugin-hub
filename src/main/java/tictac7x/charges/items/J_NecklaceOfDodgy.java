@@ -11,9 +11,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerWidget;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -35,14 +35,15 @@ public class J_NecklaceOfDodgy extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.DODGY_NECKLACE).needsToBeEquipped(),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your dodgy necklace has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your dodgy necklace protects you. It has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("Your dodgy necklace protects you. It then crumbles to dust.").fixedCharges(10).notification("Your dodgy necklace crumbles to dust."),
-            new TriggerChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges."),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your dodgy necklace has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your dodgy necklace protects you. It has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your dodgy necklace protects you. It then crumbles to dust.").fixedCharges(10).notification("Your dodgy necklace crumbles to dust."),
+            new OnChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges.").setDynamically(),
         };
-        this.triggersWidgets = new TriggerWidget[]{
-            new TriggerWidget(219, 1, 0, "Status: (?<charges>.+) charges? left."),
-        };
+        // TODO
+//        this.triggersWidgets = new TriggerWidget[]{
+//            new TriggerWidget(219, 1, 0, "Status: (?<charges>.+) charges? left."),
+//        };
     }
 }

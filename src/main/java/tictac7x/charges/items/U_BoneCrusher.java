@@ -12,10 +12,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerStat;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -38,27 +37,28 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             new TriggerItem(ItemID.BONECRUSHER),
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
+        this.triggers = new TriggerBase[] {
             // Check
-            new TriggerChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
-            new TriggerChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
-            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").activate(),
-            new TriggerChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
+            new OnChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
+            new OnChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
+            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").setDynamically().activate(),
+            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamically().deactivate(),
             // Uncharge
-            new TriggerChatMessage("You remove all the charges from the bonecrusher( necklace)?.").fixedCharges(0),
-            new TriggerChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left."),
+            new OnChatMessage("You remove all the charges from the bonecrusher( necklace)?.").fixedCharges(0),
+            new OnChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left.").setDynamically(),
             // Ran out
-            new TriggerChatMessage("Your bonecrusher( necklace)? has run out of charges.").fixedCharges(0).notification(),
+            new OnChatMessage("Your bonecrusher( necklace)? has run out of charges.").notification().fixedCharges(0),
             // Activate
-            new TriggerChatMessage("The bonecrusher( necklace)? has been deactivated").deactivate(),
+            new OnChatMessage("The bonecrusher( necklace)? has been deactivated").deactivate(),
             // Deactivate
-            new TriggerChatMessage("The bonecrusher( necklace)? is active").activate(),
+            new OnChatMessage("The bonecrusher( necklace)? is active").activate(),
         };
-        this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
-        };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+        // TODO
+//        this.triggersStats = new TriggerStat[]{
+//            new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
+//        };
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

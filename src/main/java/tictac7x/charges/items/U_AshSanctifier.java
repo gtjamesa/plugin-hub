@@ -12,10 +12,9 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerStat;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -37,20 +36,18 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ASH_SANCTIFIER),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            // Check
-            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
-            new TriggerChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").activate(),
-            // Activate
-            new TriggerChatMessage("The ash sanctifier is active and ready to scatter ashes.").activate(),
-            // Deactivate
-            new TriggerChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").deactivate(),
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
+            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").activate(),
+            new OnChatMessage("The ash sanctifier is active and ready to scatter ashes.").activate(),
+            new OnChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").deactivate(),
         };
-        this.triggersStats = new TriggerStat[]{
-            new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
-        };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+        // TODO
+//        this.triggersStats = new TriggerStat[]{
+//            new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
+//        };
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

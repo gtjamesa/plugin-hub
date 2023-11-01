@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_ToxicStaffOfTheDead extends ChargedItem {
@@ -35,8 +36,8 @@ public class W_ToxicStaffOfTheDead extends ChargedItem {
             new TriggerItem(ItemID.TOXIC_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.TOXIC_STAFF_OF_THE_DEAD)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Scales: (?<charges>.+)"),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Scales: (?<charges>.+)").setDynamically(),
         };
     }
 }

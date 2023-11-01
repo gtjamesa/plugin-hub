@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_BraceletOfClay extends ChargedItem {
@@ -34,10 +35,10 @@ public class J_BraceletOfClay extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BRACELET_OF_CLAY).needsToBeEquipped(),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust."),
-            new TriggerChatMessage("You manage to mine some( soft)? clay.").equipped().decreaseCharges(1),
-            new TriggerChatMessage("Your bracelet of clay crumbles to dust.").fixedCharges(28).notification("Your clay bracelet crumbles to dust.")
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust.").setDynamically(),
+            new OnChatMessage("You manage to mine some( soft)? clay.").equipped().decreaseCharges(1),
+            new OnChatMessage("Your bracelet of clay crumbles to dust.").fixedCharges(28).notification("Your clay bracelet crumbles to dust.")
         };
     }
 }

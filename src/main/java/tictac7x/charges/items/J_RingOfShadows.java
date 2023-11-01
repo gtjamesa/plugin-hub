@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_RingOfShadows extends ChargedItem {
@@ -36,13 +36,14 @@ public class J_RingOfShadows extends ChargedItem {
             new TriggerItem(ItemID.RING_OF_SHADOWS_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SHADOWS)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining."),
-            new TriggerChatMessage("You add (?<charges>.+) charges? to the ring of shadows.$"),
-            new TriggerChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?."),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to the ring of shadows.$").setDynamically(),
+            new OnChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?.").setDynamically(),
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(10134).decreaseCharges(1),
-        };
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(10134).decreaseCharges(1),
+//        };
     }
 }

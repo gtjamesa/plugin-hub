@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
-import tictac7x.charges.item.triggers.TriggerHitsplat;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_Arclight extends ChargedItem {
@@ -35,13 +35,15 @@ public class W_Arclight extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ARCLIGHT),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your arclight has (?<charges>.+) charges?( left)?."),
-            new TriggerChatMessage("Your arclight can perform (?<charges>.+) more attacks."),
-            new TriggerChatMessage("Your arclight has degraded.").fixedCharges(0).notification(),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your arclight has (?<charges>.+) charges?( left)?.").setDynamically(),
+            new OnChatMessage("Your arclight can perform (?<charges>.+) more attacks.").setDynamically(),
+            new OnChatMessage("Your arclight has degraded.").notification().fixedCharges(0),
         };
-        this.triggersHitsplats = new TriggerHitsplat[]{
-            new TriggerHitsplat(1).equipped().onEnemy()
-        };
+
+        // TODO
+//        this.triggersHitsplats = new TriggerHitsplat[]{
+//            new TriggerHitsplat(1).equipped().onEnemy()
+//        };
     }
 }

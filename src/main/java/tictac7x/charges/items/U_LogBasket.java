@@ -11,12 +11,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerMenuOptionClicked;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 import java.util.regex.Matcher;
@@ -60,10 +59,10 @@ public class U_LogBasket extends ChargedItemWithStorage {
             new TriggerItem(ItemID.FORESTRY_BASKET),
             new TriggerItem(ItemID.OPEN_FORESTRY_BASKET),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("(Your|The) basket is empty.").onItemClick().emptyStorage(storage),
-            new TriggerChatMessage("You empty your basket( into the bank)?.").emptyStorage(storage),
-            new TriggerChatMessage("The basket contains:").onItemClick().stringConsumer(s -> {
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("(Your|The) basket is empty.").onItemClick().emptyStorage(),
+            new OnChatMessage("You empty your basket( into the bank)?.").emptyStorage(),
+            new OnChatMessage("The basket contains:").stringConsumer(s -> {
                 storage.empty();
 
                 final Pattern pattern = Pattern.compile("(?<quantity>\\d+).x.(?<logs>.*?)(,|$)");
@@ -74,20 +73,21 @@ public class U_LogBasket extends ChargedItemWithStorage {
                     final int itemId = getLogsIdFromName(matcher.group("logs"));
                     storage.put(itemId, quantity);
                 }
-            }),
-            new TriggerChatMessage("You get some (?<logs>.+).").specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).consumer(m -> {
+            }).onItemClick(),
+            new OnChatMessage("You get some (?<logs>.+).").consumer(m -> {
                 final int itemId = getLogsIdFromName(m.group("logs"));
                 storage.add(itemId, 1);
-            }),
+            }).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
         };
-        this.triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{
-            new TriggerMenuOptionClicked("Fill").fillStorageFromInventory(storage),
-            new TriggerMenuOptionClicked("Empty").atBank().emptyStorage(storage),
-            new TriggerMenuOptionClicked("Use").use(storeableItems).fillStorageFromInventory(storage),
-        };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+        // TODO
+//        this.triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{
+//            new TriggerMenuOptionClicked("Fill").fillStorageFromInventory(storage),
+//            new TriggerMenuOptionClicked("Empty").atBank().emptyStorage(storage),
+//            new TriggerMenuOptionClicked("Use").use(storeableItems).fillStorageFromInventory(storage),
+//        };
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 
     private int getLogsIdFromName(final String logs) {

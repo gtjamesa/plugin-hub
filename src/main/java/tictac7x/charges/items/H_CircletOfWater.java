@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class H_CircletOfWater extends ChargedItem {
@@ -35,11 +36,11 @@ public class H_CircletOfWater extends ChargedItem {
             new TriggerItem(ItemID.CIRCLET_OF_WATER_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.CIRCLET_OF_WATER)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
-            new TriggerChatMessage("Your circlet has (?<charges>.+) charges? left."),
-            new TriggerChatMessage("You add (?<charges>.+) charges? to your circlet.$"),
-            new TriggerChatMessage("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?."),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
+            new OnChatMessage("Your circlet has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to your circlet.$").setDynamically(),
+            new OnChatMessage("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?.").setDynamically(),
         };
     }
 }

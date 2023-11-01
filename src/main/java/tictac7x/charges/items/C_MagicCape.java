@@ -11,16 +11,14 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerDailyReset;
-import tictac7x.charges.item.triggers.TriggerWidget;
 
 public class C_MagicCape extends ChargedItem {
     private final int MAGIC_CAPE_T = 9763;
-    private final String regex_used = "You have changed your spellbook (?<used>.+)/(?<total>.+) times today.";
 
     public C_MagicCape(
         final Client client,
@@ -42,16 +40,17 @@ public class C_MagicCape extends ChargedItem {
             new TriggerItem(MAGIC_CAPE_T)
         };
 
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage(regex_used).useDifference(),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You have changed your spellbook (?<used>.+)/(?<total>.+) times today.").useDifference(),
         };
 
-        this.triggersWidgets = new TriggerWidget[]{
-            new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/5 left\\)")
-        };
-
-        this.triggersResetsDaily = new TriggerDailyReset[]{
-            new TriggerDailyReset(5)
-        };
+        // TODO
+//        this.triggersWidgets = new TriggerWidget[]{
+//            new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/5 left\\)")
+//        };
+//
+//        this.triggersResetsDaily = new TriggerDailyReset[]{
+//            new TriggerDailyReset(5)
+//        };
     }
 }

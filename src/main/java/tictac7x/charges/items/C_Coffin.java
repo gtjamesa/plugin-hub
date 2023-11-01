@@ -11,12 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class C_Coffin extends ChargedItem {
     private final int MAX_CHARGES_BRONZE_COFFIN = 3;
@@ -54,23 +54,26 @@ public class C_Coffin extends ChargedItem {
             new TriggerItem(ItemID.OPEN_GOLD_COFFIN).negativeFullCharges(MAX_CHARGES_GOLD_COFFIN).zeroChargesIsPositive(),
         };
 
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You put the .+ remains into your open coffin.").increaseCharges(1),
-            new TriggerChatMessage("Loar (.+) / Phrin (.+) / Riyl (.+) / Asyn (.+) / Fiyr (.+) / Urium (.+)").multipleCharges(),
-            new TriggerChatMessage("Your coffin is empty.").fixedCharges(0),
-            new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.BRONZE_COFFIN, ItemID.OPEN_BRONZE_COFFIN).fixedCharges(MAX_CHARGES_BRONZE_COFFIN),
-            new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.STEEL_COFFIN, ItemID.OPEN_STEEL_COFFIN).fixedCharges(MAX_CHARGES_STEEL_COFFIN),
-            new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.BLACK_COFFIN, ItemID.OPEN_BLACK_COFFIN).fixedCharges(MAX_CHARGES_BLACK_COFFIN),
-            new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.SILVER_COFFIN, ItemID.OPEN_SILVER_COFFIN).fixedCharges(MAX_CHARGES_SILVER_COFFIN),
-            new TriggerChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.GOLD_COFFIN, ItemID.OPEN_GOLD_COFFIN).fixedCharges(MAX_CHARGES_GOLD_COFFIN),
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("You put the .+ remains into your open coffin.").increaseCharges(1),
+                // TODO to storage
+//            new OnChatMessage("Loar (.+) / Phrin (.+) / Riyl (.+) / Asyn (.+) / Fiyr (.+) / Urium (.+)").multipleCharges(),
+            new OnChatMessage("Your coffin is empty.").fixedCharges(0),
+            new OnChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.BRONZE_COFFIN, ItemID.OPEN_BRONZE_COFFIN).fixedCharges(MAX_CHARGES_BRONZE_COFFIN),
+            new OnChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.STEEL_COFFIN, ItemID.OPEN_STEEL_COFFIN).fixedCharges(MAX_CHARGES_STEEL_COFFIN),
+            new OnChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.BLACK_COFFIN, ItemID.OPEN_BLACK_COFFIN).fixedCharges(MAX_CHARGES_BLACK_COFFIN),
+            new OnChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.SILVER_COFFIN, ItemID.OPEN_SILVER_COFFIN).fixedCharges(MAX_CHARGES_SILVER_COFFIN),
+            new OnChatMessage("You cannot store anymore shade remains in this coffin.").specificItem(ItemID.GOLD_COFFIN, ItemID.OPEN_GOLD_COFFIN).fixedCharges(MAX_CHARGES_GOLD_COFFIN),
         };
 
-        this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Bronze coffin", "Fill").menuEntry("Open bronze coffin", "Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Steel coffin", "Fill").menuEntry("Open steel coffin", "Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Black coffin", "Fill").menuEntry("Open black coffin", "Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Silver coffin", "Fill").menuEntry("Open silver coffin", "Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Gold coffin", "Fill").menuEntry("Open gold coffin", "Fill").increaseByInventoryDifference(),
-        };
+
+        // TODO
+//        this.triggersItemContainers = new TriggerItemContainer[]{
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Bronze coffin", "Fill").menuEntry("Open bronze coffin", "Fill").increaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Steel coffin", "Fill").menuEntry("Open steel coffin", "Fill").increaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Black coffin", "Fill").menuEntry("Open black coffin", "Fill").increaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Silver coffin", "Fill").menuEntry("Open silver coffin", "Fill").increaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Gold coffin", "Fill").menuEntry("Open gold coffin", "Fill").increaseByInventoryDifference(),
+//        };
     }
 }

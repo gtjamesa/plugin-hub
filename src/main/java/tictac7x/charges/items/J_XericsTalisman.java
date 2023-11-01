@@ -11,12 +11,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerWidget;
 
 public class J_XericsTalisman extends ChargedItem {
     public J_XericsTalisman(
@@ -37,17 +36,19 @@ public class J_XericsTalisman extends ChargedItem {
             new TriggerItem(ItemID.XERICS_TALISMAN_INERT).fixedCharges(0),
             new TriggerItem(ItemID.XERICS_TALISMAN),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("The talisman has one charge.").onItemClick(),
-            new TriggerChatMessage("The talisman has (?<charges>.+) charges.").onItemClick(),
-            new TriggerChatMessage("Your talisman now has one charge.").onItemClick(),
-            new TriggerChatMessage("Your talisman now has (?<charges>.+) charges?.").onItemClick(),
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("The talisman has one charge.").onItemClick(),
+            new OnChatMessage("The talisman has (?<charges>.+) charges.").onItemClick(),
+            new OnChatMessage("Your talisman now has one charge.").onItemClick(),
+            new OnChatMessage("Your talisman now has (?<charges>.+) charges?.").onItemClick(),
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(3865).decreaseCharges(1)
-        };
-        this.triggersWidgets = new TriggerWidget[]{
-            new TriggerWidget(187, 0, 1, "The talisman has (?<charges>.+) charges.")
-        };
+
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(3865).decreaseCharges(1)
+//        };
+//        this.triggersWidgets = new TriggerWidget[]{
+//            new TriggerWidget(187, 0, 1, "The talisman has (?<charges>.+) charges.")
+//        };
     }
 }

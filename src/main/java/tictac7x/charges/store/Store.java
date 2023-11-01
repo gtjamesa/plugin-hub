@@ -103,12 +103,18 @@ public class Store {
 
     public boolean inMenuTargets(final int ...itemIds) {
         for (final int itemId : itemIds) {
-            if (menuEntries.stream().anyMatch(entry -> entry.target.contains(itemManager.getItemComposition(itemId).getName()))) {
-                return true;
+            for (final MenuEntry menuEntry : menuEntries) {
+                if (menuEntry.target.contains(itemManager.getItemComposition(itemId).getName())) {
+                    return true;
+                }
             }
         }
 
         return false;
+    }
+
+    public boolean notInMenuTargets(final int ...itemIds) {
+        return !inMenuTargets(itemIds);
     }
 
     public boolean inMenuTargets(final String ...targets) {

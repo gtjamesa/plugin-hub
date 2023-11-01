@@ -11,9 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class KarilsLeatherskirt extends ChargedItem {
@@ -38,8 +39,8 @@ public class KarilsLeatherskirt extends ChargedItem {
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT_25).fixedCharges(25),
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT_0).fixedCharges(0)
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Karil's skirt has broken!").notification()
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("Karil's skirt has broken!").notification()
         };
     }
 }

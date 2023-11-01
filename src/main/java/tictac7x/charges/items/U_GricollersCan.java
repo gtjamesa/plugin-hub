@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class U_GricollersCan extends ChargedItem {
@@ -35,19 +35,20 @@ public class U_GricollersCan extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(2293).unallowedItems(
-                ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
-                ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
-                ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
-                ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
-                ItemID.WATERING_CAN8
-            ).decreaseCharges(1),
-        };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Watering can charges remaining: (?<charges>.+)%").onItemClick(),
-            new TriggerChatMessage("You water").onItemClick().decreaseCharges(1),
-            new TriggerChatMessage("You fill the watering can").onItemClick().fixedCharges(1000),
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(2293).unallowedItems(
+//                ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
+//                ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
+//                ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
+//                ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
+//                ItemID.WATERING_CAN8
+//            ).decreaseCharges(1),
+//        };
+        this.triggers = new TriggerBase[] {
+            new OnChatMessage("Watering can charges remaining: (?<charges>.+)%").setDynamically().onItemClick(),
+            new OnChatMessage("You water").onItemClick().decreaseCharges(1),
+            new OnChatMessage("You fill the watering can").onItemClick().fixedCharges(1000),
         };
     }
 }

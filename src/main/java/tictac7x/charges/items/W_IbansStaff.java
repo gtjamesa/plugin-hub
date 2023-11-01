@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_IbansStaff extends ChargedItem {
@@ -37,11 +37,13 @@ public class W_IbansStaff extends ChargedItem {
             new TriggerItem(ItemID.IBANS_STAFF_1410),
             new TriggerItem(ItemID.IBANS_STAFF_U),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("You have (?<charges>.+) charges left on the staff."),
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("You have (?<charges>.+) charges left on the staff.").setDynamically(),
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(708).equipped().decreaseCharges(1)
-        };
+
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(708).equipped().decreaseCharges(1)
+//        };
     }
 }

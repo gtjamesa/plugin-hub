@@ -11,13 +11,12 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.item.triggers.TriggerItemContainer;
 
 public class U_FishBarrel extends ChargedItem {
     private final int MAX_CHARGES = 28;
@@ -42,18 +41,20 @@ public class U_FishBarrel extends ChargedItem {
             new TriggerItem(ItemID.FISH_SACK_BARREL).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
             new TriggerItem(ItemID.OPEN_FISH_SACK_BARREL).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("(Your|The) barrel is empty.").onItemClick().fixedCharges(0),
-            new TriggerChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(MAX_CHARGES),
-            new TriggerChatMessage("(You catch .*)|(.* enabled you to catch an extra fish.)").specificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).increaseCharges(1),
-            new TriggerChatMessage("The barrel contains:").onItemClick().multipleCharges()
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("(Your|The) barrel is empty.").onItemClick().fixedCharges(0),
+            new OnChatMessage("The barrel is full. It may be emptied at a bank.").onItemClick().fixedCharges(MAX_CHARGES),
+            new OnChatMessage("(You catch .*)|(.* enabled you to catch an extra fish.)").specificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).increaseCharges(1),
+                // TODO
+//            new OnChatMessage("The barrel contains:").multipleCharges().onItemClick()
         };
-        this.triggersItemContainers = new TriggerItemContainer[]{
-            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Fish barrel", "Fill").menuEntry("Open fish barrel", "Fill").increaseByInventoryDifference(),
-            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Fish barrel", "Empty").menuEntry("Open fish barrel", "Empty").decreaseByBankDifference(),
-        };
-        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-            new TriggerMenuEntryAdded("Destroy").hide(),
-        };
+        // TODO
+//        this.triggersItemContainers = new TriggerItemContainer[]{
+//            new TriggerItemContainer(ItemContainerType.INVENTORY).menuEntry("Fish barrel", "Fill").menuEntry("Open fish barrel", "Fill").increaseByInventoryDifference(),
+//            new TriggerItemContainer(ItemContainerType.BANK).menuEntry("Fish barrel", "Empty").menuEntry("Open fish barrel", "Empty").decreaseByBankDifference(),
+//        };
+//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
+//            new TriggerMenuEntryAdded("Destroy").hide(),
+//        };
     }
 }

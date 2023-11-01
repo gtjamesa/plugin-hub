@@ -11,10 +11,10 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerAnimation;
-import tictac7x.charges.item.triggers.TriggerChatMessage;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class W_PharaohsSceptre extends ChargedItem {
@@ -54,13 +54,14 @@ public class W_PharaohsSceptre extends ChargedItem {
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_26950),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_UNCHARGED).fixedCharges(0),
         };
-        this.triggersChatMessages = new TriggerChatMessage[]{
-            new TriggerChatMessage("Your sceptre has (?<charges>.+) charges? left.").onItemClick(),
-            new TriggerChatMessage("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically(),
-            new TriggerChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way."),
+        this.triggers = new TriggerBase[]{
+            new OnChatMessage("Your sceptre has (?<charges>.+) charges? left.").setDynamically().onItemClick(),
+            new OnChatMessage("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically(),
+            new OnChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way.").setDynamically(),
         };
-        this.triggersAnimations = new TriggerAnimation[]{
-            new TriggerAnimation(2881).decreaseCharges(1)
-        };
+        // TODO
+//        this.triggersAnimations = new TriggerAnimation[]{
+//            new TriggerAnimation(2881).decreaseCharges(1)
+//        };
     }
 }
