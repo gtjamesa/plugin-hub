@@ -12,10 +12,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
+
+import static tictac7x.charges.store.HitsplatTarget.SELF;
 
 public class A_CrystalHelm extends ChargedItem {
     public A_CrystalHelm(
@@ -51,11 +54,8 @@ public class A_CrystalHelm extends ChargedItem {
             new TriggerItem(ItemID.CRYSTAL_HELM_INACTIVE_27779).fixedCharges(0)
         };
         this.triggers = new TriggerBase[]{
-            new OnChatMessage("Your crystal helm has (?<charges>.+) charges? remaining").setDynamically().onItemClick()
+            new OnChatMessage("Your crystal helm has (?<charges>.+) charges? remaining").setDynamically().onItemClick(),
+            new OnHitsplatApplied(SELF).isEquipped().decreaseCharges(1)
         };
-        // TODO
-//        this.triggersHitsplats = new TriggerHitsplat[]{
-//            new TriggerHitsplat(1).equipped().onSelf()
-//        };
     }
 }

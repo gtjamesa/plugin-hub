@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -35,20 +36,18 @@ public class U_GricollersCan extends ChargedItem {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
-        // TODO
-//        this.triggersAnimations = new TriggerAnimation[]{
-//            new TriggerAnimation(2293).unallowedItems(
-//                ItemID.WATERING_CAN1, ItemID.WATERING_CAN2,
-//                ItemID.WATERING_CAN3, ItemID.WATERING_CAN4,
-//                ItemID.WATERING_CAN5, ItemID.WATERING_CAN6,
-//                ItemID.WATERING_CAN6, ItemID.WATERING_CAN7,
-//                ItemID.WATERING_CAN8
-//            ).decreaseCharges(1),
-//        };
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("Watering can charges remaining: (?<charges>.+)%").setDynamically().onItemClick(),
+
+            // Water inventory item.
             new OnChatMessage("You water").onItemClick().decreaseCharges(1),
+
+            // Fill.
             new OnChatMessage("You fill the watering can").onItemClick().fixedCharges(1000),
+
+            // Water.
+            new OnGraphicChanged(410).decreaseCharges(1),
         };
     }
 }

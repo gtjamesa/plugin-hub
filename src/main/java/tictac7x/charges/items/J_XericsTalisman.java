@@ -12,6 +12,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
+import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -37,18 +39,15 @@ public class J_XericsTalisman extends ChargedItem {
             new TriggerItem(ItemID.XERICS_TALISMAN),
         };
         this.triggers = new TriggerBase[]{
-            new OnChatMessage("The talisman has one charge.").onItemClick(),
-            new OnChatMessage("The talisman has (?<charges>.+) charges.").onItemClick(),
-            new OnChatMessage("Your talisman now has one charge.").onItemClick(),
-            new OnChatMessage("Your talisman now has (?<charges>.+) charges?.").onItemClick(),
-        };
+            // Check.
+            new OnChatMessage("(The|Your) talisman( now)? has one charge.").onItemClick().fixedCharges(1),
+            new OnChatMessage("(The|Your) talisman( now)? has (?<charges>.+) charges.").setDynamically().onItemClick(),
 
-        // TODO
-//        this.triggersAnimations = new TriggerAnimation[]{
-//            new TriggerAnimation(3865).decreaseCharges(1)
-//        };
-//        this.triggersWidgets = new TriggerWidget[]{
-//            new TriggerWidget(187, 0, 1, "The talisman has (?<charges>.+) charges.")
-//        };
+            // Teleport.
+            new OnGraphicChanged(1612).decreaseCharges(1),
+
+            // Teleport widget.
+            new OnWidgetLoaded(187, 0, 1, "The talisman has (?<charges>.+) charges.").setDynamically(),
+        };
     }
 }

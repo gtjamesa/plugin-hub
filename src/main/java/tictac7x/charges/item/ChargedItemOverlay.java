@@ -91,24 +91,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
             charges_component.setText(charges);
 
-            if (charges.equals("?")) {
-                charges_component.setColor(config.getColorUnknown());
-            } else if (
-                !isBankWidget(widgetItem) && charged_item.isActivated() && charged_item.getCharges() > 0 ||
-                !isBankWidget(widgetItem) && charged_item.needsToBeEquipped() && charged_item.isEquipped() && charged_item.getCharges() > 0
-            ) {
-                charges_component.setColor(config.getColorActivated());
-            } else if (
-                !isBankWidget(widgetItem) && (trigger_item_to_use.needsToBeEquipped && !charged_item.isEquipped()) ||
-                charges.equals("0") && !trigger_item_to_use.zeroChargesIsPositive && !(charged_item instanceof ChargedItemWithStorage) ||
-                charged_item.negativeFullCharges().isPresent() && charged_item.getCharges() == charged_item.negativeFullCharges().get() ||
-                charged_item.isDeactivated() ||
-                charged_item instanceof ChargedItemWithStorage && ((ChargedItemWithStorage) charged_item).storage.maximumTotalQuantity.isPresent() && charged_item.getCharges() == ((ChargedItemWithStorage) charged_item).storage.maximumTotalQuantity.get()
-            ) {
-                charges_component.setColor(config.getColorEmpty());
-            } else {
-                charges_component.setColor(config.getColorDefault());
-            }
+            charges_component.setColor(charged_item.getTextColor());
 
             charges_component.render(graphics);
 

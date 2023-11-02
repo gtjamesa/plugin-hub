@@ -12,6 +12,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
+import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -37,19 +39,20 @@ public class S_FaladorShield extends ChargedItem {
             new TriggerItem(ItemID.FALADOR_SHIELD_4),
         };
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),
             new OnChatMessage("You have two remaining charges for today.").onItemClick().fixedCharges(2),
-            new OnChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().fixedCharges(0),
-            new OnChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0)
-        };
 
-        // TODO
-//        this.triggersGraphics = new TriggerGraphic[]{
-//            new TriggerGraphic(321).decreaseCharges(1)
-//        };
-//        this.triggersResetsDaily = new TriggerDailyReset[]{
-//            new TriggerDailyReset(1).specificItem(ItemID.FALADOR_SHIELD_3),
-//            new TriggerDailyReset(2).specificItem(ItemID.FALADOR_SHIELD_4)
-//        };
+            // Teleport when empty.
+            new OnChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().fixedCharges(0),
+            new OnChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0),
+
+            // Recharge prayer.
+            new OnGraphicChanged(321).onItemClick().decreaseCharges(1),
+
+            // Daily resets.
+            new OnResetDaily(1).specificItem(ItemID.FALADOR_SHIELD_3),
+            new OnResetDaily(2).specificItem(ItemID.FALADOR_SHIELD_4),
+        };
     }
 }

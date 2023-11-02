@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
@@ -47,11 +48,9 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
             new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification().setDynamically(),
             new OnChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))? has (?<charges>.+) charges?( left)?.").setDynamically(),
-            new OnChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)").setDynamically()
+            new OnChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)").setDynamically(),
+            // Attack.
+            new OnGraphicChanged(1251).isEquipped().decreaseCharges(1)
         };
-        // TODO
-//        this.triggersGraphics = new TriggerGraphic[]{
-//            new TriggerGraphic(1251).decreaseCharges(1).equipped()
-//        };
     }
 }

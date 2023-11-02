@@ -16,6 +16,7 @@ import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -208,7 +209,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void startUp() {
-		store = new Store(items, configs);
+		store = new Store(client, items, configs);
 
 		chargedItems = new ChargedItem[]{
 			// Weapons
@@ -353,11 +354,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-//			", sender: " + event.getSender()
-//		);
+		System.out.println("MESSAGE | " +
+			"type: " + event.getType().name() +
+			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+			", sender: " + event.getSender()
+		);
 	}
 
 	@Subscribe
@@ -375,11 +376,14 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("GRAPHIC | " +
-//				"id: " + event.getActor().getGraphic()
-//			);
-//		}
+		for (final ActorSpotAnim a : client.getLocalPlayer().getSpotAnims()) {
+			System.out.println(a.getId());
+		}
+		if (event.getActor() == client.getLocalPlayer()) {
+			System.out.println("GRAPHIC | " +
+				"id: " + event.getActor().getGraphic()
+			);
+		}
 	}
 
 	@Subscribe
@@ -399,22 +403,22 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
 
-//		System.out.println("HITSPLAT | " +
-//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
-//			", type: " + event.getHitsplat().getHitsplatType() +
-//			", amount:" + event.getHitsplat().getAmount() +
-//			", others = " + event.getHitsplat().isOthers() +
-//			", mine = " + event.getHitsplat().isMine()
-//		);
+		System.out.println("HITSPLAT | " +
+			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
+			", type: " + event.getHitsplat().getHitsplatType() +
+			", amount:" + event.getHitsplat().getAmount() +
+			", others = " + event.getHitsplat().isOthers() +
+			", mine = " + event.getHitsplat().isMine()
+		);
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onWidgetLoaded(event));
 
-//		System.out.println("WIDGET | " +
-//			"group: " + event.getGroupId()
-//		);
+		System.out.println("WIDGET | " +
+			"group: " + event.getGroupId()
+		);
 	}
 
 	@Subscribe
@@ -422,13 +426,14 @@ public class ChargesImprovedPlugin extends Plugin {
 		store.onMenuOptionClicked(event);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuOptionClicked(event));
 
-//		System.out.println("MENU OPTION | " +
-//			"option: " + event.getMenuOption() +
-//			", target: " + event.getMenuTarget() +
-//			", action name: " + event.getMenuAction().name() +
-//			", action id: " + event.getMenuAction().getId() +
-//			", item id: " + event.getItemId()
-//		);
+		System.out.println("MENU OPTION | " +
+			"option: " + event.getMenuOption() +
+			", target: " + event.getMenuTarget() +
+			", action name: " + event.getMenuAction().name() +
+			", action id: " + event.getMenuAction().getId() +
+			", item id: " + event.getItemId() +
+			" " + event.getMenuEntry().getIdentifier()
+		);
 	}
 
 	@Subscribe

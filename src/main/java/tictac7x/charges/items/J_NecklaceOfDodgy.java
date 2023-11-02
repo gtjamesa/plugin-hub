@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
@@ -36,14 +37,19 @@ public class J_NecklaceOfDodgy extends ChargedItem {
             new TriggerItem(ItemID.DODGY_NECKLACE).needsToBeEquipped(),
         };
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("Your dodgy necklace has (?<charges>.+) charges? left.").setDynamically(),
+
+            // Protects.
             new OnChatMessage("Your dodgy necklace protects you. It has (?<charges>.+) charges? left.").setDynamically(),
+
+            // Breaks.
             new OnChatMessage("Your dodgy necklace protects you. It then crumbles to dust.").fixedCharges(10).notification("Your dodgy necklace crumbles to dust."),
+
+            // Break.
             new OnChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges.").setDynamically(),
+
+            new OnWidgetLoaded(219, 1, 0, "Status: (?<charges>.+) charges? left.").setDynamically(),
         };
-        // TODO
-//        this.triggersWidgets = new TriggerWidget[]{
-//            new TriggerWidget(219, 1, 0, "Status: (?<charges>.+) charges? left."),
-//        };
     }
 }

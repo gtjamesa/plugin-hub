@@ -13,6 +13,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
@@ -37,17 +39,21 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
             new TriggerItem(ItemID.ASH_SANCTIFIER),
         };
         this.triggers = new TriggerBase[]{
+            // Check.
             new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
             new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").activate(),
+
+            // Activate.
             new OnChatMessage("The ash sanctifier is active and ready to scatter ashes.").activate(),
+
+            // Deactivate.
             new OnChatMessage("The ash sanctifier has been deactivated, and will not scatter ashes now.").deactivate(),
+
+            // Automatic scatter.
+            new OnXpDrop(Skill.PRAYER).isActivated().decreaseCharges(1),
+
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
         };
-        // TODO
-//        this.triggersStats = new TriggerStat[]{
-//            new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
-//        };
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
     }
 }

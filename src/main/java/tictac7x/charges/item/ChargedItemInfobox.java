@@ -52,39 +52,7 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public Color getTextColor() {
-        final int charges = chargedItem.getCharges();
-
-        if (charges == Charges.UNKNOWN) {
-            return config.getColorUnknown();
-        }
-
-        if (
-            // Is activated.
-            charges > 0 && chargedItem.isActivated() ||
-
-            // Needs to be equipped and is.
-            chargedItem.needsToBeEquipped() && chargedItem.isEquipped()
-        ) {
-            return config.getColorActivated();
-        }
-
-        if (
-            // 0 charges is positive.
-            charges == 0 && !chargedItem.isZeroChargesPositive() ||
-
-            // X charges is negative.
-            chargedItem.negativeFullCharges().isPresent() && charges == chargedItem.negativeFullCharges().get() ||
-
-            // Item needs to be equipped, but is not.
-            chargedItem.needsToBeEquipped() && !chargedItem.isEquipped() ||
-
-            // Item is deactivated.
-            chargedItem.isDeactivated()
-        ) {
-            return config.getColorEmpty();
-        }
-
-        return config.getColorDefault();
+        return chargedItem.getTextColor();
     }
 
     @Override

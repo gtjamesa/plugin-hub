@@ -22,6 +22,8 @@ public class Storage {
     protected List<StorageItem> storage = new ArrayList<>();
 
     public Optional<Integer> maximumTotalQuantity = Optional.empty();
+    public Optional<Integer> maximumTotalQuantityWithItemEquipped = Optional.empty();
+    public Optional<int[]> maximumTotalQuantityWithItemEquippedItems = Optional.empty();
     private Optional<Integer> maximumIndividualQuantity = Optional.empty();
     private Optional<int[]> storeableItems = Optional.empty();
 
@@ -36,6 +38,12 @@ public class Storage {
 
     public Storage maximumTotalQuantity(final int quantity) {
         this.maximumTotalQuantity = Optional.of(quantity);
+        return this;
+    }
+
+    public Storage maximumTotalQuantityWithEquippedItem(int quantity, final int ...itemIds) {
+        this.maximumTotalQuantityWithItemEquipped = Optional.of(quantity);
+        this.maximumTotalQuantityWithItemEquippedItems = Optional.of(itemIds);
         return this;
     }
 
@@ -63,21 +71,19 @@ public class Storage {
         if (itemId == Charges.UNKNOWN) return;
 
         // Check for individual maximum quantity.
-        if (maximumIndividualQuantity.isPresent()) {
-            quantity = Math.min(quantity, maximumIndividualQuantity.get());
-
+        if (maximumIndividualQuantity.isPresent() && quantity > maximumIndividualQuantity.get()) {
+            quantity = maximumIndividualQuantity.get();
         }
 
-        // Check for total maximum quantity.
+        final Optional<Integer> maximumTotalQuantity = getMaximumTotalQuantity();
         if (maximumTotalQuantity.isPresent()) {
-            int totalQuantity = 0;
-
+            int newTotalQuantity = 0;
             for (final StorageItem storageItem : storage) {
-                totalQuantity += storageItem.itemId == itemId ? quantity : storageItem.getQuantity();
+                newTotalQuantity += storageItem.itemId == itemId ? quantity : storageItem.getQuantity();
             }
 
-            if (totalQuantity > maximumTotalQuantity.get()) {
-                quantity -= totalQuantity - maximumTotalQuantity.get();
+            if (newTotalQuantity > maximumTotalQuantity.get()) {
+                quantity = maximumTotalQuantity.get();
             }
         }
 
@@ -170,6 +176,22 @@ public class Storage {
             if (item.itemId == itemId) {
                 return Optional.of(item);
             }
+        }
+
+        return Optional.empty();
+    }
+
+    public Optional<Integer> getMaximumTotalQuantity() {
+        if (!maximumTotalQuantity.isPresent() && !maximumTotalQuantityWithItemEquipped.isPresent()) {
+            return Optional.empty();
+        }
+
+        if (maximumTotalQuantityWithItemEquipped.isPresent() && maximumTotalQuantityWithItemEquippedItems.isPresent() && store.equipmentContainsItem(maximumTotalQuantityWithItemEquippedItems.get())) {
+            return maximumTotalQuantityWithItemEquipped;
+        }
+
+        if (maximumTotalQuantity.isPresent()) {
+            return maximumTotalQuantity;
         }
 
         return Optional.empty();

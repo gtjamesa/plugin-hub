@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -37,16 +38,28 @@ public class S_KharedstMemoirs extends ChargedItem {
             new TriggerItem(ItemID.BOOK_OF_THE_DEAD)
         };
         this.triggers = new TriggerBase[] {
+            // Teleport.
             new OnChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) (memories|memory) remaining.").setDynamically(),
+            // Check empty.
             new OnChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) holds no charges?.").fixedCharges(0),
-            new OnChatMessage("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+) (memories|memory) remain.").setDynamically(),
-            new OnChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) charges.").setDynamically()
-        };
 
-        // TODO
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Reminisce").replace("Teleport"),
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
+            // Check.
+            new OnChatMessage("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+) (memories|memory) remain.").setDynamically(),
+
+            // Charge.
+            new OnChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) charges.").setDynamically(),
+
+            // Try to charge book of the dead when already full.
+            new OnChatMessage("The Book of the Dead is already fully charged").fixedCharges(60),
+
+            // Try to charge kharedst memoirs when already full.
+            new OnChatMessage("The Kharedst's Memoirs? is already fully charged").fixedCharges(40),
+
+            // Common menu entries.
+            new OnMenuEntryAdded("Reminisce").replaceOption("Teleport"),
+
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
+        };
     }
 }

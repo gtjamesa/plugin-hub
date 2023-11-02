@@ -12,10 +12,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
+
+import static tictac7x.charges.store.HitsplatTarget.ENEMY;
 
 public class W_CrystalHalberd extends ChargedItem {
     public W_CrystalHalberd(
@@ -65,11 +68,8 @@ public class W_CrystalHalberd extends ChargedItem {
             new TriggerItem(ItemID.NEW_CRYSTAL_HALBERD_FULL_I_16892),
         };
         this.triggers = new TriggerBase[]{
-            new OnChatMessage("Your crystal halberd has (?<charges>.+) charges? remaining.").setDynamically()
+            new OnChatMessage("Your crystal halberd has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnHitsplatApplied(ENEMY).isEquipped().decreaseCharges(1),
         };
-        // TODO
-//        this.triggersHitsplats = new TriggerHitsplat[]{
-//            new TriggerHitsplat(1).onEnemy().equipped()
-//        };
     }
 }

@@ -11,15 +11,15 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
 
-public class U_CoalBag extends ChargedItem {
-    private final int MAX_CHARGES = 27;
-
+public class U_CoalBag extends ChargedItemWithStorage {
     public U_CoalBag(
         final Client client,
         final ClientThread client_thread,
@@ -32,21 +32,44 @@ public class U_CoalBag extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.COAL_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.coal_bag;
+        super(ChargesImprovedConfig.coal_bag, ItemKey.COAL_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        this.storage = storage
+            .storeableItems(ItemID.COAL)
+            .maximumTotalQuantity(27)
+            .maximumTotalQuantityWithEquippedItem(36, ItemID.SMITHING_CAPE, ItemID.HITPOINTS_CAPET);
+
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.COAL_BAG_12019).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
-            new TriggerItem(ItemID.OPEN_COAL_BAG).zeroChargesIsPositive().negativeFullCharges(MAX_CHARGES),
+            new TriggerItem(ItemID.COAL_BAG_12019),
+            new TriggerItem(ItemID.OPEN_COAL_BAG),
         };
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("The coal bag is( now)? empty.").fixedCharges(0),
-            new OnChatMessage("The coal bag( still)? contains one piece of coal.").fixedCharges(1),
-            new OnChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal.").setDynamically(),
-            new OnChatMessage("You manage to mine some coal.").specificItem(ItemID.OPEN_COAL_BAG).increaseCharges(1),
+            // Check or empty.
+            new OnChatMessage("The coal bag is( now)? empty.").emptyStorage(),
+
+            // Fill or check with 1 coal.
+            new OnChatMessage("The coal bag( still)? contains one piece of coal.").consumer(() -> {
+                storage.put(ItemID.COAL, 1);
+            }),
+
+            // Check or empty with not enough inventory space.
+            new OnChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal.").consumer((m) -> {
+                storage.put(ItemID.COAL, Integer.parseInt(m.group("charges")));
+            }),
+
+            // Mine coal with open bag.
+            // Extra coal mined by celestial ring.
+            // Extra coal mined by varrock platebody.
+            new OnChatMessage(
+                "(You manage to mine some coal.|Your Celestial ring allows you to mine an additional ore.|The Varrock platebody enabled you to mine an additional ore.)"
+            ).onMenuOption("Mine")
+            .onMenuTarget("Coal rocks")
+            .specificItem(ItemID.OPEN_COAL_BAG)
+            .consumer(() -> {
+                storage.add(ItemID.COAL, 1);
+            }),
+
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
         };
-        // TODO
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
     }
 }

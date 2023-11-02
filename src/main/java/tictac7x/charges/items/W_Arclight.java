@@ -12,10 +12,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
+
+import static tictac7x.charges.store.HitsplatTarget.ENEMY;
 
 public class W_Arclight extends ChargedItem {
     public W_Arclight(
@@ -39,11 +42,7 @@ public class W_Arclight extends ChargedItem {
             new OnChatMessage("Your arclight has (?<charges>.+) charges?( left)?.").setDynamically(),
             new OnChatMessage("Your arclight can perform (?<charges>.+) more attacks.").setDynamically(),
             new OnChatMessage("Your arclight has degraded.").notification().fixedCharges(0),
+            new OnHitsplatApplied(ENEMY).isEquipped().decreaseCharges(1),
         };
-
-        // TODO
-//        this.triggersHitsplats = new TriggerHitsplat[]{
-//            new TriggerHitsplat(1).equipped().onEnemy()
-//        };
     }
 }

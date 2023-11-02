@@ -12,10 +12,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
+
+import static tictac7x.charges.store.HitsplatTarget.SELF;
 
 public class A_CrystalBody extends ChargedItem {
     public A_CrystalBody(
@@ -51,11 +54,8 @@ public class A_CrystalBody extends ChargedItem {
             new TriggerItem(ItemID.CRYSTAL_BODY_INACTIVE_27771).fixedCharges(0)
         };
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("Your crystal body has (?<charges>.+) charges? remaining").setDynamically().onItemClick()
+            new OnChatMessage("Your crystal body has (?<charges>.+) charges? remaining").setDynamically().onItemClick(),
+            new OnHitsplatApplied(SELF).isEquipped().decreaseCharges(1)
         };
-        // TODO
-//        this.triggersHitsplats = new TriggerHitsplat[]{
-//            new TriggerHitsplat(1).equipped().onSelf()
-//        };
     }
 }

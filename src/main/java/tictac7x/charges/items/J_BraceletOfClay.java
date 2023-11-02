@@ -37,7 +37,7 @@ public class J_BraceletOfClay extends ChargedItem {
         };
         this.triggers = new TriggerBase[] {
             new OnChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust.").setDynamically(),
-            new OnChatMessage("You manage to mine some( soft)? clay.").equipped().decreaseCharges(1),
+            new OnChatMessage("You manage to mine some( soft)? clay.").isEquipped().decreaseCharges(1),
             new OnChatMessage("Your bracelet of clay crumbles to dust.").fixedCharges(28).notification("Your clay bracelet crumbles to dust.")
         };
     }

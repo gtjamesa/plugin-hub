@@ -1,28 +1,35 @@
 package tictac7x.charges.item.listeners;
 
+import net.runelite.api.Client;
 import net.runelite.api.events.ItemDespawned;
 import net.runelite.client.Notifier;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnItemDespawned;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 
 public class ListenerOnItemDespawned extends ListenerBase {
-    public ListenerOnItemDespawned(final ChargedItem chargedItem, final Notifier notifier) {
-        super(chargedItem, notifier);
+    public ListenerOnItemDespawned(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+        super(client, chargedItem, notifier, config);
     }
 
     public void trigger(final ItemDespawned event) {
         for (final TriggerBase triggerBase : chargedItem.triggers) {
             if (!isValidTrigger(triggerBase, event)) continue;
             final OnItemDespawned trigger = (OnItemDespawned) triggerBase;
+            boolean triggerUsed = false;
 
             if (trigger.pickUpToStorage.isPresent()) {
                 ((ChargedItemWithStorage) chargedItem).storage.add(event.getItem().getId(), event.getItem().getQuantity());
-                return;
-            } else if (super.trigger(trigger)) {
-                return;
+                triggerUsed = true;
             }
+
+            if (super.trigger(trigger)) {
+                triggerUsed = true;
+            }
+
+            if (triggerUsed) return;
         }
     }
 
@@ -38,10 +45,14 @@ public class ListenerOnItemDespawned extends ListenerBase {
                 break;
             }
         }
-        if (!despawnedItemCheck) return false;
+        if (!despawnedItemCheck) {
+            return false;
+        }
 
         // Pick up to storage check.
-        if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) return false;
+        if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
+            return false;
+        }
 
         return super.isValidTrigger(trigger);
     }

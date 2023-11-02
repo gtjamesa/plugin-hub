@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -55,13 +56,14 @@ public class W_PharaohsSceptre extends ChargedItem {
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_UNCHARGED).fixedCharges(0),
         };
         this.triggers = new TriggerBase[]{
+            // Check and automatic messages.
             new OnChatMessage("Your sceptre has (?<charges>.+) charges? left.").setDynamically().onItemClick(),
+            // Charge non-empty sceptre.
             new OnChatMessage("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically(),
+            // Charge empty sceptre.
             new OnChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way.").setDynamically(),
+            // Teleport.
+            new OnGraphicChanged(715).onItemClick().decreaseCharges(1),
         };
-        // TODO
-//        this.triggersAnimations = new TriggerAnimation[]{
-//            new TriggerAnimation(2881).decreaseCharges(1)
-//        };
     }
 }

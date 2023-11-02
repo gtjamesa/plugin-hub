@@ -1,5 +1,6 @@
 package tictac7x.charges.store;
 
+import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
@@ -20,9 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 public class Store {
+    private final Client client;
     private final ItemManager itemManager;
     private final ConfigManager configManager;
 
@@ -35,12 +36,21 @@ public class Store {
     public Optional<Item[]> inventory_items = Optional.empty();
     public Optional<Item[]> bank_items = Optional.empty();
 
-    public final List<MenuEntry> menuEntries = new ArrayList<>();
-    public final Map<Skill, Integer> skillExperiences = new HashMap<>();
+    public final List<MenuEntry> menuOptionsClicked = new ArrayList<>();
+    private final Map<Skill, Integer> skillsXp = new HashMap<>();
 
-    public Store(final ItemManager itemManager, final ConfigManager configManager) {
+    public Store(final Client client, final ItemManager itemManager, final ConfigManager configManager) {
+        this.client = client;
         this.itemManager = itemManager;
         this.configManager = configManager;
+    }
+
+    public Optional<Integer> getSkillXp(final Skill skill) {
+        if (skillsXp.containsKey(skill)) {
+            return Optional.of(skillsXp.get(skill));
+        }
+
+        return Optional.empty();
     }
 
     public int getPreviouslyInventoryEmptySlots() {
@@ -48,7 +58,7 @@ public class Store {
     }
 
     public void onStatChanged(final StatChanged event) {
-        skillExperiences.put(event.getSkill(), event.getXp());
+        skillsXp.put(event.getSkill(), event.getXp());
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
@@ -77,14 +87,20 @@ public class Store {
     }
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
-        final String menu_target = event.getMenuTarget().replaceAll("</?col.*?>", "");
-        final String menu_option = event.getMenuOption();
+        final String menuTarget = event.getMenuTarget().replaceAll("</?col.*?>", "");
+        final String menuOption = event.getMenuOption();
+        int impostorId = -1;
+
+        try {
+            impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
+        } catch (final Exception ignored) {}
 
         if (
             // Not menu.
-            menu_target.isEmpty() ||
+            menuTarget.isEmpty() ||
             // Menu option not found.
-            menu_option == null || menu_option.isEmpty()
+            menuOption == null || menuOption.isEmpty() ||
+            event.getMenuAction().name().equals("RUNELITE")
         ) {
             return;
         }
@@ -92,25 +108,31 @@ public class Store {
         // Gametick changed, clear previous menu entries since they are no longer valid.
         if (gametick >= gametick_before + 2) {
             gametick = 0; gametick_before = 0;
-            menuEntries.clear();
+            menuOptionsClicked.clear();
         }
 
         // Save menu option and target for other triggers to use.
-        menuEntries.add(new MenuEntry(menu_target, menu_option));
+        menuOptionsClicked.add(new MenuEntry(menuTarget, menuOption, impostorId));
     }
 
     public void onGameTick(final GameTick ignored) {
         gametick++;
     }
 
-    public boolean notInMenuTargets(final String target) {
-        return menuEntries.stream().noneMatch(entry -> entry.target.contains(target));
+    public boolean inMenuTargets(final int ...itemIds) {
+        final String[] targets = new String[itemIds.length];
+
+        for (int i = 0; i < itemIds.length; i++) {
+            targets[i] = itemManager.getItemComposition(itemIds[i]).getName();
+        }
+
+        return inMenuTargets(targets);
     }
 
-    public boolean inMenuTargets(final int ...itemIds) {
-        for (final int itemId : itemIds) {
-            for (final MenuEntry menuEntry : menuEntries) {
-                if (menuEntry.target.contains(itemManager.getItemComposition(itemId).getName())) {
+    public boolean inMenuTargets(final String ...targets) {
+        for (final String target : targets) {
+            for (final MenuEntry menuEntry : menuOptionsClicked) {
+                if (menuEntry.target.contains(target)) {
                     return true;
                 }
             }
@@ -119,13 +141,17 @@ public class Store {
         return false;
     }
 
+    public boolean notInMenuTargets(final String ...targets) {
+        return !inMenuTargets(targets);
+    }
+
     public boolean notInMenuTargets(final int ...itemIds) {
         return !inMenuTargets(itemIds);
     }
 
-    public boolean inMenuTargets(final String ...targets) {
-        for (final String target : targets) {
-            if (menuEntries.stream().anyMatch(entry -> entry.target.contains(target))) {
+    public boolean inMenuOptions(final String option) {
+        for (final MenuEntry menuEntry : menuOptionsClicked) {
+            if (menuEntry.option.contains(option)) {
                 return true;
             }
         }
@@ -134,15 +160,23 @@ public class Store {
     }
 
     public boolean notInMenuOptions(final String option) {
-        return menuEntries.stream().noneMatch(entry -> entry.option.equals(option));
+        return !inMenuOptions(option);
     }
 
-    public boolean notInMenuEntries(final MenuEntry menuEntry) {
-        return !inMenuEntries(menuEntry);
+    public boolean inMenuImpostors(final int ...impostorIds) {
+        for (final MenuEntry menuEntry : menuOptionsClicked) {
+            for (final int impostorId : impostorIds) {
+                if (menuEntry.impostorId == impostorId) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
-    public boolean inMenuEntries(final MenuEntry menuEntry) {
-        return menuEntries.stream().anyMatch(entry -> Pattern.compile(menuEntry.target).matcher(entry.target).find() && entry.option.equals(menuEntry.option));
+    public boolean notInMenuImpostors(final int ...impostorIds) {
+        return !inMenuImpostors(impostorIds);
     }
 
     public int getInventoryItemsDifference(final ItemContainerChanged event) {
@@ -216,16 +250,18 @@ public class Store {
         return inventory.map(itemContainer -> itemContainer.contains(itemId)).orElse(false);
     }
 
-    public boolean equipmentContainsItem(final int itemId) {
-        return equipment.map(itemContainer -> itemContainer.contains(itemId)).orElse(false);
-    }
+    public boolean equipmentContainsItem(final int ...itemIds) {
+        if (!equipment.isPresent()) return false;
 
-    public Optional<Integer> getSkillExperience(final Skill skill) {
-        if (skillExperiences.containsKey(skill)) {
-            return Optional.of(skillExperiences.get(skill));
-        } else {
-            return Optional.empty();
+        for (final Item equipmentItem : equipment.get().getItems()) {
+            for (final int itemId : itemIds) {
+                if (equipmentItem.getId() == itemId) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     private void updateStorage(final ItemContainerChanged event) {
@@ -237,15 +273,10 @@ public class Store {
             return;
         }
 
-        final String storageString = configManager.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage);
-        final Set<Integer> items = new HashSet<>();
+        // Get all previous items.
+        final Set<Integer> items = getAllitems();
 
-        for (final String itemString : storageString.split(",")) {
-            try {
-                items.add(Integer.parseInt(itemString));
-            } catch (final Exception ignored) {}
-        }
-
+        // Update items.
         for (final Item item : event.getItemContainer().getItems()) {
             if (item.getId() != -1) {
                 items.add(item.getId());
@@ -257,6 +288,30 @@ public class Store {
             storage.append(item).append(",");
         }
 
+        // Update config all items.
         configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage, storage.toString().replaceAll(",$", ""));
+    }
+
+    private Set<Integer> getAllitems() {
+        final String storageString = configManager.getConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.storage);
+        final Set<Integer> allItems = new HashSet<>();
+
+        for (final String itemString : storageString.split(",")) {
+            try {
+                allItems.add(Integer.parseInt(itemString));
+            } catch (final Exception ignored) {}
+        }
+
+        return allItems;
+    }
+
+    public boolean possessItem(final int itemId) {
+        for (final int item : getAllitems()) {
+            if (item == itemId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

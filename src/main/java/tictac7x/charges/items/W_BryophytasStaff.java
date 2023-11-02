@@ -13,6 +13,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
+import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -38,20 +40,73 @@ public class W_BryophytasStaff extends ChargedItem {
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF)
         };
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("The nature staff has (?<charges>.+) charges?.").setDynamically(),
+
+            // Save a nature rune.
             new OnChatMessage("Your staff saved you a nature rune.").increaseCharges(1),
-            new OnChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.").setDynamically()
+
+            // Charge.
+            new OnChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.").setDynamically(),
+
+            // Regular spellbook.
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Bones to Bananas",
+                "Low Level Alchemy",
+                "Superheat Item",
+                "High Level Alchemy"
+            ).decreaseCharges(1),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Make sets").onMenuTarget(
+                "Emerald bolts (e)"
+            ).decreaseCharges(1),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Bind",
+                "Bones to Peaches"
+            ).decreaseCharges(2),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Snare"
+            ).decreaseCharges(3),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Entangle"
+            ).decreaseCharges(4),
+
+
+            // Arcuus spellbook.
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Dark Lure",
+                "Harmony Island Teleport"
+            ).decreaseCharges(1),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Degrime",
+                "Ward of Arceuus"
+            ).decreaseCharges(2),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Reanimate").onMenuTarget(
+                "Basic Reanimation"
+            ).decreaseCharges(2),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Reanimate").onMenuTarget(
+                "Adept Reanimation",
+                "Expert Reanimation"
+            ).decreaseCharges(3),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Reanimate").onMenuTarget(
+                "Master Reanimation"
+            ).decreaseCharges(4),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Resurrect").onMenuTarget(
+                "Resurrect Crops"
+            ).decreaseCharges(12),
+
+            // Lunar spellbook.
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Tan Leather",
+                "Plank Make",
+                "Energy Transfer"
+            ).decreaseCharges(1),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Spin Flax",
+                "Fertile Soil"
+            ).decreaseCharges(2),
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
+                "Geomancy"
+            ).decreaseCharges(3),
         };
-        // TODO
-//        this.triggersGraphics = new TriggerGraphic[]{
-//            new TriggerGraphic(112).decreaseCharges(1).equipped(),
-//            new TriggerGraphic(113).decreaseCharges(1).equipped(),
-//        };
-//        this.triggersStats = new TriggerStat[]{
-//            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Basic Reanimation", "Expert Reanimation").decreaseCharges(2),
-//            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Adept Reanimation", "Expert Reanimation").decreaseCharges(3),
-//            new TriggerStat(Skill.MAGIC).isEquipped().menuOption("Reanimate").menuTarget("Adept Reanimation", "Master Reanimation").decreaseCharges(4),
-//            new TriggerStat(Skill.MAGIC).isEquipped().menuEntry("Cast", "Spin Flax").decreaseCharges(2),
-//        };
     }
 }

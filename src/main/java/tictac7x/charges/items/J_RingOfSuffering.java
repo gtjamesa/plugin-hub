@@ -12,7 +12,9 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.store.HitsplatTarget;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -46,12 +48,12 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
             // Check
             new OnChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").setDynamically().onItemClick().activate(),
             new OnChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently disabled.").setDynamically().onItemClick().deactivate(),
+
             // Charge
             new OnChatMessage("You load your ring with .+ rings? of recoil. It now has (?<charges>.+) recoil charges.").setDynamically(),
+
+            // Get hit.
+            new OnHitsplatApplied(HitsplatTarget.SELF).moreThanZeroDamage().isEquipped().isActivated().decreaseCharges(1),
         };
-        // TODO
-//        this.triggersHitsplats = new TriggerHitsplat[]{
-//            new TriggerHitsplat(1).equipped().onSelf().isActivated(),
-//        };
     }
 }

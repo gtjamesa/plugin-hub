@@ -12,6 +12,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnResetDaily;
+import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -41,16 +43,14 @@ public class C_MagicCape extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
+            // After spellbook swap.
             new OnChatMessage("You have changed your spellbook (?<used>.+)/(?<total>.+) times today.").useDifference(),
-        };
 
-        // TODO
-//        this.triggersWidgets = new TriggerWidget[]{
-//            new TriggerWidget(219,1,0, "Choose spellbook: \\((?<charges>.+)/5 left\\)")
-//        };
-//
-//        this.triggersResetsDaily = new TriggerDailyReset[]{
-//            new TriggerDailyReset(5)
-//        };
+            // Spellbook swap widget.
+            new OnWidgetLoaded(219, 1, 0, "Choose spellbook: \\((?<charges>.+)/5 left\\)").setDynamically(),
+
+            // Daily reset.
+            new OnResetDaily(5),
+        };
     }
 }

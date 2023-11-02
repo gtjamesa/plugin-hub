@@ -1,7 +1,9 @@
 package tictac7x.charges.item.listeners;
 
+import net.runelite.api.Client;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.Notifier;
+import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -9,8 +11,8 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import java.util.regex.Matcher;
 
 public class ListenerOnChatMessage extends ListenerBase {
-    public ListenerOnChatMessage(final ChargedItem chargedItem, final Notifier notifier) {
-        super(chargedItem, notifier);
+    public ListenerOnChatMessage(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+        super(client, chargedItem, notifier, config);
     }
 
     public void trigger(final ChatMessage event) {
@@ -61,7 +63,7 @@ public class ListenerOnChatMessage extends ListenerBase {
         }
     }
 
-    public boolean isValidTrigger(TriggerBase triggerBase, final ChatMessage event) {
+    public boolean isValidTrigger(final TriggerBase triggerBase, final ChatMessage event) {
         if (!(triggerBase instanceof OnChatMessage)) return false;
         final OnChatMessage trigger = (OnChatMessage) triggerBase;
 

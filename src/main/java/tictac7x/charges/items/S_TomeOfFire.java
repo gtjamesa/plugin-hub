@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
@@ -37,16 +38,12 @@ public class S_TomeOfFire extends ChargedItem {
             new TriggerItem(ItemID.TOME_OF_FIRE).needsToBeEquipped(),
         };
 
-        // TODO
-//        this.triggersGraphics = new TriggerGraphic[]{
-//            new TriggerGraphic(99).decreaseCharges(1),
-//            new TriggerGraphic(126).decreaseCharges(1),
-//            new TriggerGraphic(129).decreaseCharges(1),
-//            new TriggerGraphic(155).decreaseCharges(1),
-//            new TriggerGraphic(1464).decreaseCharges(1),
-//        };
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").increaseDynamically().onItemClick(),
+
+            // Attack with regular spellbook fire spells.
+            new OnGraphicChanged(99, 126, 129, 155, 1464).isEquipped().decreaseCharges(1)
         };
     }
 }

@@ -6,21 +6,28 @@ public abstract class TriggerBase {
     // Checks.
     public Optional<int[]> specificItem = Optional.empty();
     public Optional<String> onMenuOption = Optional.empty();
-    public Optional<int[]> use = Optional.empty();
+    public Optional<String[]> onMenuTargets = Optional.empty();
+    public Optional<int[]> onMenuImpostorId = Optional.empty();
     public Optional<Boolean> onItemClick = Optional.empty();
-    public Optional<Boolean> equipped = Optional.empty();
+    public Optional<int[]> use = Optional.empty();
+    public Optional<Boolean> isEquipped = Optional.empty();
 
     // Actions.
     public Optional<Integer> fixedCharges = Optional.empty();
     public Optional<Integer> increaseCharges = Optional.empty();
     public Optional<Integer> decreaseCharges = Optional.empty();
-    public Optional<Boolean> activate = Optional.empty();
-    public Optional<Boolean> deactivate = Optional.empty();
+    public Optional<Runnable> consumer = Optional.empty();
+
     public Optional<String> notificationCustom = Optional.empty();
 
     // Storage.
     public Optional<Boolean> emptyStorage = Optional.empty();
     public Optional<Boolean> pickUpToStorage = Optional.empty();
+
+    // Activity.
+    public Optional<Boolean> isActivated = Optional.empty();
+    public Optional<Boolean> activate = Optional.empty();
+    public Optional<Boolean> deactivate = Optional.empty();
 
     public TriggerBase fixedCharges(final int charges) {
         this.fixedCharges = Optional.of(charges);
@@ -52,6 +59,21 @@ public abstract class TriggerBase {
         return this;
     }
 
+    public TriggerBase onMenuTarget(final String ...targets) {
+        this.onMenuTargets = Optional.of(targets);
+        return this;
+    }
+
+    public TriggerBase onMenuImpostorId(final int ...impostorIds) {
+        this.onMenuImpostorId = Optional.of(impostorIds);
+        return this;
+    }
+
+    public TriggerBase onItemClick() {
+        this.onItemClick = Optional.of(true);
+        return this;
+    }
+
     public TriggerBase pickUpToStorage() {
         this.pickUpToStorage = Optional.of(true);
         return this;
@@ -72,18 +94,23 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onItemClick() {
-        this.onItemClick = Optional.of(true);
-        return this;
-    }
-
     public TriggerBase notification(final String notification) {
         this.notificationCustom = Optional.of(notification);
         return this;
     }
 
-    public TriggerBase equipped() {
-        this.equipped = Optional.of(true);
+    public TriggerBase isEquipped() {
+        this.isEquipped = Optional.of(true);
+        return this;
+    }
+
+    public TriggerBase consumer(final Runnable consumer) {
+        this.consumer = Optional.of(consumer);
+        return this;
+    }
+
+    public TriggerBase isActivated() {
+        this.isActivated = Optional.of(true);
         return this;
     }
 }

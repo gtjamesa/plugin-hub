@@ -13,10 +13,11 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
+import java.awt.Color;
 import java.util.List;
 
 public class ChargedItemWithStorage extends ChargedItem {
-    public final Storage storage;
+    public Storage storage;
 
     public ChargedItemWithStorage(
         final String configKey,
@@ -55,5 +56,18 @@ public class ChargedItemWithStorage extends ChargedItem {
 
     public List<StorageItem> getStorage() {
         return this.storage.getStorage();
+    }
+
+    @Override
+    public Color getTextColor() {
+        if (getCharges() == 0) {
+            return config.getColorDefault();
+        }
+
+        if (storage.getMaximumTotalQuantity().isPresent() && getCharges() == storage.getMaximumTotalQuantity().get()) {
+            return config.getColorEmpty();
+        }
+
+        return super.getTextColor();
     }
 }

@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -38,15 +39,22 @@ public class S_DragonfireShield extends ChargedItem {
             new TriggerItem(ItemID.DRAGONFIRE_WARD_22003).fixedCharges(0),
             new TriggerItem(ItemID.DRAGONFIRE_WARD)
         };
-        // TODO
-//        this.triggersGraphics = new TriggerGraphic[]{
-//                new TriggerGraphic(1165).decreaseCharges(1)
-//        };
+
         this.triggers = new TriggerBase[]{
+            // Check.
             new OnChatMessage("The shield has (?<charges>.+) charges?.").setDynamically().onItemClick(),
+
+            // Uncharge.
             new OnChatMessage("You vent the shield's remaining charges harmlessly into the air.").fixedCharges(0),
+
+            // Charge collected.
             new OnChatMessage("Your dragonfire (shield|ward) glows more brightly.").increaseCharges(1),
-            new OnChatMessage("Your dragonfire shield is already fully charged.").fixedCharges(50)
+
+            // Already full.
+            new OnChatMessage("Your dragonfire shield is already fully charged.").fixedCharges(50),
+
+            // Attack.
+            new OnGraphicChanged(1165).isEquipped().decreaseCharges(1),
         };
     }
 }

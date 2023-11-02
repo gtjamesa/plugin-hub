@@ -13,6 +13,7 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemDespawned;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -56,6 +57,7 @@ public class U_GemBag extends ChargedItemWithStorage {
         this.triggers = new TriggerBase[]{
             // Empty to bank or inventory.
             new OnChatMessage("The gem bag is( now)? empty.").emptyStorage(),
+
             // Empty and Check.
             new OnChatMessage("(Left in bag: )?Sapphires: (?<sapphires>.+) / Emeralds: (?<emeralds>.+) / Rubies: (?<rubies>.+) Diamonds: (?<diamonds>.+) / Dragonstones: (?<dragonstones>.+)").consumer(m -> {
                 storage.put(ItemID.UNCUT_SAPPHIRE, Integer.parseInt(m.group("sapphires")));
@@ -64,31 +66,35 @@ public class U_GemBag extends ChargedItemWithStorage {
                 storage.put(ItemID.UNCUT_DIAMOND, Integer.parseInt(m.group("diamonds")));
                 storage.put(ItemID.UNCUT_DRAGONSTONE, Integer.parseInt(m.group("dragonstones")));
             }),
-            // Mining.
-            new OnChatMessage("You just mined (a|an) (?<gem>.+)!").consumer(m -> {
+
+            // Mining regular or gem rocks.
+            new OnChatMessage("You just (found|mined) (a|an) (?<gem>.+)!").consumer(m -> {
                 final int itemId = getGemIdFromName(m.group("gem"));
                 storage.add(itemId, 1);
             }).specificItem(ItemID.OPEN_GEM_BAG),
+
             // Pickpocketing.
             new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<amount>.+)").consumer(m -> {
                 final int itemId = getGemIdFromName(m.group("gem"));
                 final int amount = Integer.parseInt(m.group("amount"));
                 storage.add(itemId, amount);
             }),
+
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+
             // Empty to bank.
             new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
+
             // Use gem on bag
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storeableItems),
+
             // Pick up.
             new OnItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
-        };
 
-        // TODO
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
+        };
     }
 
     private int getGemIdFromName(final String gem) {

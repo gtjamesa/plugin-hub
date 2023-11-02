@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
@@ -41,12 +42,9 @@ public class C_ArdougneCloak extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference()
+            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Ardougne Farm teleports for today.").useDifference(),
+            new OnResetDaily(3).specificItem(ItemID.ARDOUGNE_CLOAK_2),
+            new OnResetDaily(5).specificItem(ItemID.ARDOUGNE_CLOAK_3),
         };
-        // TODO
-//        this.triggersResetsDaily = new TriggerDailyReset[]{
-//            new TriggerDailyReset(3).specificItem(ItemID.ARDOUGNE_CLOAK_2),
-//            new TriggerDailyReset(5).specificItem(ItemID.ARDOUGNE_CLOAK_3),
-//        };
     }
 }

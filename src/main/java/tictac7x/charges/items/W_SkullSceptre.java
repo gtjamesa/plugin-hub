@@ -12,6 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -37,14 +38,15 @@ public class W_SkullSceptre extends ChargedItem {
             new TriggerItem(ItemID.SKULL_SCEPTRE_I)
         };
         this.triggers = new TriggerBase[] {
+            // Teleport.
             new OnChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left.").setDynamically(),
+            // Check.
             new OnChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left.").setDynamically(),
-            new OnChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.").setDynamically()
+            // Charge.
+            new OnChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.").setDynamically(),
+            // Common menu entries.
+            new OnMenuEntryAdded("Divine").replaceOption("Check"),
+            new OnMenuEntryAdded("Invoke").replaceOption("Teleport"),
         };
-        // TODO
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Divine").replace("Check"),
-//            new TriggerMenuEntryAdded("Invoke").replace("Teleport"),
-//        };
     }
 }

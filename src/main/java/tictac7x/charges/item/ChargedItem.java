@@ -23,8 +23,14 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.listeners.ListenerBase;
 import tictac7x.charges.item.listeners.ListenerOnChatMessage;
+import tictac7x.charges.item.listeners.ListenerOnGraphicChanged;
+import tictac7x.charges.item.listeners.ListenerOnHitsplatApplied;
 import tictac7x.charges.item.listeners.ListenerOnItemContainerChanged;
 import tictac7x.charges.item.listeners.ListenerOnItemDespawned;
+import tictac7x.charges.item.listeners.ListenerOnMenuEntryAdded;
+import tictac7x.charges.item.listeners.ListenerOnResetDaily;
+import tictac7x.charges.item.listeners.ListenerOnWidgetLoaded;
+import tictac7x.charges.item.listeners.ListenerOnXpDrop;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -35,6 +41,7 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import javax.annotation.Nullable;
+import java.awt.Color;
 import java.util.Optional;
 
 public class ChargedItem {
@@ -57,9 +64,15 @@ public class ChargedItem {
     public int charges = Charges.UNKNOWN;
 
     public TriggerBase[] triggers = new TriggerBase[]{};
-    public final ListenerOnChatMessage listenerOnChatMessage;
-    public final ListenerOnItemContainerChanged listenerOnItemContainerChanged;
-    public final ListenerOnItemDespawned listenerOnItemDespawned;
+    private final ListenerOnChatMessage listenerOnChatMessage;
+    private final ListenerOnItemContainerChanged listenerOnItemContainerChanged;
+    private final ListenerOnItemDespawned listenerOnItemDespawned;
+    private final ListenerOnXpDrop listenerOnXpDrop;
+    private final ListenerOnMenuEntryAdded listenerOnMenuEntryAdded;
+    private final ListenerOnResetDaily listenerOnResetDaily;
+    private final ListenerOnGraphicChanged listenerOnGraphicChanged;
+    private final ListenerOnHitsplatApplied listenerOnHitsplatApplied;
+    private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
 
     public ChargedItem(
         final ItemKey infobox_id,
@@ -86,9 +99,15 @@ public class ChargedItem {
         this.config = config;
         this.store = store;
 
-        listenerOnChatMessage = new ListenerOnChatMessage(this, notifier);
-        listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(this, notifier);
-        listenerOnItemDespawned = new ListenerOnItemDespawned(this, notifier);
+        listenerOnChatMessage = new ListenerOnChatMessage(client, this, notifier, config);
+        listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(client, this, notifier, config);
+        listenerOnItemDespawned = new ListenerOnItemDespawned(client, this, notifier, config);
+        listenerOnXpDrop = new ListenerOnXpDrop(client, this, notifier, config);
+        listenerOnMenuEntryAdded = new ListenerOnMenuEntryAdded(client, this, notifier, config);
+        listenerOnResetDaily = new ListenerOnResetDaily(client, this, notifier, config);
+        listenerOnGraphicChanged = new ListenerOnGraphicChanged(client, this, notifier, config);
+        listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
+        listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
     }
@@ -230,11 +249,13 @@ public class ChargedItem {
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
-//        onHitsplatApplied.trigger(event);
+        listenerOnHitsplatApplied.trigger(event);
     }
 
     public void onWidgetLoaded(final WidgetLoaded event) {
-//        onWidgetLoaded.trigger(event);
+        client_thread.invokeLater(() -> {
+            listenerOnWidgetLoaded.trigger(event);
+        });
     }
 
     public void onVarbitChanged(final VarbitChanged event) {
@@ -248,11 +269,11 @@ public class ChargedItem {
     }
 
     public void onStatChanged(final StatChanged event) {
-//        onStatChanged.trigger(event);
+        listenerOnXpDrop.trigger(event);
     }
 
     public void onGraphicChanged(final GraphicChanged event) {
-//        onGraphicChanged.trigger(event);
+        listenerOnGraphicChanged.trigger(event);
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
@@ -269,7 +290,7 @@ public class ChargedItem {
     }
 
     public void onMenuEntryAdded(final MenuEntryAdded event) {
-//        onMenuEntryAdded.trigger(event);
+        listenerOnMenuEntryAdded.trigger(event);
     }
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
@@ -281,7 +302,19 @@ public class ChargedItem {
     }
 
     public void onResetDaily() {
-//        onResetDaily.trigger();
+        listenerOnResetDaily.trigger();
+    }
+
+    public Color getTextColor() {
+        if (getCharges() == Charges.UNKNOWN) {
+            return config.getColorUnknown();
+        }
+
+        if (getCharges() == 0) {
+            return config.getColorEmpty();
+        }
+
+        return config.getColorDefault();
     }
 }
 

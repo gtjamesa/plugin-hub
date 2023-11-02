@@ -1,6 +1,7 @@
 package tictac7x.charges.items;
 
 import net.runelite.api.Client;
+import net.runelite.api.GameObject;
 import net.runelite.api.ItemID;
 import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
@@ -15,6 +16,8 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemContainerType;
@@ -80,15 +83,48 @@ public class U_HerbSack extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
             // Empty to bank.
             new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
+            // Pick guam leaf.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39816).consumer(() -> {
+                storage.add(ItemID.GRIMY_GUAM_LEAF, 1);
+            }),
+            // Pick marrentill.
+            // Pick tarromin.
+            // Pick harralander.
+            // Pick ranarr.
+            // Pick toadflax.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39781).consumer(() -> {
+                storage.add(ItemID.GRIMY_TOADFLAX, 1);
+            }),
+            // Pick irit leaf.
+            // Pick avantoe.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39846).consumer(() -> {
+                storage.add(ItemID.GRIMY_AVANTOE, 1);
+            }),
+            // Pick kwuarm.
+            // Pick snapdragon
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39811).consumer(() -> {
+                storage.add(ItemID.GRIMY_SNAPDRAGON, 1);
+            }),
+            // Pick cadantine.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39791).consumer(() -> {
+                storage.add(ItemID.GRIMY_CADANTINE, 1);
+            }),
+            // Pick lantadyme.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39796).consumer(() -> {
+                storage.add(ItemID.GRIMY_LANTADYME, 1);
+            }),
+            // Pick dwarf weed.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39801).consumer(() -> {
+                storage.add(ItemID.GRIMY_DWARF_WEED, 1);
+            }),
+            // Pick torstol.
+            // Pick irit leaf.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs").onMenuImpostorId(39771, 39841).consumer(() -> {
+                storage.add(ItemID.GRIMY_IRIT_LEAF, 1);
+            }),
+            // Hide destroy option.
+            new OnMenuEntryAdded("Destroy").hide()
         };
-
-        // TODO
-//        this.triggersStats = new TriggerStat[]{
-//            new TriggerStat(Skill.FARMING).specificItem(ItemID.OPEN_HERB_SACK).menuEntry("Pick", "Herbs").increaseCharges(1),
-//        };
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
     }
 
     private int getHerbIdFromName(final String herb) {

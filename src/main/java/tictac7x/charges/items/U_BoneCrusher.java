@@ -13,6 +13,8 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
@@ -38,27 +40,24 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
         this.triggers = new TriggerBase[] {
-            // Check
+            // Check.
             new OnChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
             new OnChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
             new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").setDynamically().activate(),
             new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamically().deactivate(),
-            // Uncharge
+            // Uncharge.
             new OnChatMessage("You remove all the charges from the bonecrusher( necklace)?.").fixedCharges(0),
             new OnChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left.").setDynamically(),
-            // Ran out
+            // Ran out.
             new OnChatMessage("Your bonecrusher( necklace)? has run out of charges.").notification().fixedCharges(0),
-            // Activate
+            // Activate.
             new OnChatMessage("The bonecrusher( necklace)? has been deactivated").deactivate(),
-            // Deactivate
+            // Deactivate.
             new OnChatMessage("The bonecrusher( necklace)? is active").activate(),
+            // Automatic bury.
+            new OnXpDrop(Skill.PRAYER).isActivated().decreaseCharges(1),
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
         };
-        // TODO
-//        this.triggersStats = new TriggerStat[]{
-//            new TriggerStat(Skill.PRAYER).isActivated().decreaseCharges(1),
-//        };
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
     }
 }
