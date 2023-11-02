@@ -54,12 +54,6 @@ public abstract class ListenerBase {
             triggerUsed = true;
         }
 
-        // Put to storage.
-        if (trigger.putToStorage.isPresent()) {
-            ((ChargedItemWithStorage) chargedItem).storage.put(trigger.putToStorage.get()[0], trigger.putToStorage.get()[1]);
-            triggerUsed = true;
-        }
-
         // Consumer.
         if (trigger.consumer.isPresent()) {
             trigger.consumer.get().run();
@@ -89,8 +83,8 @@ public abstract class ListenerBase {
 
     boolean isValidTrigger(final TriggerBase trigger) {
         // Specific item check.
-        specificItemCheck: if (trigger.specificItem.isPresent()) {
-            for (final int itemId : trigger.specificItem.get()) {
+        specificItemCheck: if (trigger.onSpecificItem.isPresent()) {
+            for (final int itemId : trigger.onSpecificItem.get()) {
                 if (chargedItem.store.inventoryContainsItem(itemId) || chargedItem.store.equipmentContainsItem(itemId)) {
                     break specificItemCheck;
                 }
@@ -104,7 +98,7 @@ public abstract class ListenerBase {
         }
 
         // Menu option check.
-        if (trigger.onMenuOption.isPresent() && chargedItem.store.notInMenuOptions(trigger.onMenuOption.get())) {
+        if (trigger.onMenuOptions.isPresent() && chargedItem.store.notInMenuOptions(trigger.onMenuOptions.get())) {
             return false;
         }
 
@@ -114,7 +108,7 @@ public abstract class ListenerBase {
         }
 
         // Menu impostor id check.
-        if (trigger.onMenuImpostorId.isPresent() && chargedItem.store.notInMenuImpostors(trigger.onMenuImpostorId.get())) {
+        if (trigger.onMenuImpostors.isPresent() && chargedItem.store.notInMenuImpostors(trigger.onMenuImpostors.get())) {
             return false;
         }
 
@@ -124,7 +118,7 @@ public abstract class ListenerBase {
         }
 
         // Use check.
-        if (trigger.use.isPresent() && (chargedItem.store.notInMenuTargets(chargedItem.item_id) || chargedItem.store.notInMenuTargets(trigger.use.get()))) {
+        if (trigger.onUse.isPresent() && (chargedItem.store.notInMenuTargets(chargedItem.item_id) || chargedItem.store.notInMenuTargets(trigger.onUse.get()))) {
             return false;
         }
 
@@ -140,11 +134,6 @@ public abstract class ListenerBase {
 
         // Add to storage check.
         if (trigger.addToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-            return false;
-        }
-
-        // Put to storage check.
-        if (trigger.putToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
             return false;
         }
 

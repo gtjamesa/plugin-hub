@@ -87,6 +87,11 @@ public class Storage {
         put(item.get().itemId, quantity);
     }
 
+    public void remove(final Optional<StoreableItem> item, final int quantity) {
+        if (!item.isPresent()) return;
+        remove(item.get().itemId, quantity);
+    }
+
     public void remove(final int itemId, final int quantity) {
         final Optional<StorageItem> item = getItem(itemId);
         put(itemId, (item.isPresent() ? Math.max(0, item.get().getQuantity() - quantity) : 0));

@@ -49,61 +49,61 @@ public class W_BryophytasStaff extends ChargedItem {
             new OnChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.").setDynamically(),
 
             // Regular spellbook.
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Bones to Bananas",
                 "Low Level Alchemy",
                 "Superheat Item",
                 "High Level Alchemy"
             ).decreaseCharges(1),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Make sets").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Make sets").onMenuTarget(
                 "Emerald bolts (e)"
             ).decreaseCharges(1),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Bind",
                 "Bones to Peaches"
             ).decreaseCharges(2),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Snare"
             ).decreaseCharges(3),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Entangle"
             ).decreaseCharges(4),
 
 
             // Arcuus spellbook.
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Dark Lure",
                 "Harmony Island Teleport"
             ).decreaseCharges(1),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Degrime",
                 "Ward of Arceuus"
             ).decreaseCharges(2),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Reanimate").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Reanimate").onMenuTarget(
                 "Basic Reanimation"
             ).decreaseCharges(2),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Reanimate").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Reanimate").onMenuTarget(
                 "Adept Reanimation",
                 "Expert Reanimation"
             ).decreaseCharges(3),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Reanimate").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Reanimate").onMenuTarget(
                 "Master Reanimation"
             ).decreaseCharges(4),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Resurrect").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Resurrect").onMenuTarget(
                 "Resurrect Crops"
             ).decreaseCharges(12),
 
             // Lunar spellbook.
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Tan Leather",
                 "Plank Make",
                 "Energy Transfer"
             ).decreaseCharges(1),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Spin Flax",
                 "Fertile Soil"
             ).decreaseCharges(2),
-            new OnXpDrop(Skill.MAGIC).isEquipped().isMenuOption("Cast").isMenuTarget(
+            new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(
                 "Geomancy"
             ).decreaseCharges(3),
         };

@@ -81,7 +81,7 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             }),
 
             // Fill compost from bin.
-            new OnXpDrop(Skill.FARMING).isMenuOption("Take").isMenuTarget("Compost Bin", "Big Compost Bin").consumer(() -> {
+            new OnXpDrop(Skill.FARMING).onMenuOption("Take").onMenuTarget("Compost Bin", "Big Compost Bin").consumer(() -> {
                 storage.add(getCompostType(), 2);
             })
         };

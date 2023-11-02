@@ -6,12 +6,12 @@ import java.util.Optional;
 
 public abstract class TriggerBase {
     // Checks.
-    public Optional<int[]> specificItem = Optional.empty();
-    public Optional<String> onMenuOption = Optional.empty();
+    public Optional<int[]> onSpecificItem = Optional.empty();
+    public Optional<String[]> onMenuOptions = Optional.empty();
     public Optional<String[]> onMenuTargets = Optional.empty();
-    public Optional<int[]> onMenuImpostorId = Optional.empty();
+    public Optional<int[]> onMenuImpostors = Optional.empty();
     public Optional<Boolean> onItemClick = Optional.empty();
-    public Optional<StoreableItem[]> use = Optional.empty();
+    public Optional<StoreableItem[]> onUse = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
 
     // Actions.
@@ -26,7 +26,6 @@ public abstract class TriggerBase {
     public Optional<Boolean> emptyStorage = Optional.empty();
     public Optional<Boolean> pickUpToStorage = Optional.empty();
     public Optional<int[]> addToStorage = Optional.empty();
-    public Optional<int[]> putToStorage = Optional.empty();
 
     // Activity.
     public Optional<Boolean> isActivated = Optional.empty();
@@ -53,23 +52,23 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase specificItem(final int ...itemIds) {
-        this.specificItem = Optional.of(itemIds);
+    public TriggerBase onSpecificItem(final int ...itemIds) {
+        this.onSpecificItem = Optional.of(itemIds);
         return this;
     }
 
-    public TriggerBase isMenuOption(final String option) {
-        this.onMenuOption = Optional.of(option);
+    public TriggerBase onMenuOption(final String ...options) {
+        this.onMenuOptions = Optional.of(options);
         return this;
     }
 
-    public TriggerBase isMenuTarget(final String ...targets) {
+    public TriggerBase onMenuTarget(final String ...targets) {
         this.onMenuTargets = Optional.of(targets);
         return this;
     }
 
-    public TriggerBase isMenuImpostorId(final int ...impostorIds) {
-        this.onMenuImpostorId = Optional.of(impostorIds);
+    public TriggerBase onMenuImpostor(final int ...impostorIds) {
+        this.onMenuImpostors = Optional.of(impostorIds);
         return this;
     }
 
@@ -83,8 +82,8 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase use(final Optional<StoreableItem[]> storeableItems) {
-        this.use = storeableItems;
+    public TriggerBase onUse(final Optional<StoreableItem[]> storeableItems) {
+        this.onUse = storeableItems;
         return this;
     }
 
@@ -120,11 +119,6 @@ public abstract class TriggerBase {
 
     public TriggerBase addToStorage(final int itemId, final int quantity) {
         this.addToStorage = Optional.of(new int[]{itemId, quantity});
-        return this;
-    }
-
-    public TriggerBase putToStorage(final int itemId, final int quantity) {
-        this.putToStorage = Optional.of(new int[]{itemId, quantity});
         return this;
     }
 }

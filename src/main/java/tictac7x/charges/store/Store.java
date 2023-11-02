@@ -186,18 +186,20 @@ public class Store {
         return !inMenuTargets(itemIds);
     }
 
-    public boolean inMenuOptions(final String option) {
+    public boolean inMenuOptions(final String ...options) {
         for (final MenuEntry menuEntry : menuOptionsClicked) {
-            if (menuEntry.option.contains(option)) {
-                return true;
+            for (final String option : options) {
+                if (menuEntry.option.contains(option)) {
+                    return true;
+                }
             }
         }
 
         return false;
     }
 
-    public boolean notInMenuOptions(final String option) {
-        return !inMenuOptions(option);
+    public boolean notInMenuOptions(final String ...options) {
+        return !inMenuOptions(options);
     }
 
     public boolean inMenuImpostors(final int ...impostorIds) {

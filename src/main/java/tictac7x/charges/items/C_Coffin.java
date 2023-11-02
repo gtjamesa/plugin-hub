@@ -9,7 +9,6 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StoreableItem;
@@ -20,9 +19,6 @@ import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
-
-import static tictac7x.charges.store.ItemContainerType.BANK;
-import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 public class C_Coffin extends ChargedItemWithStorage {
     public C_Coffin(
@@ -82,7 +78,7 @@ public class C_Coffin extends ChargedItemWithStorage {
             new OnChatMessage("Your coffin is empty.").onItemClick().emptyStorage(),
 
             // Fill from inventory.
-            new OnItemContainerChanged(ItemContainerType.INVENTORY).fillStorageFromInventory().isMenuOption("Fill"),
+            new OnItemContainerChanged(ItemContainerType.INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
         };
     }
 }

@@ -68,7 +68,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             // Mining regular or gem rocks.
             new OnChatMessage("You just (found|mined) (a|an) (?<gem>.+)!").consumer(m -> {
                 storage.add(getStorageItemFromName(m.group("gem")), 1);
-            }).specificItem(ItemID.OPEN_GEM_BAG),
+            }).onSpecificItem(ItemID.OPEN_GEM_BAG),
 
             // Pickpocketing.
             new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+)").consumer(m -> {
@@ -76,16 +76,16 @@ public class U_GemBag extends ChargedItemWithStorage {
             }),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().isMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).isMenuOption("Empty").emptyStorage(),
+            new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
 
             // Use gem on bag
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storage.getStoreableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUse(storage.getStoreableItems()),
 
             // Pick up.
-            new OnItemDespawned(storage.getStoreableItems()).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
+            new OnItemDespawned(storage.getStoreableItems()).onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

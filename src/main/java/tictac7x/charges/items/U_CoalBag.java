@@ -61,9 +61,9 @@ public class U_CoalBag extends ChargedItemWithStorage {
             // Extra coal mined by varrock platebody.
             new OnChatMessage(
                 "(You manage to mine some coal.|Your Celestial ring allows you to mine an additional ore.|The Varrock platebody enabled you to mine an additional ore.)"
-            ).isMenuOption("Mine")
-            .isMenuTarget("Coal rocks")
-            .specificItem(ItemID.OPEN_COAL_BAG)
+            ).onMenuOption("Mine")
+            .onMenuTarget("Coal rocks")
+            .onSpecificItem(ItemID.OPEN_COAL_BAG)
             .consumer(() -> {
                 storage.add(ItemID.COAL, 1);
             }),

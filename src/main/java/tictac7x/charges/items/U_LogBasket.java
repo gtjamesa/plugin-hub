@@ -2,6 +2,7 @@ package tictac7x.charges.items;
 
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -15,11 +16,13 @@ import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +30,9 @@ import static tictac7x.charges.store.ItemContainerType.BANK;
 import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 public class U_LogBasket extends ChargedItemWithStorage {
+    private Optional<StoreableItem> lastLogs = Optional.empty();
+    private int infernalQuantityTracker = 0;
+
     public U_LogBasket(
         final Client client,
         final ClientThread client_thread,
@@ -64,10 +70,16 @@ public class U_LogBasket extends ChargedItemWithStorage {
         };
         this.triggers = new TriggerBase[] {
             // Check while empty.
-            new OnChatMessage("(Your|The) basket is empty.").onItemClick().emptyStorage(),
+            new OnChatMessage("(Your|The) basket is empty.").onItemClick().emptyStorage().consumer(() -> {
+                infernalQuantityTracker = 0;
+                lastLogs = Optional.empty();
+            }),
 
             // Empty to bank.
-            new OnChatMessage("You empty your basket( into the bank)?.").onItemClick().emptyStorage(),
+            new OnChatMessage("You empty your basket( into the bank)?.").onItemClick().emptyStorage().consumer(() -> {
+                infernalQuantityTracker = 0;
+                lastLogs = Optional.empty();
+            }),
 
             // Check.
             new OnChatMessage("The basket contains:").stringConsumer(s -> {
@@ -79,25 +91,38 @@ public class U_LogBasket extends ChargedItemWithStorage {
                 while (matcher.find()) {
                     storage.put(getStorageItemFromName(matcher.group("logs")), Integer.parseInt(matcher.group("quantity")));
                 }
+
+                infernalQuantityTracker = getCharges();
             }).onItemClick(),
 
             // Chop.
             new OnChatMessage("You get some (?<logs>.+).").consumer(m -> {
-                storage.add(getStorageItemFromName(m.group("logs")), 1);
-            }).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
+                lastLogs = getStorageItemFromName(m.group("logs"));
+                storage.add(lastLogs, 1);
+                infernalQuantityTracker += 1;
+            }).onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().isMenuOption("Fill"),
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storage.getStoreableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUse(storage.getStoreableItems()),
 
             // Empty to inventory.
-            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().isMenuOption("Empty"),
+            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).isMenuOption("Empty").emptyStorage(),
+            new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),
+
+            // Infernal axe support.
+            new OnXpDrop(Skill.FIREMAKING).onMenuOption("Chop down", "Cut").consumer(() -> {
+                System.out.println(infernalQuantityTracker);
+                if (infernalQuantityTracker < 29 && lastLogs.isPresent()) {
+                    storage.remove(lastLogs, 1);
+                    infernalQuantityTracker -= 1;
+                }
+            }).onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
         };
     }
 

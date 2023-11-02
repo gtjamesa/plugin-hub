@@ -469,22 +469,22 @@ public class ChargesImprovedPlugin extends Plugin {
 		store.onMenuOptionClicked(event);
 
 		try {
-//			System.out.println("MENU OPTION | " +
-//				"option: " + event.getMenuOption() +
-//				", target: " + event.getMenuTarget() +
-//				", action name: " + event.getMenuAction().name() +
-//				", action id: " + event.getMenuAction().getId() +
-//				", item id: " + event.getItemId() +
-//				", impostor id " + client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId()
-//			);
+			System.out.println("MENU OPTION | " +
+				"option: " + event.getMenuOption() +
+				", target: " + event.getMenuTarget() +
+				", action name: " + event.getMenuAction().name() +
+				", action id: " + event.getMenuAction().getId() +
+				", item id: " + event.getItemId() +
+				", impostor id " + client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId()
+			);
 		} catch (final Exception ignored) {
-//			System.out.println("MENU OPTION | " +
-//				"option: " + event.getMenuOption() +
-//				", target: " + event.getMenuTarget() +
-//				", action name: " + event.getMenuAction().name() +
-//				", action id: " + event.getMenuAction().getId() +
-//				", item id: " + event.getItemId()
-//			);
+			System.out.println("MENU OPTION | " +
+				"option: " + event.getMenuOption() +
+				", target: " + event.getMenuTarget() +
+				", action name: " + event.getMenuAction().name() +
+				", action id: " + event.getMenuAction().getId() +
+				", item id: " + event.getItemId()
+			);
 		}
 	}
 

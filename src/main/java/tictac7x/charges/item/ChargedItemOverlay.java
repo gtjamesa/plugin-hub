@@ -91,7 +91,11 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
             charges_component.setText(charges);
 
+            // Set color.
             charges_component.setColor(charged_item.getTextColor());
+            if (isBankWidget(widgetItem) && charged_item.getCharges() != Charges.UNKNOWN) {
+                charges_component.setColor(config.getColorDefault());
+            }
 
             charges_component.render(graphics);
 

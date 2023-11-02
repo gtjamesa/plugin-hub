@@ -87,10 +87,10 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new OnChatMessage("You catch (a|an) (?<fish>.+).").consumer(m -> {
                 lastCaughtFish = getStorageItemFromName(m.group("fish"));
                 storage.add(lastCaughtFish, 1);
-            }).specificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL),
+            }).onSpecificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL),
 
             // Extra fish.
-            new OnChatMessage(".* enabled you to catch an extra fish.").specificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).consumer(() -> {
+            new OnChatMessage(".* enabled you to catch an extra fish.").onSpecificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).consumer(() -> {
                 storage.add(lastCaughtFish, 1);
             }),
 
@@ -107,10 +107,10 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             }).onItemClick(),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().isMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).isMenuOption("Empty").emptyStorage(),
+            new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),
