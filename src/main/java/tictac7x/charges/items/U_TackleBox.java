@@ -11,6 +11,8 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
@@ -34,9 +36,9 @@ public class U_TackleBox extends ChargedItem {
             new TriggerItem(ItemID.TACKLE_BOX).fixedCharges(Charges.UNLIMITED),
         };
 
-        //TODO
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
+        this.triggers = new TriggerBase[]{
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
+        };
     }
 }

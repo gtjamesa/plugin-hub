@@ -48,6 +48,18 @@ public abstract class ListenerBase {
             triggerUsed = true;
         }
 
+        // Add to storage.
+        if (trigger.addToStorage.isPresent()) {
+            ((ChargedItemWithStorage) chargedItem).storage.add(trigger.addToStorage.get()[0], trigger.addToStorage.get()[1]);
+            triggerUsed = true;
+        }
+
+        // Put to storage.
+        if (trigger.putToStorage.isPresent()) {
+            ((ChargedItemWithStorage) chargedItem).storage.put(trigger.putToStorage.get()[0], trigger.putToStorage.get()[1]);
+            triggerUsed = true;
+        }
+
         // Consumer.
         if (trigger.consumer.isPresent()) {
             trigger.consumer.get().run();
@@ -83,73 +95,71 @@ public abstract class ListenerBase {
                     break specificItemCheck;
                 }
             }
-//            System.out.println("A");
             return false;
         }
 
         // On item click check.
         if (trigger.onItemClick.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.item_id)) {
-//            System.out.println("B");
             return false;
         }
 
         // Menu option check.
         if (trigger.onMenuOption.isPresent() && chargedItem.store.notInMenuOptions(trigger.onMenuOption.get())) {
-//            System.out.println("C");
             return false;
         }
 
         // Menu target check.
         if (trigger.onMenuTargets.isPresent() && chargedItem.store.notInMenuTargets(trigger.onMenuTargets.get())) {
-//            System.out.println("WASD");
             return false;
         }
 
         // Menu impostor id check.
         if (trigger.onMenuImpostorId.isPresent() && chargedItem.store.notInMenuImpostors(trigger.onMenuImpostorId.get())) {
-//            System.out.println("D");
             return false;
         }
 
         // Equipped check.
         if (trigger.isEquipped.isPresent() && !chargedItem.store.equipmentContainsItem(chargedItem.item_id)) {
-//            System.out.println("E");
             return false;
         }
 
         // Use check.
         if (trigger.use.isPresent() && (chargedItem.store.notInMenuTargets(chargedItem.item_id) || chargedItem.store.notInMenuTargets(trigger.use.get()))) {
-//            System.out.println("F");
             return false;
         }
 
         // Empty storage check.
         if (trigger.emptyStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-//            System.out.println("G");
             return false;
         }
 
         // Pick up to storage check.
         if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-//            System.out.println("H");
+            return false;
+        }
+
+        // Add to storage check.
+        if (trigger.addToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
+            return false;
+        }
+
+        // Put to storage check.
+        if (trigger.putToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
             return false;
         }
 
         // Is activated check.
         if (trigger.isActivated.isPresent() && !(chargedItem instanceof ChargedItemWithStatus)) {
-//            System.out.println("NOT ACTIVATED");
             return false;
         }
 
         // Activate check.
         if (trigger.activate.isPresent() && !(chargedItem instanceof ChargedItemWithStatus)) {
-//            System.out.println("I");
             return false;
         }
 
         // Deactivate check.
         if (trigger.deactivate.isPresent() && !(chargedItem instanceof ChargedItemWithStatus)) {
-//            System.out.println("J");
             return false;
         }
 

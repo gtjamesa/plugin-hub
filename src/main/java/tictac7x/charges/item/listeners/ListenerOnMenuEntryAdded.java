@@ -28,16 +28,23 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
                 triggerUsed = true;
             }
 
-            if (trigger.hide.isPresent()) {
+            if (trigger.replaceTarget.isPresent()) {
+                if (event.getTarget().contains(trigger.replaceTarget.get()[0])) {
+                    event.getMenuEntry().setTarget(event.getTarget().replaceAll(trigger.replaceTarget.get()[0], trigger.replaceTarget.get()[1]));
+                    triggerUsed = true;
+                }
+            }
+
+            if (trigger.hide.isPresent() && trigger.menuEntryOption.isPresent()) {
                 final List<MenuEntry> newMenuEntries = new ArrayList<>();
 
                 for (final MenuEntry entry : client.getMenuEntries()) {
-                    if (!entry.getOption().equals(trigger.menuEntryOption)) {
+                    if (!entry.getOption().equals(trigger.menuEntryOption.get())) {
                         newMenuEntries.add(entry);
                     }
                 }
-                client.setMenuEntries(newMenuEntries.toArray(new MenuEntry[0]));
 
+                client.setMenuEntries(newMenuEntries.toArray(new MenuEntry[0]));
                 triggerUsed = true;
             }
 
@@ -54,7 +61,7 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
         final OnMenuEntryAdded trigger = (OnMenuEntryAdded) triggerBase;
 
         // Item id check.
-        if (event.getMenuEntry().getItemId() != chargedItem.item_id) {
+        if (!trigger.replaceImpostorIds.isPresent() && event.getMenuEntry().getItemId() != chargedItem.item_id) {
             return false;
         }
 
@@ -64,15 +71,38 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
         }
 
         // Menu entry option check.
-        if (!event.getOption().equals(trigger.menuEntryOption)) {
+        if (trigger.menuEntryOption.isPresent() && !event.getOption().equals(trigger.menuEntryOption.get())) {
             return false;
         }
 
-        // Menu entry replace check.
+        // Menu option replace check.
         if (trigger.replaceOption.isPresent() && (
+            !trigger.menuEntryOption.isPresent() ||
             !config.useCommonMenuEntries() ||
-            !event.getOption().equals(trigger.menuEntryOption)
+            !event.getOption().equals(trigger.menuEntryOption.get())
         )) {
+            return false;
+        }
+
+        // Menu target replace check.
+        menuReplaceTargetCheck: if (trigger.replaceTarget.isPresent()) {
+            if (event.getTarget().contains(trigger.replaceTarget.get()[0])) {
+                break menuReplaceTargetCheck;
+            }
+
+            return false;
+        }
+
+        // Menu replace impostor id check.
+        replaceImpostorIdCheck: if (trigger.replaceImpostorIds.isPresent()) {
+            for (final int impostorId : trigger.replaceImpostorIds.get()) {
+                try {
+                    if (client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId() == impostorId) {
+                        break replaceImpostorIdCheck;
+                    }
+                } catch (final Exception ignored) {}
+            }
+
             return false;
         }
 

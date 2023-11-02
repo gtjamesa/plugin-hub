@@ -1,9 +1,17 @@
 package tictac7x.charges.item.triggers;
 
-public class OnItemDespawned extends TriggerBase {
-    public final int[] despawnedItemIds;
+import tictac7x.charges.item.storage.StoreableItem;
 
-    public OnItemDespawned(final int ... despawnedItemIds) {
-        this.despawnedItemIds = despawnedItemIds;
+import java.util.Optional;
+
+public class OnItemDespawned extends TriggerBase {
+    public final StoreableItem[] despawnedItemIds;
+
+    public OnItemDespawned(final Optional<StoreableItem[]> despawnedItems) {
+        if (despawnedItems.isPresent()) {
+            this.despawnedItemIds = despawnedItems.get();
+        } else {
+            this.despawnedItemIds = new StoreableItem[]{};
+        }
     }
 }

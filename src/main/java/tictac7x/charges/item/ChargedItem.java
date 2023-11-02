@@ -1,5 +1,6 @@
 package tictac7x.charges.item;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.Item;
 import net.runelite.api.events.AnimationChanged;
@@ -29,6 +30,7 @@ import tictac7x.charges.item.listeners.ListenerOnItemContainerChanged;
 import tictac7x.charges.item.listeners.ListenerOnItemDespawned;
 import tictac7x.charges.item.listeners.ListenerOnMenuEntryAdded;
 import tictac7x.charges.item.listeners.ListenerOnResetDaily;
+import tictac7x.charges.item.listeners.ListenerOnVarbitChanged;
 import tictac7x.charges.item.listeners.ListenerOnWidgetLoaded;
 import tictac7x.charges.item.listeners.ListenerOnXpDrop;
 import tictac7x.charges.item.triggers.OnChatMessage;
@@ -44,6 +46,7 @@ import javax.annotation.Nullable;
 import java.awt.Color;
 import java.util.Optional;
 
+@Slf4j
 public class ChargedItem {
     public final ItemKey infobox_id;
     public int item_id;
@@ -73,6 +76,7 @@ public class ChargedItem {
     private final ListenerOnGraphicChanged listenerOnGraphicChanged;
     private final ListenerOnHitsplatApplied listenerOnHitsplatApplied;
     private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
+    private final ListenerOnVarbitChanged listenerOnVarbitChanged;
 
     public ChargedItem(
         final ItemKey infobox_id,
@@ -108,6 +112,7 @@ public class ChargedItem {
         listenerOnGraphicChanged = new ListenerOnGraphicChanged(client, this, notifier, config);
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
+        listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
 
         client_thread.invokeLater(this::loadChargesFromConfig);
     }
@@ -121,6 +126,10 @@ public class ChargedItem {
     }
 
     public int getCharges() {
+        if (getCurrentTriggerItem().isPresent() && getCurrentTriggerItem().get().fixed_charges != null) {
+            return getCurrentTriggerItem().get().fixed_charges;
+        }
+
         return charges;
     }
 
@@ -226,14 +235,6 @@ public class ChargedItem {
         return false;
     }
 
-    public boolean isZeroChargesPositive() {
-        if (getCurrentTriggerItem().isPresent()) {
-            return getCurrentTriggerItem().get().zeroChargesIsPositive;
-        }
-
-        return false;
-    }
-
     public Optional<Integer> negativeFullCharges() {
         if (getCurrentTriggerItem().isPresent() && getCurrentTriggerItem().get().maxCharges.isPresent() && getCurrentTriggerItem().get().negativeMaxCharges) {
             return getCurrentTriggerItem().get().maxCharges;
@@ -244,36 +245,57 @@ public class ChargedItem {
 
     public void activityCallback(final ItemActivity ignored) {}
 
+    public Color getTextColor() {
+        if (getCharges() == Charges.UNKNOWN) {
+            return config.getColorUnknown();
+        }
+
+        if (
+                getCharges() == 0 ||
+                        needsToBeEquipped() && !isEquipped()
+        ) {
+            return config.getColorEmpty();
+        }
+
+        return config.getColorDefault();
+    }
+
     public void onChatMessage(final ChatMessage event) {
-        listenerOnChatMessage.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnChatMessage.trigger(event);
+        }
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
-        listenerOnHitsplatApplied.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnHitsplatApplied.trigger(event);
+        }
     }
 
     public void onWidgetLoaded(final WidgetLoaded event) {
-        client_thread.invokeLater(() -> {
-            listenerOnWidgetLoaded.trigger(event);
-        });
+        if (inInventory() || isEquipped()) {
+            client_thread.invokeLater(() -> {
+                listenerOnWidgetLoaded.trigger(event);
+            });
+        }
     }
 
     public void onVarbitChanged(final VarbitChanged event) {
-//        if (onVarbitChanged != null) {
-//            onVarbitChanged.trigger(event);
-//        }
-    }
-
-    public void onAnimationChanged(final AnimationChanged event) {
-//        onAnimationChanged.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnVarbitChanged.trigger(event);
+        }
     }
 
     public void onStatChanged(final StatChanged event) {
-        listenerOnXpDrop.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnXpDrop.trigger(event);
+        }
     }
 
     public void onGraphicChanged(final GraphicChanged event) {
-        listenerOnGraphicChanged.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnGraphicChanged.trigger(event);
+        }
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
@@ -286,35 +308,25 @@ public class ChargedItem {
             }
         }
 
-        listenerOnItemContainerChanged.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnItemContainerChanged.trigger(event);
+        }
     }
 
     public void onMenuEntryAdded(final MenuEntryAdded event) {
-        listenerOnMenuEntryAdded.trigger(event);
-    }
-
-    public void onMenuOptionClicked(final MenuOptionClicked event) {
-//        onMenuOptionClicked.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnMenuEntryAdded.trigger(event);
+        }
     }
 
     public void onItemDespawned(final ItemDespawned event) {
-        listenerOnItemDespawned.trigger(event);
+        if (inInventory() || isEquipped()) {
+            listenerOnItemDespawned.trigger(event);
+        }
     }
 
     public void onResetDaily() {
         listenerOnResetDaily.trigger();
-    }
-
-    public Color getTextColor() {
-        if (getCharges() == Charges.UNKNOWN) {
-            return config.getColorUnknown();
-        }
-
-        if (getCharges() == 0) {
-            return config.getColorEmpty();
-        }
-
-        return config.getColorDefault();
     }
 }
 

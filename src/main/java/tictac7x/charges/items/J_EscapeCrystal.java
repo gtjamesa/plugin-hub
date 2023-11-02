@@ -11,13 +11,13 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
+import tictac7x.charges.item.triggers.OnVarbitChanged;
+import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class J_EscapeCrystal extends ChargedItemWithStatus {
-    final private int VARBIT_ESCAPE_CRYSTAL_ACTIVATED = 14838;
-
     public J_EscapeCrystal(
         final Client client,
         final ClientThread client_thread,
@@ -36,10 +36,10 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).quantityCharges().hideOverlay(),
         };
-        // TODO
-//        this.triggersVarbits = new TriggerVarbit[]{
-//            new TriggerVarbit(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 0).deactivate(),
-//            new TriggerVarbit(VARBIT_ESCAPE_CRYSTAL_ACTIVATED, 1).activate(),
-//        };
+
+        this.triggers = new TriggerBase[]{
+            new OnVarbitChanged(14838).isVarbitValue(0).deactivate(),
+            new OnVarbitChanged(14838).isVarbitValue(1).activate(),
+        };
     }
 }

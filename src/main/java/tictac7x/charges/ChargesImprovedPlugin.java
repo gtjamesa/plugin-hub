@@ -1,8 +1,10 @@
 package tictac7x.charges;
 
 import com.google.inject.Provides;
-import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.*;
+import net.runelite.api.ActorSpotAnim;
+import net.runelite.api.ChatMessageType;
+import net.runelite.api.Client;
+import net.runelite.api.GameState;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
@@ -16,7 +18,6 @@ import net.runelite.api.events.MenuOptionClicked;
 import net.runelite.api.events.StatChanged;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.api.events.WidgetLoaded;
-import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -31,8 +32,67 @@ import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemInfobox;
-import tictac7x.charges.items.*;
+import tictac7x.charges.item.ChargedItemOverlay;
+import tictac7x.charges.items.A_CrystalBody;
+import tictac7x.charges.items.A_CrystalHelm;
+import tictac7x.charges.items.A_CrystalLegs;
+import tictac7x.charges.items.B_FremennikSeaBoots;
+import tictac7x.charges.items.C_ArdougneCloak;
+import tictac7x.charges.items.C_Coffin;
+import tictac7x.charges.items.C_ForestryKit;
+import tictac7x.charges.items.C_MagicCape;
+import tictac7x.charges.items.H_CircletOfWater;
+import tictac7x.charges.items.H_KandarinHeadgear;
+import tictac7x.charges.items.J_BraceletOfClay;
+import tictac7x.charges.items.J_BraceletOfExpeditious;
+import tictac7x.charges.items.J_BraceletOfFlamtaer;
+import tictac7x.charges.items.J_BraceletOfSlaughter;
+import tictac7x.charges.items.J_Camulet;
+import tictac7x.charges.items.J_DesertAmulet;
+import tictac7x.charges.items.J_EscapeCrystal;
+import tictac7x.charges.items.J_NecklaceOfDodgy;
+import tictac7x.charges.items.J_NecklaceOfPassage;
+import tictac7x.charges.items.J_NecklaceOfPhoenix;
+import tictac7x.charges.items.J_RingOfCelestial;
+import tictac7x.charges.items.J_RingOfRecoil;
+import tictac7x.charges.items.J_RingOfShadows;
+import tictac7x.charges.items.J_RingOfSlayer;
+import tictac7x.charges.items.J_RingOfSuffering;
+import tictac7x.charges.items.J_XericsTalisman;
+import tictac7x.charges.items.S_Chronicle;
+import tictac7x.charges.items.S_CrystalShield;
+import tictac7x.charges.items.S_DragonfireShield;
+import tictac7x.charges.items.S_FaladorShield;
+import tictac7x.charges.items.S_KharedstMemoirs;
+import tictac7x.charges.items.S_TomeOfFire;
+import tictac7x.charges.items.U_AshSanctifier;
+import tictac7x.charges.items.U_BoneCrusher;
+import tictac7x.charges.items.U_BottomlessCompostBucket;
+import tictac7x.charges.items.U_CoalBag;
+import tictac7x.charges.items.U_FishBarrel;
+import tictac7x.charges.items.U_FungicideSpray;
+import tictac7x.charges.items.U_GemBag;
+import tictac7x.charges.items.U_GricollersCan;
+import tictac7x.charges.items.U_HerbSack;
+import tictac7x.charges.items.U_LogBasket;
+import tictac7x.charges.items.U_OgreBellows;
+import tictac7x.charges.items.U_SeedBox;
+import tictac7x.charges.items.U_SoulBearer;
+import tictac7x.charges.items.U_StrangeOldLockpick;
+import tictac7x.charges.items.U_TackleBox;
+import tictac7x.charges.items.U_TeleportCrystal;
+import tictac7x.charges.items.U_Waterskin;
+import tictac7x.charges.items.W_Arclight;
+import tictac7x.charges.items.W_BryophytasStaff;
+import tictac7x.charges.items.W_CrystalBow;
+import tictac7x.charges.items.W_CrystalHalberd;
+import tictac7x.charges.items.W_IbansStaff;
+import tictac7x.charges.items.W_PharaohsSceptre;
+import tictac7x.charges.items.W_SanguinestiStaff;
+import tictac7x.charges.items.W_SkullSceptre;
+import tictac7x.charges.items.W_TridentOfTheSeas;
 import tictac7x.charges.items.barrows.AhrimsHood;
 import tictac7x.charges.items.barrows.AhrimsRobeskirt;
 import tictac7x.charges.items.barrows.AhrimsRobetop;
@@ -57,8 +117,6 @@ import tictac7x.charges.items.barrows.VeracsBrassard;
 import tictac7x.charges.items.barrows.VeracsFlail;
 import tictac7x.charges.items.barrows.VeracsHelm;
 import tictac7x.charges.items.barrows.VeracsPlateskirt;
-import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.ChargedItemOverlay;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
@@ -70,7 +128,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 @PluginDescriptor(
 	name = "Item Charges Improved",
 	description = "Show charges of various items",
@@ -354,36 +411,22 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-		System.out.println("MESSAGE | " +
-			"type: " + event.getType().name() +
-			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-			", sender: " + event.getSender()
-		);
-	}
-
-	@Subscribe
-	public void onAnimationChanged(final AnimationChanged event) {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onAnimationChanged(event));
-
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("ANIMATION | " +
-//				"id: " + event.getActor().getAnimation()
-//			);
-//		}
+//		System.out.println("MESSAGE | " +
+//			"type: " + event.getType().name() +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+//			", sender: " + event.getSender()
+//		);
 	}
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
-		for (final ActorSpotAnim a : client.getLocalPlayer().getSpotAnims()) {
-			System.out.println(a.getId());
-		}
-		if (event.getActor() == client.getLocalPlayer()) {
-			System.out.println("GRAPHIC | " +
-				"id: " + event.getActor().getGraphic()
-			);
-		}
+//		if (event.getActor() == client.getLocalPlayer()) {
+//			System.out.println("GRAPHIC | " +
+//				"id: " + event.getActor().getGraphic()
+//			);
+//		}
 	}
 
 	@Subscribe
@@ -403,37 +446,46 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
 
-		System.out.println("HITSPLAT | " +
-			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
-			", type: " + event.getHitsplat().getHitsplatType() +
-			", amount:" + event.getHitsplat().getAmount() +
-			", others = " + event.getHitsplat().isOthers() +
-			", mine = " + event.getHitsplat().isMine()
-		);
+//		System.out.println("HITSPLAT | " +
+//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
+//			", type: " + event.getHitsplat().getHitsplatType() +
+//			", amount:" + event.getHitsplat().getAmount() +
+//			", others = " + event.getHitsplat().isOthers() +
+//			", mine = " + event.getHitsplat().isMine()
+//		);
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onWidgetLoaded(event));
 
-		System.out.println("WIDGET | " +
-			"group: " + event.getGroupId()
-		);
+//		System.out.println("WIDGET | " +
+//			"group: " + event.getGroupId()
+//		);
 	}
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		store.onMenuOptionClicked(event);
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuOptionClicked(event));
 
-		System.out.println("MENU OPTION | " +
-			"option: " + event.getMenuOption() +
-			", target: " + event.getMenuTarget() +
-			", action name: " + event.getMenuAction().name() +
-			", action id: " + event.getMenuAction().getId() +
-			", item id: " + event.getItemId() +
-			" " + event.getMenuEntry().getIdentifier()
-		);
+		try {
+//			System.out.println("MENU OPTION | " +
+//				"option: " + event.getMenuOption() +
+//				", target: " + event.getMenuTarget() +
+//				", action name: " + event.getMenuAction().name() +
+//				", action id: " + event.getMenuAction().getId() +
+//				", item id: " + event.getItemId() +
+//				", impostor id " + client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId()
+//			);
+		} catch (final Exception ignored) {
+//			System.out.println("MENU OPTION | " +
+//				"option: " + event.getMenuOption() +
+//				", target: " + event.getMenuTarget() +
+//				", action name: " + event.getMenuAction().name() +
+//				", action id: " + event.getMenuAction().getId() +
+//				", item id: " + event.getItemId()
+//			);
+		}
 	}
 
 	@Subscribe

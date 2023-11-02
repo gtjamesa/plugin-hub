@@ -10,11 +10,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.storage.Storage;
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Optional;
 
 public class ChargedItemWithStorage extends ChargedItem {
     public Storage storage;
@@ -46,7 +48,7 @@ public class ChargedItemWithStorage extends ChargedItem {
             store
         );
         this.config_key = configKey;
-        this.storage = new Storage(configKey, configs, client_thread, store);
+        this.storage = new Storage(this, configKey, configs, client_thread, store);
     }
 
     @Override
@@ -69,5 +71,9 @@ public class ChargedItemWithStorage extends ChargedItem {
         }
 
         return super.getTextColor();
+    }
+
+    public Optional<StoreableItem> getStorageItemFromName(final String name) {
+        return storage.getStorageItemFromName(name);
     }
 }

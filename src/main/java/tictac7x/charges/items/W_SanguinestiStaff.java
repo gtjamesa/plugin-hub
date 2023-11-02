@@ -39,13 +39,14 @@ public class W_SanguinestiStaff extends ChargedItem {
             new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
         };
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining.").setDynamically(),
+
+            // Charge partially full.
             new OnChatMessage("You apply an additional .+ charges? to your Sanguinesti staff. It now has (?<charges>.+) charges? in total.").setDynamically(),
+
+            // Charge empty.
             new OnChatMessage("You apply (?<charges>.+) charges to your Sanguinesti staff.").setDynamically()
         };
-        // TODO
-//        this.triggersAnimations = new TriggerAnimation[]{
-//            new TriggerAnimation(1167).decreaseCharges(1).equipped()
-//        };
     }
 }

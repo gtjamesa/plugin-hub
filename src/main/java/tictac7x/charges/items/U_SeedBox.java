@@ -1,5 +1,6 @@
 package tictac7x.charges.items;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
@@ -9,15 +10,20 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerItem;
 
-public class U_SeedBox extends ChargedItem {
+import java.lang.reflect.Field;
+
+@Slf4j
+public class U_SeedBox extends ChargedItemWithStorage {
     public U_SeedBox(
         final Client client,
         final ClientThread client_thread,
@@ -30,24 +36,49 @@ public class U_SeedBox extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.seed_box;
+        super(ChargesImprovedConfig.seed_box, ItemKey.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.triggersItems = new TriggerItem[]{
-            new TriggerItem(ItemID.SEED_BOX).zeroChargesIsPositive(),
-            new TriggerItem(ItemID.OPEN_SEED_BOX).zeroChargesIsPositive(),
+            new TriggerItem(ItemID.SEED_BOX),
+            new TriggerItem(ItemID.OPEN_SEED_BOX),
         };
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("(The|Your) seed box is( now| already)? empty.").fixedCharges(0),
-            new OnChatMessage("Stored (?<charges>.+) x .* seed in your seed box.").increaseDynamically(),
-            new OnChatMessage("You put (?<charges>.+) x .* seed straight into your open seed box.").increaseDynamically(),
-            new OnChatMessage("Emptied (?<charges>.+) x .* seed to your inventory.").decreaseDynamically(),
-            new OnChatMessage("The seed box contains:").fixedCharges(0),
-            new OnChatMessage("(?<charges>.+) x .* seed.").increaseDynamically(),
-        };
+            // Check or empty.
+            new OnChatMessage("(The|Your) seed box is( now| already)? empty.").emptyStorage(),
 
-        // TODO
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
+            // Empty into inventory.
+            new OnChatMessage("Emptied (?<quantity>.+) x (?<seed>.+) seed to your inventory.").consumer(m -> {
+                final int seed = getSeedIdFromName(m.group("seed"));
+                final int quantity = Integer.parseInt(m.group("quantity"));
+                storage.remove(seed, quantity);
+            }),
+
+            // Check or add seed into box.
+            new OnChatMessage("(Stored |You put )?(?<quantity>.+) x (?<seed>.+?) seed( straight into| in)?( your seed box)?.").consumer(m -> {
+                final int seed = getSeedIdFromName(m.group("seed"));
+                final int quantity = Integer.parseInt(m.group("quantity"));
+                storage.add(seed, quantity);
+            }),
+
+            // Check first message.
+            new OnChatMessage("The seed box contains:").emptyStorage(),
+
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide()
+        };
+    }
+
+    private int getSeedIdFromName(final String seed) {
+        for (final Field field : ItemID.class.getDeclaredFields()) {
+            if (field.getName().equals(seed.toUpperCase().replaceAll(" ", "_") + "_SEED")) {
+                try {
+                    return (Integer) field.get(ItemID.class);
+                } catch (final Exception ignored) {
+                    log.debug("Dynamic seed not found: " + seed);
+                    return Charges.UNKNOWN;
+                }
+            }
+        }
+
+        return Charges.UNKNOWN;
     }
 }

@@ -34,23 +34,17 @@ public class ListenerOnGraphicChanged extends ListenerBase {
 
         // Player check.
         if (event.getActor() != client.getLocalPlayer()) {
-            System.out.println("A");
             return false;
         }
 
         // Graphic id check.
         graphicIdCheck: if (trigger.graphicId != null) {
             for (final int graphicId : trigger.graphicId) {
-                System.out.println("check for " + graphicId);
-                for (final ActorSpotAnim a : event.getActor().getSpotAnims()) {
-                    System.out.println(a.getId());
-                }
                 if (event.getActor().hasSpotAnim(graphicId)) {
                     break graphicIdCheck;
                 }
             }
 
-            System.out.println("B");
             return false;
         }
 

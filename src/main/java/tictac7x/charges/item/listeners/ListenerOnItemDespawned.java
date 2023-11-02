@@ -5,6 +5,7 @@ import net.runelite.api.events.ItemDespawned;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnItemDespawned;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
@@ -39,8 +40,8 @@ public class ListenerOnItemDespawned extends ListenerBase {
 
         // Despawned item id check.
         boolean despawnedItemCheck = false;
-        for (final int itemId : trigger.despawnedItemIds) {
-            if (event.getItem().getId() == itemId) {
+        for (final StoreableItem storeableItem : trigger.despawnedItemIds) {
+            if (event.getItem().getId() == storeableItem.itemId) {
                 despawnedItemCheck = true;
                 break;
             }

@@ -12,6 +12,8 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 
+import java.awt.Color;
+
 public class ChargedItemWithStatus extends ChargedItem {
     public ChargedItemWithStatus(
         final ItemKey infobox_id,
@@ -63,5 +65,18 @@ public class ChargedItemWithStatus extends ChargedItem {
         } else if (activity == ItemActivity.DEACTIVATED) {
             deactivate();
         }
+    }
+
+    @Override
+    public Color getTextColor() {
+        if (isActivated()) {
+            return config.getColorActivated();
+        }
+
+        if (isDeactivated()) {
+            return config.getColorEmpty();
+        }
+
+        return super.getTextColor();
     }
 }

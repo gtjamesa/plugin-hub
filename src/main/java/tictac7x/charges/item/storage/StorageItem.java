@@ -13,6 +13,10 @@ public class StorageItem {
         return quantity;
     }
 
+    public int getItemId() {
+        return itemId;
+    }
+
     void setQuantity(final int quantity) {
         this.quantity = quantity;
     }

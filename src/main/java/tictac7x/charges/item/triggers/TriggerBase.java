@@ -1,5 +1,7 @@
 package tictac7x.charges.item.triggers;
 
+import tictac7x.charges.item.storage.StoreableItem;
+
 import java.util.Optional;
 
 public abstract class TriggerBase {
@@ -9,7 +11,7 @@ public abstract class TriggerBase {
     public Optional<String[]> onMenuTargets = Optional.empty();
     public Optional<int[]> onMenuImpostorId = Optional.empty();
     public Optional<Boolean> onItemClick = Optional.empty();
-    public Optional<int[]> use = Optional.empty();
+    public Optional<StoreableItem[]> use = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
 
     // Actions.
@@ -23,6 +25,8 @@ public abstract class TriggerBase {
     // Storage.
     public Optional<Boolean> emptyStorage = Optional.empty();
     public Optional<Boolean> pickUpToStorage = Optional.empty();
+    public Optional<int[]> addToStorage = Optional.empty();
+    public Optional<int[]> putToStorage = Optional.empty();
 
     // Activity.
     public Optional<Boolean> isActivated = Optional.empty();
@@ -54,17 +58,17 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onMenuOption(final String option) {
+    public TriggerBase isMenuOption(final String option) {
         this.onMenuOption = Optional.of(option);
         return this;
     }
 
-    public TriggerBase onMenuTarget(final String ...targets) {
+    public TriggerBase isMenuTarget(final String ...targets) {
         this.onMenuTargets = Optional.of(targets);
         return this;
     }
 
-    public TriggerBase onMenuImpostorId(final int ...impostorIds) {
+    public TriggerBase isMenuImpostorId(final int ...impostorIds) {
         this.onMenuImpostorId = Optional.of(impostorIds);
         return this;
     }
@@ -79,8 +83,8 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase use(final int ...itemIds) {
-        this.use = Optional.of(itemIds);
+    public TriggerBase use(final Optional<StoreableItem[]> storeableItems) {
+        this.use = storeableItems;
         return this;
     }
 
@@ -111,6 +115,16 @@ public abstract class TriggerBase {
 
     public TriggerBase isActivated() {
         this.isActivated = Optional.of(true);
+        return this;
+    }
+
+    public TriggerBase addToStorage(final int itemId, final int quantity) {
+        this.addToStorage = Optional.of(new int[]{itemId, quantity});
+        return this;
+    }
+
+    public TriggerBase putToStorage(final int itemId, final int quantity) {
+        this.putToStorage = Optional.of(new int[]{itemId, quantity});
         return this;
     }
 }

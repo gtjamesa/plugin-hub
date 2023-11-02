@@ -10,8 +10,8 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -34,7 +34,7 @@ public class U_CoalBag extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.coal_bag, ItemKey.COAL_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.storage = storage
-            .storeableItems(ItemID.COAL)
+            .storeableItems(new StoreableItem(ItemID.COAL, "Coal"))
             .maximumTotalQuantity(27)
             .maximumTotalQuantityWithEquippedItem(36, ItemID.SMITHING_CAPE, ItemID.HITPOINTS_CAPET);
 
@@ -61,8 +61,8 @@ public class U_CoalBag extends ChargedItemWithStorage {
             // Extra coal mined by varrock platebody.
             new OnChatMessage(
                 "(You manage to mine some coal.|Your Celestial ring allows you to mine an additional ore.|The Varrock platebody enabled you to mine an additional ore.)"
-            ).onMenuOption("Mine")
-            .onMenuTarget("Coal rocks")
+            ).isMenuOption("Mine")
+            .isMenuTarget("Coal rocks")
             .specificItem(ItemID.OPEN_COAL_BAG)
             .consumer(() -> {
                 storage.add(ItemID.COAL, 1);

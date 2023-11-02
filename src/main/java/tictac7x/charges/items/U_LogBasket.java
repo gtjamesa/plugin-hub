@@ -11,9 +11,11 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnItemContainerChanged;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -21,23 +23,10 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class U_LogBasket extends ChargedItemWithStorage {
-    private final int[] storeableItems = new int[]{
-        ItemID.LOGS,
-        ItemID.ACHEY_TREE_LOGS,
-        ItemID.OAK_LOGS,
-        ItemID.WILLOW_LOGS,
-        ItemID.TEAK_LOGS,
-        ItemID.JUNIPER_LOGS,
-        ItemID.MAPLE_LOGS,
-        ItemID.MAHOGANY_LOGS,
-        ItemID.ARCTIC_PINE_LOGS,
-        ItemID.YEW_LOGS,
-        ItemID.BLISTERWOOD_LOGS,
-        ItemID.MAGIC_LOGS,
-        ItemID.REDWOOD_LOGS
-    };
+import static tictac7x.charges.store.ItemContainerType.BANK;
+import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
+public class U_LogBasket extends ChargedItemWithStorage {
     public U_LogBasket(
         final Client client,
         final ClientThread client_thread,
@@ -51,7 +40,21 @@ public class U_LogBasket extends ChargedItemWithStorage {
         final Plugin plugin
     ) {
         super(ChargesImprovedConfig.log_basket, ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        storage.maximumTotalQuantity(28).storeableItems(storeableItems);
+        storage.maximumTotalQuantity(28).storeableItems(
+            new StoreableItem(ItemID.LOGS, "Logs"),
+            new StoreableItem(ItemID.ACHEY_TREE_LOGS, "Achey tree logs"),
+            new StoreableItem(ItemID.OAK_LOGS, "Oak logs"),
+            new StoreableItem(ItemID.WILLOW_LOGS, "Willow logs"),
+            new StoreableItem(ItemID.TEAK_LOGS, "Teak logs"),
+            new StoreableItem(ItemID.JUNIPER_LOGS, "Juniper logs"),
+            new StoreableItem(ItemID.MAPLE_LOGS, "Maple logs"),
+            new StoreableItem(ItemID.MAHOGANY_LOGS, "Mahogany logs"),
+            new StoreableItem(ItemID.ARCTIC_PINE_LOGS, "Arctic pine logs"),
+            new StoreableItem(ItemID.YEW_LOGS, "Yew logs"),
+            new StoreableItem(ItemID.BLISTERWOOD_LOGS, "Blisterwood logs"),
+            new StoreableItem(ItemID.MAGIC_LOGS,"Magic logs"),
+            new StoreableItem(ItemID.REDWOOD_LOGS, "Redwood logs")
+        );
 
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.LOG_BASKET),
@@ -60,8 +63,13 @@ public class U_LogBasket extends ChargedItemWithStorage {
             new TriggerItem(ItemID.OPEN_FORESTRY_BASKET),
         };
         this.triggers = new TriggerBase[] {
+            // Check while empty.
             new OnChatMessage("(Your|The) basket is empty.").onItemClick().emptyStorage(),
-            new OnChatMessage("You empty your basket( into the bank)?.").emptyStorage(),
+
+            // Empty to bank.
+            new OnChatMessage("You empty your basket( into the bank)?.").onItemClick().emptyStorage(),
+
+            // Check.
             new OnChatMessage("The basket contains:").stringConsumer(s -> {
                 storage.empty();
 
@@ -69,55 +77,28 @@ public class U_LogBasket extends ChargedItemWithStorage {
                 final Matcher matcher = pattern.matcher(s);
 
                 while (matcher.find()) {
-                    final int quantity = Integer.parseInt(matcher.group("quantity"));
-                    final int itemId = getLogsIdFromName(matcher.group("logs"));
-                    storage.put(itemId, quantity);
+                    storage.put(getStorageItemFromName(matcher.group("logs")), Integer.parseInt(matcher.group("quantity")));
                 }
             }).onItemClick(),
+
+            // Chop.
             new OnChatMessage("You get some (?<logs>.+).").consumer(m -> {
-                final int itemId = getLogsIdFromName(m.group("logs"));
-                storage.add(itemId, 1);
+                storage.add(getStorageItemFromName(m.group("logs")), 1);
             }).specificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
+
+            // Fill from inventory.
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().isMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storage.getStoreableItems()),
+
+            // Empty to inventory.
+            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().isMenuOption("Empty"),
+
+            // Empty to bank.
+            new OnItemContainerChanged(BANK).isMenuOption("Empty").emptyStorage(),
+
+            // Hide destroy.
+            new OnMenuEntryAdded("Destroy").hide(),
         };
-        // TODO
-//        this.triggersMenuOptionClicked = new TriggerMenuOptionClicked[]{
-//            new TriggerMenuOptionClicked("Fill").fillStorageFromInventory(storage),
-//            new TriggerMenuOptionClicked("Empty").atBank().emptyStorage(storage),
-//            new TriggerMenuOptionClicked("Use").use(storeableItems).fillStorageFromInventory(storage),
-//        };
-//        this.triggersMenusEntriesAdded = new TriggerMenuEntryAdded[]{
-//            new TriggerMenuEntryAdded("Destroy").hide(),
-//        };
     }
 
-    private int getLogsIdFromName(final String logs) {
-        switch (logs.toLowerCase()) {
-            case "logs":
-                return ItemID.LOGS;
-            case "achey tree logs":
-                return ItemID.ACHEY_TREE_LOGS;
-            case "oak logs":
-                return ItemID.OAK_LOGS;
-            case "willow logs":
-                return ItemID.WILLOW_LOGS;
-            case "teak logs":
-                return ItemID.TEAK_LOGS;
-            case "maple logs":
-                return ItemID.MAPLE_LOGS;
-            case "mahogany logs":
-                return ItemID.MAHOGANY_LOGS;
-            case "arctic pine logs":
-                return ItemID.ARCTIC_PINE_LOGS;
-            case "yew logs":
-                return ItemID.YEW_LOGS;
-            case "blisterwood logs":
-                return ItemID.BLISTERWOOD_LOGS;
-            case "magic logs":
-                return ItemID.MAGIC_LOGS;
-            case "redwood logs":
-                return ItemID.REDWOOD_LOGS;
-        }
-
-        return Charges.UNKNOWN;
-    }
 }

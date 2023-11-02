@@ -46,15 +46,12 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
         final Widget widget = getWidget(trigger);
 
         // Widget group check.
-        System.out.println(event.getGroupId() + " " + trigger.groupId);
         if (event.getGroupId() != trigger.groupId) {
-            System.out.println("A");
             return false;
         }
 
         // Widget existance check.
         if (widget == null) {
-            System.out.println("B");
             return false;
         }
 
@@ -62,7 +59,6 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
         final String text = getCleanText(widget.getText());
         final Matcher matcher = trigger.text.matcher(text);
         if (!matcher.find()) {
-            System.out.println("C");
             return false;
         }
 

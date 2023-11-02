@@ -44,10 +44,8 @@ public class J_RingOfShadows extends ChargedItem {
 
             // Charge.
             new OnChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?.").setDynamically(),
+
+            // TODO - teleport
         };
-        // TODO - teleport
-//        this.triggersAnimations = new TriggerAnimation[]{
-//            new TriggerAnimation(10134).decreaseCharges(1),
-//        };
     }
 }

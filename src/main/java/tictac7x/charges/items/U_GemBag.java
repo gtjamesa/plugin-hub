@@ -10,6 +10,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemDespawned;
@@ -17,7 +18,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -26,14 +26,6 @@ import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 
 public class U_GemBag extends ChargedItemWithStorage {
-    private final int[] storeableItems = new int[]{
-        ItemID.UNCUT_SAPPHIRE,
-        ItemID.UNCUT_EMERALD,
-        ItemID.UNCUT_RUBY,
-        ItemID.UNCUT_DIAMOND,
-        ItemID.UNCUT_DRAGONSTONE
-    };
-
     public U_GemBag(
         final Client client,
         final ClientThread client_thread,
@@ -47,7 +39,13 @@ public class U_GemBag extends ChargedItemWithStorage {
         final Plugin plugin
     ) {
         super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        storage.maximumIndividualQuantity(60).storeableItems(storeableItems);
+        storage.maximumIndividualQuantity(60).storeableItems(
+            new StoreableItem(ItemID.UNCUT_SAPPHIRE, "Sapphire"),
+            new StoreableItem(ItemID.UNCUT_EMERALD, "Emerald"),
+            new StoreableItem(ItemID.UNCUT_RUBY, "Ruby"),
+            new StoreableItem(ItemID.UNCUT_DIAMOND, "Diamond"),
+            new StoreableItem(ItemID.UNCUT_DRAGONSTONE, "Dragonstone")
+        );
 
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.GEM_BAG_12020).zeroChargesIsPositive(),
@@ -69,48 +67,28 @@ public class U_GemBag extends ChargedItemWithStorage {
 
             // Mining regular or gem rocks.
             new OnChatMessage("You just (found|mined) (a|an) (?<gem>.+)!").consumer(m -> {
-                final int itemId = getGemIdFromName(m.group("gem"));
-                storage.add(itemId, 1);
+                storage.add(getStorageItemFromName(m.group("gem")), 1);
             }).specificItem(ItemID.OPEN_GEM_BAG),
 
             // Pickpocketing.
-            new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<amount>.+)").consumer(m -> {
-                final int itemId = getGemIdFromName(m.group("gem"));
-                final int amount = Integer.parseInt(m.group("amount"));
-                storage.add(itemId, amount);
+            new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+)").consumer(m -> {
+                storage.add(getStorageItemFromName(m.group("gem")), Integer.parseInt(m.group("quantity")));
             }),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().isMenuOption("Fill"),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
+            new OnItemContainerChanged(BANK).isMenuOption("Empty").emptyStorage(),
 
             // Use gem on bag
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storeableItems),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().use(storage.getStoreableItems()),
 
             // Pick up.
-            new OnItemDespawned(storeableItems).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
+            new OnItemDespawned(storage.getStoreableItems()).specificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),
         };
-    }
-
-    private int getGemIdFromName(final String gem) {
-        switch (gem.toLowerCase()) {
-            case "sapphire":
-                return ItemID.UNCUT_SAPPHIRE;
-            case "emerald":
-                return ItemID.UNCUT_EMERALD;
-            case "ruby":
-                return ItemID.UNCUT_RUBY;
-            case "diamond":
-                return ItemID.UNCUT_DIAMOND;
-            case "dragonstone":
-                return ItemID.UNCUT_DRAGONSTONE;
-        }
-
-        return Charges.UNKNOWN;
     }
 }
