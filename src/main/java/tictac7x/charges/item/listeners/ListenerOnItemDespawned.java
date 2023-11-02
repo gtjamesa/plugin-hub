@@ -1,5 +1,6 @@
 package tictac7x.charges.item.listeners;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.ItemDespawned;
 import net.runelite.client.Notifier;
@@ -10,6 +11,7 @@ import tictac7x.charges.item.triggers.OnItemDespawned;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 
+@Slf4j
 public class ListenerOnItemDespawned extends ListenerBase {
     public ListenerOnItemDespawned(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
@@ -22,6 +24,7 @@ public class ListenerOnItemDespawned extends ListenerBase {
             boolean triggerUsed = false;
 
             if (trigger.pickUpToStorage.isPresent()) {
+                log.debug(chargedItem.getItemName() + " pickup to storage");
                 ((ChargedItemWithStorage) chargedItem).storage.add(event.getItem().getId(), event.getItem().getQuantity());
                 triggerUsed = true;
             }

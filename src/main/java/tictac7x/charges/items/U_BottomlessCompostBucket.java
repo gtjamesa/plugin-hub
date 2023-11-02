@@ -13,6 +13,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -20,6 +21,8 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
+
+import java.util.Optional;
 
 public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
     public U_BottomlessCompostBucket(
@@ -35,7 +38,11 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
         final Plugin plugin
     ) {
         super(ChargesImprovedConfig.bottomless_compost_bucket, ItemKey.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        storage = storage.maximumTotalQuantity(10000);
+        storage = storage.maximumTotalQuantity(10000).storeableItems(
+            new StoreableItem(ItemID.ULTRACOMPOST, "Ultracompost"),
+            new StoreableItem(ItemID.SUPERCOMPOST, "Supercompost"),
+            new StoreableItem(ItemID.COMPOST, "Compost")
+        );
 
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET).fixedCharges(0),
@@ -45,8 +52,7 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
         this.triggers = new TriggerBase[] {
             // Compost something.
             new OnChatMessage("You treat the .* with (?<compost>.+).").consumer(m -> {
-                final int compostId = getCompostIdFromName(m.group("compost"));
-                storage.remove(compostId, 1);
+                storage.remove(getStorageItemFromName(m.group("compost")), 1);
             }).onItemClick(),
 
             // Check.
@@ -55,19 +61,16 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             // Automatic chat message after use.
             new OnChatMessage("Your bottomless compost bucket has (?<quantity>.+) uses of (?<compost>.+) ?compost remaining.").consumer(m -> {
                 final int quantity = getCleanQuantity(m.group("quantity"));
-                final int compostId = getCompostIdFromName(m.group("compost"));
-                storage.put(compostId, quantity);
+                storage.put(getStorageItemFromName(m.group("compost")), quantity);
             }),
 
             // Check.
             new OnChatMessage("Your bottomless compost bucket is currently holding one use of (?<compost>.+).").consumer(m -> {
-                final int compostId = getCompostIdFromName(m.group("compost"));
-                storage.put(compostId, 1);
+                storage.put(getStorageItemFromName(m.group("compost")), 1);
             }),
             new OnChatMessage("Your bottomless compost bucket is currently holding (?<quantity>.+) uses of (?<compost>.+).").consumer(m -> {
                 final int quantity = getCleanQuantity(m.group("quantity"));
-                final int compostId = getCompostIdFromName(m.group("compost"));
-                storage.put(compostId, quantity);
+                storage.put(getStorageItemFromName(m.group("compost")), quantity);
             }),
 
             // Discard.
@@ -76,8 +79,7 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             // Fill.
             new OnChatMessage("You fill your bottomless compost bucket with .* buckets? of (?<compost>.+). Your bottomless compost bucket now contains a total of (?<quantity>.+) uses.").consumer(m -> {
                 final int quantity = getCleanQuantity(m.group("quantity"));
-                final int compostId = getCompostIdFromName(m.group("compost"));
-                storage.put(compostId, quantity);
+                storage.put(getStorageItemFromName(m.group("compost")), quantity);
             }),
 
             // Fill compost from bin.
@@ -87,30 +89,17 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
         };
     }
 
-    private int getCompostIdFromName(final String compost) {
-        switch (compost.toLowerCase()) {
-            case "compost":
-                return ItemID.COMPOST;
-            case "supercompost":
-                return ItemID.SUPERCOMPOST;
-            case "ultracompost":
-                return ItemID.ULTRACOMPOST;
-        }
-
-        return Charges.UNKNOWN;
-    }
-
     private int getCleanQuantity(final String charges) {
         return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
     }
 
-    private int getCompostType() {
+    private Optional<StoreableItem> getCompostType() {
         for (final StorageItem storageItem : getStorage()) {
             if (storageItem.getQuantity() > 0) {
-                return storageItem.getItemId();
+                return Optional.of(new StoreableItem(storageItem.itemId, ""));
             }
         }
 
-        return Charges.UNKNOWN;
+        return Optional.empty();
     }
 }

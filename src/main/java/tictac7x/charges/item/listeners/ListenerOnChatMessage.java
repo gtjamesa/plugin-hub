@@ -1,5 +1,6 @@
 package tictac7x.charges.item.listeners;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.client.Notifier;
@@ -10,6 +11,7 @@ import tictac7x.charges.item.triggers.TriggerBase;
 
 import java.util.regex.Matcher;
 
+@Slf4j
 public class ListenerOnChatMessage extends ListenerBase {
     public ListenerOnChatMessage(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
@@ -26,31 +28,37 @@ public class ListenerOnChatMessage extends ListenerBase {
             matcher.find();
 
             if (trigger.setDynamically.isPresent()) {
+                log.debug(chargedItem.getItemName() + " charges dynamically set: " + getCleanCharges(matcher.group("charges")));
                 chargedItem.setCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 
             if (trigger.increaseDynamically.isPresent()) {
+                log.debug(chargedItem.getItemName() + " charges dynamically increased by: " + getCleanCharges(matcher.group("charges")));
                 chargedItem.increaseCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 
             if (trigger.decreaseDynamically.isPresent()) {
+                log.debug(chargedItem.getItemName() + " charges dynamically decreased by: " + getCleanCharges(matcher.group("charges")));
                 chargedItem.decreaseCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 
             if (trigger.useDifference.isPresent()) {
+                log.debug(chargedItem.getItemName() + " charges set from difference: " + (getCleanCharges(matcher.group("total")) - getCleanCharges(matcher.group("used"))));
                 chargedItem.setCharges(getCleanCharges(matcher.group("total")) - getCleanCharges(matcher.group("used")));
                 triggerUsed = true;
             }
 
             if (trigger.matcherConsumer.isPresent()) {
+                log.debug(chargedItem.getItemName() + " custom matcher consumer run");
                 trigger.matcherConsumer.get().accept(matcher);
                 triggerUsed = true;
             }
 
             if (trigger.stringConsumer.isPresent()) {
+                log.debug(chargedItem.getItemName() + " custom string consumer run");
                 trigger.stringConsumer.get().accept(message);
                 triggerUsed = true;
             }
@@ -71,6 +79,7 @@ public class ListenerOnChatMessage extends ListenerBase {
         final String message = getCleanMessage(event);
         final Matcher matcher = trigger.message.matcher(message);
         if (!matcher.find()) {
+            log.debug(chargedItem.getItemName() + " trigger check failed: chat message pattern");
             return false;
         }
 

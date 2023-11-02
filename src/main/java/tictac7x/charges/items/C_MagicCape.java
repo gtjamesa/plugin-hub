@@ -20,8 +20,6 @@ import tictac7x.charges.store.Store;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 public class C_MagicCape extends ChargedItem {
-    private final int MAGIC_CAPE_T = 9763;
-
     public C_MagicCape(
         final Client client,
         final ClientThread client_thread,
@@ -39,7 +37,7 @@ public class C_MagicCape extends ChargedItem {
 
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.MAGIC_CAPE),
-            new TriggerItem(MAGIC_CAPE_T)
+            new TriggerItem(ItemID.MAGIC_CAPET)
         };
 
         this.triggers = new TriggerBase[] {

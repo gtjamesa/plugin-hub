@@ -1,5 +1,6 @@
 package tictac7x.charges.item.listeners;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
@@ -11,6 +12,7 @@ import tictac7x.charges.item.triggers.TriggerBase;
 
 import java.util.regex.Matcher;
 
+@Slf4j
 public class ListenerOnWidgetLoaded extends ListenerBase {
     public ListenerOnWidgetLoaded(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
@@ -28,6 +30,7 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
             matcher.find();
 
             if (trigger.setDynamically.isPresent()) {
+                log.debug(chargedItem.getItemName() + " charges set dynamically from widget: " + getCleanCharges(matcher.group("charges")));
                 chargedItem.setCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }

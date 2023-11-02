@@ -131,14 +131,14 @@ public class Storage {
         if (!storeableItems.isPresent()) return;
 
         for (final StoreableItem storeableItem : storeableItems.get()) {
-            add(storeableItem.itemId, store.getPreviousInventoryItemCount(storeableItem.itemId));
+            add(storeableItem.itemId, store.getPreviousInventoryItemQuantity(storeableItem.itemId));
         }
     }
 
     public void emptyToInventory() {
         if (!store.inventory.isPresent()) return;
 
-        int inventoryEmptySlots = store.getPreviouslyInventoryEmptySlots();
+        int inventoryEmptySlots = store.getInventoryPreviouslyEmptySlots();
 
         for (final StorageItem storageItem : storage) {
             // Empty storage until 0 inventory slots left.

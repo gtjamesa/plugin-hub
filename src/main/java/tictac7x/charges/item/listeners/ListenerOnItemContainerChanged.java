@@ -1,5 +1,6 @@
 package tictac7x.charges.item.listeners;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.ItemContainer;
@@ -12,6 +13,7 @@ import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ItemContainerType;
 
+@Slf4j
 public class ListenerOnItemContainerChanged extends ListenerBase {
     public ListenerOnItemContainerChanged(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
@@ -25,12 +27,14 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
 
             // Fill storage from inventory.
             if (trigger.fillStorageFromInventory.isPresent()) {
+                log.debug(chargedItem.getItemName() + " fill storage from inventory");
                 ((ChargedItemWithStorage) chargedItem).storage.fillFromInventory();
                 triggerUsed = true;
             }
 
             // Empty storage to inventory.
             if (trigger.emptyStorageToInventory.isPresent()) {
+                log.debug(chargedItem.getItemName() + " empty storage to inventory");
                 ((ChargedItemWithStorage) chargedItem).storage.emptyToInventory();
                 triggerUsed = true;
             }

@@ -1,10 +1,12 @@
 package tictac7x.charges;
 
 import com.google.inject.Provides;
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.ActorSpotAnim;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
+import net.runelite.api.Item;
 import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
@@ -203,6 +205,7 @@ import java.util.List;
 		"toxic",
 	}
 )
+@Slf4j
 public class ChargesImprovedPlugin extends Plugin {
 	private final String plugin_version = "v0.4";
 	private final String plugin_message = "" +
@@ -393,99 +396,94 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
+		store.onItemContainerChanged(event);
+
 		for (final ChargedItem infobox : chargedItems) {
 			infobox.onItemContainerChanged(event);
 		}
 
-		store.onItemContainerChanged(event);
-		store.onInventoryItemsChanged(event);
-		store.onBankItemsChanged(event);
-
-//		System.out.println("ITEM CONTAINER | " + event.getContainerId());
-//		for (final Item item : event.getItemContainer().getItems()) {
-//			System.out.println(item.getId() + ": " + items.getItemComposition(item.getId()).getName() + ", q: " + item.getQuantity());
-//		}
+		String itemContainer = "ITEM CONTAINER | " + event.getContainerId();
+		for (final Item item : event.getItemContainer().getItems()) {
+			itemContainer += "\r\n" +
+				item.getId() + ": " + items.getItemComposition(item.getId()).getName() +
+				", quantity: " + item.getQuantity();
+		}
+		log.debug(itemContainer);
 	}
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-//			", sender: " + event.getSender()
-//		);
+		log.debug("MESSAGE | " +
+			"type: " + event.getType().name() +
+			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+			", sender: " + event.getSender()
+		);
 	}
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("GRAPHIC | " +
-//				"id: " + event.getActor().getGraphic()
-//			);
-//		}
+		if (event.getActor() == client.getLocalPlayer()) {
+			log.debug("GRAPHIC | " +
+				"id: " + event.getActor().getGraphic()
+			);
+		}
 	}
 
 	@Subscribe
 	public void onConfigChanged(final ConfigChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
 
-//		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-//			System.out.println("CONFIG | " +
-//				"key: " + event.getKey() +
-//				", old value: " + event.getOldValue() +
-//				", new value: " + event.getNewValue()
-//			);
-//		}
+		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
+			log.debug("CONFIG | " +
+				"key: " + event.getKey() +
+				", old value: " + event.getOldValue() +
+				", new value: " + event.getNewValue()
+			);
+		}
 	}
 
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
 
-//		System.out.println("HITSPLAT | " +
-//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
-//			", type: " + event.getHitsplat().getHitsplatType() +
-//			", amount:" + event.getHitsplat().getAmount() +
-//			", others = " + event.getHitsplat().isOthers() +
-//			", mine = " + event.getHitsplat().isMine()
-//		);
+		log.debug("HITSPLAT | " +
+			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
+			", type: " + event.getHitsplat().getHitsplatType() +
+			", amount:" + event.getHitsplat().getAmount() +
+			", others = " + event.getHitsplat().isOthers() +
+			", mine = " + event.getHitsplat().isMine()
+		);
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onWidgetLoaded(event));
 
-//		System.out.println("WIDGET | " +
-//			"group: " + event.getGroupId()
-//		);
+		log.debug("WIDGET | " +
+			"group: " + event.getGroupId()
+		);
 	}
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		store.onMenuOptionClicked(event);
-
+		int impostorId = -1;
 		try {
-			System.out.println("MENU OPTION | " +
+			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
+		} catch (final Exception ignored) {}
+
+		log.debug("MENU OPTION | " +
 				"option: " + event.getMenuOption() +
 				", target: " + event.getMenuTarget() +
 				", action name: " + event.getMenuAction().name() +
 				", action id: " + event.getMenuAction().getId() +
 				", item id: " + event.getItemId() +
-				", impostor id " + client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId()
-			);
-		} catch (final Exception ignored) {
-			System.out.println("MENU OPTION | " +
-				"option: " + event.getMenuOption() +
-				", target: " + event.getMenuTarget() +
-				", action name: " + event.getMenuAction().name() +
-				", action id: " + event.getMenuAction().getId() +
-				", item id: " + event.getItemId()
-			);
-		}
+				", impostor id " + impostorId
+		);
 	}
 
 	@Subscribe
@@ -512,21 +510,21 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
 		store.onStatChanged(event);
 
-//		System.out.println("STAT CHANGED | " +
-//			event.getSkill().getName() +
-//			", level: " + event.getLevel() +
-//			", xp: " + event.getXp()
-//		);
+		log.debug("STAT CHANGED | " +
+			event.getSkill().getName() +
+			", level: " + event.getLevel() +
+			", xp: " + event.getXp()
+		);
 	}
 
 	@Subscribe
 	public void onItemDespawned(final ItemDespawned event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemDespawned(event));
 
-//		System.out.println("ITEM DESPAWNED | " +
-//			event.getItem().getId() +
-//			", quantity: " + event.getItem().getQuantity()
-//		);
+		log.debug("ITEM DESPAWNED | " +
+			event.getItem().getId() +
+			", quantity: " + event.getItem().getQuantity()
+		);
 	}
 
 	@Subscribe
@@ -538,10 +536,10 @@ public class ChargesImprovedPlugin extends Plugin {
 			checkForChargesReset();
 		}
 
-//		System.out.println("VARBIT CHANGED | " +
-//			"id: " + event.getVarbitId() +
-//			", value: " + event.getValue()
-//		);
+		log.debug("VARBIT CHANGED | " +
+			"id: " + event.getVarbitId() +
+			", value: " + event.getValue()
+		);
 	}
 
 	@Subscribe
@@ -549,9 +547,9 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuEntryAdded(event));
 
 //		if (event.getMenuEntry().getItemId() != -1) {
-//			System.out.println("MENU ENTRY ADDED | " +
+//			log.debug("MENU ENTRY ADDED | " +
 //				"item id: " + event.getMenuEntry().getItemId() +
-//				" , option: " + event.getOption() +
+//				", option: " + event.getOption() +
 //				", target: " + event.getTarget()
 //			);
 //		}

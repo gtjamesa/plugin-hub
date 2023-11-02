@@ -30,7 +30,7 @@ public class ListenerOnResetDaily extends ListenerBase {
         if (!(triggerBase instanceof OnResetDaily)) return false;
         final OnResetDaily trigger = (OnResetDaily) triggerBase;
 
-        if (trigger.resetSpecificItem.isPresent() && !chargedItem.store.possessItem(trigger.resetSpecificItem.get())) {
+        if (trigger.resetSpecificItem.isPresent() && !chargedItem.store.itemInPossession(trigger.resetSpecificItem.get())) {
             return false;
         }
 

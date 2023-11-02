@@ -1,5 +1,6 @@
 package tictac7x.charges.item.listeners;
 
+import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.MenuEntryAdded;
@@ -12,6 +13,7 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class ListenerOnMenuEntryAdded extends ListenerBase {
     public ListenerOnMenuEntryAdded(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
@@ -24,12 +26,14 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
             boolean triggerUsed = false;
 
             if (trigger.replaceOption.isPresent()) {
+                log.debug(chargedItem.getItemName() + " menu option replaced");
                 event.getMenuEntry().setOption(trigger.replaceOption.get());
                 triggerUsed = true;
             }
 
             if (trigger.replaceTarget.isPresent()) {
                 if (event.getTarget().contains(trigger.replaceTarget.get()[0])) {
+                    log.debug(chargedItem.getItemName() + " menu target replaced: " + trigger.replaceTarget.get()[0] + " -> " + trigger.replaceTarget.get()[1]);
                     event.getMenuEntry().setTarget(event.getTarget().replaceAll(trigger.replaceTarget.get()[0], trigger.replaceTarget.get()[1]));
                     triggerUsed = true;
                 }
@@ -41,6 +45,8 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
                 for (final MenuEntry entry : client.getMenuEntries()) {
                     if (!entry.getOption().equals(trigger.menuEntryOption.get())) {
                         newMenuEntries.add(entry);
+                    } else {
+                        log.debug(chargedItem.getItemName() + " menu entry hidden: " + entry.getOption());
                     }
                 }
 

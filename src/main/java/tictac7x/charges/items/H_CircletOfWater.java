@@ -34,12 +34,19 @@ public class H_CircletOfWater extends ChargedItem {
         this.config_key = ChargesImprovedConfig.circlet_of_water;
         this.triggersItems = new TriggerItem[]{
             new TriggerItem(ItemID.CIRCLET_OF_WATER_UNCHARGED).fixedCharges(0),
-            new TriggerItem(ItemID.CIRCLET_OF_WATER)
+            new TriggerItem(ItemID.CIRCLET_OF_WATER).needsToBeEquipped(),
         };
         this.triggers = new TriggerBase[] {
+            // Protect from heat.
             new OnChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
+
+            // Check.
             new OnChatMessage("Your circlet has (?<charges>.+) charges? left.").setDynamically(),
+
+            // Charge while empty.
             new OnChatMessage("You add (?<charges>.+) charges? to your circlet.$").setDynamically(),
+
+            // Charge while not empty.
             new OnChatMessage("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?.").setDynamically(),
         };
     }
