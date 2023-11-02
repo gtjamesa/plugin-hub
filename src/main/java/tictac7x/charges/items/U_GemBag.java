@@ -71,7 +71,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             }).onSpecificItem(ItemID.OPEN_GEM_BAG),
 
             // Pickpocketing.
-            new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+)").consumer(m -> {
+            new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+).").consumer(m -> {
                 storage.add(getStorageItemFromName(m.group("gem")), Integer.parseInt(m.group("quantity")));
             }),
 

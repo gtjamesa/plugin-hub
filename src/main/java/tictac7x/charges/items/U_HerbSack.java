@@ -117,6 +117,9 @@ public class U_HerbSack extends ChargedItemWithStorage {
             new OnMenuEntryAdded().isReplaceImpostorId(39776, 39846).replaceTarget("Herbs", "Avantoe herbs"),
 
             // Pick kwuarm.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs", "Kwuarm herbs").onMenuImpostor(39786).addToStorage(ItemID.GRIMY_KWUARM),
+            new OnMenuEntryAdded().isReplaceImpostorId(39786).replaceTarget("Herbs", "Kwuarm herbs"),
+
             // Pick snapdragon
             new OnXpDrop(Skill.FARMING).onMenuOption("Pick").onMenuTarget("Herbs", "Snapdragon herbs").onMenuImpostor(39811).addToStorage(ItemID.GRIMY_SNAPDRAGON),
             new OnMenuEntryAdded().isReplaceImpostorId(39811).replaceTarget("Herbs", "Snapdragon herbs"),
