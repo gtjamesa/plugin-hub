@@ -78,6 +78,7 @@ public interface ChargesImprovedConfig extends Config {
     String dodgy_necklace = "dodgy_necklace";
     String kandarin_headgear = "kandarin_headgear";
     String fremennik_sea_boots = "fremennik_sea_boots";
+    String jar_generator = "jar_generator";
 
     @ConfigSection(
         name = "General",
@@ -621,4 +622,11 @@ public interface ChargesImprovedConfig extends Config {
             description = fremennik_sea_boots,
             section = debug
         ) default int getFremennikSeaBootsCharges() { return Charges.UNKNOWN; }
+
+    @ConfigItem(
+        keyName = jar_generator,
+        name = jar_generator,
+        description = jar_generator,
+        section = debug
+    ) default int getJarGeneratorCharges() { return Charges.UNKNOWN; }
 }

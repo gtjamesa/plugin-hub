@@ -37,6 +37,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Helms
 - [x] Circlet of water
+- [x] Kandarin Headgear
 
 ### Capes
 - [x] Ardougle Cloak
@@ -49,16 +50,16 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bracelet of flamtaer
 - [x] Bracelet of slaughter
 - [x] Camulet
-- [x] Celestial Ring
 - [x] Desert amulet
 - [x] Escape crystal
 - [x] Necklace of passage
-- [x] Phoenix necklace
-- [x] Ring of Recoil
-- [x] Ring of Suffering
-- [x] Slayer ring
-- [x] Xeric's talisman
+- [x] Necklace of phoenix
+- [x] Ring of celestial
+- [x] Ring of recoil
+- [x] Ring of suffering
 - [x] Ring of shadows
+- [x] Ring of slayer
+- [x] Xeric's talisman
 
 ### Utilities
 - [x] Ash sanctifier
@@ -66,8 +67,11 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bottomless compost bucket
 - [x] Coal bag
 - [x] Fish barrel
+- [x] Fungicide spray
 - [x] Gem bag
 - [x] Gricoller's can
+- [x] Herb sack
+- [x] Jar generator
 - [x] Log basket
 - [x] Ogre bellows
 - [x] Seed box

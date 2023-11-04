@@ -78,6 +78,7 @@ import tictac7x.charges.items.U_FungicideSpray;
 import tictac7x.charges.items.U_GemBag;
 import tictac7x.charges.items.U_GricollersCan;
 import tictac7x.charges.items.U_HerbSack;
+import tictac7x.charges.items.U_JarGenerator;
 import tictac7x.charges.items.U_LogBasket;
 import tictac7x.charges.items.U_OgreBellows;
 import tictac7x.charges.items.U_SeedBox;
@@ -203,6 +204,7 @@ import java.util.List;
 		"trident",
 		"sea",
 		"toxic",
+		"jar",
 	}
 )
 @Slf4j
@@ -330,6 +332,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_GemBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_HerbSack(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_JarGenerator(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_FungicideSpray(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
 			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
@@ -402,70 +405,70 @@ public class ChargesImprovedPlugin extends Plugin {
 			infobox.onItemContainerChanged(event);
 		}
 
-		String itemContainer = "ITEM CONTAINER | " + event.getContainerId();
-		for (final Item item : event.getItemContainer().getItems()) {
-			itemContainer += "\r\n" +
-				item.getId() + ": " + items.getItemComposition(item.getId()).getName() +
-				", quantity: " + item.getQuantity();
-		}
-		log.debug(itemContainer);
+//		String itemContainer = "ITEM CONTAINER | " + event.getContainerId();
+//		for (final Item item : event.getItemContainer().getItems()) {
+//			itemContainer += "\r\n" +
+//				item.getId() + ": " + items.getItemComposition(item.getId()).getName() +
+//				", quantity: " + item.getQuantity();
+//		}
+//		log.debug(itemContainer);
 	}
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-		log.debug("MESSAGE | " +
-			"type: " + event.getType().name() +
-			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-			", sender: " + event.getSender()
-		);
+//		log.debug("MESSAGE | " +
+//			"type: " + event.getType().name() +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+//			", sender: " + event.getSender()
+//		);
 	}
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
-		if (event.getActor() == client.getLocalPlayer()) {
-			log.debug("GRAPHIC | " +
-				"id: " + event.getActor().getGraphic()
-			);
-		}
+//		if (event.getActor() == client.getLocalPlayer()) {
+//			log.debug("GRAPHIC | " +
+//				"id: " + event.getActor().getGraphic()
+//			);
+//		}
 	}
 
 	@Subscribe
 	public void onConfigChanged(final ConfigChanged event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
 
-		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-			log.debug("CONFIG | " +
-				"key: " + event.getKey() +
-				", old value: " + event.getOldValue() +
-				", new value: " + event.getNewValue()
-			);
-		}
+//		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
+//			log.debug("CONFIG | " +
+//				"key: " + event.getKey() +
+//				", old value: " + event.getOldValue() +
+//				", new value: " + event.getNewValue()
+//			);
+//		}
 	}
 
 	@Subscribe
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
 
-		log.debug("HITSPLAT | " +
-			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
-			", type: " + event.getHitsplat().getHitsplatType() +
-			", amount:" + event.getHitsplat().getAmount() +
-			", others = " + event.getHitsplat().isOthers() +
-			", mine = " + event.getHitsplat().isMine()
-		);
+//		log.debug("HITSPLAT | " +
+//			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
+//			", type: " + event.getHitsplat().getHitsplatType() +
+//			", amount:" + event.getHitsplat().getAmount() +
+//			", others = " + event.getHitsplat().isOthers() +
+//			", mine = " + event.getHitsplat().isMine()
+//		);
 	}
 
 	@Subscribe
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onWidgetLoaded(event));
 
-		log.debug("WIDGET | " +
-			"group: " + event.getGroupId()
-		);
+//		log.debug("WIDGET | " +
+//			"group: " + event.getGroupId()
+//		);
 	}
 
 	@Subscribe
@@ -477,12 +480,12 @@ public class ChargesImprovedPlugin extends Plugin {
 		} catch (final Exception ignored) {}
 
 		log.debug("MENU OPTION | " +
-				"option: " + event.getMenuOption() +
-				", target: " + event.getMenuTarget() +
-				", action name: " + event.getMenuAction().name() +
-				", action id: " + event.getMenuAction().getId() +
-				", item id: " + event.getItemId() +
-				", impostor id " + impostorId
+			"option: " + event.getMenuOption() +
+			", target: " + event.getMenuTarget() +
+			", action name: " + event.getMenuAction().name() +
+			", action id: " + event.getMenuAction().getId() +
+			", item id: " + event.getItemId() +
+			", impostor id " + impostorId
 		);
 	}
 
@@ -510,21 +513,21 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
 		store.onStatChanged(event);
 
-		log.debug("STAT CHANGED | " +
-			event.getSkill().getName() +
-			", level: " + event.getLevel() +
-			", xp: " + event.getXp()
-		);
+//		log.debug("STAT CHANGED | " +
+//			event.getSkill().getName() +
+//			", level: " + event.getLevel() +
+//			", xp: " + event.getXp()
+//		);
 	}
 
 	@Subscribe
 	public void onItemDespawned(final ItemDespawned event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemDespawned(event));
 
-		log.debug("ITEM DESPAWNED | " +
-			event.getItem().getId() +
-			", quantity: " + event.getItem().getQuantity()
-		);
+//		log.debug("ITEM DESPAWNED | " +
+//			event.getItem().getId() +
+//			", quantity: " + event.getItem().getQuantity()
+//		);
 	}
 
 	@Subscribe
@@ -536,10 +539,10 @@ public class ChargesImprovedPlugin extends Plugin {
 			checkForChargesReset();
 		}
 
-		log.debug("VARBIT CHANGED | " +
-			"id: " + event.getVarbitId() +
-			", value: " + event.getValue()
-		);
+//		log.debug("VARBIT CHANGED | " +
+//			"id: " + event.getVarbitId() +
+//			", value: " + event.getValue()
+//		);
 	}
 
 	@Subscribe
@@ -566,6 +569,12 @@ public class ChargesImprovedPlugin extends Plugin {
 
 		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onResetDaily());
+
+		chat_messages.queue(QueuedMessage.builder()
+			.type(ChatMessageType.CONSOLE)
+			.runeLiteFormattedMessage("Daily item charges have been reset.")
+			.build()
+		);
 	}
 
 	public static String getChargesMinified(final int charges) {
