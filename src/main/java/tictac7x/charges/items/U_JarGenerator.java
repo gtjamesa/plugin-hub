@@ -41,7 +41,7 @@ public class U_JarGenerator extends ChargedItem {
             new OnChatMessage("You have (?<charges>.+) charges left in your jar generator.").setDynamically(),
 
             // Crumbles.
-            new OnChatMessage("Your jar generator runs out of charges and disappears.").fixedCharges(0),
+            new OnChatMessage("Your jar generator runs out of charges and disappears.").fixedCharges(100),
         };
     }
 }
