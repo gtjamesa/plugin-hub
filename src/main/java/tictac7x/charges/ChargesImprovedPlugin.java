@@ -2,12 +2,9 @@ package tictac7x.charges;
 
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
-import net.runelite.api.ActorSpotAnim;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.Item;
-import net.runelite.api.events.AnimationChanged;
 import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
@@ -58,6 +55,7 @@ import tictac7x.charges.items.J_NecklaceOfDodgy;
 import tictac7x.charges.items.J_NecklaceOfPassage;
 import tictac7x.charges.items.J_NecklaceOfPhoenix;
 import tictac7x.charges.items.J_RingOfCelestial;
+import tictac7x.charges.items.J_RingOfExplorer;
 import tictac7x.charges.items.J_RingOfRecoil;
 import tictac7x.charges.items.J_RingOfShadows;
 import tictac7x.charges.items.J_RingOfSlayer;
@@ -209,9 +207,9 @@ import java.util.List;
 )
 @Slf4j
 public class ChargesImprovedPlugin extends Plugin {
-	private final String plugin_version = "v0.4";
-	private final String plugin_message = "" +
-		"<colHIGHLIGHT>Item Charges Improved " + plugin_version + ":<br>" +
+	private final String pluginVersion = "v0.4";
+	private final String pluginMessage = "" +
+		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
 		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
 		"<colHIGHLIGHT>* Coal bag added.<br>" +
 		"<colHIGHLIGHT>* Herb sack added.<br>" +
@@ -229,25 +227,25 @@ public class ChargesImprovedPlugin extends Plugin {
 	private Client client;
 
 	@Inject
-	private ClientThread client_thread;
+	private ClientThread clientThread;
 
 	@Inject
-	private ItemManager items;
+	private ItemManager itemManager;
 
 	@Inject
-	private ConfigManager configs;
+	private ConfigManager configManager;
 
 	@Inject
-	private InfoBoxManager infoboxes;
+	private InfoBoxManager infoBoxManager;
 
 	@Inject
-	private OverlayManager overlays;
+	private OverlayManager overlayManager;
 
 	@Inject
 	private ChargesImprovedConfig config;
 
 	@Inject
-	private ChatMessageManager chat_messages;
+	private ChatMessageManager chatMessageManager;
 
 	@Inject
 	private TooltipManager tooltipManager;
@@ -271,130 +269,131 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void startUp() {
-		store = new Store(client, items, configs);
+		store = new Store(client, itemManager, configManager);
 
 		chargedItems = new ChargedItem[]{
 			// Weapons
-			new W_Arclight(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_TridentOfTheSeas(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_SkullSceptre(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_IbansStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_PharaohsSceptre(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_BryophytasStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_SanguinestiStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_CrystalBow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new W_CrystalHalberd(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new W_Arclight(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_TridentOfTheSeas(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_SkullSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_IbansStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_PharaohsSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_BryophytasStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_SanguinestiStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_CrystalBow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new W_CrystalHalberd(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Shields
-			new S_KharedstMemoirs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new S_Chronicle(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new S_CrystalShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new S_FaladorShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new S_DragonfireShield(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new S_TomeOfFire(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new S_KharedstMemoirs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new S_Chronicle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new S_CrystalShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new S_FaladorShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new S_DragonfireShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new S_TomeOfFire(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Boots
-			new B_FremennikSeaBoots(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new B_FremennikSeaBoots(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Jewellery
-			new J_BraceletOfClay(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_BraceletOfExpeditious(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_BraceletOfFlamtaer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_BraceletOfSlaughter(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_Camulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_RingOfCelestial(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_DesertAmulet(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_EscapeCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_NecklaceOfPassage(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_NecklaceOfPhoenix(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_NecklaceOfDodgy(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_RingOfRecoil(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_RingOfShadows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_RingOfSuffering(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_RingOfSlayer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new J_XericsTalisman(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new J_BraceletOfClay(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_BraceletOfExpeditious(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_BraceletOfFlamtaer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_BraceletOfSlaughter(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_Camulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_RingOfCelestial(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_DesertAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_EscapeCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_NecklaceOfPassage(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_NecklaceOfPhoenix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_NecklaceOfDodgy(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_RingOfExplorer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_RingOfRecoil(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_RingOfShadows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_RingOfSuffering(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_RingOfSlayer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new J_XericsTalisman(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Helms
-			new H_CircletOfWater(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new H_KandarinHeadgear(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new H_CircletOfWater(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new H_KandarinHeadgear(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Capes
-			new C_ArdougneCloak(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new C_Coffin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new C_ForestryKit(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new C_MagicCape(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new C_ArdougneCloak(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new C_Coffin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new C_ForestryKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new C_MagicCape(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Utilities
-			new U_AshSanctifier(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_BoneCrusher(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_BottomlessCompostBucket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_CoalBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_FishBarrel(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_GemBag(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_HerbSack(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_JarGenerator(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_FungicideSpray(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_GricollersCan(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_LogBasket(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_OgreBellows(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_SeedBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_SoulBearer(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_StrangeOldLockpick(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_TackleBox(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_TeleportCrystal(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new U_Waterskin(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new U_AshSanctifier(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_BoneCrusher(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_BottomlessCompostBucket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_CoalBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_FishBarrel(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_GemBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_HerbSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_JarGenerator(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_FungicideSpray(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_GricollersCan(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_LogBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_OgreBellows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_SeedBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_SoulBearer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_StrangeOldLockpick(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_TackleBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_TeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new U_Waterskin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Crystal armor set
-			new A_CrystalBody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new A_CrystalHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new A_CrystalLegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new A_CrystalBody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new A_CrystalHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new A_CrystalLegs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
 			// Barrows armor sets
-			new AhrimsHood(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new AhrimsRobetop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new AhrimsRobeskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new AhrimsStaff(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new AhrimsHood(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new AhrimsRobetop(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new AhrimsRobeskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new AhrimsStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
-			new DharoksHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new DharoksPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new DharoksPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new DharoksGreataxe(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new DharoksHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new DharoksPlatebody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new DharoksPlatelegs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new DharoksGreataxe(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
-			new GuthansHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new GuthansPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new GuthansChainskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new GuthansWarspear(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new GuthansHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new GuthansPlatebody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new GuthansChainskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new GuthansWarspear(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
-			new KarilsCoif(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new KarilsLeathertop(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new KarilsLeatherskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new KarilsCrossbow(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new KarilsCoif(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new KarilsLeathertop(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new KarilsLeatherskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new KarilsCrossbow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
-			new ToragsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new ToragsPlatebody(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new ToragsPlatelegs(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new ToragsHammers(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new ToragsHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new ToragsPlatebody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new ToragsPlatelegs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new ToragsHammers(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 
-			new VeracsHelm(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new VeracsBrassard(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new VeracsPlateskirt(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
-			new VeracsFlail(client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, this),
+			new VeracsHelm(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new VeracsBrassard(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new VeracsPlateskirt(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
+			new VeracsFlail(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 		};
 
 		// Items overlays.
-		overlay_charged_items = new ChargedItemOverlay(client, tooltipManager, items, config, chargedItems);
-		overlays.add(overlay_charged_items);
+		overlay_charged_items = new ChargedItemOverlay(client, tooltipManager, itemManager, config, chargedItems);
+		overlayManager.add(overlay_charged_items);
 
 		// Items infoboxes.
 		chargedItemsInfoboxes.clear();
-		Arrays.stream(chargedItems).forEach(chargedItem -> chargedItemsInfoboxes.add(new ChargedItemInfobox(chargedItem, items, infoboxes, client_thread, config, this)));
-		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoboxes.addInfoBox(chargedItemInfobox));
+		Arrays.stream(chargedItems).forEach(chargedItem -> chargedItemsInfoboxes.add(new ChargedItemInfobox(chargedItem, itemManager, infoBoxManager, clientThread, config, this)));
+		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoBoxManager.addInfoBox(chargedItemInfobox));
 	}
 
 	@Override
 	protected void shutDown() {
-		overlays.remove(overlay_charged_items);
-		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoboxes.removeInfoBox(chargedItemInfobox));
+		overlayManager.remove(overlay_charged_items);
+		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoBoxManager.removeInfoBox(chargedItemInfobox));
 	}
 
 	@Subscribe
@@ -418,11 +417,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-//			", sender: " + event.getSender()
-//		);
+		System.out.println("MESSAGE | " +
+			"type: " + event.getType().name() +
+			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+			", sender: " + event.getSender()
+		);
 	}
 
 	@Subscribe
@@ -498,11 +497,11 @@ public class ChargesImprovedPlugin extends Plugin {
 		if (event.getGameState() != GameState.LOGGED_IN) return;
 
 		// Send message about plugin updates for once.
-		if (!config.getVersion().equals(plugin_version)) {
-			configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.version, plugin_version);
-			chat_messages.queue(QueuedMessage.builder()
+		if (!config.getVersion().equals(pluginVersion)) {
+			configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.version, pluginVersion);
+			chatMessageManager.queue(QueuedMessage.builder()
 				.type(ChatMessageType.CONSOLE)
-				.runeLiteFormattedMessage(plugin_message)
+				.runeLiteFormattedMessage(pluginMessage)
 				.build()
 			);
 		}
@@ -567,10 +566,10 @@ public class ChargesImprovedPlugin extends Plugin {
 		final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 		if (date.equals(config.getResetDate())) return;
 
-		configs.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
+		configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onResetDaily());
 
-		chat_messages.queue(QueuedMessage.builder()
+		chatMessageManager.queue(QueuedMessage.builder()
 			.type(ChatMessageType.CONSOLE)
 			.runeLiteFormattedMessage("Daily item charges have been reset.")
 			.build()

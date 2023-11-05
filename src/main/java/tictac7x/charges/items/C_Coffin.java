@@ -11,7 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -35,12 +35,12 @@ public class C_Coffin extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.coffin, ItemKey.COFFIN, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         this.storage = storage.storeableItems(
-            new StoreableItem(ItemID.LOAR_REMAINS, "Loar"),
-            new StoreableItem(ItemID.PHRIN_REMAINS, "Phrin"),
-            new StoreableItem(ItemID.RIYL_REMAINS, "Riyl"),
-            new StoreableItem(ItemID.ASYN_REMAINS, "Asyn"),
-            new StoreableItem(ItemID.FIYR_REMAINS, "Fiyr"),
-            new StoreableItem(ItemID.URIUM_REMAINS, "Urium")
+            new StorageItem(ItemID.LOAR_REMAINS).checkName("Loar"),
+            new StorageItem(ItemID.PHRIN_REMAINS).checkName("Phrin"),
+            new StorageItem(ItemID.RIYL_REMAINS).checkName("Riyl"),
+            new StorageItem(ItemID.ASYN_REMAINS).checkName("Asyn"),
+            new StorageItem(ItemID.FIYR_REMAINS).checkName("Fiyr"),
+            new StorageItem(ItemID.URIUM_REMAINS).checkName("Urium")
         );
 
         this.triggersItems = new TriggerItem[]{

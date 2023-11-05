@@ -19,6 +19,11 @@ public class ListenerOnVarbitChanged extends ListenerBase {
             final OnVarbitChanged trigger = (OnVarbitChanged) triggerBase;
             boolean triggerUsed = false;
 
+            // Varbit value consumer.
+            if (trigger.varbitValueConsumer.isPresent()) {
+                trigger.varbitValueConsumer.get().accept(event.getValue());
+            }
+
             if (super.trigger(trigger)) {
                 triggerUsed = true;
             }

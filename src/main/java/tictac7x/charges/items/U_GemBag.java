@@ -10,7 +10,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemDespawned;
@@ -40,11 +40,11 @@ public class U_GemBag extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage.maximumIndividualQuantity(60).storeableItems(
-            new StoreableItem(ItemID.UNCUT_SAPPHIRE, "Sapphire"),
-            new StoreableItem(ItemID.UNCUT_EMERALD, "Emerald"),
-            new StoreableItem(ItemID.UNCUT_RUBY, "Ruby"),
-            new StoreableItem(ItemID.UNCUT_DIAMOND, "Diamond"),
-            new StoreableItem(ItemID.UNCUT_DRAGONSTONE, "Dragonstone")
+            new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire").displayName("LMAO"),
+            new StorageItem(ItemID.UNCUT_EMERALD).checkName("Emerald"),
+            new StorageItem(ItemID.UNCUT_RUBY).checkName("Ruby"),
+            new StorageItem(ItemID.UNCUT_DIAMOND).checkName("Diamond"),
+            new StorageItem(ItemID.UNCUT_DRAGONSTONE).checkName("Dragonstone")
         );
 
         this.triggersItems = new TriggerItem[]{

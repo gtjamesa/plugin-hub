@@ -10,7 +10,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.storage.Storage;
 import tictac7x.charges.item.storage.StorageItem;
-import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -73,7 +72,7 @@ public class ChargedItemWithStorage extends ChargedItem {
         return super.getTextColor();
     }
 
-    public Optional<StoreableItem> getStorageItemFromName(final String name) {
+    public Optional<StorageItem> getStorageItemFromName(final String name) {
         return storage.getStorageItemFromName(name);
     }
 }

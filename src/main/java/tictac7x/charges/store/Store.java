@@ -12,7 +12,7 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,8 +34,8 @@ public class Store {
     public Optional<ItemContainer> equipment = Optional.empty();
     public Optional<ItemContainer> bank = Optional.empty();
     
-    public List<StoreableItem> currentItems = new ArrayList<>();
-    public List<StoreableItem> previousItems = new ArrayList<>();
+    public List<StorageItem> currentItems = new ArrayList<>();
+    public List<StorageItem> previousItems = new ArrayList<>();
 
     public final List<MenuEntry> menuOptionsClicked = new ArrayList<>();
     private final Map<Skill, Integer> skillsXp = new HashMap<>();
@@ -70,11 +70,10 @@ public class Store {
             currentItems = new ArrayList<>();
             for (final Item item : event.getItemContainer().getItems()) {
                 if (item.getId() != -1) {
-                    currentItems.add(new StoreableItem(
-                        item.getId(), 
-                        itemManager.getItemComposition(item.getId()).getName(), 
-                        item.getQuantity()
-                    ));
+                    currentItems.add(new StorageItem(item.getId())
+                        .displayName(itemManager.getItemComposition(item.getId()).getName())
+                        .quantity(item.getQuantity())
+                    );
                 }
             }
         } else if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
@@ -171,11 +170,11 @@ public class Store {
         return !inMenuTargets(targets);
     }
 
-    public boolean notInMenuTargets(final StoreableItem ...storeableItems) {
-        final int[] storeableItemIds = new int[storeableItems.length];
+    public boolean notInMenuTargets(final StorageItem... storageItems) {
+        final int[] storeableItemIds = new int[storageItems.length];
 
-        for (int i = 0; i < storeableItems.length; i ++) {
-            storeableItemIds[i] = storeableItems[i].itemId;
+        for (int i = 0; i < storageItems.length; i ++) {
+            storeableItemIds[i] = storageItems[i].itemId;
         }
 
         return notInMenuTargets(storeableItemIds);
@@ -220,9 +219,9 @@ public class Store {
     public int getInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 
-        for (final StoreableItem storeableItem : currentItems) {
-            if (storeableItem.itemId == itemId) {
-                quantity += storeableItem.quantity;
+        for (final StorageItem storageItem : currentItems) {
+            if (storageItem.itemId == itemId) {
+                quantity += storageItem.getQuantity();
             }
         }
 
@@ -232,9 +231,9 @@ public class Store {
     public int getPreviousInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 
-        for (final StoreableItem storeableItem : previousItems) {
-            if (storeableItem.itemId == itemId) {
-                quantity += storeableItem.quantity;
+        for (final StorageItem storageItem : previousItems) {
+            if (storageItem.itemId == itemId) {
+                quantity += storageItem.getQuantity();
             }
         }
 
@@ -242,8 +241,8 @@ public class Store {
     }
 
     public boolean inventoryContainsItem(final int itemId) {
-        for (final StoreableItem storeableItem : currentItems) {
-            if (storeableItem.itemId == itemId) {
+        for (final StorageItem storageItem : currentItems) {
+            if (storageItem.itemId == itemId) {
                 return true;
             }
         }

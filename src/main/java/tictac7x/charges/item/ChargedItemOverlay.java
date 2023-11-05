@@ -13,6 +13,7 @@ import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.item.triggers.TriggerItem;
 
@@ -78,6 +79,12 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             // Charges from infobox.
             String charges = ChargesImprovedPlugin.getChargesMinified(charged_item.getCharges());
 
+            if (charged_item instanceof ChargedItemWithStorage) {
+                if (((ChargedItemWithStorage) charged_item).storage.showIndividualCharges.isPresent()) {
+                    charges = ((ChargedItemWithStorage) charged_item).storage.getIndividualCharges();
+                }
+            }
+
             graphics.setFont(FontManager.getRunescapeSmallFont());
 
             // Charges from name (override the infobox).
@@ -121,7 +128,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         String tooltip = "";
         for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
             if (storageItem.getQuantity() > 0) {
-                tooltip += itemManager.getItemComposition(storageItem.itemId).getName() + ": ";
+                tooltip += (storageItem.displayName.isPresent() ? storageItem.displayName.get() : itemManager.getItemComposition(storageItem.itemId).getName()) + ": ";
                 tooltip += ColorUtil.wrapWithColorTag(String.valueOf(storageItem.getQuantity()), JagexColors.MENU_TARGET) + "</br>";
             }
         }

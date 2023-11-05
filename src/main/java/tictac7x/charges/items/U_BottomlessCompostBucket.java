@@ -13,12 +13,10 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
-import tictac7x.charges.item.storage.StoreableItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -39,9 +37,9 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.bottomless_compost_bucket, ItemKey.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage = storage.maximumTotalQuantity(10000).storeableItems(
-            new StoreableItem(ItemID.ULTRACOMPOST, "Ultracompost"),
-            new StoreableItem(ItemID.SUPERCOMPOST, "Supercompost"),
-            new StoreableItem(ItemID.COMPOST, "Compost")
+            new StorageItem(ItemID.ULTRACOMPOST).checkName("Ultracompost"),
+            new StorageItem(ItemID.SUPERCOMPOST).checkName("Supercompost"),
+            new StorageItem(ItemID.COMPOST).checkName("Compost")
         );
 
         this.triggersItems = new TriggerItem[]{
@@ -93,10 +91,10 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
         return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
     }
 
-    private Optional<StoreableItem> getCompostType() {
+    private Optional<StorageItem> getCompostType() {
         for (final StorageItem storageItem : getStorage()) {
             if (storageItem.getQuantity() > 0) {
-                return Optional.of(new StoreableItem(storageItem.itemId, ""));
+                return Optional.of(storageItem);
             }
         }
 

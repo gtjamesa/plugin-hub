@@ -1,6 +1,6 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 
 import java.util.Optional;
 
@@ -11,7 +11,7 @@ public abstract class TriggerBase {
     public Optional<String[]> onMenuTarget = Optional.empty();
     public Optional<int[]> onMenuImpostor = Optional.empty();
     public Optional<Boolean> onItemClick = Optional.empty();
-    public Optional<StoreableItem[]> onUse = Optional.empty();
+    public Optional<StorageItem[]> onUse = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
 
     // Actions.
@@ -82,7 +82,7 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onUse(final Optional<StoreableItem[]> storeableItems) {
+    public TriggerBase onUse(final Optional<StorageItem[]> storeableItems) {
         this.onUse = storeableItems;
         return this;
     }

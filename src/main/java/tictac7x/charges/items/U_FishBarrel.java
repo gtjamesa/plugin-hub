@@ -11,7 +11,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
@@ -28,7 +28,7 @@ import static tictac7x.charges.store.ItemContainerType.BANK;
 import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 public class U_FishBarrel extends ChargedItemWithStorage {
-    private Optional<StoreableItem> lastCaughtFish = Optional.empty();
+    private Optional<StorageItem> lastCaughtFish = Optional.empty();
 
     public U_FishBarrel(
         final Client client,
@@ -44,33 +44,33 @@ public class U_FishBarrel extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.fish_barrel, ItemKey.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage = storage.maximumTotalQuantity(28).storeableItems(
-            new StoreableItem(ItemID.RAW_SHRIMPS, "Shrimp"),
-            new StoreableItem(ItemID.RAW_SARDINE, "Sardine"),
-            new StoreableItem(ItemID.RAW_HERRING, "Herring"),
-            new StoreableItem(ItemID.RAW_ANCHOVIES, "Anchovies"),
-            new StoreableItem(ItemID.RAW_MACKEREL, "Mackerel"),
-            new StoreableItem(ItemID.RAW_TROUT, "Trout"),
-            new StoreableItem(ItemID.RAW_COD, "Cod"),
-            new StoreableItem(ItemID.RAW_PIKE, "Pike"),
-            new StoreableItem(ItemID.RAW_SLIMY_EEL, "Slimy swamp eel"),
-            new StoreableItem(ItemID.RAW_SALMON, "Salmon"),
-            new StoreableItem(ItemID.RAW_TUNA, "Tuna"),
-            new StoreableItem(ItemID.RAW_RAINBOW_FISH, "Rainbow fish"),
-            new StoreableItem(ItemID.RAW_CAVE_EEL, "Cave eel"),
-            new StoreableItem(ItemID.RAW_LOBSTER, "Lobster"),
-            new StoreableItem(ItemID.RAW_BASS, "Bass"),
-            new StoreableItem(ItemID.LEAPING_TROUT, "Leaping trout"),
-            new StoreableItem(ItemID.RAW_SWORDFISH, "Swordfish"),
-            new StoreableItem(ItemID.RAW_LAVA_EEL, "Lava eel"),
-            new StoreableItem(ItemID.LEAPING_SALMON, "Leaping salmon"),
-            new StoreableItem(ItemID.RAW_MONKFISH, "Monkfish"),
-            new StoreableItem(ItemID.RAW_KARAMBWAN, "Karambwan"),
-            new StoreableItem(ItemID.LEAPING_STURGEON, "Leaping sturgeon"),
-            new StoreableItem(ItemID.RAW_SHARK, "Shark"),
-            new StoreableItem(ItemID.INFERNAL_EEL, "Infernal eel"),
-            new StoreableItem(ItemID.RAW_ANGLERFISH, "Anglerfish"),
-            new StoreableItem(ItemID.RAW_DARK_CRAB, "Dark crab"),
-            new StoreableItem(ItemID.SACRED_EEL, "Sacred eel")
+            new StorageItem(ItemID.RAW_SHRIMPS).checkName("Shrimp"),
+            new StorageItem(ItemID.RAW_SARDINE).checkName("Sardine"),
+            new StorageItem(ItemID.RAW_HERRING).checkName("Herring"),
+            new StorageItem(ItemID.RAW_ANCHOVIES).checkName("Anchovies"),
+            new StorageItem(ItemID.RAW_MACKEREL).checkName("Mackerel"),
+            new StorageItem(ItemID.RAW_TROUT).checkName("Trout"),
+            new StorageItem(ItemID.RAW_COD).checkName("Cod"),
+            new StorageItem(ItemID.RAW_PIKE).checkName("Pike"),
+            new StorageItem(ItemID.RAW_SLIMY_EEL).checkName("Slimy swamp eel"),
+            new StorageItem(ItemID.RAW_SALMON).checkName("Salmon"),
+            new StorageItem(ItemID.RAW_TUNA).checkName("Tuna"),
+            new StorageItem(ItemID.RAW_RAINBOW_FISH).checkName("Rainbow fish"),
+            new StorageItem(ItemID.RAW_CAVE_EEL).checkName("Cave eel"),
+            new StorageItem(ItemID.RAW_LOBSTER).checkName("Lobster"),
+            new StorageItem(ItemID.RAW_BASS).checkName("Bass"),
+            new StorageItem(ItemID.LEAPING_TROUT).checkName("Leaping trout"),
+            new StorageItem(ItemID.RAW_SWORDFISH).checkName("Swordfish"),
+            new StorageItem(ItemID.RAW_LAVA_EEL).checkName("Lava eel"),
+            new StorageItem(ItemID.LEAPING_SALMON).checkName("Leaping salmon"),
+            new StorageItem(ItemID.RAW_MONKFISH).checkName("Monkfish"),
+            new StorageItem(ItemID.RAW_KARAMBWAN).checkName("Karambwan"),
+            new StorageItem(ItemID.LEAPING_STURGEON).checkName("Leaping sturgeon"),
+            new StorageItem(ItemID.RAW_SHARK).checkName("Shark"),
+            new StorageItem(ItemID.INFERNAL_EEL).checkName("Infernal eel"),
+            new StorageItem(ItemID.RAW_ANGLERFISH).checkName("Anglerfish"),
+            new StorageItem(ItemID.RAW_DARK_CRAB).checkName("Dark crab"),
+            new StorageItem(ItemID.SACRED_EEL).checkName("Sacred eel")
         );
 
         this.triggersItems = new TriggerItem[]{

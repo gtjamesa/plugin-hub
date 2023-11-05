@@ -42,6 +42,12 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public String getText() {
+        if (chargedItem instanceof ChargedItemWithStorage) {
+            if (((ChargedItemWithStorage) chargedItem).storage.showIndividualCharges.isPresent()) {
+                return ((ChargedItemWithStorage) chargedItem).storage.getIndividualCharges();
+            }
+        }
+
         return ChargesImprovedPlugin.getChargesMinified(chargedItem.getCharges());
     }
 

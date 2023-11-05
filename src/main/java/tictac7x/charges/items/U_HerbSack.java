@@ -12,7 +12,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
@@ -41,20 +41,20 @@ public class U_HerbSack extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.herb_sack, ItemKey.HERB_SACK, ItemID.HERB_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage = storage.maximumIndividualQuantity(30).storeableItems(
-            new StoreableItem(ItemID.GRIMY_GUAM_LEAF, "Guam leaf"),
-            new StoreableItem(ItemID.GRIMY_MARRENTILL, "Marrentill"),
-            new StoreableItem(ItemID.GRIMY_TARROMIN, "Tarromin"),
-            new StoreableItem(ItemID.GRIMY_HARRALANDER, "Harralander"),
-            new StoreableItem(ItemID.GRIMY_RANARR_WEED, "Ranarr weed"),
-            new StoreableItem(ItemID.GRIMY_TOADFLAX, "Toadflax"),
-            new StoreableItem(ItemID.GRIMY_IRIT_LEAF, "Irit leaf"),
-            new StoreableItem(ItemID.GRIMY_AVANTOE, "Avantoe"),
-            new StoreableItem(ItemID.GRIMY_KWUARM, "Kwuarm"),
-            new StoreableItem(ItemID.GRIMY_SNAPDRAGON, "Snapdragon"),
-            new StoreableItem(ItemID.GRIMY_CADANTINE, "Cadantine"),
-            new StoreableItem(ItemID.GRIMY_LANTADYME, "Lantadyme"),
-            new StoreableItem(ItemID.GRIMY_DWARF_WEED, "Dwarf weed"),
-            new StoreableItem(ItemID.GRIMY_TORSTOL, "Torstol")
+            new StorageItem(ItemID.GRIMY_GUAM_LEAF).checkName("Guam leaf"),
+            new StorageItem(ItemID.GRIMY_MARRENTILL).checkName("Marrentill"),
+            new StorageItem(ItemID.GRIMY_TARROMIN).checkName("Tarromin"),
+            new StorageItem(ItemID.GRIMY_HARRALANDER).checkName("Harralander"),
+            new StorageItem(ItemID.GRIMY_RANARR_WEED).checkName("Ranarr weed"),
+            new StorageItem(ItemID.GRIMY_TOADFLAX).checkName("Toadflax"),
+            new StorageItem(ItemID.GRIMY_IRIT_LEAF).checkName("Irit leaf"),
+            new StorageItem(ItemID.GRIMY_AVANTOE).checkName("Avantoe"),
+            new StorageItem(ItemID.GRIMY_KWUARM).checkName("Kwuarm"),
+            new StorageItem(ItemID.GRIMY_SNAPDRAGON).checkName("Snapdragon"),
+            new StorageItem(ItemID.GRIMY_CADANTINE).checkName("Cadantine"),
+            new StorageItem(ItemID.GRIMY_LANTADYME).checkName("Lantadyme"),
+            new StorageItem(ItemID.GRIMY_DWARF_WEED).checkName("Dwarf weed"),
+            new StorageItem(ItemID.GRIMY_TORSTOL).checkName("Torstol")
         );
 
         this.triggersItems = new TriggerItem[]{

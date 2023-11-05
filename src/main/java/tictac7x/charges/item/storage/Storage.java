@@ -1,6 +1,11 @@
 package tictac7x.charges.item.storage;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
@@ -21,14 +26,15 @@ public class Storage {
     private final ConfigManager configManager;
     private final Store store;
 
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     protected List<StorageItem> storage = new ArrayList<>();
 
     public Optional<Integer> maximumTotalQuantity = Optional.empty();
     public Optional<Integer> maximumTotalQuantityWithItemEquipped = Optional.empty();
     public Optional<int[]> maximumTotalQuantityWithItemEquippedItems = Optional.empty();
+    public Optional<Boolean> showIndividualCharges = Optional.empty();
     private Optional<Integer> maximumIndividualQuantity = Optional.empty();
-    private Optional<StoreableItem[]> storeableItems = Optional.empty();
+    private Optional<StorageItem[]> storeableItems = Optional.empty();
 
 
     public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ConfigManager configManager, final ClientThread clientThread, final Store store) {
@@ -56,8 +62,13 @@ public class Storage {
         return this;
     }
 
-    public Storage storeableItems(final StoreableItem ...storeableItems) {
-        this.storeableItems = Optional.of(storeableItems);
+    public Storage showIndividualCharges() {
+        this.showIndividualCharges = Optional.of(true);
+        return this;
+    }
+
+    public Storage storeableItems(final StorageItem... storageItems) {
+        this.storeableItems = Optional.of(storageItems);
         return this;
     }
 
@@ -77,23 +88,29 @@ public class Storage {
         put(itemId, (item.isPresent() ? item.get().getQuantity() : 0) + quantity);
     }
 
-    public void add(final Optional<StoreableItem> item, final int quantity) {
+    public void add(final Optional<StorageItem> item, final int quantity) {
         if (!item.isPresent()) return;
         add(item.get().itemId, quantity);
     }
 
-    public void put(final Optional<StoreableItem> item, final int quantity) {
+    public void put(final Optional<StorageItem> item, final int quantity) {
         if (!item.isPresent()) return;
         put(item.get().itemId, quantity);
     }
 
-    public void remove(final Optional<StoreableItem> item, final int quantity) {
+    public void remove(final Optional<StorageItem> item, final int quantity) {
         if (!item.isPresent()) return;
         remove(item.get().itemId, quantity);
     }
 
     public void remove(final int itemId, final int quantity) {
         final Optional<StorageItem> item = getItem(itemId);
+
+        // Don't decrease quantity of unlimited storage item.
+        if (item.isPresent() && item.get().getQuantity() == Charges.UNLIMITED) {
+            return;
+        }
+
         put(itemId, (item.isPresent() ? Math.max(0, item.get().getQuantity() - quantity) : 0));
     }
 
@@ -121,7 +138,7 @@ public class Storage {
         if (item.isPresent()) {
             item.get().setQuantity(quantity);
         } else {
-            storage.add(new StorageItem(itemId, quantity));
+            storage.add(new StorageItem(itemId).quantity(quantity));
         }
 
         save();
@@ -130,8 +147,8 @@ public class Storage {
     public void fillFromInventory() {
         if (!storeableItems.isPresent()) return;
 
-        for (final StoreableItem storeableItem : storeableItems.get()) {
-            add(storeableItem.itemId, store.getPreviousInventoryItemQuantity(storeableItem.itemId));
+        for (final StorageItem storageItem : storeableItems.get()) {
+            add(storageItem.itemId, store.getPreviousInventoryItemQuantity(storageItem.itemId));
         }
     }
 
@@ -160,6 +177,18 @@ public class Storage {
         return charges;
     }
 
+    public String getIndividualCharges() {
+        String charges = "";
+
+        for (final StorageItem item : storage) {
+            if (item.getQuantity() != Charges.UNLIMITED) {
+                charges += item.getQuantity() + "/";
+            }
+        }
+
+        return charges.replaceAll("/$", "");
+    }
+
     public List<StorageItem> getStorage() {
         return storage;
     }
@@ -170,9 +199,20 @@ public class Storage {
 
         // Load storage from config.
         try {
-            final String storageJson = configManager.getConfiguration(ChargesImprovedConfig.group, storageConfigKey);
+            final String jsonString = configManager.getConfiguration(ChargesImprovedConfig.group, storageConfigKey);
+            final JsonArray jsonStorage = (JsonArray) (new JsonParser()).parse(jsonString);
+
+            for (final JsonElement jsonStorageItem : jsonStorage) {
+                final StorageItem storageItem = new StorageItem(jsonStorageItem.getAsJsonObject().get("itemId").getAsInt());
+
+                storageItem.setQuantity(jsonStorageItem.getAsJsonObject().get("quantity").getAsInt());
+
+                if (jsonStorageItem.getAsJsonObject().has("displayName")) {
+                    storageItem.setDisplayName(jsonStorageItem.getAsJsonObject().get("displayName").getAsString());
+                }
+            }
             final Type listType = new TypeToken<ArrayList<StorageItem>>(){}.getType();
-            final List<StorageItem> loadedStorage = gson.fromJson(storageJson, listType);
+            final List<StorageItem> loadedStorage = gson.fromJson(jsonString, listType);
 
             for (final StorageItem loadedItem : loadedStorage) {
                 final Optional<StorageItem> item = getItem(loadedItem.itemId);
@@ -186,15 +226,42 @@ public class Storage {
     }
 
     private void save() {
-        configManager.setConfiguration(ChargesImprovedConfig.group, storageConfigKey, gson.toJson(storage));
+        final JsonArray jsonStorage = new JsonArray();
+
+        for (final StorageItem storageItem : storage) {
+            System.out.println("-> " + storageItem.itemId + " " + storageItem.checkName + " " + storageItem.displayName + " " + storageItem.quantity);
+            final JsonObject jsonItem = new JsonObject();
+            jsonItem.addProperty("itemId", storageItem.itemId);
+            jsonItem.addProperty("quantity", storageItem.getQuantity());
+            if (storageItem.displayName.isPresent()) {
+                jsonItem.addProperty("displayName", storageItem.displayName.get());
+            }
+            jsonStorage.add(jsonItem);
+        }
+
+        System.out.println("SAVE " + gson.toJson(jsonStorage));
+
+        configManager.setConfiguration(ChargesImprovedConfig.group, storageConfigKey, gson.toJson(jsonStorage));
     }
 
     private List<StorageItem> getNewStorage() {
         final List<StorageItem> storage = new ArrayList<>();
 
         if (storeableItems.isPresent()) {
-            for (final StoreableItem storeableItem : storeableItems.get()) {
-                storage.add(new StorageItem(storeableItem.itemId, 0));
+            System.out.println(storeableItems.get().length);
+            for (final StorageItem storeableItem : storeableItems.get()) {
+                System.out.println(storeableItem.itemId + " " + storeableItem.displayName + " " + storeableItem.checkName + " " + storeableItem.quantity);
+                final StorageItem storageItem = new StorageItem(storeableItem.itemId);
+
+                if (storeableItem.checkName.isPresent()) {
+                    storageItem.setCheckName(storeableItem.checkName.get());
+                }
+
+                if (storeableItem.displayName.isPresent()) {
+                    storageItem.setDisplayName(storeableItem.displayName.get());
+                }
+
+                storage.add(storageItem);
             }
         }
 
@@ -232,27 +299,27 @@ public class Storage {
         return Optional.empty();
     }
 
-    public final Optional<StoreableItem> getStorageItemFromName(final String name) {
+    public final Optional<StorageItem> getStorageItemFromName(final String name) {
         if (!storeableItems.isPresent()) return Optional.empty();
 
         // Perfect match.
-        for (final StoreableItem storeableItem : storeableItems.get()) {
-            if (name.equalsIgnoreCase(storeableItem.name)) {
-                return Optional.of(storeableItem);
+        for (final StorageItem storageItem : storeableItems.get()) {
+            if (storageItem.checkName.isPresent() && name.equalsIgnoreCase(storageItem.checkName.get())) {
+                return Optional.of(storageItem);
             }
         }
 
         // Partial match.
-        for (final StoreableItem storeableItem : storeableItems.get()) {
-            if (name.toLowerCase().contains(storeableItem.name.toLowerCase())) {
-                return Optional.of(storeableItem);
+        for (final StorageItem storageItem : storeableItems.get()) {
+            if (storageItem.checkName.isPresent() && name.toLowerCase().contains(storageItem.checkName.get().toLowerCase())) {
+                return Optional.of(storageItem);
             }
         }
 
         return Optional.empty();
     }
 
-    public Optional<StoreableItem[]> getStoreableItems() {
+    public Optional<StorageItem[]> getStoreableItems() {
         return storeableItems;
     }
 }

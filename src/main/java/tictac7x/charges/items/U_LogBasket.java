@@ -12,7 +12,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StoreableItem;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
@@ -30,7 +30,7 @@ import static tictac7x.charges.store.ItemContainerType.BANK;
 import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 public class U_LogBasket extends ChargedItemWithStorage {
-    private Optional<StoreableItem> lastLogs = Optional.empty();
+    private Optional<StorageItem> lastLogs = Optional.empty();
     private int infernalQuantityTracker = 0;
 
     public U_LogBasket(
@@ -47,19 +47,19 @@ public class U_LogBasket extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.log_basket, ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage.maximumTotalQuantity(28).storeableItems(
-            new StoreableItem(ItemID.LOGS, "Logs"),
-            new StoreableItem(ItemID.ACHEY_TREE_LOGS, "Achey tree logs"),
-            new StoreableItem(ItemID.OAK_LOGS, "Oak logs"),
-            new StoreableItem(ItemID.WILLOW_LOGS, "Willow logs"),
-            new StoreableItem(ItemID.TEAK_LOGS, "Teak logs"),
-            new StoreableItem(ItemID.JUNIPER_LOGS, "Juniper logs"),
-            new StoreableItem(ItemID.MAPLE_LOGS, "Maple logs"),
-            new StoreableItem(ItemID.MAHOGANY_LOGS, "Mahogany logs"),
-            new StoreableItem(ItemID.ARCTIC_PINE_LOGS, "Arctic pine logs"),
-            new StoreableItem(ItemID.YEW_LOGS, "Yew logs"),
-            new StoreableItem(ItemID.BLISTERWOOD_LOGS, "Blisterwood logs"),
-            new StoreableItem(ItemID.MAGIC_LOGS,"Magic logs"),
-            new StoreableItem(ItemID.REDWOOD_LOGS, "Redwood logs")
+            new StorageItem(ItemID.LOGS).checkName("Logs"),
+            new StorageItem(ItemID.ACHEY_TREE_LOGS).checkName("Achey tree logs"),
+            new StorageItem(ItemID.OAK_LOGS).checkName("Oak logs"),
+            new StorageItem(ItemID.WILLOW_LOGS).checkName("Willow logs"),
+            new StorageItem(ItemID.TEAK_LOGS).checkName("Teak logs"),
+            new StorageItem(ItemID.JUNIPER_LOGS).checkName("Juniper logs"),
+            new StorageItem(ItemID.MAPLE_LOGS).checkName("Maple logs"),
+            new StorageItem(ItemID.MAHOGANY_LOGS).checkName("Mahogany logs"),
+            new StorageItem(ItemID.ARCTIC_PINE_LOGS).checkName("Arctic pine logs"),
+            new StorageItem(ItemID.YEW_LOGS).checkName("Yew logs"),
+            new StorageItem(ItemID.BLISTERWOOD_LOGS).checkName("Blisterwood logs"),
+            new StorageItem(ItemID.MAGIC_LOGS).checkName("Magic logs"),
+            new StorageItem(ItemID.REDWOOD_LOGS).checkName("Redwood logs")
         );
 
         this.triggersItems = new TriggerItem[]{
