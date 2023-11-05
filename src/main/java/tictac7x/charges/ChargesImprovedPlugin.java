@@ -411,14 +411,14 @@ public class ChargesImprovedPlugin extends Plugin {
 //				item.getId() + ": " + items.getItemComposition(item.getId()).getName() +
 //				", quantity: " + item.getQuantity();
 //		}
-//		log.debug(itemContainer);
+//		System.out.println(itemContainer);
 	}
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-//		log.debug("MESSAGE | " +
+//		System.out.println("MESSAGE | " +
 //			"type: " + event.getType().name() +
 //			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
 //			", sender: " + event.getSender()
@@ -430,7 +430,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
 //		if (event.getActor() == client.getLocalPlayer()) {
-//			log.debug("GRAPHIC | " +
+//			System.out.println("GRAPHIC | " +
 //				"id: " + event.getActor().getGraphic()
 //			);
 //		}
@@ -441,7 +441,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
 
 //		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-//			log.debug("CONFIG | " +
+//			System.out.println("CONFIG | " +
 //				"key: " + event.getKey() +
 //				", old value: " + event.getOldValue() +
 //				", new value: " + event.getNewValue()
@@ -453,7 +453,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onHitsplatApplied(final HitsplatApplied event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onHitsplatApplied(event));
 
-//		log.debug("HITSPLAT | " +
+//		System.out.println("HITSPLAT | " +
 //			"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : "enemy") +
 //			", type: " + event.getHitsplat().getHitsplatType() +
 //			", amount:" + event.getHitsplat().getAmount() +
@@ -466,7 +466,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onWidgetLoaded(final WidgetLoaded event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onWidgetLoaded(event));
 
-//		log.debug("WIDGET | " +
+//		System.out.println("WIDGET | " +
 //			"group: " + event.getGroupId()
 //		);
 	}
@@ -479,7 +479,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
 		} catch (final Exception ignored) {}
 
-		log.debug("MENU OPTION | " +
+		System.out.println("MENU OPTION | " +
 			"option: " + event.getMenuOption() +
 			", target: " + event.getMenuTarget() +
 			", action name: " + event.getMenuAction().name() +
@@ -513,7 +513,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
 		store.onStatChanged(event);
 
-//		log.debug("STAT CHANGED | " +
+//		System.out.println("STAT CHANGED | " +
 //			event.getSkill().getName() +
 //			", level: " + event.getLevel() +
 //			", xp: " + event.getXp()
@@ -524,7 +524,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onItemDespawned(final ItemDespawned event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemDespawned(event));
 
-//		log.debug("ITEM DESPAWNED | " +
+//		System.out.println("ITEM DESPAWNED | " +
 //			event.getItem().getId() +
 //			", quantity: " + event.getItem().getQuantity()
 //		);
@@ -539,7 +539,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			checkForChargesReset();
 		}
 
-//		log.debug("VARBIT CHANGED | " +
+//		System.out.println("VARBIT CHANGED | " +
 //			"id: " + event.getVarbitId() +
 //			", value: " + event.getValue()
 //		);
@@ -550,7 +550,7 @@ public class ChargesImprovedPlugin extends Plugin {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onMenuEntryAdded(event));
 
 //		if (event.getMenuEntry().getItemId() != -1) {
-//			log.debug("MENU ENTRY ADDED | " +
+//			System.out.println("MENU ENTRY ADDED | " +
 //				"item id: " + event.getMenuEntry().getItemId() +
 //				", option: " + event.getOption() +
 //				", target: " + event.getTarget()

@@ -27,14 +27,12 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
 
             // Fill storage from inventory.
             if (trigger.fillStorageFromInventory.isPresent()) {
-                log.debug(chargedItem.getItemName() + " fill storage from inventory");
                 ((ChargedItemWithStorage) chargedItem).storage.fillFromInventory();
                 triggerUsed = true;
             }
 
             // Empty storage to inventory.
             if (trigger.emptyStorageToInventory.isPresent()) {
-                log.debug(chargedItem.getItemName() + " empty storage to inventory");
                 ((ChargedItemWithStorage) chargedItem).storage.emptyToInventory();
                 triggerUsed = true;
             }

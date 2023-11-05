@@ -30,7 +30,6 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
             matcher.find();
 
             if (trigger.setDynamically.isPresent()) {
-                log.debug(chargedItem.getItemName() + " charges set dynamically from widget: " + getCleanCharges(matcher.group("charges")));
                 chargedItem.setCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }

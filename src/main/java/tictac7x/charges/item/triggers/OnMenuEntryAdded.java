@@ -1,12 +1,14 @@
 package tictac7x.charges.item.triggers;
 
+import tictac7x.charges.store.ReplaceTarget;
+
 import java.util.Optional;
 
 public class OnMenuEntryAdded extends TriggerBase {
     public final Optional<String> menuEntryOption;
     public Optional<Boolean> hide = Optional.empty();
     public Optional<String> replaceOption = Optional.empty();
-    public Optional<String[]> replaceTarget = Optional.empty();
+    public Optional<ReplaceTarget[]> replaceTargets = Optional.empty();
     public Optional<int[]> replaceImpostorIds = Optional.empty();
 
     public OnMenuEntryAdded() {
@@ -28,7 +30,11 @@ public class OnMenuEntryAdded extends TriggerBase {
     }
 
     public OnMenuEntryAdded replaceTarget(final String target, final String replace) {
-        this.replaceTarget = Optional.of(new String[]{target, replace});
+        return replaceTargets(new ReplaceTarget(target, replace));
+    }
+
+    public OnMenuEntryAdded replaceTargets(final ReplaceTarget ...targets) {
+        this.replaceTargets = Optional.of(targets);
         return this;
     }
 

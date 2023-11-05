@@ -9,6 +9,7 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.store.ReplaceTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +27,17 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
             boolean triggerUsed = false;
 
             if (trigger.replaceOption.isPresent()) {
-                log.debug(chargedItem.getItemName() + " menu option replaced");
                 event.getMenuEntry().setOption(trigger.replaceOption.get());
                 triggerUsed = true;
             }
 
-            if (trigger.replaceTarget.isPresent()) {
-                if (event.getTarget().contains(trigger.replaceTarget.get()[0])) {
-                    log.debug(chargedItem.getItemName() + " menu target replaced: " + trigger.replaceTarget.get()[0] + " -> " + trigger.replaceTarget.get()[1]);
-                    event.getMenuEntry().setTarget(event.getTarget().replaceAll(trigger.replaceTarget.get()[0], trigger.replaceTarget.get()[1]));
-                    triggerUsed = true;
+            if (trigger.replaceTargets.isPresent()) {
+                for (final ReplaceTarget replaceTarget : trigger.replaceTargets.get()) {
+                    if (event.getTarget().contains(replaceTarget.target)) {
+                        event.getMenuEntry().setTarget(event.getTarget().replaceAll(replaceTarget.target, replaceTarget.replace));
+                        triggerUsed = true;
+                        break;
+                    }
                 }
             }
 
@@ -45,8 +47,6 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
                 for (final MenuEntry entry : client.getMenuEntries()) {
                     if (!entry.getOption().equals(trigger.menuEntryOption.get())) {
                         newMenuEntries.add(entry);
-                    } else {
-                        log.debug(chargedItem.getItemName() + " menu entry hidden: " + entry.getOption());
                     }
                 }
 
@@ -91,12 +91,12 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
         }
 
         // Menu target replace check.
-        menuReplaceTargetCheck: if (trigger.replaceTarget.isPresent()) {
-            if (event.getTarget().contains(trigger.replaceTarget.get()[0])) {
-                break menuReplaceTargetCheck;
+        menuReplaceTargetsCheck: if (trigger.replaceTargets.isPresent()) {
+            for (final ReplaceTarget replaceTarget: trigger.replaceTargets.get()) {
+                if (event.getTarget().contains(replaceTarget.target)) {
+                    break menuReplaceTargetsCheck;
+                }
             }
-
-            return false;
         }
 
         // Menu replace impostor id check.

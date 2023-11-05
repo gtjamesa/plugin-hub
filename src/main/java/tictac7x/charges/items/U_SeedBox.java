@@ -73,7 +73,6 @@ public class U_SeedBox extends ChargedItemWithStorage {
                 try {
                     return (Integer) field.get(ItemID.class);
                 } catch (final Exception ignored) {
-                    log.debug("Dynamic seed not found: " + seed);
                     return Charges.UNKNOWN;
                 }
             }

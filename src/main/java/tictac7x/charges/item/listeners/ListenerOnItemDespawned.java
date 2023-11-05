@@ -24,7 +24,6 @@ public class ListenerOnItemDespawned extends ListenerBase {
             boolean triggerUsed = false;
 
             if (trigger.pickUpToStorage.isPresent()) {
-                log.debug(chargedItem.getItemName() + " pickup to storage");
                 ((ChargedItemWithStorage) chargedItem).storage.add(event.getItem().getId(), event.getItem().getQuantity());
                 triggerUsed = true;
             }

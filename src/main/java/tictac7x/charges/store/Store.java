@@ -318,10 +318,6 @@ public class Store {
         return false;
     }
 
-    public int getInventoryEmptySlots() {
-        return 28 - getInventoryQuantity();
-    }
-
     public int getInventoryQuantity() {
         return currentItems.size();
     }
