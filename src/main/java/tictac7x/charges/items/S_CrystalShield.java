@@ -32,12 +32,13 @@ public class S_CrystalShield extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CRYSTAL_SHIELD, ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.crystal_shield;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.crystal_shield, ItemKey.CRYSTAL_SHIELD, ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_SHIELD),
             new TriggerItem(ItemID.CRYSTAL_SHIELD_24127),
         };
+
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("Your crystal shield has (?<charges>.+) charges? remaining.").setDynamically(),

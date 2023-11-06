@@ -32,12 +32,13 @@ public class J_XericsTalisman extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.XERICS_TALISMAN, ItemID.XERICS_TALISMAN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.xerics_talisman;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.xerics_talisman, ItemKey.XERICS_TALISMAN, ItemID.XERICS_TALISMAN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.XERICS_TALISMAN_INERT).fixedCharges(0),
             new TriggerItem(ItemID.XERICS_TALISMAN),
         };
+
         this.triggers = new TriggerBase[]{
             // Check.
             new OnChatMessage("(The|Your) talisman( now)? has one charge.").onItemClick().fixedCharges(1),

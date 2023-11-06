@@ -28,9 +28,9 @@ public class U_TeleportCrystal extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.TELEPORT_CRYSTAL, ItemID.TELEPORT_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.teleport_crystal;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.teleport_crystal, ItemKey.TELEPORT_CRYSTAL, ItemID.TELEPORT_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TELEPORT_CRYSTAL).fixedCharges(0),
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_1).fixedCharges(1),
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_2).fixedCharges(2),

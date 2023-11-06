@@ -31,12 +31,13 @@ public class W_SkullSceptre extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.SKULL_SCEPTRE, ItemID.SKULL_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.skull_sceptre;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.skull_sceptre, ItemKey.SKULL_SCEPTRE, ItemID.SKULL_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SKULL_SCEPTRE),
             new TriggerItem(ItemID.SKULL_SCEPTRE_I)
         };
+
         this.triggers = new TriggerBase[] {
             // Teleport.
             new OnChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left.").setDynamically(),

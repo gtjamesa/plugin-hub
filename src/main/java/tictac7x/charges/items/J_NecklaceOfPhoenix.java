@@ -29,7 +29,7 @@ public class J_NecklaceOfPhoenix extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.PHOENIX_NECKLACE, ItemID.PHOENIX_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.PHOENIX_NECKLACE).fixedCharges(1).needsToBeEquipped(),
         };
     }

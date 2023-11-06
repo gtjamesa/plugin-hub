@@ -29,7 +29,7 @@ public class VeracsPlateskirt extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.VERACS_PLATESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_PLATESKIRT).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_PLATESKIRT_100).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_PLATESKIRT_75).fixedCharges(75),

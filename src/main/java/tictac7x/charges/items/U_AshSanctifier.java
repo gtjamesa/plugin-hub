@@ -33,9 +33,8 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.ASH_SANCTIFIER, ItemID.ASH_SANCTIFIER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.ash_sanctifier;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.ash_sanctifier, ItemKey.ASH_SANCTIFIER, ItemID.ASH_SANCTIFIER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ASH_SANCTIFIER),
         };
         this.triggers = new TriggerBase[]{

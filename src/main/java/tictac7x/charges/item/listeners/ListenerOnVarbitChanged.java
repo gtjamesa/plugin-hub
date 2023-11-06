@@ -5,11 +5,12 @@ import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnVarbitChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 
 public class ListenerOnVarbitChanged extends ListenerBase {
-    public ListenerOnVarbitChanged(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerOnVarbitChanged(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
     }
 

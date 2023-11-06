@@ -29,7 +29,7 @@ public class GuthansWarspear extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_WARSPEAR).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_WARSPEAR_100).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_WARSPEAR_75).fixedCharges(75),

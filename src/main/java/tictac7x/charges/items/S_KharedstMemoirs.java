@@ -31,12 +31,13 @@ public class S_KharedstMemoirs extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.KHAREDSTS_MEMOIRS, ItemID.KHAREDSTS_MEMOIRS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.kharedsts_memoirs;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.kharedsts_memoirs, ItemKey.KHAREDSTS_MEMOIRS, ItemID.KHAREDSTS_MEMOIRS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.KHAREDSTS_MEMOIRS),
             new TriggerItem(ItemID.BOOK_OF_THE_DEAD)
         };
+
         this.triggers = new TriggerBase[] {
             // Teleport.
             new OnChatMessage("(Kharedst's Memoirs?)|(The Book of the Dead) now has (?<charges>.+) (memories|memory) remaining.").setDynamically(),

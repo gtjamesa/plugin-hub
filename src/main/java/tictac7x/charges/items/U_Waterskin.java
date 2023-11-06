@@ -29,7 +29,7 @@ public class U_Waterskin extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.WATERSKIN, ItemID.WATERSKIN0, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.WATERSKIN0).fixedCharges(0),
             new TriggerItem(ItemID.WATERSKIN1).fixedCharges(1),
             new TriggerItem(ItemID.WATERSKIN2).fixedCharges(2),

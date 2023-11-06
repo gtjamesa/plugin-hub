@@ -29,7 +29,7 @@ public class U_OgreBellows extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.OGRE_BELLOWS, ItemID.OGRE_BELLOWS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.OGRE_BELLOWS).fixedCharges(0),
             new TriggerItem(ItemID.OGRE_BELLOWS_1).fixedCharges(1),
             new TriggerItem(ItemID.OGRE_BELLOWS_2).fixedCharges(2),

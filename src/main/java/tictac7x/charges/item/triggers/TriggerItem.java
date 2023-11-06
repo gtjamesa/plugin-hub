@@ -43,11 +43,6 @@ public class TriggerItem {
         return this;
     }
 
-    public TriggerItem negativeFullCharges(final int charges) {
-        this.negativeMaxCharges = true;
-        return maxCharges(charges);
-    }
-
     public TriggerItem maxCharges(final int charges) {
         this.maxCharges = Optional.of(charges);
         return this;

@@ -31,11 +31,12 @@ public class J_NecklaceOfDodgy extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.DODGY_NECKLACE, ItemID.DODGY_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.dodgy_necklace;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.dodgy_necklace, ItemKey.DODGY_NECKLACE, ItemID.DODGY_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DODGY_NECKLACE).needsToBeEquipped(),
         };
+        
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("Your dodgy necklace has (?<charges>.+) charges? left.").setDynamically(),

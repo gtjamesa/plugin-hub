@@ -29,7 +29,7 @@ public class AhrimsHood extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.AHRIMS_HOOD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_HOOD).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_HOOD_100).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_HOOD_75).fixedCharges(75),

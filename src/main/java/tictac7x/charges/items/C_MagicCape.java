@@ -32,10 +32,9 @@ public class C_MagicCape extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.MAGIC_CAPE, ItemID.MAGIC_CAPE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.magic_cape;
+        super(ChargesImprovedConfig.magic_cape, ItemKey.MAGIC_CAPE, ItemID.MAGIC_CAPE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.MAGIC_CAPE),
             new TriggerItem(ItemID.MAGIC_CAPET)
         };

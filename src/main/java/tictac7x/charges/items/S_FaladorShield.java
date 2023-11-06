@@ -32,12 +32,13 @@ public class S_FaladorShield extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.falador_shield;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.falador_shield, ItemKey.FALADOR_SHIELD, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FALADOR_SHIELD_3),
             new TriggerItem(ItemID.FALADOR_SHIELD_4),
         };
+        
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),

@@ -33,9 +33,8 @@ public class W_CrystalHalberd extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CRYSTAL_HALBERD, ItemID.CRYSTAL_HALBERD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.crystal_halberd;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.crystal_halberd, ItemKey.CRYSTAL_HALBERD, ItemID.CRYSTAL_HALBERD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_HALBERD),
             new TriggerItem(ItemID.CRYSTAL_HALBERD_24125),
             new TriggerItem(ItemID.CRYSTAL_HALBERD_110),

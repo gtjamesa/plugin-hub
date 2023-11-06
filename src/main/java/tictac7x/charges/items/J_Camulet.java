@@ -31,11 +31,12 @@ public class J_Camulet extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CAMULET, ItemID.CAMULET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.camulet;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.camulet, ItemKey.CAMULET, ItemID.CAMULET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CAMULET),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your Camulet has (?<charges>.+) charges? left.").setDynamically(),
             new OnChatMessage("You recharge the Camulet using camel dung. Yuck!").fixedCharges(4),

@@ -31,11 +31,12 @@ public class J_DesertAmulet extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.DESERT_AMULET, ItemID.DESERT_AMULET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.desert_amulet;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.desert_amulet, ItemKey.DESERT_AMULET, ItemID.DESERT_AMULET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DESERT_AMULET_3).maxCharges(1),
         };
+
         this.triggers = new TriggerBase[]{
             new OnChatMessage("You have already used your available teleports for today.").fixedCharges(0),
             new OnResetDaily(1).specificItem(ItemID.DESERT_AMULET_3)

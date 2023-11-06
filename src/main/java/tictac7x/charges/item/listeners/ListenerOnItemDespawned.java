@@ -6,6 +6,7 @@ import net.runelite.api.events.ItemDespawned;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnItemDespawned;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -13,7 +14,7 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 
 @Slf4j
 public class ListenerOnItemDespawned extends ListenerBase {
-    public ListenerOnItemDespawned(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerOnItemDespawned(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
     }
 

@@ -30,10 +30,9 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.escape_crystal;
+        super(ChargesImprovedConfig.escape_crystal, ItemKey.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).quantityCharges().hideOverlay(),
         };
 

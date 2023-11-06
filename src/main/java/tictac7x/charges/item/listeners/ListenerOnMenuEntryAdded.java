@@ -7,6 +7,7 @@ import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.ReplaceTarget;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 public class ListenerOnMenuEntryAdded extends ListenerBase {
-    public ListenerOnMenuEntryAdded(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerOnMenuEntryAdded(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
     }
 
@@ -67,7 +68,7 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
         final OnMenuEntryAdded trigger = (OnMenuEntryAdded) triggerBase;
 
         // Item id check.
-        if (!trigger.replaceImpostorIds.isPresent() && event.getMenuEntry().getItemId() != chargedItem.item_id) {
+        if (!trigger.replaceImpostorIds.isPresent() && event.getMenuEntry().getItemId() != chargedItem.itemId) {
             return false;
         }
 

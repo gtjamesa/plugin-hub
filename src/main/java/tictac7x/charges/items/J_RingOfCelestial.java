@@ -32,9 +32,9 @@ public class J_RingOfCelestial extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CELESTIAL_RING, ItemID.CELESTIAL_RING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.celestial_ring;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.celestial_ring, ItemKey.CELESTIAL_RING, ItemID.CELESTIAL_RING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CELESTIAL_RING_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.CELESTIAL_RING).needsToBeEquipped()
         };

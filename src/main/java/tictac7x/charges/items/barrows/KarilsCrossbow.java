@@ -29,7 +29,7 @@ public class KarilsCrossbow extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.KARILS_CROSSBOW, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_CROSSBOW).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_CROSSBOW_100).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_CROSSBOW_75).fixedCharges(75),

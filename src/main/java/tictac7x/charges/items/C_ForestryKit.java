@@ -32,7 +32,7 @@ public class C_ForestryKit extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.FORESTRY_KIT, ItemID.FORESTRY_KIT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FORESTRY_KIT).fixedCharges(Charges.UNLIMITED),
         };
         this.triggers = new TriggerBase[]{

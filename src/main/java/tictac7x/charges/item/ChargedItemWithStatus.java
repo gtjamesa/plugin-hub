@@ -13,33 +13,48 @@ import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 
 import java.awt.Color;
+import java.util.Optional;
 
 public class ChargedItemWithStatus extends ChargedItem {
-    public ChargedItemWithStatus(
-        final ItemKey infobox_id,
-        final int item_id, Client client,
-        final ClientThread client_thread,
-        final ConfigManager configs,
-        final ItemManager items,
-        final InfoBoxManager infoboxes,
-        final ChatMessageManager chat_messages,
-        final Notifier notifier,
-        final ChargesImprovedConfig config,
-        final Store store
-    ) {
-        super(
-            infobox_id,
-            item_id,
-            client,
-            client_thread,
-            configs,
-            items,
-            infoboxes,
-            chat_messages,
-            notifier,
-            config,
-            store
-        );
+
+    public ChargedItemWithStatus(String configKey, ItemKey itemKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store) {
+        super(configKey, itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
+    }
+
+    public boolean isDeactivated() {
+        if (!getConfigStatusKey().isPresent()) {
+            return false;
+        }
+
+        final Optional<String> status = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get()));
+
+        if (!status.isPresent()) {
+            return false;
+        }
+
+        return status.get().equals(ItemActivity.DEACTIVATED.toString());
+    }
+
+    public boolean isActivated() {
+        if (!getConfigStatusKey().isPresent()) {
+            return false;
+        }
+
+        final Optional<String> status = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get()));
+
+        if (!status.isPresent()) {
+            return false;
+        }
+
+        return status.get().equals(ItemActivity.ACTIVATED.toString());
+    }
+
+    public Optional<String> getConfigStatusKey() {
+        if (configKey.isPresent()) {
+            return Optional.of(configKey.get() + "_status");
+        }
+
+        return Optional.empty();
     }
 
     public void deactivate() {
@@ -52,18 +67,7 @@ public class ChargedItemWithStatus extends ChargedItem {
 
     private void setActivity(final ItemActivity status) {
         if (getConfigStatusKey().isPresent()) {
-            configs.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get(), status);
-        }
-    }
-
-    @Override
-    public void activityCallback(final ItemActivity activity) {
-        super.activityCallback(activity);
-
-        if (activity == ItemActivity.ACTIVATED) {
-            activate();
-        } else if (activity == ItemActivity.DEACTIVATED) {
-            deactivate();
+            configManager.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get(), status);
         }
     }
 

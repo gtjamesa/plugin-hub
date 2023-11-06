@@ -31,11 +31,12 @@ public class U_GricollersCan extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.GRICOLLERS_CAN, ItemID.GRICOLLERS_CAN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.gricollers_can;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.gricollers_can, ItemKey.GRICOLLERS_CAN, ItemID.GRICOLLERS_CAN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.GRICOLLERS_CAN),
         };
+
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("Watering can charges remaining: (?<charges>.+)%").setDynamically().onItemClick(),

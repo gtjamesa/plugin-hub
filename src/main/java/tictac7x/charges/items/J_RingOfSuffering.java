@@ -32,9 +32,9 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.RING_OF_SUFFERING, ItemID.RING_OF_SUFFERING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.ring_of_suffering;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.ring_of_suffering, ItemKey.RING_OF_SUFFERING, ItemID.RING_OF_SUFFERING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_SUFFERING).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SUFFERING_I).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SUFFERING_I_25246).fixedCharges(0),
@@ -44,6 +44,7 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_25248),
             new TriggerItem(ItemID.RING_OF_SUFFERING_RI_26762),
         };
+
         this.triggers = new TriggerBase[]{
             // Check
             new OnChatMessage("Your ring currently has (?<charges>.+) recoil charges? remaining. The recoil effect is currently enabled.").setDynamically().onItemClick().activate(),

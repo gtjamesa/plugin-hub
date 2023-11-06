@@ -33,12 +33,13 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.BONE_CRUSHER, ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.bone_crusher;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.bone_crusher, ItemKey.BONE_CRUSHER, ItemID.BONECRUSHER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BONECRUSHER),
             new TriggerItem(ItemID.BONECRUSHER_NECKLACE)
         };
+
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),

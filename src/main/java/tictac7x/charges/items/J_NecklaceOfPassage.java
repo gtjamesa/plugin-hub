@@ -29,7 +29,7 @@ public class J_NecklaceOfPassage extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.NECKLACE_OF_PASSAGE, ItemID.NECKLACE_OF_PASSAGE1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.NECKLACE_OF_PASSAGE1).fixedCharges(1),
             new TriggerItem(ItemID.NECKLACE_OF_PASSAGE2).fixedCharges(2),
             new TriggerItem(ItemID.NECKLACE_OF_PASSAGE3).fixedCharges(3),

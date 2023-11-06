@@ -33,9 +33,9 @@ public class A_CrystalBody extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CRYSTAL_BODY, ItemID.CRYSTAL_BODY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.crystal_body;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.crystal_body, ItemKey.CRYSTAL_BODY, ItemID.CRYSTAL_BODY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_BODY),
             new TriggerItem(ItemID.CRYSTAL_BODY_27697),
             new TriggerItem(ItemID.CRYSTAL_BODY_27709),
@@ -53,6 +53,7 @@ public class A_CrystalBody extends ChargedItem {
             new TriggerItem(ItemID.CRYSTAL_BODY_INACTIVE_27759).fixedCharges(0),
             new TriggerItem(ItemID.CRYSTAL_BODY_INACTIVE_27771).fixedCharges(0)
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your crystal body has (?<charges>.+) charges? remaining").setDynamically().onItemClick(),
             new OnHitsplatApplied(SELF).isEquipped().decreaseCharges(1)

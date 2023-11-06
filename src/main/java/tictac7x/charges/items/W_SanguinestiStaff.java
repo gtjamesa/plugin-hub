@@ -30,14 +30,15 @@ public class W_SanguinestiStaff extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.SANGUINESTI_STAFF, ItemID.SANGUINESTI_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.sanguinesti_staff;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.sanguinesti_staff, ItemKey.SANGUINESTI_STAFF, ItemID.SANGUINESTI_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SANGUINESTI_STAFF),
             new TriggerItem(ItemID.SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF),
             new TriggerItem(ItemID.HOLY_SANGUINESTI_STAFF_UNCHARGED).fixedCharges(0),
         };
+
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("Your (Holy s|S)anguinesti staff has (?<charges>.+) charges? remaining.").setDynamically(),

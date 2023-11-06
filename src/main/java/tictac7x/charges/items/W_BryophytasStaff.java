@@ -32,12 +32,13 @@ public class W_BryophytasStaff extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.BRYOPHYTAS_STAFF, ItemID.BRYOPHYTAS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.bryophytas_staff;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.bryophytas_staff, ItemKey.BRYOPHYTAS_STAFF, ItemID.BRYOPHYTAS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.BRYOPHYTAS_STAFF)
         };
+
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("The nature staff has (?<charges>.+) charges?.").setDynamically(),

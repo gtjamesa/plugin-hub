@@ -31,11 +31,12 @@ public class U_JarGenerator extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.JAR_GENERATOR, ItemID.JAR_GENERATOR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.jar_generator;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.jar_generator, ItemKey.JAR_GENERATOR, ItemID.JAR_GENERATOR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.JAR_GENERATOR)
         };
+
         this.triggers = new TriggerBase[] {
             // Check or use.
             new OnChatMessage("You have (?<charges>.+) charges left in your jar generator.").setDynamically(),

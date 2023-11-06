@@ -31,9 +31,9 @@ public class W_TridentOfTheSeas extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.trident_of_the_seas;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.trident_of_the_seas, ItemKey.TRIDENT_OF_THE_SEAS, ItemID.TRIDENT_OF_THE_SEAS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.UNCHARGED_TRIDENT).fixedCharges(0),
             new TriggerItem(ItemID.UNCHARGED_TRIDENT_E).fixedCharges(0),
             new TriggerItem(ItemID.UNCHARGED_TOXIC_TRIDENT).fixedCharges(0),
@@ -43,6 +43,7 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP_E),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has run out of charges.").notification().fixedCharges(0),
             new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),

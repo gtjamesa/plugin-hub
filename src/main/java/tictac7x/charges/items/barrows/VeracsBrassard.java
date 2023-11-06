@@ -29,7 +29,7 @@ public class VeracsBrassard extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_BRASSARD).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_BRASSARD_100).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_BRASSARD_75).fixedCharges(75),

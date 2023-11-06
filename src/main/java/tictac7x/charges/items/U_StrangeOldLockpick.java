@@ -30,12 +30,13 @@ public class U_StrangeOldLockpick extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.STRANGE_OLD_LOCKPICK, ItemID.STRANGE_OLD_LOCKPICK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.strange_old_lockpick;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.strange_old_lockpick, ItemKey.STRANGE_OLD_LOCKPICK, ItemID.STRANGE_OLD_LOCKPICK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK),
             new TriggerItem(ItemID.STRANGE_OLD_LOCKPICK_FULL).fixedCharges(50)
         };
+        
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining.").setDynamically(),
             new OnChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.").notification("Your strange old lockpick crumbles to dust."),

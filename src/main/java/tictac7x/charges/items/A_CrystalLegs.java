@@ -33,9 +33,9 @@ public class A_CrystalLegs extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CRYSTAL_LEGS, ItemID.CRYSTAL_LEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.crystal_legs;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.crystal_legs, ItemKey.CRYSTAL_LEGS, ItemID.CRYSTAL_LEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_LEGS),
             new TriggerItem(ItemID.CRYSTAL_LEGS_27701),
             new TriggerItem(ItemID.CRYSTAL_LEGS_27713),
@@ -53,6 +53,7 @@ public class A_CrystalLegs extends ChargedItem {
             new TriggerItem(ItemID.CRYSTAL_LEGS_INACTIVE_27763).fixedCharges(0),
             new TriggerItem(ItemID.CRYSTAL_LEGS_INACTIVE_27775).fixedCharges(0)
         };
+
         this.triggers = new TriggerBase[]{
             new OnChatMessage("Your crystal legs has (?<charges>.+) charges? remaining").setDynamically().onItemClick(),
             new OnHitsplatApplied(SELF).isEquipped().decreaseCharges(1)

@@ -5,6 +5,7 @@ import net.runelite.api.Client;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -12,11 +13,11 @@ import tictac7x.charges.item.triggers.TriggerBase;
 @Slf4j
 public abstract class ListenerBase {
     protected final Client client;
-    protected final ChargedItem chargedItem;
+    protected final ChargedItemBase chargedItem;
     protected final Notifier notifier;
     protected final ChargesImprovedConfig config;
 
-    public ListenerBase(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerBase(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         this.client = client;
         this.chargedItem = chargedItem;
         this.notifier = notifier;
@@ -27,31 +28,31 @@ public abstract class ListenerBase {
         boolean triggerUsed = false;
 
         // Fixed charges.
-        if (trigger.fixedCharges.isPresent()) {
-            chargedItem.setCharges(trigger.fixedCharges.get());
+        if (trigger.fixedCharges.isPresent() && (chargedItem instanceof ChargedItem)) {
+            ((ChargedItem) chargedItem).setCharges(trigger.fixedCharges.get());
             triggerUsed = true;
         }
 
         // Increase charges.
-        if (trigger.increaseCharges.isPresent()) {
-            chargedItem.increaseCharges(trigger.increaseCharges.get());
+        if (trigger.increaseCharges.isPresent() && (chargedItem instanceof ChargedItem)) {
+            ((ChargedItem) chargedItem).increaseCharges(trigger.increaseCharges.get());
             triggerUsed = true;
         }
 
         // Decrease charges.
-        if (trigger.decreaseCharges.isPresent()) {
-            chargedItem.decreaseCharges(trigger.decreaseCharges.get());
+        if (trigger.decreaseCharges.isPresent() && (chargedItem instanceof ChargedItem)) {
+            ((ChargedItem) chargedItem).decreaseCharges(trigger.decreaseCharges.get());
             triggerUsed = true;
         }
 
         // Empty storage.
-        if (trigger.emptyStorage.isPresent()) {
+        if (trigger.emptyStorage.isPresent() && (chargedItem instanceof ChargedItemWithStorage)) {
             ((ChargedItemWithStorage) chargedItem).storage.empty();
             triggerUsed = true;
         }
 
         // Add to storage.
-        if (trigger.addToStorage.isPresent()) {
+        if (trigger.addToStorage.isPresent() && (chargedItem instanceof ChargedItemWithStorage)) {
             ((ChargedItemWithStorage) chargedItem).storage.add(trigger.addToStorage.get()[0], trigger.addToStorage.get()[1]);
             triggerUsed = true;
         }
@@ -63,13 +64,13 @@ public abstract class ListenerBase {
         }
 
         // Activate.
-        if (trigger.activate.isPresent()) {
+        if (trigger.activate.isPresent() && (chargedItem instanceof ChargedItemWithStatus)) {
             ((ChargedItemWithStatus) chargedItem).activate();
             triggerUsed = true;
         }
 
         // Deactivate.
-        if (trigger.deactivate.isPresent()) {
+        if (trigger.deactivate.isPresent() && (chargedItem instanceof ChargedItemWithStatus)) {
             ((ChargedItemWithStatus) chargedItem).deactivate();
             triggerUsed = true;
         }
@@ -95,12 +96,16 @@ public abstract class ListenerBase {
         }
 
         // On item click check.
-        if (trigger.onItemClick.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.item_id)) {
+        if (trigger.onItemClick.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.itemId)) {
             return false;
         }
 
         // Menu option without target or impostor needs to check for self charged item.
-        if (trigger.onMenuOption.isPresent() && !trigger.onMenuTarget.isPresent() && !trigger.onMenuImpostor.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.item_id)) {
+        if (
+            trigger.onMenuOption.isPresent() &&
+            !trigger.onMenuTarget.isPresent() &&
+            !trigger.onMenuImpostor.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.itemId)
+        ) {
             return false;
         }
 
@@ -120,42 +125,12 @@ public abstract class ListenerBase {
         }
 
         // Equipped check.
-        if (trigger.isEquipped.isPresent() && !chargedItem.store.equipmentContainsItem(chargedItem.item_id)) {
+        if (trigger.isEquipped.isPresent() && !chargedItem.store.equipmentContainsItem(chargedItem.itemId)) {
             return false;
         }
 
         // Use check.
-        if (trigger.onUse.isPresent() && (chargedItem.store.notInMenuTargets(chargedItem.item_id) || chargedItem.store.notInMenuTargets(trigger.onUse.get()))) {
-            return false;
-        }
-
-        // Empty storage check.
-        if (trigger.emptyStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-            return false;
-        }
-
-        // Pick up to storage check.
-        if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-            return false;
-        }
-
-        // Add to storage check.
-        if (trigger.addToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-            return false;
-        }
-
-        // Is activated check.
-        if (trigger.isActivated.isPresent() && !(chargedItem instanceof ChargedItemWithStatus)) {
-            return false;
-        }
-
-        // Activate check.
-        if (trigger.activate.isPresent() && !(chargedItem instanceof ChargedItemWithStatus)) {
-            return false;
-        }
-
-        // Deactivate check.
-        if (trigger.deactivate.isPresent() && !(chargedItem instanceof ChargedItemWithStatus)) {
+        if (trigger.onUse.isPresent() && (chargedItem.store.notInMenuTargets(chargedItem.itemId) || chargedItem.store.notInMenuTargets(trigger.onUse.get()))) {
             return false;
         }
 

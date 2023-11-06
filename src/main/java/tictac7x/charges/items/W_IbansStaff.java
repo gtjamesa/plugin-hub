@@ -31,13 +31,14 @@ public class W_IbansStaff extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.IBANS_STAFF, ItemID.IBANS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.ibans_staff;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.ibans_staff, ItemKey.IBANS_STAFF, ItemID.IBANS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.IBANS_STAFF),
             new TriggerItem(ItemID.IBANS_STAFF_1410),
             new TriggerItem(ItemID.IBANS_STAFF_U),
         };
+
         this.triggers = new TriggerBase[]{
             // Check.
             new OnChatMessage("You have (?<charges>.+) charges left on the staff.").setDynamically().onItemClick(),

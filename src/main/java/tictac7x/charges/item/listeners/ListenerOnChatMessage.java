@@ -6,6 +6,7 @@ import net.runelite.api.events.ChatMessage;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.TriggerBase;
 
@@ -13,7 +14,7 @@ import java.util.regex.Matcher;
 
 @Slf4j
 public class ListenerOnChatMessage extends ListenerBase {
-    public ListenerOnChatMessage(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerOnChatMessage(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
     }
 
@@ -27,23 +28,23 @@ public class ListenerOnChatMessage extends ListenerBase {
             final Matcher matcher = trigger.message.matcher(message);
             matcher.find();
 
-            if (trigger.setDynamically.isPresent()) {
-                chargedItem.setCharges(getCleanCharges(matcher.group("charges")));
+            if (trigger.setDynamically.isPresent() && (chargedItem instanceof ChargedItem)) {
+                ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 
-            if (trigger.increaseDynamically.isPresent()) {
-                chargedItem.increaseCharges(getCleanCharges(matcher.group("charges")));
+            if (trigger.increaseDynamically.isPresent() && (chargedItem instanceof ChargedItem)) {
+                ((ChargedItem) chargedItem).increaseCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 
-            if (trigger.decreaseDynamically.isPresent()) {
-                chargedItem.decreaseCharges(getCleanCharges(matcher.group("charges")));
+            if (trigger.decreaseDynamically.isPresent() && (chargedItem instanceof ChargedItem)) {
+                ((ChargedItem) chargedItem).decreaseCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 
-            if (trigger.useDifference.isPresent()) {
-                chargedItem.setCharges(getCleanCharges(matcher.group("total")) - getCleanCharges(matcher.group("used")));
+            if (trigger.useDifference.isPresent() && (chargedItem instanceof ChargedItem)) {
+                ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("total")) - getCleanCharges(matcher.group("used")));
                 triggerUsed = true;
             }
 

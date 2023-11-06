@@ -29,7 +29,7 @@ public class GuthansPlatebody extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.GUTHANS_PLATEBODY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_PLATEBODY).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_PLATEBODY_100).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_PLATEBODY_75).fixedCharges(75),

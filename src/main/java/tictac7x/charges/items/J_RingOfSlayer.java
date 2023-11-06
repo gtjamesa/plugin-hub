@@ -29,7 +29,7 @@ public class J_RingOfSlayer extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.SLAYER_RING, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SLAYER_RING_1).fixedCharges(1),
             new TriggerItem(ItemID.SLAYER_RING_2).fixedCharges(2),
             new TriggerItem(ItemID.SLAYER_RING_3).fixedCharges(3),

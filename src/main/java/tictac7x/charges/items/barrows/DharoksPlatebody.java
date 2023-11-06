@@ -29,7 +29,7 @@ public class DharoksPlatebody extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.DHAROKS_PLATEBODY, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DHAROKS_PLATEBODY).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_PLATEBODY_100).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_PLATEBODY_75).fixedCharges(75),

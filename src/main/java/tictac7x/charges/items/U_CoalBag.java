@@ -38,7 +38,7 @@ public class U_CoalBag extends ChargedItemWithStorage {
             .maximumTotalQuantity(27)
             .maximumTotalQuantityWithEquippedItem(36, ItemID.SMITHING_CAPE, ItemID.HITPOINTS_CAPET);
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.COAL_BAG_12019),
             new TriggerItem(ItemID.OPEN_COAL_BAG),
         };

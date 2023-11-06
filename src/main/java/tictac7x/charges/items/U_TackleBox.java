@@ -32,7 +32,7 @@ public class U_TackleBox extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.TACKLE_BOX, ItemID.TACKLE_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TACKLE_BOX).fixedCharges(Charges.UNLIMITED),
         };
 

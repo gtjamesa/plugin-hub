@@ -32,11 +32,12 @@ public class B_FremennikSeaBoots extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.FREMENNIK_SEA_BOOTS, ItemID.FREMENNIK_SEA_BOOTS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.fremennik_sea_boots;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.fremennik_sea_boots, ItemKey.FREMENNIK_SEA_BOOTS, ItemID.FREMENNIK_SEA_BOOTS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FREMENNIK_SEA_BOOTS_3)
         };
+
         this.triggers = new TriggerBase[]{
             // Try to teleport while empty.
             new OnChatMessage("You have already used your available teleport for today. Try again tomorrow when the boots have recharged.").fixedCharges(0),
@@ -47,6 +48,5 @@ public class B_FremennikSeaBoots extends ChargedItem {
             // Daily reset.
             new OnResetDaily(1).specificItem(ItemID.FREMENNIK_SEA_BOOTS_3),
         };
-
     }
 }

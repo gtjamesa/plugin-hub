@@ -30,11 +30,12 @@ public class S_Chronicle extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CHRONICLE, ItemID.CHRONICLE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.chronicle;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.chronicle, ItemKey.CHRONICLE, ItemID.CHRONICLE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CHRONICLE),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your book has (?<charges>.+) charges? left.").setDynamically().onItemClick()
         };

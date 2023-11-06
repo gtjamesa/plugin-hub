@@ -43,7 +43,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorage {
             new StorageItem(ChargesItemID.EXPLORER_RING_RESTORES).displayName("Energy restores")
         ).showIndividualCharges();
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.EXPLORERS_RING_4),
         };
 

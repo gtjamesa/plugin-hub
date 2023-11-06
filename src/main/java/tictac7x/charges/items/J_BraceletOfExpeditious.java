@@ -30,11 +30,12 @@ public class J_BraceletOfExpeditious extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.BRACELET_OF_EXPEDITIOUS, ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.expeditious_bracelet;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.expeditious_bracelet, ItemKey.BRACELET_OF_EXPEDITIOUS, ItemID.EXPEDITIOUS_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.EXPEDITIOUS_BRACELET).needsToBeEquipped(),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("The bracelet shatters. Your next expeditious bracelet will start afresh from 30 charges.").fixedCharges(30),
             new OnChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your expeditious bracelet crumbles to dust."),

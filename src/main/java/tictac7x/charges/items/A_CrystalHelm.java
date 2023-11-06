@@ -33,9 +33,9 @@ public class A_CrystalHelm extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CRYSTAL_HELM, ItemID.CRYSTAL_HELM, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.crystal_helm;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.crystal_helm, ItemKey.CRYSTAL_HELM, ItemID.CRYSTAL_HELM, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_HELM),
             new TriggerItem(ItemID.CRYSTAL_HELM_27705),
             new TriggerItem(ItemID.CRYSTAL_HELM_27717),
@@ -53,6 +53,7 @@ public class A_CrystalHelm extends ChargedItem {
             new TriggerItem(ItemID.CRYSTAL_HELM_INACTIVE_27767).fixedCharges(0),
             new TriggerItem(ItemID.CRYSTAL_HELM_INACTIVE_27779).fixedCharges(0)
         };
+
         this.triggers = new TriggerBase[]{
             new OnChatMessage("Your crystal helm has (?<charges>.+) charges? remaining").setDynamically().onItemClick(),
             new OnHitsplatApplied(SELF).isEquipped().decreaseCharges(1)

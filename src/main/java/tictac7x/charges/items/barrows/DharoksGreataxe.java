@@ -29,7 +29,7 @@ public class DharoksGreataxe extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.DHAROKS_GREATAXE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DHAROKS_GREATAXE).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_GREATAXE_100).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_GREATAXE_75).fixedCharges(75),

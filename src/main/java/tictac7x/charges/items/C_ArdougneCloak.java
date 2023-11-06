@@ -32,10 +32,9 @@ public class C_ArdougneCloak extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.ARDOUGNE_CLOAK, ItemID.ARDOUGNE_CLOAK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.ardougne_cloak;
+        super(ChargesImprovedConfig.ardougne_cloak, ItemKey.ARDOUGNE_CLOAK, ItemID.ARDOUGNE_CLOAK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_2),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_3),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(Charges.UNLIMITED)

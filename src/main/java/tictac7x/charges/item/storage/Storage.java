@@ -193,7 +193,7 @@ public class Storage {
         return storage;
     }
 
-    private void loadStorage() {
+    public void loadStorage() {
         // Create new empty storage to have specific items in correct order.
         this.storage = getNewStorage();
 
@@ -239,8 +239,6 @@ public class Storage {
             jsonStorage.add(jsonItem);
         }
 
-        System.out.println("SAVE " + gson.toJson(jsonStorage));
-
         configManager.setConfiguration(ChargesImprovedConfig.group, storageConfigKey, gson.toJson(jsonStorage));
     }
 
@@ -280,8 +278,8 @@ public class Storage {
 
     public Optional<Integer> getMaximumTotalQuantity() {
         // Maximum storage from trigger item.
-        for (final TriggerItem item : chargedItem.triggersItems) {
-            if (chargedItem.item_id == item.item_id && item.maxCharges.isPresent()) {
+        for (final TriggerItem item : chargedItem.items) {
+            if (chargedItem.itemId == item.item_id && item.maxCharges.isPresent()) {
                 return item.maxCharges;
             }
         }

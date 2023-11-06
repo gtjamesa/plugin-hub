@@ -31,9 +31,9 @@ public class S_TomeOfFire extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.TOME_OF_FIRE, ItemID.TOME_OF_FIRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.tome_of_fire;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.tome_of_fire, ItemKey.TOME_OF_FIRE, ItemID.TOME_OF_FIRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TOME_OF_FIRE_EMPTY).fixedCharges(0),
             new TriggerItem(ItemID.TOME_OF_FIRE).needsToBeEquipped(),
         };

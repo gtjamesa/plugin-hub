@@ -30,12 +30,13 @@ public class H_CircletOfWater extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CIRCLET_OF_WATER, ItemID.CIRCLET_OF_WATER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.circlet_of_water;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.circlet_of_water, ItemKey.CIRCLET_OF_WATER, ItemID.CIRCLET_OF_WATER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CIRCLET_OF_WATER_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.CIRCLET_OF_WATER).needsToBeEquipped(),
         };
+
         this.triggers = new TriggerBase[] {
             // Protect from heat.
             new OnChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),

@@ -32,11 +32,12 @@ public class J_RingOfRecoil extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.RING_OF_RECOIL, ItemID.RING_OF_RECOIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.ring_of_recoil;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.ring_of_recoil, ItemKey.RING_OF_RECOIL, ItemID.RING_OF_RECOIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_RECOIL),
         };
+
         this.triggers = new TriggerBase[]{
             // Check.
             new OnChatMessage("You can inflict (?<charges>.+) more points? of damage before a ring will shatter.").setDynamically(),

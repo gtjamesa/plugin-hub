@@ -42,7 +42,7 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             new StorageItem(ItemID.COMPOST).checkName("Compost")
         );
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET).fixedCharges(0),
             new TriggerItem(ItemID.BOTTOMLESS_COMPOST_BUCKET_22997),
         };

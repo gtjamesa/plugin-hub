@@ -31,7 +31,7 @@ public class KarilsLeatherskirt extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.KARILS_LEATHERSKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT_100).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_LEATHERSKIRT_75).fixedCharges(75),

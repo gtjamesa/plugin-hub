@@ -29,7 +29,7 @@ public class ToragsPlatelegs extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.TORAGS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_PLATELEGS).fixedCharges(100),
             new TriggerItem(ItemID.TORAGS_PLATELEGS_100).fixedCharges(100),
             new TriggerItem(ItemID.TORAGS_PLATELEGS_75).fixedCharges(75),

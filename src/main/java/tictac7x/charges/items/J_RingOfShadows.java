@@ -30,12 +30,13 @@ public class J_RingOfShadows extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.RING_OF_SHADOWS, ItemID.RING_OF_SHADOWS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.ring_of_shadows;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.ring_of_shadows, ItemKey.RING_OF_SHADOWS, ItemID.RING_OF_SHADOWS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_SHADOWS_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.RING_OF_SHADOWS)
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining.").setDynamically(),
 

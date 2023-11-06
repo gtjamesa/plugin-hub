@@ -32,9 +32,9 @@ public class H_KandarinHeadgear extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.KANDARIN_HEADGEAR, ItemID.KANDARIN_HEADGEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.kandarin_headgear;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.kandarin_headgear, ItemKey.KANDARIN_HEADGEAR, ItemID.KANDARIN_HEADGEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.KANDARIN_HEADGEAR_3)
         };
 

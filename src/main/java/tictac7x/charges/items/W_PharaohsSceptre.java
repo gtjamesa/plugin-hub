@@ -31,9 +31,9 @@ public class W_PharaohsSceptre extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.PHARAOHS_SCEPTRE, ItemID.PHARAOHS_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.pharaohs_sceptre;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.pharaohs_sceptre, ItemKey.PHARAOHS_SCEPTRE, ItemID.PHARAOHS_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_9045),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_9046),
@@ -55,6 +55,7 @@ public class W_PharaohsSceptre extends ChargedItem {
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_26950),
             new TriggerItem(ItemID.PHARAOHS_SCEPTRE_UNCHARGED).fixedCharges(0),
         };
+        
         this.triggers = new TriggerBase[]{
             // Check and automatic messages.
             new OnChatMessage("Your sceptre has (?<charges>.+) charges? left.").setDynamically().onItemClick(),

@@ -17,42 +17,22 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 
-public class ChargedItemWithStorage extends ChargedItem {
+public class ChargedItemWithStorage extends ChargedItemBase {
     public Storage storage;
 
-    public ChargedItemWithStorage(
-        final String configKey,
-        final ItemKey infobox_id,
-        final int item_id, Client client,
-        final ClientThread client_thread,
-        final ConfigManager configs,
-        final ItemManager items,
-        final InfoBoxManager infoboxes,
-        final ChatMessageManager chat_messages,
-        final Notifier notifier,
-        final ChargesImprovedConfig config,
-        final Store store
-    ) {
-        super(
-            infobox_id,
-            item_id,
-            client,
-            client_thread,
-            configs,
-            items,
-            infoboxes,
-            chat_messages,
-            notifier,
-            config,
-            store
-        );
-        this.config_key = configKey;
-        this.storage = new Storage(this, configKey, configs, client_thread, store);
+    public ChargedItemWithStorage(String configKey, ItemKey itemKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store) {
+        super(configKey, itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
+        this.storage = new Storage(this, configKey, configManager, clientThread, store);
     }
 
     @Override
-    public int getCharges() {
-        return storage.getCharges();
+    public String getCharges() {
+        return String.valueOf(getQuantity());
+    }
+
+    @Override
+    public void loadCharges() {
+        storage.loadStorage();
     }
 
     public List<StorageItem> getStorage() {
@@ -61,12 +41,14 @@ public class ChargedItemWithStorage extends ChargedItem {
 
     @Override
     public Color getTextColor() {
-        if (getCharges() == 0) {
-            return config.getColorDefault();
+        // Storage is full.
+        if (storage.getMaximumTotalQuantity().isPresent() && getCharges().equals(String.valueOf(storage.getMaximumTotalQuantity().get()))) {
+            return config.getColorEmpty();
         }
 
-        if (storage.getMaximumTotalQuantity().isPresent() && getCharges() == storage.getMaximumTotalQuantity().get()) {
-            return config.getColorEmpty();
+        // Storage is empty.
+        if (getQuantity() == 0) {
+            return config.getColorDefault();
         }
 
         return super.getTextColor();
@@ -74,5 +56,17 @@ public class ChargedItemWithStorage extends ChargedItem {
 
     public Optional<StorageItem> getStorageItemFromName(final String name) {
         return storage.getStorageItemFromName(name);
+    }
+
+    public int getQuantity() {
+        int quantity = 0;
+
+        for (final StorageItem storageItem : getStorage()) {
+            if (storageItem.getQuantity() > 0) {
+                quantity += storageItem.getQuantity();
+            }
+        }
+
+        return quantity;
     }
 }

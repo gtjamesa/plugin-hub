@@ -7,6 +7,7 @@ import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 
@@ -14,7 +15,7 @@ import java.util.regex.Matcher;
 
 @Slf4j
 public class ListenerOnWidgetLoaded extends ListenerBase {
-    public ListenerOnWidgetLoaded(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerOnWidgetLoaded(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
     }
 
@@ -30,7 +31,7 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
             matcher.find();
 
             if (trigger.setDynamically.isPresent()) {
-                chargedItem.setCharges(getCleanCharges(matcher.group("charges")));
+                ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
                 triggerUsed = true;
             }
 

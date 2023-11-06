@@ -33,9 +33,9 @@ public class W_CrystalBow extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.CRYSTAL_BOW, ItemID.CRYSTAL_BOW, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.crystal_bow;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.crystal_bow, ItemKey.CRYSTAL_BOW, ItemID.CRYSTAL_BOW, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_BOW),
             new TriggerItem(ItemID.CRYSTAL_BOW_24123),
             new TriggerItem(ItemID.CRYSTAL_BOW_110),
@@ -68,6 +68,7 @@ public class W_CrystalBow extends ChargedItem {
             new TriggerItem(ItemID.NEW_CRYSTAL_BOW_I),
             new TriggerItem(ItemID.NEW_CRYSTAL_BOW_I_16889),
         };
+
         this.triggers = new TriggerBase[] {
             // Check.
             new OnChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.").setDynamically(),

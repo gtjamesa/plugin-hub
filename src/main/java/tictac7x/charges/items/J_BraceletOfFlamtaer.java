@@ -30,11 +30,12 @@ public class J_BraceletOfFlamtaer extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.BRACELET_OF_FLAMTAER, ItemID.FLAMTAER_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.bracelet_of_flamtaer;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.bracelet_of_flamtaer, ItemKey.BRACELET_OF_FLAMTAER, ItemID.FLAMTAER_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FLAMTAER_BRACELET).needsToBeEquipped(),
         };
+
         this.triggers = new TriggerBase[]{
             new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left.").setDynamically(),
             new OnChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left.").setDynamically(),

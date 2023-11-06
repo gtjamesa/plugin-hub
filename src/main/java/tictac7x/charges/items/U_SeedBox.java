@@ -37,7 +37,7 @@ public class U_SeedBox extends ChargedItemWithStorage {
         final Plugin plugin
     ) {
         super(ChargesImprovedConfig.seed_box, ItemKey.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SEED_BOX),
             new TriggerItem(ItemID.OPEN_SEED_BOX),
         };

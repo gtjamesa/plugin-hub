@@ -8,6 +8,7 @@ import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -15,7 +16,7 @@ import tictac7x.charges.store.ItemContainerType;
 
 @Slf4j
 public class ListenerOnItemContainerChanged extends ListenerBase {
-    public ListenerOnItemContainerChanged(final Client client, final ChargedItem chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerOnItemContainerChanged(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);
     }
 

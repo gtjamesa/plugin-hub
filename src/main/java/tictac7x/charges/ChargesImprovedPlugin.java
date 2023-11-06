@@ -31,9 +31,9 @@ import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
-import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.ChargedItemInfobox;
-import tictac7x.charges.item.ChargedItemOverlay;
+import tictac7x.charges.item.ChargedItemBase;
+import tictac7x.charges.item.overlays.ChargedItemInfobox;
+import tictac7x.charges.item.overlays.ChargedItemOverlay;
 import tictac7x.charges.items.A_CrystalBody;
 import tictac7x.charges.items.A_CrystalHelm;
 import tictac7x.charges.items.A_CrystalLegs;
@@ -118,7 +118,6 @@ import tictac7x.charges.items.barrows.VeracsBrassard;
 import tictac7x.charges.items.barrows.VeracsFlail;
 import tictac7x.charges.items.barrows.VeracsHelm;
 import tictac7x.charges.items.barrows.VeracsPlateskirt;
-import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
@@ -262,7 +261,7 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	private ChargedItemOverlay overlay_charged_items;
 
-	private ChargedItem[] chargedItems;
+	private ChargedItemBase[] chargedItems;
 	private List<InfoBox> chargedItemsInfoboxes = new ArrayList<>();
 
 	private final ZoneId timezone = ZoneId.of("Europe/London");
@@ -271,7 +270,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	protected void startUp() {
 		store = new Store(client, itemManager, configManager);
 
-		chargedItems = new ChargedItem[]{
+		chargedItems = new ChargedItemBase[]{
 			// Weapons
 			new W_Arclight(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
 			new W_TridentOfTheSeas(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, this),
@@ -400,7 +399,7 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onItemContainerChanged(final ItemContainerChanged event) {
 		store.onItemContainerChanged(event);
 
-		for (final ChargedItem infobox : chargedItems) {
+		for (final ChargedItemBase infobox : chargedItems) {
 			infobox.onItemContainerChanged(event);
 		}
 
@@ -431,19 +430,6 @@ public class ChargesImprovedPlugin extends Plugin {
 //		if (event.getActor() == client.getLocalPlayer()) {
 //			System.out.println("GRAPHIC | " +
 //				"id: " + event.getActor().getGraphic()
-//			);
-//		}
-	}
-
-	@Subscribe
-	public void onConfigChanged(final ConfigChanged event) {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
-
-//		if (event.getGroup().equals(ChargesImprovedConfig.group)) {
-//			System.out.println("CONFIG | " +
-//				"key: " + event.getKey() +
-//				", old value: " + event.getOldValue() +
-//				", new value: " + event.getNewValue()
 //			);
 //		}
 	}
@@ -558,6 +544,13 @@ public class ChargesImprovedPlugin extends Plugin {
 	}
 
 	@Subscribe
+	public void onConfigChanged(final ConfigChanged event) {
+		if (!event.getGroup().equals(ChargesImprovedConfig.group)) return;
+
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
+	}
+
+	@Subscribe
 	public void onGameTick(final GameTick gametick) {
 		store.onGameTick(gametick);
 	}
@@ -576,16 +569,6 @@ public class ChargesImprovedPlugin extends Plugin {
 		);
 	}
 
-	public static String getChargesMinified(final int charges) {
-		if (charges == Charges.UNLIMITED) return "∞";
-		if (charges == Charges.UNKNOWN) return "?";
-		if (charges < 1000) return String.valueOf(charges);
-		if (charges >= 1000000) return charges / 1000000 + "M";
 
-		final int thousands = charges / 1000;
-		final int hundreds = Math.min((charges % 1000 + 50) / 100, 9);
-
-		return thousands + (thousands < 10 && hundreds > 0 ? "." + hundreds : "") + "K";
-	}
 }
 

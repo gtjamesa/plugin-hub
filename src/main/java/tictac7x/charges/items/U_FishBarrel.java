@@ -73,7 +73,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new StorageItem(ItemID.SACRED_EEL).checkName("Sacred eel")
         );
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FISH_BARREL),
             new TriggerItem(ItemID.OPEN_FISH_BARREL),
             new TriggerItem(ItemID.FISH_SACK_BARREL),

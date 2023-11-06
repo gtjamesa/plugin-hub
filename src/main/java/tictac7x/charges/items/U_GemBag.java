@@ -47,7 +47,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             new StorageItem(ItemID.UNCUT_DRAGONSTONE).checkName("Dragonstone")
         );
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.GEM_BAG_12020).zeroChargesIsPositive(),
             new TriggerItem(ItemID.OPEN_GEM_BAG).zeroChargesIsPositive(),
         };

@@ -43,7 +43,7 @@ public class C_Coffin extends ChargedItemWithStorage {
             new StorageItem(ItemID.URIUM_REMAINS).checkName("Urium")
         );
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BROKEN_COFFIN).fixedCharges(0),
             new TriggerItem(ItemID.BRONZE_COFFIN).maxCharges(3),
             new TriggerItem(ItemID.OPEN_BRONZE_COFFIN).maxCharges(3),

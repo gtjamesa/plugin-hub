@@ -29,7 +29,7 @@ public class AhrimsStaff extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.AHRIMS_STAFF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_STAFF).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_STAFF_100).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_STAFF_75).fixedCharges(75),

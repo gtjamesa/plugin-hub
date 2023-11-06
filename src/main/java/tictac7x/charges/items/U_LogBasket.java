@@ -62,7 +62,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
             new StorageItem(ItemID.REDWOOD_LOGS).checkName("Redwood logs")
         );
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.LOG_BASKET),
             new TriggerItem(ItemID.OPEN_LOG_BASKET),
             new TriggerItem(ItemID.FORESTRY_BASKET),
@@ -92,7 +92,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
                     storage.put(getStorageItemFromName(matcher.group("logs")), Integer.parseInt(matcher.group("quantity")));
                 }
 
-                infernalQuantityTracker = getCharges();
+                infernalQuantityTracker = getQuantity();
             }).onItemClick(),
 
             // Chop.

@@ -29,7 +29,7 @@ public class KarilsCoif extends ChargedItem {
         final Plugin plugin
     ) {
         super(ItemKey.BARROWS_GEAR, ItemID.KARILS_COIF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_COIF).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_COIF_100).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_COIF_75).fixedCharges(75),

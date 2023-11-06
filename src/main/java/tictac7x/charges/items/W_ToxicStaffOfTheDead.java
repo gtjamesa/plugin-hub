@@ -30,12 +30,13 @@ public class W_ToxicStaffOfTheDead extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.toxic_staff_of_the_dead;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.toxic_staff_of_the_dead, ItemKey.TOXIC_STAFF_OF_THE_DEAD, ItemID.TOXIC_STAFF_OF_THE_DEAD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TOXIC_STAFF_UNCHARGED).fixedCharges(0),
             new TriggerItem(ItemID.TOXIC_STAFF_OF_THE_DEAD)
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Scales: (?<charges>.+)").setDynamically(),
         };

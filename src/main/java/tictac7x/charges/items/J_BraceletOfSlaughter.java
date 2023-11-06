@@ -30,11 +30,12 @@ public class J_BraceletOfSlaughter extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.BRACELET_OF_SLAUGHTER, ItemID.BRACELET_OF_SLAUGHTER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.bracelet_of_slaughter;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.bracelet_of_slaughter, ItemKey.BRACELET_OF_SLAUGHTER, ItemID.BRACELET_OF_SLAUGHTER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BRACELET_OF_SLAUGHTER).needsToBeEquipped(),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left.").setDynamically(),
             new OnChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It has (?<charges>.+) charges? left.").setDynamically(),

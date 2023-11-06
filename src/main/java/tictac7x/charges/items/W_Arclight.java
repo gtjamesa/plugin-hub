@@ -33,11 +33,12 @@ public class W_Arclight extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.ARCLIGHT, ItemID.ARCLIGHT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.arclight;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.arclight, ItemKey.ARCLIGHT, ItemID.ARCLIGHT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ARCLIGHT),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("Your arclight has (?<charges>.+) charges?( left)?.").setDynamically(),
             new OnChatMessage("Your arclight can perform (?<charges>.+) more attacks.").setDynamically(),

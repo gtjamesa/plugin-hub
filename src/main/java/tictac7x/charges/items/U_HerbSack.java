@@ -57,7 +57,7 @@ public class U_HerbSack extends ChargedItemWithStorage {
             new StorageItem(ItemID.GRIMY_TORSTOL).checkName("Torstol")
         );
 
-        this.triggersItems = new TriggerItem[]{
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.HERB_SACK).zeroChargesIsPositive(),
             new TriggerItem(ItemID.OPEN_HERB_SACK).zeroChargesIsPositive(),
         };

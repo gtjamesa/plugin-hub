@@ -30,12 +30,13 @@ public class U_SoulBearer extends ChargedItem {
         final Store store,
         final Plugin plugin
     ) {
-        super(ItemKey.SOUL_BEARER, ItemID.SOUL_BEARER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
-        this.config_key = ChargesImprovedConfig.soul_bearer;
-        this.triggersItems = new TriggerItem[]{
+        super(ChargesImprovedConfig.soul_bearer, ItemKey.SOUL_BEARER, ItemID.SOUL_BEARER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+
+        this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SOUL_BEARER),
             new TriggerItem(ItemID.DAMAGED_SOUL_BEARER).fixedCharges(0),
         };
+
         this.triggers = new TriggerBase[] {
             new OnChatMessage("You remove the runes from the soul bearer.").fixedCharges(0),
             new OnChatMessage("(The|Your) soul bearer( now)? has one charge.").fixedCharges(1),
