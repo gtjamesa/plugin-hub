@@ -99,7 +99,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
             new OnChatMessage("You get some (?<logs>.+).").consumer(m -> {
                 lastLogs = getStorageItemFromName(m.group("logs"));
                 storage.add(lastLogs, 1);
-                infernalQuantityTracker += 1;
+                infernalQuantityTracker++;
             }).onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
 
             // Fill from inventory.
@@ -117,10 +117,9 @@ public class U_LogBasket extends ChargedItemWithStorage {
 
             // Infernal axe support.
             new OnXpDrop(Skill.FIREMAKING).onMenuOption("Chop down", "Cut").consumer(() -> {
-                System.out.println(infernalQuantityTracker);
                 if (infernalQuantityTracker < 29 && lastLogs.isPresent()) {
                     storage.remove(lastLogs, 1);
-                    infernalQuantityTracker -= 1;
+                    infernalQuantityTracker--;
                 }
             }).onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
         };

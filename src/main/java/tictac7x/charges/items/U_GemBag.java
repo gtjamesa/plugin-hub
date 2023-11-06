@@ -40,7 +40,7 @@ public class U_GemBag extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage.maximumIndividualQuantity(60).storeableItems(
-            new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire").displayName("LMAO"),
+            new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire"),
             new StorageItem(ItemID.UNCUT_EMERALD).checkName("Emerald"),
             new StorageItem(ItemID.UNCUT_RUBY).checkName("Ruby"),
             new StorageItem(ItemID.UNCUT_DIAMOND).checkName("Diamond"),

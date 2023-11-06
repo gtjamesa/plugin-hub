@@ -25,8 +25,8 @@ public class Storage {
     private final String storageConfigKey;
     private final ConfigManager configManager;
     private final Store store;
-
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
     protected List<StorageItem> storage = new ArrayList<>();
 
     public Optional<Integer> maximumTotalQuantity = Optional.empty();
@@ -37,13 +37,11 @@ public class Storage {
     private Optional<StorageItem[]> storeableItems = Optional.empty();
 
 
-    public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ConfigManager configManager, final ClientThread clientThread, final Store store) {
+    public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ConfigManager configManager, final Store store) {
         this.chargedItem = chargedItem;
         this.storageConfigKey = configKey + "_storage";
         this.configManager = configManager;
         this.store = store;
-
-        clientThread.invokeLater(() -> loadStorage());
     }
 
     public Storage maximumTotalQuantity(final int quantity) {
@@ -203,18 +201,13 @@ public class Storage {
             final JsonArray jsonStorage = (JsonArray) (new JsonParser()).parse(jsonString);
 
             for (final JsonElement jsonStorageItem : jsonStorage) {
-                final StorageItem storageItem = new StorageItem(jsonStorageItem.getAsJsonObject().get("itemId").getAsInt());
+                // Load item id.
+                final StorageItem loadedItem = new StorageItem(jsonStorageItem.getAsJsonObject().get("itemId").getAsInt());
 
-                storageItem.setQuantity(jsonStorageItem.getAsJsonObject().get("quantity").getAsInt());
+                // Load quantity.
+                loadedItem.setQuantity(jsonStorageItem.getAsJsonObject().get("quantity").getAsInt());
 
-                if (jsonStorageItem.getAsJsonObject().has("displayName")) {
-                    storageItem.setDisplayName(jsonStorageItem.getAsJsonObject().get("displayName").getAsString());
-                }
-            }
-            final Type listType = new TypeToken<ArrayList<StorageItem>>(){}.getType();
-            final List<StorageItem> loadedStorage = gson.fromJson(jsonString, listType);
-
-            for (final StorageItem loadedItem : loadedStorage) {
+                // Update previous item quantity or put new into the storage.
                 final Optional<StorageItem> item = getItem(loadedItem.itemId);
                 if (item.isPresent()) {
                     item.get().setQuantity(loadedItem.getQuantity());
@@ -229,13 +222,9 @@ public class Storage {
         final JsonArray jsonStorage = new JsonArray();
 
         for (final StorageItem storageItem : storage) {
-            System.out.println("-> " + storageItem.itemId + " " + storageItem.checkName + " " + storageItem.displayName + " " + storageItem.quantity);
             final JsonObject jsonItem = new JsonObject();
             jsonItem.addProperty("itemId", storageItem.itemId);
             jsonItem.addProperty("quantity", storageItem.getQuantity());
-            if (storageItem.displayName.isPresent()) {
-                jsonItem.addProperty("displayName", storageItem.displayName.get());
-            }
             jsonStorage.add(jsonItem);
         }
 
@@ -246,10 +235,10 @@ public class Storage {
         final List<StorageItem> storage = new ArrayList<>();
 
         if (storeableItems.isPresent()) {
-            System.out.println(storeableItems.get().length);
             for (final StorageItem storeableItem : storeableItems.get()) {
-                System.out.println(storeableItem.itemId + " " + storeableItem.displayName + " " + storeableItem.checkName + " " + storeableItem.quantity);
                 final StorageItem storageItem = new StorageItem(storeableItem.itemId);
+
+                storageItem.setQuantity(0);
 
                 if (storeableItem.checkName.isPresent()) {
                     storageItem.setCheckName(storeableItem.checkName.get());

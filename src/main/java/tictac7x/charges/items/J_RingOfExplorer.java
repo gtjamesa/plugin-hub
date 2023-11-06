@@ -11,7 +11,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.ChargedItemWithStorageMultipleCharges;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnVarbitChanged;
@@ -22,7 +22,7 @@ import tictac7x.charges.store.ChargesItemID;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
-public class J_RingOfExplorer extends ChargedItemWithStorage {
+public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
     public J_RingOfExplorer(
         final Client client,
         final ClientThread client_thread,
@@ -35,7 +35,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorage {
         final Store store,
         final Plugin plugin
     ) {
-        super(ChargesImprovedConfig.explorers_ring, ItemKey.EXPLORERS_RING, ItemID.EXPLORERS_RING_4, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        super(ChargesImprovedConfig.explorers_ring, ItemKey.EXPLORERS_RING, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
         storage = storage.storeableItems(
             new StorageItem(ChargesItemID.EXPLORER_RING_LOW_ALCHEMY).displayName("Low alchemies"),
             new StorageItem(ChargesItemID.EXPLORER_RING_HIGH_ALCHEMY).displayName("High alchemies"),
@@ -44,6 +44,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorage {
         ).showIndividualCharges();
 
         this.items = new TriggerItem[]{
+            new TriggerItem(ItemID.EXPLORERS_RING_3),
             new TriggerItem(ItemID.EXPLORERS_RING_4),
         };
 

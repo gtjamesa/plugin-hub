@@ -1,12 +1,14 @@
 package tictac7x.charges.item.storage;
 
+import tictac7x.charges.store.Charges;
+
 import java.util.Optional;
 
 public class StorageItem {
     public final int itemId;
     public Optional<String> checkName = Optional.empty();
     public Optional<String> displayName = Optional.empty();
-    public int quantity = 0;
+    public int quantity = Charges.UNKNOWN;
 
     public StorageItem(final int itemId) {
         this.itemId = itemId;

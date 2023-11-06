@@ -174,7 +174,7 @@ public abstract class ChargedItemBase {
         return config.getColorDefault();
     }
 
-    private String getChargesMinified(final int charges) {
+    protected String getChargesMinified(final int charges) {
         // Unlimited.
         if (charges == Charges.UNLIMITED) return "∞";
 

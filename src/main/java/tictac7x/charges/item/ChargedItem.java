@@ -30,7 +30,7 @@ public class ChargedItem extends ChargedItemBase {
     @Override
     public String getCharges() {
         if (charges >= 0) {
-            return String.valueOf(charges);
+            return getChargesMinified(charges);
         }
 
         if (charges == Charges.UNLIMITED) {

@@ -416,11 +416,11 @@ public class ChargesImprovedPlugin extends Plugin {
 	public void onChatMessage(final ChatMessage event) {
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
-		System.out.println("MESSAGE | " +
-			"type: " + event.getType().name() +
-			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-			", sender: " + event.getSender()
-		);
+//		System.out.println("MESSAGE | " +
+//			"type: " + event.getType().name() +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+//			", sender: " + event.getSender()
+//		);
 	}
 
 	@Subscribe
@@ -459,19 +459,19 @@ public class ChargesImprovedPlugin extends Plugin {
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		store.onMenuOptionClicked(event);
-		int impostorId = -1;
-		try {
-			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
-		} catch (final Exception ignored) {}
-
-		System.out.println("MENU OPTION | " +
-			"option: " + event.getMenuOption() +
-			", target: " + event.getMenuTarget() +
-			", action name: " + event.getMenuAction().name() +
-			", action id: " + event.getMenuAction().getId() +
-			", item id: " + event.getItemId() +
-			", impostor id " + impostorId
-		);
+//		int impostorId = -1;
+//		try {
+//			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
+//		} catch (final Exception ignored) {}
+//
+//		System.out.println("MENU OPTION | " +
+//			"option: " + event.getMenuOption() +
+//			", target: " + event.getMenuTarget() +
+//			", action name: " + event.getMenuAction().name() +
+//			", action id: " + event.getMenuAction().getId() +
+//			", item id: " + event.getItemId() +
+//			", impostor id " + impostorId
+//		);
 	}
 
 	@Subscribe
