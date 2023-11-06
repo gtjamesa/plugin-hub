@@ -1,6 +1,5 @@
 package tictac7x.charges.item.listeners;
 
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
@@ -10,7 +9,6 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerBase;
 
-@Slf4j
 public abstract class ListenerBase {
     protected final Client client;
     protected final ChargedItemBase chargedItem;

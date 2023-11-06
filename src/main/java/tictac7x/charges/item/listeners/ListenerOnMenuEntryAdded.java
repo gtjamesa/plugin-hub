@@ -1,12 +1,10 @@
 package tictac7x.charges.item.listeners;
 
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.MenuEntry;
 import net.runelite.api.events.MenuEntryAdded;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -15,7 +13,6 @@ import tictac7x.charges.store.ReplaceTarget;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 public class ListenerOnMenuEntryAdded extends ListenerBase {
     public ListenerOnMenuEntryAdded(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);

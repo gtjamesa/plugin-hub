@@ -1,6 +1,5 @@
 package tictac7x.charges.item.listeners;
 
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.events.WidgetLoaded;
 import net.runelite.api.widgets.Widget;
@@ -13,7 +12,6 @@ import tictac7x.charges.item.triggers.TriggerBase;
 
 import java.util.regex.Matcher;
 
-@Slf4j
 public class ListenerOnWidgetLoaded extends ListenerBase {
     public ListenerOnWidgetLoaded(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, chargedItem, notifier, config);

@@ -3,7 +3,6 @@ package tictac7x.charges.item.listeners;
 import net.runelite.api.Client;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;

@@ -1,6 +1,5 @@
 package tictac7x.charges.items;
 
-import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
@@ -22,7 +21,6 @@ import tictac7x.charges.store.Store;
 
 import java.lang.reflect.Field;
 
-@Slf4j
 public class U_SeedBox extends ChargedItemWithStorage {
     public U_SeedBox(
         final Client client,

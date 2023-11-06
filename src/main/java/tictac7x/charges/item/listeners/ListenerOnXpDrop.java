@@ -5,7 +5,6 @@ import net.runelite.api.Skill;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;

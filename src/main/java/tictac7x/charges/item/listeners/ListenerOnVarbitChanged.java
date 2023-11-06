@@ -4,7 +4,6 @@ import net.runelite.api.Client;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnVarbitChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
