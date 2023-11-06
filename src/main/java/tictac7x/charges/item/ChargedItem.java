@@ -9,12 +9,9 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-
-import java.util.Optional;
 
 public class ChargedItem extends ChargedItemBase {
     public int charges = Charges.UNKNOWN;
