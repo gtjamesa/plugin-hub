@@ -57,7 +57,7 @@ public class ChargedItemWithStorage extends ChargedItemBase {
             return "?";
         }
 
-        return String.valueOf(quantity);
+        return getChargesMinified(quantity);
     }
 
     @Override

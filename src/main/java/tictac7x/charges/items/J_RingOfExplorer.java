@@ -61,6 +61,18 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
                 storage.put(ChargesItemID.EXPLORER_RING_TELEPORTS, Charges.UNLIMITED);
             }).onItemClick(),
 
+            // Check with all available.
+            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").consumer(m -> {
+                final int alchemy = Integer.parseInt(m.group("alchemy"));
+                final int restores = Integer.parseInt(m.group("restores"));
+
+                storage.empty();
+                storage.put(ChargesItemID.EXPLORER_RING_LOW_ALCHEMY, Charges.UNLIMITED);
+                storage.put(ChargesItemID.EXPLORER_RING_HIGH_ALCHEMY, alchemy);
+                storage.put(ChargesItemID.EXPLORER_RING_RESTORES, restores);
+                storage.put(ChargesItemID.EXPLORER_RING_TELEPORTS, Charges.UNLIMITED);
+            }).onItemClick(),
+
             // Check with restores used.
             new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and have exhausted the ring's run restore power for today.").consumer(m -> {
                 final int alchemy = Integer.parseInt(m.group("alchemy"));
@@ -97,6 +109,13 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
                 storage.remove(ChargesItemID.EXPLORER_RING_LOW_ALCHEMY, 1);
                 storage.remove(ChargesItemID.EXPLORER_RING_HIGH_ALCHEMY, 1);
             }),
+
+            // Teleport.
+            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Cabbage teleports for today.").consumer(m -> {
+                final int total = Integer.parseInt(m.group("total"));
+                final int used = Integer.parseInt(m.group("used"));
+                storage.put(ChargesItemID.EXPLORER_RING_TELEPORTS, total - used);
+            }).onItemClick(),
         };
     }
 }
