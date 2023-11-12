@@ -1,5 +1,6 @@
 package tictac7x.charges.items;
 
+import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
@@ -7,16 +8,15 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
-import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnItemDespawned;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -36,9 +36,9 @@ public class U_GemBag extends ChargedItemWithStorage {
         final Notifier notifier,
         final ChargesImprovedConfig config,
         final Store store,
-        final Plugin plugin
+        final Gson gson
     ) {
-        super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumIndividualQuantity(60).storeableItems(
             new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire"),
             new StorageItem(ItemID.UNCUT_EMERALD).checkName("Emerald"),
@@ -48,8 +48,8 @@ public class U_GemBag extends ChargedItemWithStorage {
         );
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.GEM_BAG_12020).zeroChargesIsPositive(),
-            new TriggerItem(ItemID.OPEN_GEM_BAG).zeroChargesIsPositive(),
+            new TriggerItem(ItemID.GEM_BAG_12020),
+            new TriggerItem(ItemID.OPEN_GEM_BAG),
         };
 
         this.triggers = new TriggerBase[]{

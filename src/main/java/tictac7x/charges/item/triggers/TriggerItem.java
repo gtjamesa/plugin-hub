@@ -1,45 +1,37 @@
 package tictac7x.charges.item.triggers;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class TriggerItem {
-    public final int item_id;
-    public boolean quantity_charges;
-    public boolean hide_overlay;
-    public boolean needsToBeEquipped;
-    public boolean zeroChargesIsPositive;
-    public boolean negativeMaxCharges;
+    public final int itemId;
+
+    public Optional<Boolean> quantityCharges = Optional.empty();
+    public Optional<Boolean> hideOverlay = Optional.empty();
+    public Optional<Boolean> needsToBeEquipped = Optional.empty();
     public Optional<Integer> maxCharges = Optional.empty();
+    public Optional<Integer> fixedCharges = Optional.empty();
 
-    @Nullable public Integer fixed_charges;
-
-    public TriggerItem(final int item_id) {
-        this.item_id = item_id;
+    public TriggerItem(final int itemId) {
+        this.itemId = itemId;
     }
 
     public TriggerItem fixedCharges(final int charges) {
-        this.fixed_charges = charges;
+        this.fixedCharges = Optional.of(charges);
         return this;
     }
 
     public TriggerItem quantityCharges() {
-        this.quantity_charges = true;
+        this.quantityCharges = Optional.of(true);
         return this;
     }
 
     public TriggerItem hideOverlay() {
-        this.hide_overlay = true;
+        this.hideOverlay = Optional.of(true);
         return this;
     }
 
     public TriggerItem needsToBeEquipped() {
-        this.needsToBeEquipped = true;
-        return this;
-    }
-
-    public TriggerItem zeroChargesIsPositive() {
-        this.zeroChargesIsPositive = true;
+        this.needsToBeEquipped = Optional.of(true);
         return this;
     }
 

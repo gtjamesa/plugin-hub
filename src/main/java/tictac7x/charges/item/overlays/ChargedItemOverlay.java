@@ -69,20 +69,21 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
             TriggerItem trigger_item_to_use = null;
             for (final TriggerItem trigger_item : charged_item.items) {
-                if (trigger_item.item_id == itemId && !trigger_item.hide_overlay) {
+                if (trigger_item.itemId == itemId && !trigger_item.hideOverlay.isPresent()) {
                     trigger_item_to_use = trigger_item;
                     break;
                 }
             }
-            if (trigger_item_to_use == null || trigger_item_to_use.fixed_charges != null && trigger_item_to_use.fixed_charges == Charges.UNLIMITED) continue;
+            if (trigger_item_to_use == null || trigger_item_to_use.fixedCharges.isPresent() && trigger_item_to_use.fixedCharges.get() == Charges.UNLIMITED) continue;
+
 
             // Get default charges from charged item.
             String charges = charged_item.getCharges();
 
             // Override charged item with fixed charges item.
             for (final TriggerItem item : charged_item.items) {
-                if (item.item_id == itemId && item.fixed_charges != null) {
-                    charges = String.valueOf(item.fixed_charges);
+                if (item.itemId == itemId && item.fixedCharges.isPresent()) {
+                    charges = String.valueOf(item.fixedCharges.get());
                 }
             }
 

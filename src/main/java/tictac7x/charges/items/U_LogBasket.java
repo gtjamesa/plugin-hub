@@ -1,5 +1,6 @@
 package tictac7x.charges.items;
 
+import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
 import net.runelite.api.Skill;
@@ -8,7 +9,6 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
@@ -18,9 +18,9 @@ import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
-import tictac7x.charges.item.triggers.TriggerItem;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -43,9 +43,9 @@ public class U_LogBasket extends ChargedItemWithStorage {
         final Notifier notifier,
         final ChargesImprovedConfig config,
         final Store store,
-        final Plugin plugin
+        final Gson gson
     ) {
-        super(ChargesImprovedConfig.log_basket, ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        super(ChargesImprovedConfig.log_basket, ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumTotalQuantity(28).storeableItems(
             new StorageItem(ItemID.LOGS).checkName("Logs"),
             new StorageItem(ItemID.ACHEY_TREE_LOGS).checkName("Achey tree logs"),

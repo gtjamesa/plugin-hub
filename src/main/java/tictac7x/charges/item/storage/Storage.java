@@ -1,13 +1,10 @@
 package tictac7x.charges.item.storage;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
@@ -15,7 +12,6 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +21,7 @@ public class Storage {
     private final String storageConfigKey;
     private final ConfigManager configManager;
     private final Store store;
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson;
 
     protected List<StorageItem> storage = new ArrayList<>();
 
@@ -37,11 +33,12 @@ public class Storage {
     private Optional<StorageItem[]> storeableItems = Optional.empty();
 
 
-    public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ConfigManager configManager, final Store store) {
+    public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ConfigManager configManager, final Store store, final Gson gson) {
         this.chargedItem = chargedItem;
         this.storageConfigKey = configKey + "_storage";
         this.configManager = configManager;
         this.store = store;
+        this.gson = gson;
     }
 
     public Storage maximumTotalQuantity(final int quantity) {
@@ -268,7 +265,7 @@ public class Storage {
     public Optional<Integer> getMaximumTotalQuantity() {
         // Maximum storage from trigger item.
         for (final TriggerItem item : chargedItem.items) {
-            if (chargedItem.itemId == item.item_id && item.maxCharges.isPresent()) {
+            if (chargedItem.itemId == item.itemId && item.maxCharges.isPresent()) {
                 return item.maxCharges;
             }
         }

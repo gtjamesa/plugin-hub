@@ -1,5 +1,6 @@
 package tictac7x.charges.items;
 
+import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
 import net.runelite.api.Varbits;
@@ -8,7 +9,6 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.plugins.Plugin;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorageMultipleCharges;
@@ -33,9 +33,9 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
         final Notifier notifier,
         final ChargesImprovedConfig config,
         final Store store,
-        final Plugin plugin
+        final Gson gson
     ) {
-        super(ChargesImprovedConfig.explorers_ring, ItemKey.EXPLORERS_RING, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store);
+        super(ChargesImprovedConfig.explorers_ring, ItemKey.EXPLORERS_RING, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.storeableItems(
             new StorageItem(ChargesItemID.EXPLORER_RING_LOW_ALCHEMY).displayName("Low alchemies"),
             new StorageItem(ChargesItemID.EXPLORER_RING_HIGH_ALCHEMY).displayName("High alchemies"),

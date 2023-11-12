@@ -1,6 +1,5 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.store.HitsplatTarget;
 
 import java.util.Optional;

@@ -77,18 +77,18 @@ public abstract class ChargedItemBase {
     }
 
     public ChargedItemBase(
-            final Optional<String> configKey,
-            final ItemKey itemKey,
-            final int itemId,
-            final Client client,
-            final ClientThread clientThread,
-            final ConfigManager configManager,
-            final ItemManager itemManager,
-            final InfoBoxManager infoBoxManager,
-            final ChatMessageManager chatMessageManager,
-            final Notifier notifier,
-            final ChargesImprovedConfig config,
-            final Store store
+        final Optional<String> configKey,
+        final ItemKey itemKey,
+        final int itemId,
+        final Client client,
+        final ClientThread clientThread,
+        final ConfigManager configManager,
+        final ItemManager itemManager,
+        final InfoBoxManager infoBoxManager,
+        final ChatMessageManager chatMessageManager,
+        final Notifier notifier,
+        final ChargesImprovedConfig config,
+        final Store store
     ) {
         this.itemKey = itemKey;
         this.itemId = itemId;
@@ -123,8 +123,8 @@ public abstract class ChargedItemBase {
 
     public String getCharges() {
         final Optional<TriggerItem> currentItem = getCurrentItem();
-        if (currentItem.isPresent() && currentItem.get().fixed_charges != null) {
-            return String.valueOf(currentItem.get().fixed_charges);
+        if (currentItem.isPresent() && currentItem.get().fixedCharges.isPresent()) {
+            return String.valueOf(currentItem.get().fixedCharges.get());
         }
 
         return "?";
@@ -142,7 +142,7 @@ public abstract class ChargedItemBase {
 
     Optional<TriggerItem> getCurrentItem() {
         for (final TriggerItem triggerItem : items) {
-            if (triggerItem.item_id == itemId) {
+            if (triggerItem.itemId == itemId) {
                 return Optional.of(triggerItem);
             }
         }
@@ -156,7 +156,7 @@ public abstract class ChargedItemBase {
 
     public boolean needsToBeEquipped() {
         if (getCurrentItem().isPresent()) {
-            return getCurrentItem().get().needsToBeEquipped;
+            return getCurrentItem().get().needsToBeEquipped.isPresent();
         }
 
         return false;
@@ -234,7 +234,7 @@ public abstract class ChargedItemBase {
     public void onItemContainerChanged(final ItemContainerChanged event) {
         chargedItemIdChecker: for (final Item item : event.getItemContainer().getItems()) {
             for (final TriggerItem triggerItem : items) {
-                if (triggerItem.item_id == item.getId()) {
+                if (triggerItem.itemId == item.getId()) {
                     this.itemId = item.getId();
                     break chargedItemIdChecker;
                 }
