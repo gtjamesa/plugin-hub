@@ -124,7 +124,7 @@ import java.util.List;
 )
 
 public class ChargesImprovedPlugin extends Plugin {
-	private final String pluginVersion = "v0.4";
+	private final String pluginVersion = "v0.5";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
 		"<colHIGHLIGHT>* Fish barrel max charges fixed.<br>" +
@@ -135,7 +135,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>* Dodgy necklace added.<br>" +
 		"<colHIGHLIGHT>* Tome of fire added.<br>" +
 		"<colHIGHLIGHT>* Able to hide item charges in bank.<br>" +
-		"<colHIGHLIGHT>* Activateable items have configurable positive/negative colors."
+		"<colHIGHLIGHT>* Activateable items have configurable positive/negative colors.<br>" +
+		"<colHIGHLIGHT>* Storage items (like herb sack, gem bac, etc) show items inside them on hover"
 	;
 
 	private final int VARBIT_MINUTES = 8354;
