@@ -74,7 +74,10 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
                     break;
                 }
             }
-            if (trigger_item_to_use == null || trigger_item_to_use.fixedCharges.isPresent() && trigger_item_to_use.fixedCharges.get() == Charges.UNLIMITED) continue;
+            if (
+                trigger_item_to_use == null ||
+                trigger_item_to_use.fixedCharges.isPresent() && trigger_item_to_use.fixedCharges.get() == Charges.UNLIMITED
+            ) continue;
 
 
             // Get default charges from charged item.

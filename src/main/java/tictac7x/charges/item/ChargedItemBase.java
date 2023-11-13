@@ -68,6 +68,9 @@ public abstract class ChargedItemBase {
     private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
     private final ListenerOnVarbitChanged listenerOnVarbitChanged;
 
+    private boolean inInventory = false;
+    private boolean inEquipment = false;
+
     public ChargedItemBase(final String configKey, final ItemKey itemKey, final int itemId, final Client client, final ClientThread clientThread, final ConfigManager configManager, final ItemManager itemManager, final InfoBoxManager infoBoxManager, final ChatMessageManager chatMessageManager, final Notifier notifier, final ChargesImprovedConfig config, final Store store) {
         this(Optional.of(configKey), itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
     }
@@ -131,11 +134,11 @@ public abstract class ChargedItemBase {
     }
 
     public boolean inInventory() {
-        return store.inventoryContainsItem(itemId);
+        return inInventory;
     }
 
     public boolean isEquipped() {
-        return store.equipmentContainsItem(itemId);
+        return inEquipment;
     }
 
     public abstract void loadCharges();
@@ -241,7 +244,10 @@ public abstract class ChargedItemBase {
             }
         }
 
-        if (inInventory() || isEquipped()) {
+        inInventory = store.inventoryContainsItem(itemId);
+        inEquipment = store.equipmentContainsItem(itemId);
+
+        if (inInventory || inEquipment) {
             listenerOnItemContainerChanged.trigger(event);
         }
     }

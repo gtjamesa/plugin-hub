@@ -64,6 +64,19 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
         if (!(triggerBase instanceof OnMenuEntryAdded)) return false;
         final OnMenuEntryAdded trigger = (OnMenuEntryAdded) triggerBase;
 
+        // Check base triggers to avoid calling impostor id getters on client.
+        impostorIdsTargetCheck: if (trigger.replaceImpostorIds.isPresent() && trigger.onMenuTarget.isPresent()) {
+            for (final String target : trigger.onMenuTarget.get()) {
+                if (event.getTarget().contains(target)) {
+                    break impostorIdsTargetCheck;
+                }
+            }
+
+            if (!super.isValidTrigger(trigger)) {
+                return false;
+            }
+        }
+
         // Item id check.
         if (!trigger.replaceImpostorIds.isPresent() && event.getMenuEntry().getItemId() != chargedItem.itemId) {
             return false;
@@ -110,6 +123,6 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
             return false;
         }
 
-        return super.isValidTrigger(trigger);
+        return true;
     }
 }
