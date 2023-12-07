@@ -204,6 +204,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new W_SanguinestiStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_CrystalBow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_CrystalHalberd(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_EnchantedLyre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
 			// Shields
 			new S_KharedstMemoirs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -319,6 +320,17 @@ public class ChargesImprovedPlugin extends Plugin {
 	}
 
 	@Subscribe
+	public void onChatMessage(final ChatMessage event) {
+//		System.out.println("MESSAGE | " +
+//				"type: " + event.getType().name() +
+//				", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
+//				", sender: " + event.getSender()
+//		);
+
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
+	}
+
+	@Subscribe
 	public void onItemContainerChanged(final ItemContainerChanged event) {
 		store.onItemContainerChanged(event);
 
@@ -333,17 +345,6 @@ public class ChargesImprovedPlugin extends Plugin {
 //				", quantity: " + item.getQuantity();
 //		}
 //		System.out.println(itemContainer);
-	}
-
-	@Subscribe
-	public void onChatMessage(final ChatMessage event) {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
-
-//		System.out.println("MESSAGE | " +
-//			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-//			", sender: " + event.getSender()
-//		);
 	}
 
 	@Subscribe

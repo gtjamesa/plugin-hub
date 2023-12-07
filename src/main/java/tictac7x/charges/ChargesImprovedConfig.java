@@ -49,6 +49,7 @@ public interface ChargesImprovedConfig extends Config {
     String ring_of_suffering_status = "ring_of_suffering_status";
     String sanguinesti_staff = "sanguinesti_staff";
     String skull_sceptre = "skull_sceptre";
+    String enchanted_lyre = "enchanted_lyre";
     String soul_bearer = "soul_bearer";
     String trident_of_the_seas = "trident_of_the_seas";
     String xerics_talisman = "xerics_talisman";
@@ -637,4 +638,11 @@ public interface ChargesImprovedConfig extends Config {
             description = explorers_ring + "_storage",
             section = debug
         ) default String getExplorersRingCharges() { return ""; }
+
+        @ConfigItem(
+            keyName = enchanted_lyre,
+            name = enchanted_lyre,
+            description = enchanted_lyre,
+            section = debug
+        ) default int getEnchantedLyreCharges() { return Charges.UNKNOWN; }
 }
