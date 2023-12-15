@@ -33,6 +33,7 @@ public interface ChargesImprovedConfig extends Config {
     String bracelet_of_slaughter = "bracelet_of_slaughter";
     String bryophytas_staff = "bryophytas_staff";
     String celestial_ring = "celestial_ring";
+    String ring_of_elements = "ring_of_elements";
     String escape_crystal = "escape_crystal";
     String escape_crystal_status = "escape_crystal_status";
     String chronicle = "chronicle";
@@ -645,4 +646,11 @@ public interface ChargesImprovedConfig extends Config {
             description = enchanted_lyre,
             section = debug
         ) default int getEnchantedLyreCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = ring_of_elements,
+            name = ring_of_elements,
+            description = ring_of_elements,
+            section = debug
+        ) default int getRingOfElementsCharges() { return Charges.UNKNOWN; }
 }
