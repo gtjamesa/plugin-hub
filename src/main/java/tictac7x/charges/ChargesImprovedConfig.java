@@ -82,6 +82,7 @@ public interface ChargesImprovedConfig extends Config {
     String fremennik_sea_boots = "fremennik_sea_boots";
     String jar_generator = "jar_generator";
     String explorers_ring = "explorers_ring";
+    String plank_sack = "plank_sack";
 
     @ConfigSection(
         name = "General",
@@ -653,4 +654,11 @@ public interface ChargesImprovedConfig extends Config {
             description = ring_of_elements,
             section = debug
         ) default int getRingOfElementsCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = plank_sack,
+            name = plank_sack,
+            description = plank_sack,
+            section = debug
+        ) default int getPlankSackCharges() { return Charges.UNKNOWN; }
 }

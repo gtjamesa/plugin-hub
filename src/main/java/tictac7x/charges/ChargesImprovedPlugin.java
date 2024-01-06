@@ -265,6 +265,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new U_TackleBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_TeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_Waterskin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_PlankSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
 			// Crystal armor set
 			new A_CrystalBody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -321,11 +322,11 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-//		System.out.println("MESSAGE | " +
-//				"type: " + event.getType().name() +
-//				", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ") +
-//				", sender: " + event.getSender()
-//		);
+		System.out.println("MESSAGE | " +
+				"type: " + event.getType().name() +
+				", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ") +
+				", sender: " + event.getSender()
+		);
 
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 	}

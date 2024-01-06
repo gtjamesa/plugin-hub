@@ -54,6 +54,12 @@ public class Store {
         return Optional.empty();
     }
 
+    public int getXpDrop(final Skill skill, final int xp) {
+        if (!skillsXp.containsKey(skill)) return 0;
+
+        return xp - skillsXp.get(skill);
+    }
+
     public int getInventoryPreviouslyEmptySlots() {
         return 28 - previousItems.size();
     }

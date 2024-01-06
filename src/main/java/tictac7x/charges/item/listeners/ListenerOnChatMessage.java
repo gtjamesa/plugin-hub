@@ -79,7 +79,7 @@ public class ListenerOnChatMessage extends ListenerBase {
     }
 
     private String getCleanMessage(final ChatMessage event) {
-        return event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
+        return event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ");
     }
 
     private int getCleanCharges(final String charges) {
