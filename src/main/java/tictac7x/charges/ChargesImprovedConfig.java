@@ -530,6 +530,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getSeedBoxCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
+            keyName = seed_box + "_storage",
+            name = seed_box + "_storage",
+            description = seed_box + "_storage",
+            section = debug
+        ) default String getSeedBoxStorage() { return ""; }
+
+        @ConfigItem(
             keyName = crystal_helm,
             name = crystal_helm,
             description = crystal_helm,

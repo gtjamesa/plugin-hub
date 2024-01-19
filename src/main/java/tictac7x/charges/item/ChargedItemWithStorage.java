@@ -39,15 +39,13 @@ public class ChargedItemWithStorage extends ChargedItemBase {
     public int getQuantity() {
         int quantity = 0;
 
-        int validItems = 0;
         for (final StorageItem storageItem : getStorage()) {
             if (storageItem.getQuantity() >= 0) {
                 quantity += storageItem.getQuantity();
-                validItems++;
             }
         }
 
-        return validItems > 0 ? quantity : Charges.UNKNOWN;
+        return quantity;
     }
 
     @Override
@@ -79,12 +77,5 @@ public class ChargedItemWithStorage extends ChargedItemBase {
         }
 
         return super.getTextColor();
-    }
-
-    @Override
-    public void onConfigChanged(final ConfigChanged event) {
-        if (configKey.isPresent() && event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(configKey.get() + "_storage")) {
-            loadCharges();
-        }
     }
 }

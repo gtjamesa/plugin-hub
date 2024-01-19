@@ -322,11 +322,11 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-		System.out.println("MESSAGE | " +
-				"type: " + event.getType().name() +
-				", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ") +
-				", sender: " + event.getSender()
-		);
+//		System.out.println("MESSAGE | " +
+//				"type: " + event.getType().name() +
+//				", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ") +
+//				", sender: " + event.getSender()
+//		);
 
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 	}
@@ -466,13 +466,6 @@ public class ChargesImprovedPlugin extends Plugin {
 //				", target: " + event.getTarget()
 //			);
 //		}
-	}
-
-	@Subscribe
-	public void onConfigChanged(final ConfigChanged event) {
-		if (!event.getGroup().equals(ChargesImprovedConfig.group)) return;
-
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onConfigChanged(event));
 	}
 
 	@Subscribe

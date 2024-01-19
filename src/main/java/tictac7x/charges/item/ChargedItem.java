@@ -6,7 +6,6 @@ import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
@@ -70,13 +69,6 @@ public class ChargedItem extends ChargedItemBase {
 
     public void increaseCharges(final int charges) {
         setCharges(this.charges + charges);
-    }
-
-    @Override
-    public void onConfigChanged(final ConfigChanged event) {
-        if (configKey.isPresent() && event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(configKey.get())) {
-            charges = Integer.parseInt(event.getNewValue());
-        }
     }
 }
 

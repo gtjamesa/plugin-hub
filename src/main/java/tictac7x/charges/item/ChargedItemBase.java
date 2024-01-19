@@ -267,6 +267,4 @@ public abstract class ChargedItemBase {
     public void onResetDaily() {
         listenerOnResetDaily.trigger();
     }
-
-    public void onConfigChanged(final ConfigChanged event) {}
 }
