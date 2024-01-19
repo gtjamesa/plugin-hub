@@ -63,10 +63,6 @@ public class U_PlankSack extends ChargedItemWithStorage {
 
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
-
-            new OnXpDrop(Skill.CONSTRUCTION).xpConsumer(xp -> {
-                System.out.println(xp);
-            }),
         };
     }
 }

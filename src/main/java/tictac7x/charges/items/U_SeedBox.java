@@ -73,8 +73,6 @@ public class U_SeedBox extends ChargedItemWithStorage {
                 storage.put(seed, quantity);
             }),
 
-
-
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide()
         };
