@@ -1,13 +1,17 @@
-# Item Charges Improved - v0.5
+# Item Charges Improved - v0.5.1
+
 Show charges of various items that are in inventory or equipped
 
 ## Missing items
+
 If some item is missing, and you would like to see it added, create an issue here in github.
 
 If you find any dialogs or chat messages that don't seem to affect the charges of the items that are in this list, let me know.
 
 ## Implemented items
+
 ### Armor sets
+
 - [x] Barrows gear
   - [x] Ahrim
   - [x] Dharok
@@ -18,6 +22,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Crystal armor
 
 ### Weapons
+
 - [x] Arclight
 - [x] Bryophyta's staff
 - [x] Crystal bow
@@ -28,6 +33,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Trident of the seas / swamp
 
 ### Shields
+
 - [x] Chronicle
 - [x] Crystal shield
 - [x] Dragonfire shield / ward
@@ -36,15 +42,18 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Tome of fire
 
 ### Helms
+
 - [x] Circlet of water
 - [x] Kandarin Headgear
 
 ### Capes
+
 - [x] Ardougle Cloak
 - [x] Coffin
 - [x] Magic Cape
 
 ### Jewellery
+
 - [x] Bracelet of clay
 - [x] Bracelet of expeditious
 - [x] Bracelet of flamtaer
@@ -62,6 +71,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Xeric's talisman
 
 ### Utilities
+
 - [x] Ash sanctifier
 - [x] Bonecrusher
 - [x] Bottomless compost bucket
@@ -79,4 +89,3 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Strange old lockpick
 - [x] Teleport crystal
 - [x] Waterskins
-
