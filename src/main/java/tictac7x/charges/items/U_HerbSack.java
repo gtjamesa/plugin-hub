@@ -221,8 +221,8 @@ public class U_HerbSack extends ChargedItemWithStorage {
                 39807, 39808, 39809, 39810, 39811,
                 39877, 39878, 39879, 39880, 39881
             ).replaceTargets(
-                new ReplaceTarget("Herbs", "Torstol herbs"),
-                new ReplaceTarget("Herb patch", "Torstol herbs")
+                new ReplaceTarget("Herbs", "Snapdragon herbs"),
+                new ReplaceTarget("Herb patch", "Snapdragon herbs")
             ).onMenuTarget("Herbs"),
 
             // Hide destroy option.
