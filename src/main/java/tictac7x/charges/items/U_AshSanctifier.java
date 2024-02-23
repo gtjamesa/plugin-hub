@@ -39,8 +39,8 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
         };
         this.triggers = new TriggerBase[]{
             // Check.
-            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").deactivate(),
-            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").activate(),
+            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamically().deactivate(),
+            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").setDynamically().activate(),
 
             // Activate.
             new OnChatMessage("The ash sanctifier is active and ready to scatter ashes.").activate(),

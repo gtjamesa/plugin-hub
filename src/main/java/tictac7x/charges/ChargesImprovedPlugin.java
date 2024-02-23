@@ -206,10 +206,10 @@ import java.util.List;
 )
 
 public class ChargesImprovedPlugin extends Plugin {
-	private final String pluginVersion = "v0.5.1";
+	private final String pluginVersion = "v0.5.2";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Hotfixed snapdragon herb showing wrong name."
+		"<colHIGHLIGHT>* Fix ash sanctifier charges."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
