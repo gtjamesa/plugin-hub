@@ -2,15 +2,7 @@ package tictac7x.charges.item;
 
 import net.runelite.api.Client;
 import net.runelite.api.Item;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.GraphicChanged;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.api.events.ItemContainerChanged;
-import net.runelite.api.events.ItemDespawned;
-import net.runelite.api.events.MenuEntryAdded;
-import net.runelite.api.events.StatChanged;
-import net.runelite.api.events.VarbitChanged;
-import net.runelite.api.events.WidgetLoaded;
+import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -19,16 +11,7 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.listeners.ListenerOnChatMessage;
-import tictac7x.charges.item.listeners.ListenerOnGraphicChanged;
-import tictac7x.charges.item.listeners.ListenerOnHitsplatApplied;
-import tictac7x.charges.item.listeners.ListenerOnItemContainerChanged;
-import tictac7x.charges.item.listeners.ListenerOnItemDespawned;
-import tictac7x.charges.item.listeners.ListenerOnMenuEntryAdded;
-import tictac7x.charges.item.listeners.ListenerOnResetDaily;
-import tictac7x.charges.item.listeners.ListenerOnVarbitChanged;
-import tictac7x.charges.item.listeners.ListenerOnWidgetLoaded;
-import tictac7x.charges.item.listeners.ListenerOnXpDrop;
+import tictac7x.charges.item.listeners.*;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
@@ -64,6 +47,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnMenuEntryAdded listenerOnMenuEntryAdded;
     private final ListenerOnResetDaily listenerOnResetDaily;
     private final ListenerOnGraphicChanged listenerOnGraphicChanged;
+    private final ListenerOnAnimationChanged listenerOnAnimationChanged;
     private final ListenerOnHitsplatApplied listenerOnHitsplatApplied;
     private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
     private final ListenerOnVarbitChanged listenerOnVarbitChanged;
@@ -114,6 +98,7 @@ public abstract class ChargedItemBase {
         listenerOnMenuEntryAdded = new ListenerOnMenuEntryAdded(client, this, notifier, config);
         listenerOnResetDaily = new ListenerOnResetDaily(client, this, notifier, config);
         listenerOnGraphicChanged = new ListenerOnGraphicChanged(client, this, notifier, config);
+        listenerOnAnimationChanged = new ListenerOnAnimationChanged(client, this, notifier, config);
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
@@ -231,6 +216,12 @@ public abstract class ChargedItemBase {
     public void onGraphicChanged(final GraphicChanged event) {
         if (inInventory() || isEquipped()) {
             listenerOnGraphicChanged.trigger(event);
+        }
+    }
+
+    public void onAnimationChanged(final AnimationChanged event) {
+        if (inInventory() || isEquipped()) {
+            listenerOnAnimationChanged.trigger(event);
         }
     }
 

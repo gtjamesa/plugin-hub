@@ -20,11 +20,6 @@ public class ListenerOnXpDrop extends ListenerBase {
             final OnXpDrop trigger = (OnXpDrop) triggerBase;
             boolean triggerUsed = false;
 
-            if (trigger.xpConsumer.isPresent()) {
-                trigger.xpConsumer.get().accept(chargedItem.store.getXpDrop(Skill.CONSTRUCTION, event.getXp()));
-                triggerUsed = true;
-            }
-
             if (super.trigger(trigger)) {
                 triggerUsed = true;
             }

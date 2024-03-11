@@ -5,18 +5,7 @@ import com.google.inject.Provides;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
-import net.runelite.api.events.ChatMessage;
-import net.runelite.api.events.GameStateChanged;
-import net.runelite.api.events.GameTick;
-import net.runelite.api.events.GraphicChanged;
-import net.runelite.api.events.HitsplatApplied;
-import net.runelite.api.events.ItemContainerChanged;
-import net.runelite.api.events.ItemDespawned;
-import net.runelite.api.events.MenuEntryAdded;
-import net.runelite.api.events.MenuOptionClicked;
-import net.runelite.api.events.StatChanged;
-import net.runelite.api.events.VarbitChanged;
-import net.runelite.api.events.WidgetLoaded;
+import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -33,67 +22,7 @@ import net.runelite.client.ui.overlay.tooltip.TooltipManager;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.overlays.ChargedItemInfobox;
 import tictac7x.charges.item.overlays.ChargedItemOverlay;
-import tictac7x.charges.items.A_CrystalBody;
-import tictac7x.charges.items.A_CrystalHelm;
-import tictac7x.charges.items.A_CrystalLegs;
-import tictac7x.charges.items.B_FremennikSeaBoots;
-import tictac7x.charges.items.C_ArdougneCloak;
-import tictac7x.charges.items.C_Coffin;
-import tictac7x.charges.items.C_ForestryKit;
-import tictac7x.charges.items.C_MagicCape;
-import tictac7x.charges.items.H_CircletOfWater;
-import tictac7x.charges.items.H_KandarinHeadgear;
-import tictac7x.charges.items.J_BraceletOfClay;
-import tictac7x.charges.items.J_BraceletOfExpeditious;
-import tictac7x.charges.items.J_BraceletOfFlamtaer;
-import tictac7x.charges.items.J_BraceletOfSlaughter;
-import tictac7x.charges.items.J_Camulet;
-import tictac7x.charges.items.J_DesertAmulet;
-import tictac7x.charges.items.J_EscapeCrystal;
-import tictac7x.charges.items.J_NecklaceOfDodgy;
-import tictac7x.charges.items.J_NecklaceOfPassage;
-import tictac7x.charges.items.J_NecklaceOfPhoenix;
-import tictac7x.charges.items.J_RingOfCelestial;
-import tictac7x.charges.items.J_RingOfExplorer;
-import tictac7x.charges.items.J_RingOfRecoil;
-import tictac7x.charges.items.J_RingOfShadows;
-import tictac7x.charges.items.J_RingOfSlayer;
-import tictac7x.charges.items.J_RingOfSuffering;
-import tictac7x.charges.items.J_XericsTalisman;
-import tictac7x.charges.items.S_Chronicle;
-import tictac7x.charges.items.S_CrystalShield;
-import tictac7x.charges.items.S_DragonfireShield;
-import tictac7x.charges.items.S_FaladorShield;
-import tictac7x.charges.items.S_KharedstMemoirs;
-import tictac7x.charges.items.S_TomeOfFire;
-import tictac7x.charges.items.U_AshSanctifier;
-import tictac7x.charges.items.U_BoneCrusher;
-import tictac7x.charges.items.U_BottomlessCompostBucket;
-import tictac7x.charges.items.U_CoalBag;
-import tictac7x.charges.items.U_FishBarrel;
-import tictac7x.charges.items.U_FungicideSpray;
-import tictac7x.charges.items.U_GemBag;
-import tictac7x.charges.items.U_GricollersCan;
-import tictac7x.charges.items.U_HerbSack;
-import tictac7x.charges.items.U_JarGenerator;
-import tictac7x.charges.items.U_LogBasket;
-import tictac7x.charges.items.U_OgreBellows;
-import tictac7x.charges.items.U_SeedBox;
-import tictac7x.charges.items.U_SoulBearer;
-import tictac7x.charges.items.U_StrangeOldLockpick;
-import tictac7x.charges.items.U_TackleBox;
-import tictac7x.charges.items.U_TeleportCrystal;
-import tictac7x.charges.items.U_Waterskin;
-import tictac7x.charges.items.W_Arclight;
-import tictac7x.charges.items.W_BryophytasStaff;
-import tictac7x.charges.items.W_CrystalBow;
-import tictac7x.charges.items.W_CrystalHalberd;
-import tictac7x.charges.items.W_EnchantedLyre;
-import tictac7x.charges.items.W_IbansStaff;
-import tictac7x.charges.items.W_PharaohsSceptre;
-import tictac7x.charges.items.W_SanguinestiStaff;
-import tictac7x.charges.items.W_SkullSceptre;
-import tictac7x.charges.items.W_TridentOfTheSeas;
+import tictac7x.charges.items.*;
 import tictac7x.charges.items.barrows.AhrimsHood;
 import tictac7x.charges.items.barrows.AhrimsRobeskirt;
 import tictac7x.charges.items.barrows.AhrimsRobetop;
@@ -206,10 +135,12 @@ import java.util.List;
 )
 
 public class ChargesImprovedPlugin extends Plugin {
-	private final String pluginVersion = "v0.5.2";
+	private final String pluginVersion = "v0.5.3";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Fix ash sanctifier charges."
+		"<colHIGHLIGHT>* Tome of water added<br>" +
+		"<colHIGHLIGHT>* Slayer staff (e) added<br>" +
+		"<colHIGHLIGHT>* Ring of elements added"
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -268,15 +199,16 @@ public class ChargesImprovedPlugin extends Plugin {
 		chargedItems = new ChargedItemBase[]{
 			// Weapons
 			new W_Arclight(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_TridentOfTheSeas(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_SkullSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_IbansStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_PharaohsSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_BryophytasStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new W_SanguinestiStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_CrystalBow(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_CrystalHalberd(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_EnchantedLyre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_IbansStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_PharaohsSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_SanguinestiStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_SkullSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_SlayerStaffE(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_TridentOfTheSeas(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
 			// Shields
 			new S_KharedstMemoirs(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -285,6 +217,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new S_FaladorShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new S_DragonfireShield(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new S_TomeOfFire(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new S_TomeOfWater(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
 			// Boots
 			new B_FremennikSeaBoots(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -301,6 +234,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_NecklaceOfPassage(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfPhoenix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfDodgy(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_RingOfElements(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfExplorer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfRecoil(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfShadows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -393,13 +327,13 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
-//		System.out.println("MESSAGE | " +
-//				"type: " + event.getType().name() +
-//				", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ") +
-//				", sender: " + event.getSender()
-//		);
-
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
+
+//		System.out.println("MESSAGE | " +
+//			"type: " + event.getType().name() +
+//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ") +
+//			", sender: " + event.getSender()
+//		);
 	}
 
 	@Subscribe
@@ -441,6 +375,18 @@ public class ChargesImprovedPlugin extends Plugin {
 //			", others = " + event.getHitsplat().isOthers() +
 //			", mine = " + event.getHitsplat().isMine()
 //		);
+	}
+
+	@Subscribe
+	public void onAnimationChanged(final AnimationChanged event) {
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onAnimationChanged(event));
+
+//		if (event.getActor() != null) {
+//			System.out.println("ANIMATION | " +
+//				"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : event.getActor().getName()) +
+//				", id: " + event.getActor().getAnimation()
+//			);
+//		}
 	}
 
 	@Subscribe

@@ -77,12 +77,14 @@ public interface ChargesImprovedConfig extends Config {
     String strange_old_lockpick = "strange_old_lockpick";
     String desert_amulet = "desert_amulet";
     String tome_of_fire = "tome_of_fire";
+    String tome_of_water = "tome_of_water";
     String dodgy_necklace = "dodgy_necklace";
     String kandarin_headgear = "kandarin_headgear";
     String fremennik_sea_boots = "fremennik_sea_boots";
     String jar_generator = "jar_generator";
     String explorers_ring = "explorers_ring";
     String plank_sack = "plank_sack";
+    String slayer_staff_e = "slayer_staff_e";
 
     @ConfigSection(
         name = "General",
@@ -668,4 +670,11 @@ public interface ChargesImprovedConfig extends Config {
             description = plank_sack,
             section = debug
         ) default int getPlankSackCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = slayer_staff_e,
+            name = slayer_staff_e,
+            description = slayer_staff_e,
+            section = debug
+        ) default int getSlayerStaffECharges() { return Charges.UNKNOWN; }
 }

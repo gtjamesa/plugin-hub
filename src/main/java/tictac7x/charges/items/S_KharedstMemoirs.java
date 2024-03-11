@@ -45,7 +45,7 @@ public class S_KharedstMemoirs extends ChargedItem {
             new OnChatMessage("((Kharedst's Memoirs?)|(The Book of the Dead)) now has (?<charges>.+) (memories|memory) remaining.").setDynamically(),
 
             // Check empty.
-            new OnChatMessage("((Kharedst's Memoirs?)|(The Book of the Dead)) holds no charges.").fixedCharges(0),
+            new OnChatMessage("((Kharedst's Memoirs?)|(The Book of the Dead)) holds no charges?.").fixedCharges(0),
 
             // Check.
             new OnChatMessage("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+) (memories|memory) remain.").setDynamically(),

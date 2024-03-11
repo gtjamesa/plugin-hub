@@ -132,6 +132,11 @@ public abstract class ListenerBase {
             return false;
         }
 
+        // Activated check.
+        if ((chargedItem instanceof ChargedItemWithStatus) && trigger.isActivated.isPresent() && trigger.isActivated.get() && !((ChargedItemWithStatus) chargedItem).isActivated()) {
+            return false;
+        }
+
         return true;
     }
 }

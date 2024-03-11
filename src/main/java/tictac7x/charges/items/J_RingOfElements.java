@@ -11,9 +11,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -41,11 +39,20 @@ public class J_RingOfElements extends ChargedItem {
             // Check uncharged.
             new OnChatMessage("Your ring of the elements has no charges remaining.").fixedCharges(0),
 
-            // Charge by one.
-            new OnChatMessage("You charge your Ring of the Elements").fixedCharges(1),
+            // Uncharge.
+            new OnChatMessage("You uncharge your Ring of the Elements.").fixedCharges(0),
 
             // Teleport.
             new OnChatMessage("Your ring of elements has (?<charges>.+) charge remaining.").setDynamically(),
+
+            // Check from uncharge dialog not near bank.
+            new OnChatMessage("The Ring of the Elements has (?<charges>.+) charges?. You can uncharge it at a bank.").setDynamically(),
+
+            // Check from uncharge dialog at bank.
+            new OnWidgetLoaded(219, 1, 0, "Ring of the Elements charges: (?<charges>.+). Uncharge it?").setDynamically(),
+
+            // Teleport to air/water/earth/fire altars.
+            new OnGraphicChanged(2060, 2061, 2062, 2063).onItemClick().decreaseCharges(1),
         };
     }
 }
