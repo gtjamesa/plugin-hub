@@ -2,14 +2,17 @@ package tictac7x.charges.item.listeners;
 
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
+import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemContainerType;
 
 public class ListenerOnItemContainerChanged extends ListenerBase {
@@ -18,6 +21,18 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
     }
 
     public void trigger(final ItemContainerChanged event) {
+        // Get quantity from amount in item container.
+        for (final TriggerItem triggerItem : chargedItem.items) {
+            if (triggerItem.quantityCharges.isPresent()) {
+               for (final Item item : event.getItemContainer().getItems()) {
+                    if (item.getId() == triggerItem.itemId) {
+                        ((ChargedItem) chargedItem).setCharges(item.getQuantity());
+                        break;
+                    }
+                }
+            }
+        }
+
         for (final TriggerBase triggerBase : chargedItem.triggers) {
             if (!isValidTrigger(triggerBase, event)) continue;
             boolean triggerUsed = false;

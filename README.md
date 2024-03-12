@@ -30,6 +30,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Pharaoh's sceptre
 - [x] Sanguinesti Staff
 - [x] Skull sceptre
+- [x] Slayer staff (e)
 - [x] Trident of the seas / swamp
 
 ### Shields
@@ -40,6 +41,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Falador shield
 - [x] Kharedst's Memoirs / Book of the Dead
 - [x] Tome of fire
+- [x] Tome of water
 
 ### Helms
 
@@ -64,6 +66,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Necklace of passage
 - [x] Necklace of phoenix
 - [x] Ring of celestial
+- [x] Ring of elements
 - [x] Ring of recoil
 - [x] Ring of suffering
 - [x] Ring of shadows
