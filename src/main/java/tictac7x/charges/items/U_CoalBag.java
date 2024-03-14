@@ -3,6 +3,7 @@ package tictac7x.charges.items;
 import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -12,10 +13,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
@@ -64,6 +62,30 @@ public class U_CoalBag extends ChargedItemWithStorage {
             ).onMenuOption("Mine").onMenuTarget("Coal rocks").onSpecificItem(ItemID.OPEN_COAL_BAG).consumer(() -> {
                 storage.add(ItemID.COAL, 1);
             }),
+
+            // Superheat spells.
+            new OnXpDrop(Skill.SMITHING).onMenuOption("Cast").onMenuTarget(
+                "Superheat Item -> Lovakite ore",
+                "Superheat Item -> Iron ore"
+            ).consumer(() -> {
+                storage.removeAndPrioritizeInventory(ItemID.COAL, 2);
+            }),
+            new OnXpDrop(Skill.SMITHING).onMenuOption("Cast").onMenuTarget(
+                "Superheat Item -> Mithril ore"
+            ).consumer(() -> {
+                storage.removeAndPrioritizeInventory(ItemID.COAL, 4);
+            }),
+            new OnXpDrop(Skill.SMITHING).onMenuOption("Cast").onMenuTarget(
+                "Superheat Item -> Adamantite ore"
+            ).consumer(() -> {
+                storage.removeAndPrioritizeInventory(ItemID.COAL, 6);
+            }),
+            new OnXpDrop(Skill.SMITHING).onMenuOption("Cast").onMenuTarget(
+                "Superheat Item -> Runite ore"
+            ).consumer(() -> {
+                storage.removeAndPrioritizeInventory(ItemID.COAL, 8);
+            }),
+
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

@@ -131,6 +131,7 @@ import java.util.List;
 		"sea",
 		"toxic",
 		"jar",
+		"tome",
 	}
 )
 
@@ -140,7 +141,8 @@ public class ChargesImprovedPlugin extends Plugin {
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
 		"<colHIGHLIGHT>* Tome of water added<br>" +
 		"<colHIGHLIGHT>* Slayer staff (e) added<br>" +
-		"<colHIGHLIGHT>* Ring of elements added"
+		"<colHIGHLIGHT>* Ring of elements added<br>" +
+		"<colHIGHLIGHT>* General bug fixes"
 	;
 
 	private final int VARBIT_MINUTES = 8354;

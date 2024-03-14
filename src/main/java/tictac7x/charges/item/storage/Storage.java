@@ -109,6 +109,10 @@ public class Storage {
         put(itemId, (item.isPresent() ? Math.max(0, item.get().getQuantity() - quantity) : 0));
     }
 
+    public void removeAndPrioritizeInventory(final int itemId, final int quantity) {
+        this.remove(itemId, Math.max(quantity - store.getInventoryItemQuantity(itemId), 0));
+    }
+
     public void put(final int itemId, int quantity) {
         if (itemId == Charges.UNKNOWN) return;
 
