@@ -31,7 +31,7 @@ public class S_DragonfireShield extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.dragonfire_shield, ItemKey.DRAGONFIRE_SHIELD, ItemID.CRYSTAL_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.dragonfire_shield, ItemKey.DRAGONFIRE_SHIELD, ItemID.DRAGONFIRE_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DRAGONFIRE_SHIELD_11284).fixedCharges(0),

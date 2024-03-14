@@ -11,10 +11,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnHitsplatApplied;
-import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.HitsplatTarget;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -35,7 +32,7 @@ public class J_RingOfRecoil extends ChargedItem {
         super(ChargesImprovedConfig.ring_of_recoil, ItemKey.RING_OF_RECOIL, ItemID.RING_OF_RECOIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.RING_OF_RECOIL),
+            new TriggerItem(ItemID.RING_OF_RECOIL).needsToBeEquipped(),
         };
 
         this.triggers = new TriggerBase[]{
@@ -50,6 +47,12 @@ public class J_RingOfRecoil extends ChargedItem {
 
             // Take damage.
             new OnHitsplatApplied(HitsplatTarget.SELF).moreThanZeroDamage().isEquipped().decreaseCharges(1),
+
+            // Check from break dialog.
+            new OnWidgetLoaded(219, 1, 0, "Status: (?<charges>.+) damage points? left.").setDynamically(),
+
+            // Break.
+            new OnChatMessage("The ring shatters. Your next ring of recoil will start afresh from (?<charges>.+) damage points?.").setDynamically(),
         };
     }
 }
