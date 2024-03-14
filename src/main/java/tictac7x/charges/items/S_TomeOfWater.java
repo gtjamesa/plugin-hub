@@ -42,7 +42,7 @@ public class S_TomeOfWater extends ChargedItem {
             // Check.
             new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").setDynamically().onItemClick(),
 
-            // Attack with regular spellbook fire spells.
+            // Attack with regular spellbook water spells.
             new OnGraphicChanged(93, 120, 135, 161, 1458).isEquipped().decreaseCharges(1)
         };
     }
