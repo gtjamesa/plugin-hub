@@ -1,12 +1,15 @@
 package tictac7x.charges.item.listeners;
 
 import net.runelite.api.Client;
+import net.runelite.api.Hitsplat;
+import net.runelite.api.HitsplatID;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.store.HitsplatGroup;
 import tictac7x.charges.store.HitsplatTarget;
 
 public class ListenerOnHitsplatApplied extends ListenerBase {
@@ -31,8 +34,9 @@ public class ListenerOnHitsplatApplied extends ListenerBase {
     public boolean isValidTrigger(final TriggerBase triggerBase, final HitsplatApplied event) {
         if (!(triggerBase instanceof OnHitsplatApplied)) return false;
         final OnHitsplatApplied trigger = (OnHitsplatApplied) triggerBase;
+        final Hitsplat hitsplat = event.getHitsplat();
 
-        // Hitsplat caused by player check.
+        // Hitsplat caused by other player check.
         if (event.getHitsplat().isOthers()) {
             return false;
         }
@@ -47,8 +51,16 @@ public class ListenerOnHitsplatApplied extends ListenerBase {
             return false;
         }
 
+        // Hitsplay group check.
+        if (trigger.hitsplatGroup == HitsplatGroup.REGULAR && (
+            hitsplat.getHitsplatType() != HitsplatID.DAMAGE_ME &&
+            hitsplat.getHitsplatType() != HitsplatID.DAMAGE_MAX_ME
+        )) {
+            return false;
+        }
+
         // More than zero damage.
-        if (trigger.moreThanZeroDamage.isPresent() && event.getHitsplat().getAmount() == 0) {
+        if (trigger.moreThanZeroDamage.isPresent() && hitsplat.getAmount() == 0) {
             return false;
         }
 
