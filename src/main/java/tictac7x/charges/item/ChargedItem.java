@@ -9,6 +9,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
@@ -26,6 +27,12 @@ public class ChargedItem extends ChargedItemBase {
 
     @Override
     public String getCharges() {
+        for (final TriggerItem item : items) {
+            if (item.itemId == itemId && item.fixedCharges.isPresent()) {
+                return getChargesMinified(item.fixedCharges.get());
+            }
+        }
+
         if (charges >= 0) {
             return getChargesMinified(charges);
         }

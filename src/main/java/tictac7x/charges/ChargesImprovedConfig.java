@@ -85,6 +85,7 @@ public interface ChargesImprovedConfig extends Config {
     String explorers_ring = "explorers_ring";
     String plank_sack = "plank_sack";
     String slayer_staff_e = "slayer_staff_e";
+    String warped_sceptre = "warped_sceptre";
 
     @ConfigSection(
         name = "General",
@@ -677,4 +678,11 @@ public interface ChargesImprovedConfig extends Config {
             description = slayer_staff_e,
             section = debug
         ) default int getSlayerStaffECharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = warped_sceptre,
+            name = warped_sceptre,
+            description = warped_sceptre,
+            section = debug
+        ) default int getWarpedSceptreCharges() { return Charges.UNKNOWN; }
 }
