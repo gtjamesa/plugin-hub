@@ -27,12 +27,6 @@ public class ChargedItem extends ChargedItemBase {
 
     @Override
     public String getCharges() {
-        for (final TriggerItem item : items) {
-            if (item.itemId == itemId && item.fixedCharges.isPresent()) {
-                return getChargesMinified(item.fixedCharges.get());
-            }
-        }
-
         if (charges >= 0) {
             return getChargesMinified(charges);
         }

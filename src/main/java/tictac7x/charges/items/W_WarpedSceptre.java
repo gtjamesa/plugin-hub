@@ -47,6 +47,12 @@ public class W_WarpedSceptre extends ChargedItem {
 
             // Attack.
             new OnGraphicChanged(2567).decreaseCharges(1),
+
+            // Uncharge.
+            new OnChatMessage("You uncharge your warped sceptre").fixedCharges(0),
+
+            // Ran out of charges.
+            new OnChatMessage("Your warped sceptre has run out of charges!").fixedCharges(0),
         };
     }
 }
