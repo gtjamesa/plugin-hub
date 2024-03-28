@@ -136,13 +136,10 @@ import java.util.List;
 )
 
 public class ChargesImprovedPlugin extends Plugin {
-	private final String pluginVersion = "v0.5.4";
+	private final String pluginVersion = "v0.5.4.1";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Tome of water added<br>" +
-		"<colHIGHLIGHT>* Slayer staff (e) added<br>" +
-		"<colHIGHLIGHT>* Ring of elements added<br>" +
-		"<colHIGHLIGHT>* General bug fixes"
+		"<colHIGHLIGHT>* Kharedst's memoirs/Book of the dead fixes"
 	;
 
 	private final int VARBIT_MINUTES = 8354;
