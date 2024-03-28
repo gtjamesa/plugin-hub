@@ -42,22 +42,22 @@ public class S_KharedstMemoirs extends ChargedItem {
             new OnChatMessage("You add an entry to Kharedst's Memoirs.").increaseCharges(20),
 
             // Teleport.
-            new OnChatMessage("((Kharedst's Memoirs?)|(The Book of the Dead)) now has (?<charges>.+) (memories|memory) remaining.").setDynamically(),
+            new OnChatMessage("((Kharedst's Memoirs)|(The Book of the Dead)) now has (?<charges>.+) (memories|memory) remaining.").setDynamically(),
 
             // Check empty.
-            new OnChatMessage("((Kharedst's Memoirs?)|(The Book of the Dead)) holds no charges?.").fixedCharges(0),
+            new OnChatMessage("((Kharedst's Memoirs)|(The Book of the Dead)) holds no charges.").fixedCharges(0),
 
             // Check.
             new OnChatMessage("On the inside of the cover a message is displayed in dark ink. It reads: (?<charges>.+)/.+? (memories|memory) remain.").setDynamically(),
 
             // Charge.
-            new OnChatMessage("((Kharedst's Memoirs?)|(The Book of the Dead)) now has (?<charges>.+) charges.").setDynamically(),
+            new OnChatMessage("((Kharedst's Memoirs)|(The Book of the Dead)) now has (?<charges>.+) charges.").setDynamically(),
 
             // Try to charge book of the dead when already full.
-            new OnChatMessage("The Book of the Dead is already fully charged").fixedCharges(250),
+            new OnChatMessage("The Book of the Dead is already fully charged.").fixedCharges(250),
 
             // Try to charge kharedst memoirs when already full.
-            new OnChatMessage("The Kharedst's Memoirs? is already fully charged").fixedCharges(100),
+            new OnChatMessage("Kharedst's Memoirs is already fully charged.").fixedCharges(100),
 
             // Common menu entries.
             new OnMenuEntryAdded("Reminisce").replaceOption("Teleport"),
