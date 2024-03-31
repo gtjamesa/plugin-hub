@@ -17,6 +17,7 @@ public interface ChargesImprovedConfig extends Config {
     String version = "version";
     String storage = "storage";
     String date = "date";
+    String debug_ids = "debug_ids";
     String infoboxes_show = "infoboxes_show";
     String infoboxes_hidden = "infoboxes_hidden";
     String item_overlays_show = "item_overlays_show";
@@ -242,24 +243,32 @@ public interface ChargesImprovedConfig extends Config {
             name = version,
             description = "Version of the plugin for update message",
             section = debug,
-            position = 2
-        ) default String getVersion() { return ""; }
-
-        @ConfigItem(
-            keyName = storage,
-            name = storage,
-            description = "All player items to check for daily resets",
-            section = debug,
             position = 1
-        ) default String getStorage() { return ""; }
+        ) default String getVersion() { return ""; }
 
         @ConfigItem(
             keyName = date,
             name = "Date",
             description = "Date to check for charges reset when logging in",
             section = debug,
-            position = 3
+            position = 2
         ) default String getResetDate() { return ""; }
+
+        @ConfigItem(
+            keyName = storage,
+            name = storage,
+            description = "All player items to check for daily resets",
+            section = debug,
+            position = 3
+        ) default String getStorage() { return ""; }
+
+        @ConfigItem(
+            keyName = debug_ids,
+            name = "Debug IDs",
+            description = "Shows animation and graphics ids within ingame messages to add support for new items",
+            section = debug,
+            position = 4
+        ) default boolean showDebugIds() { return false; }
 
         @ConfigItem(
             keyName = arclight,

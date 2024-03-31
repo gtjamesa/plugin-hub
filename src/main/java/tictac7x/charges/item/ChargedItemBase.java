@@ -214,7 +214,7 @@ public abstract class ChargedItemBase {
     public void onItemContainerChanged(final ItemContainerChanged event) {
         chargedItemIdChecker: for (final Item item : event.getItemContainer().getItems()) {
             for (final TriggerItem triggerItem : items) {
-                if (triggerItem.itemId == item.getId()) {
+                if (triggerItem.itemId == item.getId() && !triggerItem.fixedCharges.isPresent()) {
                     this.itemId = item.getId();
                     break chargedItemIdChecker;
                 }

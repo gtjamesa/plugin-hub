@@ -2,6 +2,7 @@ package tictac7x.charges;
 
 import com.google.gson.Gson;
 import com.google.inject.Provides;
+import net.runelite.api.ActorSpotAnim;
 import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
@@ -12,6 +13,7 @@ import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -359,13 +361,19 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onGraphicChanged(final GraphicChanged event) {
+		if (event.getActor() != client.getLocalPlayer()) return;
+
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onGraphicChanged(event));
 
-//		if (event.getActor() == client.getLocalPlayer()) {
-//			System.out.println("GRAPHIC | " +
-//				"id: " + event.getActor().getGraphic()
-//			);
-//		}
+		if (config.showDebugIds()) {
+			for (final ActorSpotAnim graphic : event.getActor().getSpotAnims()) {
+				chatMessageManager.queue(QueuedMessage.builder()
+					.type(ChatMessageType.CONSOLE)
+					.runeLiteFormattedMessage("[Item Charges Improved] Graphic ID: " + graphic.getId())
+					.build()
+				);
+			}
+		}
 	}
 
 	@Subscribe
@@ -383,14 +391,17 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Subscribe
 	public void onAnimationChanged(final AnimationChanged event) {
+		if (event.getActor() != client.getLocalPlayer() || event.getActor().getAnimation() == -1) return;
+
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onAnimationChanged(event));
 
-//		if (event.getActor() != null) {
-//			System.out.println("ANIMATION | " +
-//				"actor: " + (event.getActor() == client.getLocalPlayer() ? "self" : event.getActor().getName()) +
-//				", id: " + event.getActor().getAnimation()
-//			);
-//		}
+		if (config.showDebugIds()) {
+			chatMessageManager.queue(QueuedMessage.builder()
+				.type(ChatMessageType.CONSOLE)
+				.runeLiteFormattedMessage("[Item Charges Improved] Animation ID: " + event.getActor().getAnimation())
+				.build()
+			);
+		}
 	}
 
 	@Subscribe
@@ -494,6 +505,19 @@ public class ChargesImprovedPlugin extends Plugin {
 		store.onGameTick(gametick);
 	}
 
+	@Subscribe
+	public void onConfigChanged(final ConfigChanged event) {
+		if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(ChargesImprovedConfig.debug_ids)) {
+			chatMessageManager.queue(QueuedMessage.builder()
+				.type(ChatMessageType.CONSOLE)
+				.runeLiteFormattedMessage(config.showDebugIds()
+					? "<colHIGHLIGHT>Debug information is now enabled. [Item Charges Improved]"
+					: "<colHIGHLIGHT>Debug information is now disabled. [Item Charges Improved]"
+				).build()
+			);
+		}
+	}
+
 	private void checkForChargesReset() {
 		final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 		if (date.equals(config.getResetDate())) return;
@@ -503,11 +527,9 @@ public class ChargesImprovedPlugin extends Plugin {
 
 		chatMessageManager.queue(QueuedMessage.builder()
 			.type(ChatMessageType.CONSOLE)
-			.runeLiteFormattedMessage("Daily item charges have been reset.")
+			.runeLiteFormattedMessage("<colHIGHLIGHT>Daily item charges have been reset.")
 			.build()
 		);
 	}
-
-
 }
 
