@@ -45,11 +45,18 @@ public class W_TridentOfTheSeas extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
+            // Ran out of charges.
             new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has run out of charges.").notification().fixedCharges(0),
+
+            // Check, one charge left.
             new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? has one charge.").fixedCharges(1),
-            new OnChatMessage("Your Trident of the (seas|swamp)( \\(e\\))? only has (?<charges>.+) charges left!").notification().setDynamically(),
-            new OnChatMessage("Your Trident of the (seas|swamp)( \\((full|e)\\))? has (?<charges>.+) charges?( left)?.").setDynamically(),
-            new OnChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(e\\))?. New total: (?<charges>.+)").setDynamically(),
+
+            // Check for charges and warning when low.
+            new OnChatMessage("Your Trident of the (seas|swamp)( \\([full|e]\\))? (only )?has (?<charges>.+) charges( left)?.").setDynamically(),
+
+            // Charge to full.
+            new OnChatMessage("You add .* charges? to the Trident of the (seas|swamp)( \\(full\\))?. New total: (?<charges>.+)").setDynamically(),
+
             // Attack.
             new OnGraphicChanged(1251).isEquipped().decreaseCharges(1)
         };
