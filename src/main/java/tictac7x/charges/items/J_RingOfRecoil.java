@@ -13,7 +13,6 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.HitsplatTarget;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_RingOfRecoil extends ChargedItem {
@@ -29,7 +28,7 @@ public class J_RingOfRecoil extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ring_of_recoil, ItemKey.RING_OF_RECOIL, ItemID.RING_OF_RECOIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.ring_of_recoil, ItemID.RING_OF_RECOIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_RECOIL).needsToBeEquipped(),

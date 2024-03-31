@@ -19,7 +19,6 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ChargesItemID;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
@@ -35,7 +34,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.explorers_ring, ItemKey.EXPLORERS_RING, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.ring_of_explorers, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.storeableItems(
             new StorageItem(ChargesItemID.EXPLORER_RING_LOW_ALCHEMY).displayName("Low alchemies"),
             new StorageItem(ChargesItemID.EXPLORER_RING_HIGH_ALCHEMY).displayName("High alchemies"),

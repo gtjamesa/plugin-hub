@@ -15,7 +15,6 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import static tictac7x.charges.store.HitsplatTarget.ENEMY;
@@ -33,7 +32,7 @@ public class W_CrystalHalberd extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.crystal_halberd, ItemKey.CRYSTAL_HALBERD, ItemID.CRYSTAL_HALBERD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.crystal_halberd, ItemID.CRYSTAL_HALBERD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CRYSTAL_HALBERD),
             new TriggerItem(ItemID.CRYSTAL_HALBERD_24125),

@@ -15,7 +15,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class C_ForestryKit extends ChargedItem {
@@ -31,7 +30,7 @@ public class C_ForestryKit extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.FORESTRY_KIT, ItemID.FORESTRY_KIT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.forestry_kit, ItemID.FORESTRY_KIT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FORESTRY_KIT).fixedCharges(Charges.UNLIMITED),
         };

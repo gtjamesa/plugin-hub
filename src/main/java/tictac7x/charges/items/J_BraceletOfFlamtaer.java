@@ -14,7 +14,6 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_BraceletOfFlamtaer extends ChargedItem {
@@ -30,7 +29,7 @@ public class J_BraceletOfFlamtaer extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.bracelet_of_flamtaer, ItemKey.BRACELET_OF_FLAMTAER, ItemID.FLAMTAER_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.bracelet_of_flamtaer, ItemID.FLAMTAER_BRACELET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.FLAMTAER_BRACELET).needsToBeEquipped(),

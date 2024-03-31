@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_NecklaceOfPassage extends ChargedItem {
@@ -28,7 +27,7 @@ public class J_NecklaceOfPassage extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.NECKLACE_OF_PASSAGE, ItemID.NECKLACE_OF_PASSAGE1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.necklace_of_passage, ItemID.NECKLACE_OF_PASSAGE1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.NECKLACE_OF_PASSAGE1).fixedCharges(1),
             new TriggerItem(ItemID.NECKLACE_OF_PASSAGE2).fixedCharges(2),

@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class ToragsPlatelegs extends ChargedItem {
@@ -28,7 +27,7 @@ public class ToragsPlatelegs extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.BARROWS_GEAR, ItemID.TORAGS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_set, ItemID.TORAGS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TORAGS_PLATELEGS).fixedCharges(100),
             new TriggerItem(ItemID.TORAGS_PLATELEGS_100).fixedCharges(100),

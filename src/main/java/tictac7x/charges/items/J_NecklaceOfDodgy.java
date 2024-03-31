@@ -15,7 +15,6 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_NecklaceOfDodgy extends ChargedItem {
@@ -31,7 +30,7 @@ public class J_NecklaceOfDodgy extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.dodgy_necklace, ItemKey.DODGY_NECKLACE, ItemID.DODGY_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.necklace_of_dodgy, ItemID.DODGY_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DODGY_NECKLACE).needsToBeEquipped(),

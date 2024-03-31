@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_RingOfElements extends ChargedItem {
@@ -28,7 +27,7 @@ public class J_RingOfElements extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ring_of_elements, ItemKey.RING_OF_ELEMENTS, ItemID.RING_OF_THE_ELEMENTS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.ring_of_the_elements, ItemID.RING_OF_THE_ELEMENTS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.RING_OF_THE_ELEMENTS).fixedCharges(0),

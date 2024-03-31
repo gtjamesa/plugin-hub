@@ -15,7 +15,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class U_TackleBox extends ChargedItem {
@@ -31,7 +30,7 @@ public class U_TackleBox extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.TACKLE_BOX, ItemID.TACKLE_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.tackle_box, ItemID.TACKLE_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TACKLE_BOX).fixedCharges(Charges.UNLIMITED),
         };

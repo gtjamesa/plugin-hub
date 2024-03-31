@@ -3,7 +3,6 @@ package tictac7x.charges.items;
 import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
-import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -15,10 +14,8 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
-import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import static tictac7x.charges.store.ItemContainerType.INVENTORY;
@@ -36,7 +33,7 @@ public class U_PlankSack extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.plank_sack, ItemKey.PLANK_SACK, ItemID.PLANK_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.plank_sack, ItemID.PLANK_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumTotalQuantity(28).storeableItems(
             new StorageItem(ItemID.PLANK).checkName("Plank"),
             new StorageItem(ItemID.OAK_PLANK).checkName("Oak plank"),

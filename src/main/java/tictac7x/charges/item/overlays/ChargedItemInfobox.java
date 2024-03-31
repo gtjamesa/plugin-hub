@@ -62,8 +62,7 @@ public class ChargedItemInfobox extends InfoBox {
         updateInfobox();
 
         if (
-            !config.showInfoboxes() ||
-            config.getHiddenInfoboxes().contains(chargedItem.itemKey) ||
+            !chargedItem.isInfoboxVisible() ||
             chargedItem.getCharges().equals("∞") && !config.showUnlimited() ||
             (!chargedItem.inInventory() && !chargedItem.isEquipped())
         ) {

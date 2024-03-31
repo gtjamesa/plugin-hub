@@ -10,7 +10,6 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.store.ItemActivity;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import java.awt.Color;
@@ -18,16 +17,12 @@ import java.util.Optional;
 
 public class ChargedItemWithStatus extends ChargedItem {
 
-    public ChargedItemWithStatus(String configKey, ItemKey itemKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
-        super(configKey, itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+    public ChargedItemWithStatus(String configKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
+        super(configKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
     }
 
     public boolean isDeactivated() {
-        if (!getConfigStatusKey().isPresent()) {
-            return false;
-        }
-
-        final Optional<String> status = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get()));
+        final Optional<String> status = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey()));
 
         if (!status.isPresent()) {
             return false;
@@ -37,11 +32,7 @@ public class ChargedItemWithStatus extends ChargedItem {
     }
 
     public boolean isActivated() {
-        if (!getConfigStatusKey().isPresent()) {
-            return false;
-        }
-
-        final Optional<String> status = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get()));
+        final Optional<String> status = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, getConfigStatusKey()));
 
         if (!status.isPresent()) {
             return false;
@@ -50,12 +41,8 @@ public class ChargedItemWithStatus extends ChargedItem {
         return status.get().equals(ItemActivity.ACTIVATED.toString());
     }
 
-    public Optional<String> getConfigStatusKey() {
-        if (configKey.isPresent()) {
-            return Optional.of(configKey.get() + "_status");
-        }
-
-        return Optional.empty();
+    public String getConfigStatusKey() {
+        return configKey + "_status";
     }
 
     public void deactivate() {
@@ -67,9 +54,7 @@ public class ChargedItemWithStatus extends ChargedItem {
     }
 
     private void setActivity(final ItemActivity status) {
-        if (getConfigStatusKey().isPresent()) {
-            configManager.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey().get(), status);
-        }
+        configManager.setConfiguration(ChargesImprovedConfig.group, getConfigStatusKey(), status);
     }
 
     @Override

@@ -12,7 +12,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 public class U_TeleportCrystal extends ChargedItem {
@@ -28,7 +28,7 @@ public class U_TeleportCrystal extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.teleport_crystal, ItemKey.TELEPORT_CRYSTAL, ItemID.TELEPORT_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.teleport_crystal, ItemID.TELEPORT_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TELEPORT_CRYSTAL).fixedCharges(0),
@@ -37,6 +37,7 @@ public class U_TeleportCrystal extends ChargedItem {
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_3).fixedCharges(3),
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_4).fixedCharges(4),
             new TriggerItem(ItemID.TELEPORT_CRYSTAL_5).fixedCharges(5),
+            new TriggerItem(ItemID.ETERNAL_TELEPORT_CRYSTAL).fixedCharges(Charges.UNLIMITED),
         };
     }
 }

@@ -15,7 +15,6 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class S_TomeOfWater extends ChargedItem {
@@ -31,7 +30,7 @@ public class S_TomeOfWater extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.tome_of_water, ItemKey.TOME_OF_WATER, ItemID.TOME_OF_WATER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.tome_of_water, ItemID.TOME_OF_WATER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.TOME_OF_WATER_EMPTY).fixedCharges(0),

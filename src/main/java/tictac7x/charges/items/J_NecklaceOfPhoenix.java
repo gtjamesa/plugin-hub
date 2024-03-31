@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_NecklaceOfPhoenix extends ChargedItem {
@@ -28,7 +27,7 @@ public class J_NecklaceOfPhoenix extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.PHOENIX_NECKLACE, ItemID.PHOENIX_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.necklace_of_phoenix, ItemID.PHOENIX_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.PHOENIX_NECKLACE).fixedCharges(1).needsToBeEquipped(),
         };

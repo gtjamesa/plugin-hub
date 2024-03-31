@@ -17,7 +17,6 @@ import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import java.util.Optional;
@@ -42,7 +41,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.fish_barrel, ItemKey.FISH_BARREL, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.fish_barrel, ItemID.FISH_BARREL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.maximumTotalQuantity(28).storeableItems(
             new StorageItem(ItemID.RAW_SHRIMPS).checkName("Shrimp"),
             new StorageItem(ItemID.RAW_SARDINE).checkName("Sardine"),

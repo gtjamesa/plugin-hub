@@ -17,7 +17,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class U_AshSanctifier extends ChargedItemWithStatus {
@@ -33,7 +32,7 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ash_sanctifier, ItemKey.ASH_SANCTIFIER, ItemID.ASH_SANCTIFIER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.ash_sanctifier, ItemID.ASH_SANCTIFIER, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ASH_SANCTIFIER),
         };

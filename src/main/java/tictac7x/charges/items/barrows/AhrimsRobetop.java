@@ -14,7 +14,6 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class AhrimsRobetop extends ChargedItem {
@@ -30,7 +29,7 @@ public class AhrimsRobetop extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.BARROWS_GEAR, ItemID.AHRIMS_ROBETOP, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_set, ItemID.AHRIMS_ROBETOP, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBETOP).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBETOP_100).fixedCharges(100),

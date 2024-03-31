@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class W_WarpedSceptre extends ChargedItem {
@@ -28,7 +27,7 @@ public class W_WarpedSceptre extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.warped_sceptre, ItemKey.WARPED_SCEPTRE, ItemID.WARPED_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.warped_sceptre, ItemID.WARPED_SCEPTRE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.WARPED_SCEPTRE_UNCHARGED).fixedCharges(0),

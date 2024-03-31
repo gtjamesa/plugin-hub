@@ -14,7 +14,6 @@ import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.triggers.OnVarbitChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class J_EscapeCrystal extends ChargedItemWithStatus {
@@ -30,7 +29,7 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.escape_crystal, ItemKey.ESCAPE_CRYSTAL, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.escape_crystal, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).quantityCharges().hideOverlay(),

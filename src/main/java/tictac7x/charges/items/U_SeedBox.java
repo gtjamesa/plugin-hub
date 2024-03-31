@@ -2,7 +2,6 @@ package tictac7x.charges.items;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
-import net.runelite.api.Item;
 import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -17,7 +16,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class U_SeedBox extends ChargedItemWithStorage {
@@ -33,7 +31,7 @@ public class U_SeedBox extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.seed_box, ItemKey.SEED_BOX, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.seed_box, ItemID.SEED_BOX, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SEED_BOX),
             new TriggerItem(ItemID.OPEN_SEED_BOX),

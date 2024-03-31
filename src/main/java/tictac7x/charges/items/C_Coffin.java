@@ -17,7 +17,6 @@ import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemContainerType;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class C_Coffin extends ChargedItemWithStorage {
@@ -33,7 +32,7 @@ public class C_Coffin extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.coffin, ItemKey.COFFIN, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.coffin, ItemID.GOLD_COFFIN, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.storage = storage.storeableItems(
             new StorageItem(ItemID.LOAR_REMAINS).checkName("Loar"),
             new StorageItem(ItemID.PHRIN_REMAINS).checkName("Phrin"),

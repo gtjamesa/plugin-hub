@@ -18,6 +18,7 @@ import tictac7x.charges.store.Charges;
 import tictac7x.charges.item.triggers.TriggerItem;
 
 import java.awt.*;
+import java.util.Optional;
 
 public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
@@ -56,66 +57,63 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int itemId, final WidgetItem widgetItem) {
-        if (!config.showItemOverlays()) return;
+        Optional<ChargedItemBase> chargedItem = Optional.empty();
 
-        for (final ChargedItemBase chargedItem : chargedItems) {
-            boolean validItem = false;
-            for (final TriggerItem triggerItem : chargedItem.items) {
+        // Find correct charged item.
+        chargedItemFinder: for (final ChargedItemBase chargedItemBase : chargedItems) {
+            for (final TriggerItem triggerItem : chargedItemBase.items) {
                 if (triggerItem.itemId == itemId) {
-                    validItem = true;
-                    break;
+                    chargedItem = Optional.of(chargedItemBase);
+                    break chargedItemFinder;
                 }
             }
-            if (!validItem) continue;
-
-            if (
-                // Item overlay hidden.
-                config.getHiddenItemOverlays().contains(chargedItem.itemKey) ||
-
-                // Infinity charges hidden.
-                !config.showUnlimited() && chargedItem.getCharges().equals("∞") ||
-
-                // Hide overlays in bank.
-                !config.showBankOverlays() && isBankWidget(widgetItem)
-            ) continue;
-
-            // Get default charges from charged item.
-            String charges = chargedItem.getCharges();
-            Color color = chargedItem.getTextColor();
-
-            // Override charges and color for fixed items.
-            for (final TriggerItem item : chargedItem.items) {
-                if (item.itemId == itemId && item.fixedCharges.isPresent()) {
-                    charges = item.fixedCharges.get() == Charges.UNLIMITED
-                        ? "∞"
-                        : String.valueOf(item.fixedCharges.get());
-                    color = item.fixedCharges.get() == 0 ? config.getColorEmpty() : config.getColorDefault();
-                }
-            }
-
-            graphics.setFont(FontManager.getRunescapeSmallFont());
-
-            final Rectangle bounds = widgetItem.getCanvasBounds();
-            final TextComponent charges_component = new TextComponent();
-
-            charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
-            charges_component.setText(charges);
-
-            // Set color.
-            charges_component.setColor(color);
-
-            // Override for bank items.
-            if (isBankWidget(widgetItem) && !chargedItem.getCharges().equals("?")) {
-                charges_component.setColor(config.getColorDefault());
-            }
-
-            charges_component.render(graphics);
-
-            // Charged item with storage
-            renderTooltip(chargedItem, widgetItem);
-
-            return;
         }
+
+        // Invalid item.
+        if (!chargedItem.isPresent()) return;
+
+        if (
+            // Infinity charges hidden.
+            !config.showUnlimited() && chargedItem.get().getCharges().equals("∞") ||
+
+            // Hide overlays in bank.
+            !config.showBankOverlays() && isBankWidget(widgetItem)
+        ) return;
+
+        // Get default charges from charged item.
+        String charges = chargedItem.get().getCharges();
+        Color color = chargedItem.get().getTextColor();
+
+        // Override charges and color for fixed items.
+        for (final TriggerItem item : chargedItem.get().items) {
+            if (item.itemId == itemId && item.fixedCharges.isPresent()) {
+                charges = item.fixedCharges.get() == Charges.UNLIMITED
+                    ? "∞"
+                    : String.valueOf(item.fixedCharges.get());
+                color = item.fixedCharges.get() == 0 ? config.getColorEmpty() : config.getColorDefault();
+            }
+        }
+
+        graphics.setFont(FontManager.getRunescapeSmallFont());
+
+        final Rectangle bounds = widgetItem.getCanvasBounds();
+        final TextComponent charges_component = new TextComponent();
+
+        charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
+        charges_component.setText(charges);
+
+        // Set color.
+        charges_component.setColor(color);
+
+        // Override for bank items.
+        if (isBankWidget(widgetItem) && !chargedItem.get().getCharges().equals("?")) {
+            charges_component.setColor(config.getColorDefault());
+        }
+
+        charges_component.render(graphics);
+
+        // Charged item with storage
+        renderTooltip(chargedItem.get(), widgetItem);
     }
 
     private void renderTooltip(final ChargedItemBase chargedItem, final WidgetItem widgetItem) {

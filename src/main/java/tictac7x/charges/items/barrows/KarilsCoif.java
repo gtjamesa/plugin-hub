@@ -12,7 +12,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class KarilsCoif extends ChargedItem {
@@ -28,7 +27,7 @@ public class KarilsCoif extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ItemKey.BARROWS_GEAR, ItemID.KARILS_COIF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_set, ItemID.KARILS_COIF, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.KARILS_COIF).fixedCharges(100),
             new TriggerItem(ItemID.KARILS_COIF_100).fixedCharges(100),

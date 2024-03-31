@@ -511,8 +511,8 @@ public class ChargesImprovedPlugin extends Plugin {
 			chatMessageManager.queue(QueuedMessage.builder()
 				.type(ChatMessageType.CONSOLE)
 				.runeLiteFormattedMessage(config.showDebugIds()
-					? "<colHIGHLIGHT>Debug information is now enabled. [Item Charges Improved]"
-					: "<colHIGHLIGHT>Debug information is now disabled. [Item Charges Improved]"
+					? "<colHIGHLIGHT>[Item Charges Improved] Debug information is now enabled."
+					: "<colHIGHLIGHT>[Item Charges Improved] Debug information is now disabled."
 				).build()
 			);
 		}

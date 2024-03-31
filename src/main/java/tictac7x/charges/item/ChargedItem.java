@@ -11,16 +11,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
-public class ChargedItem extends ChargedItemBase {
-    public ChargedItem(String configKey, ItemKey itemKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
-        super(configKey, itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
-    }
+import java.util.Optional;
 
-    public ChargedItem(ItemKey itemKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
-        super(itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
+public class ChargedItem extends ChargedItemBase {
+    public ChargedItem(String configKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
+        super(configKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
     }
 
     @Override
@@ -43,8 +40,6 @@ public class ChargedItem extends ChargedItemBase {
     }
 
     public void setCharges(int charges) {
-        if (!configKey.isPresent()) return;
-
         charges =
             // Unlimited
             charges == Charges.UNLIMITED ? charges :
@@ -53,7 +48,7 @@ public class ChargedItem extends ChargedItemBase {
             Math.max(0, charges);
 
         if (this.getChargesFromConfig() != charges) {
-            configManager.setConfiguration(ChargesImprovedConfig.group, configKey.get(), charges);
+            configManager.setConfiguration(ChargesImprovedConfig.group, configKey, charges);
         }
     }
 
@@ -66,11 +61,13 @@ public class ChargedItem extends ChargedItemBase {
     }
 
     private int getChargesFromConfig() {
-        if (configKey.isPresent()) {
-            return Integer.parseInt(configManager.getConfiguration(ChargesImprovedConfig.group, configKey.get()));
+        final Optional<String> charges = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, configKey));
+
+        if (!charges.isPresent()) {
+            return Charges.UNKNOWN;
         }
 
-        return Charges.UNKNOWN;
+        return Integer.parseInt(charges.get());
     }
 }
 

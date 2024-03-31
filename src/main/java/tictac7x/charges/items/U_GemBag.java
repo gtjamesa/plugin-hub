@@ -18,7 +18,6 @@ import tictac7x.charges.item.triggers.OnItemDespawned;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import static tictac7x.charges.store.ItemContainerType.BANK;
@@ -38,7 +37,7 @@ public class U_GemBag extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.gem_bag, ItemKey.GEM_BAG, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.gem_bag, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumIndividualQuantity(60).storeableItems(
             new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire"),
             new StorageItem(ItemID.UNCUT_EMERALD).checkName("Emerald"),

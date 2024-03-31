@@ -19,7 +19,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import java.util.Optional;
@@ -45,7 +44,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.log_basket, ItemKey.LOG_BASKET, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.log_basket, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumTotalQuantity(28).storeableItems(
             new StorageItem(ItemID.LOGS).checkName("Logs"),
             new StorageItem(ItemID.ACHEY_TREE_LOGS).checkName("Achey tree logs"),

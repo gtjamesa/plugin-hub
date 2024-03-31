@@ -17,7 +17,6 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import java.util.Optional;
@@ -35,7 +34,7 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.bottomless_compost_bucket, ItemKey.BOTTOMLESS_COMPOST_BUCKET, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.bottomless_compost_bucket, ItemID.BOTTOMLESS_COMPOST_BUCKET_22997, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.maximumTotalQuantity(10000).storeableItems(
             new StorageItem(ItemID.ULTRACOMPOST).checkName("Ultracompost"),
             new StorageItem(ItemID.SUPERCOMPOST).checkName("Supercompost"),

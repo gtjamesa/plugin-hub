@@ -7,7 +7,6 @@ import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
-import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
@@ -15,13 +14,13 @@ import tictac7x.charges.item.listeners.*;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 import java.awt.Color;
 import java.util.Optional;
 
 public abstract class ChargedItemBase {
+    protected final String configKey;
     protected final Client client;
     protected final ClientThread clientThread;
     protected final ItemManager itemManager;
@@ -34,8 +33,6 @@ public abstract class ChargedItemBase {
     public final Store store;
 
     public int itemId;
-    public final ItemKey itemKey;
-    public final Optional<String> configKey;
 
     public TriggerItem[] items = new TriggerItem[]{};
     public TriggerBase[] triggers = new TriggerBase[]{};
@@ -55,17 +52,8 @@ public abstract class ChargedItemBase {
     private boolean inInventory = false;
     private boolean inEquipment = false;
 
-    public ChargedItemBase(final String configKey, final ItemKey itemKey, final int itemId, final Client client, final ClientThread clientThread, final ConfigManager configManager, final ItemManager itemManager, final InfoBoxManager infoBoxManager, final ChatMessageManager chatMessageManager, final Notifier notifier, final ChargesImprovedConfig config, final Store store) {
-        this(Optional.of(configKey), itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
-    }
-
-    public ChargedItemBase(final ItemKey itemKey, final int itemId, final Client client, final ClientThread clientThread, final ConfigManager configManager, final ItemManager itemManager, final InfoBoxManager infoBoxManager, final ChatMessageManager chatMessageManager, final Notifier notifier, final ChargesImprovedConfig config, final Store store) {
-        this(Optional.empty(), itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
-    }
-
     public ChargedItemBase(
-        final Optional<String> configKey,
-        final ItemKey itemKey,
+        final String configKey,
         final int itemId,
         final Client client,
         final ClientThread clientThread,
@@ -77,7 +65,6 @@ public abstract class ChargedItemBase {
         final ChargesImprovedConfig config,
         final Store store
     ) {
-        this.itemKey = itemKey;
         this.itemId = itemId;
         this.configKey = configKey;
 
@@ -102,6 +89,26 @@ public abstract class ChargedItemBase {
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
+    }
+
+    public boolean isInfoboxVisible() {
+        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, configKey + "_infobox"));
+
+        if (visible.isPresent() && visible.get().equals("false")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean isOverlayVisible() {
+        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, configKey + "_overlay"));
+
+        if (visible.isPresent() && visible.get().equals("false")) {
+            return false;
+        }
+
+        return true;
     }
 
     public abstract String getCharges();

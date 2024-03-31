@@ -14,7 +14,6 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class U_CoalBag extends ChargedItemWithStorage {
@@ -30,7 +29,7 @@ public class U_CoalBag extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.coal_bag, ItemKey.COAL_BAG, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.coal_bag, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.storage = storage
             .storeableItems(new StorageItem(ItemID.COAL).checkName("Coal"))
             .maximumTotalQuantity(27)

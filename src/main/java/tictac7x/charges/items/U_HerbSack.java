@@ -19,7 +19,6 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.ReplaceTarget;
 import tictac7x.charges.store.Store;
 
@@ -39,7 +38,7 @@ public class U_HerbSack extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.herb_sack, ItemKey.HERB_SACK, ItemID.HERB_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.herb_sack, ItemID.HERB_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.maximumIndividualQuantity(30).storeableItems(
             new StorageItem(ItemID.GRIMY_GUAM_LEAF).checkName("Guam leaf"),
             new StorageItem(ItemID.GRIMY_MARRENTILL).checkName("Marrentill"),
