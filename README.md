@@ -13,12 +13,6 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Armor sets
 
 - [x] Barrows gear
-  - [x] Ahrim
-  - [x] Dharok
-  - [x] Guthan
-  - [x] Karil
-  - [x] Torag
-  - [x] Verac
 - [x] Crystal armor
 
 ### Weapons
@@ -26,12 +20,15 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Arclight
 - [x] Bryophyta's staff
 - [x] Crystal bow
+- [x] Crystal halberd
+- [x] Enchanted Lyre
 - [x] Iban's staff
 - [x] Pharaoh's sceptre
 - [x] Sanguinesti Staff
 - [x] Skull sceptre
 - [x] Slayer staff (e)
 - [x] Trident of the seas / swamp
+- [x] Warped Sceptre
 
 ### Shields
 
@@ -43,6 +40,9 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Tome of fire
 - [x] Tome of water
 
+### Boots
+- [x] Fremennik sea boots
+
 ### Helms
 
 - [x] Circlet of water
@@ -52,6 +52,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 - [x] Ardougle Cloak
 - [x] Coffin
+- [x] Forestry kit
 - [x] Magic Cape
 
 ### Jewellery
@@ -65,12 +66,14 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Escape crystal
 - [x] Necklace of passage
 - [x] Necklace of phoenix
+- [x] Necklace of dodgy
 - [x] Ring of celestial
 - [x] Ring of elements
+- [x] Ring of explorer
 - [x] Ring of recoil
-- [x] Ring of suffering
 - [x] Ring of shadows
 - [x] Ring of slayer
+- [x] Ring of suffering
 - [x] Xeric's talisman
 
 ### Utilities
@@ -79,6 +82,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bonecrusher
 - [x] Bottomless compost bucket
 - [x] Coal bag
+- [x] Crystal saw
 - [x] Fish barrel
 - [x] Fungicide spray
 - [x] Gem bag
@@ -90,5 +94,6 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Seed box
 - [x] Soul bearer
 - [x] Strange old lockpick
+- [x] Tackle box
 - [x] Teleport crystal
 - [x] Waterskins

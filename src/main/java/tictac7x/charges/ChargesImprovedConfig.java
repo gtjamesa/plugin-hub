@@ -113,7 +113,7 @@ public interface ChargesImprovedConfig extends Config {
         @ConfigItem(
             keyName = "menu_replacements",
             name = "Unify menu entries",
-            description = "Replace obscure menu entries like \"Reminisce\" and \"Divine\" with \"Teleport\" and \"Check\". Also show herb patches names.",
+            description = "Replace obscure menu entries like \"Reminisce\" and \"Divine\" with \"Teleport\" and \"Check\" and show detailed herb patches names.",
             position = 3,
             section = general
         ) default boolean useCommonMenuEntries() { return true; }

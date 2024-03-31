@@ -12,15 +12,15 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.triggers.OnResetDaily;
+import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.item.triggers.TriggerItem;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Store {
     private final Client client;
@@ -30,6 +30,7 @@ public class Store {
     private int gametick = 0;
     private int gametick_before = 0;
 
+    private Optional<ChargedItemBase[]> chargedItems = Optional.empty();
     public Optional<ItemContainer> inventory = Optional.empty();
     public Optional<ItemContainer> equipment = Optional.empty();
     public Optional<ItemContainer> bank = Optional.empty();
@@ -46,18 +47,16 @@ public class Store {
         this.configManager = configManager;
     }
 
+    public void setChargedItems(final ChargedItemBase[] chargedItems) {
+        this.chargedItems = Optional.of(chargedItems);
+    }
+
     public Optional<Integer> getSkillXp(final Skill skill) {
         if (skillsXp.containsKey(skill)) {
             return Optional.of(skillsXp.get(skill));
         }
 
         return Optional.empty();
-    }
-
-    public int getXpDrop(final Skill skill, final int xp) {
-        if (!skillsXp.containsKey(skill)) return 0;
-
-        return xp - skillsXp.get(skill);
     }
 
     public int getInventoryPreviouslyEmptySlots() {
@@ -271,22 +270,43 @@ public class Store {
     }
 
     private void updateStorage(final ItemContainerChanged event) {
-        if (
-            event.getContainerId() != InventoryID.INVENTORY.getId() &&
-            event.getContainerId() != InventoryID.BANK.getId() &&
-            event.getContainerId() != InventoryID.EQUIPMENT.getId()
-        ) {
-            return;
-        }
+        if (event.getContainerId() != InventoryID.BANK.getId()) return;
 
         // Get all previous items.
-        final Set<Integer> items = getAllItems();
+        Set<Integer> items = getAllItems();
 
         // Update items.
         for (final Item item : event.getItemContainer().getItems()) {
             if (item.getId() != -1) {
                 items.add(item.getId());
             }
+        }
+
+        // We need to know only about items that have daily resets defined.
+        if (chargedItems.isPresent()) {
+            items = items.stream().filter(
+                item -> {
+                    for (final ChargedItemBase chargedItem : chargedItems.get()) {
+                        boolean validItem = false;
+                        for (final TriggerItem triggerItem : chargedItem.items) {
+                            if (triggerItem.itemId == item) {
+                                validItem = true;
+                                break;
+                            }
+                        }
+
+                        if (validItem) {
+                            for (final TriggerBase trigger : chargedItem.triggers) {
+                                if (trigger instanceof OnResetDaily) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+
+                    return false;
+                }
+            ).collect(Collectors.toSet());
         }
 
         final StringBuilder storage = new StringBuilder();
@@ -321,9 +341,5 @@ public class Store {
         }
 
         return false;
-    }
-
-    public int getInventoryQuantity() {
-        return currentItems.size();
     }
 }
