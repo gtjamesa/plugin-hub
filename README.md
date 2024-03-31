@@ -21,14 +21,15 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Bryophyta's staff
 - [x] Crystal bow
 - [x] Crystal halberd
-- [x] Enchanted Lyre
+- [x] Enchanted lyre
 - [x] Iban's staff
 - [x] Pharaoh's sceptre
-- [x] Sanguinesti Staff
+- [x] Sanguinesti staff
 - [x] Skull sceptre
 - [x] Slayer staff (e)
 - [x] Trident of the seas / swamp
-- [x] Warped Sceptre
+- [x] Warped sceptre
+- [x] Western banner
 
 ### Shields
 
@@ -36,7 +37,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Crystal shield
 - [x] Dragonfire shield / ward
 - [x] Falador shield
-- [x] Kharedst's Memoirs / Book of the Dead
+- [x] Kharedst's memoirs / Book of the dead
 - [x] Tome of fire
 - [x] Tome of water
 
@@ -46,14 +47,14 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Helms
 
 - [x] Circlet of water
-- [x] Kandarin Headgear
+- [x] Kandarin headgear
 
 ### Capes
 
-- [x] Ardougle Cloak
+- [x] Ardougle cloak
 - [x] Coffin
 - [x] Forestry kit
-- [x] Magic Cape
+- [x] Magic cape
 
 ### Jewellery
 
