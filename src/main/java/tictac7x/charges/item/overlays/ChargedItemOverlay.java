@@ -17,9 +17,7 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.item.triggers.TriggerItem;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
@@ -60,33 +58,38 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
     public void renderItemOverlay(final Graphics2D graphics, final int itemId, final WidgetItem widgetItem) {
         if (!config.showItemOverlays()) return;
 
-        for (final ChargedItemBase charged_item : chargedItems) {
-            if (
-                config.getHiddenItemOverlays().contains(charged_item.itemKey) ||
-                charged_item.getCharges().equals("∞") ||
-                !config.showBankOverlays() && isBankWidget(widgetItem)
-            ) continue;
-
-            TriggerItem trigger_item_to_use = null;
-            for (final TriggerItem trigger_item : charged_item.items) {
-                if (trigger_item.itemId == itemId && !trigger_item.hideOverlay.isPresent()) {
-                    trigger_item_to_use = trigger_item;
+        for (final ChargedItemBase chargedItem : chargedItems) {
+            boolean validItem = false;
+            for (final TriggerItem triggerItem : chargedItem.items) {
+                if (triggerItem.itemId == itemId) {
+                    validItem = true;
                     break;
                 }
             }
+            if (!validItem) continue;
+
             if (
-                trigger_item_to_use == null ||
-                trigger_item_to_use.fixedCharges.isPresent() && trigger_item_to_use.fixedCharges.get() == Charges.UNLIMITED
+                // Item overlay hidden.
+                config.getHiddenItemOverlays().contains(chargedItem.itemKey) ||
+
+                // Infinity charges hidden.
+                !config.showUnlimited() && chargedItem.getCharges().equals("∞") ||
+
+                // Hide overlays in bank.
+                !config.showBankOverlays() && isBankWidget(widgetItem)
             ) continue;
 
-
             // Get default charges from charged item.
-            String charges = charged_item.getCharges();
+            String charges = chargedItem.getCharges();
+            Color color = chargedItem.getTextColor();
 
-            // Override charged item with fixed charges item.
-            for (final TriggerItem item : charged_item.items) {
+            // Override charges and color for fixed items.
+            for (final TriggerItem item : chargedItem.items) {
                 if (item.itemId == itemId && item.fixedCharges.isPresent()) {
-                    charges = String.valueOf(item.fixedCharges.get());
+                    charges = item.fixedCharges.get() == Charges.UNLIMITED
+                        ? "∞"
+                        : String.valueOf(item.fixedCharges.get());
+                    color = item.fixedCharges.get() == 0 ? config.getColorEmpty() : config.getColorDefault();
                 }
             }
 
@@ -99,17 +102,17 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             charges_component.setText(charges);
 
             // Set color.
-            charges_component.setColor(charged_item.getTextColor());
+            charges_component.setColor(color);
 
             // Override for bank items.
-            if (isBankWidget(widgetItem) && !charged_item.getCharges().equals("?")) {
+            if (isBankWidget(widgetItem) && !chargedItem.getCharges().equals("?")) {
                 charges_component.setColor(config.getColorDefault());
             }
 
             charges_component.render(graphics);
 
             // Charged item with storage
-            renderTooltip(charged_item, widgetItem);
+            renderTooltip(chargedItem, widgetItem);
 
             return;
         }

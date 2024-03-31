@@ -86,6 +86,7 @@ public interface ChargesImprovedConfig extends Config {
     String plank_sack = "plank_sack";
     String slayer_staff_e = "slayer_staff_e";
     String warped_sceptre = "warped_sceptre";
+    String crystal_saw = "crystal_saw";
 
     @ConfigSection(
         name = "General",
@@ -111,8 +112,8 @@ public interface ChargesImprovedConfig extends Config {
 
         @ConfigItem(
             keyName = "menu_replacements",
-            name = "Common menu entries",
-            description = "Use common menu entries like \"Teleport\" and \"Check\"",
+            name = "Unify menu entries",
+            description = "Replace obscure menu entries like \"Reminisce\" and \"Divine\" with \"Teleport\" and \"Check\". Also show herb patches names.",
             position = 3,
             section = general
         ) default boolean useCommonMenuEntries() { return true; }
@@ -124,6 +125,14 @@ public interface ChargesImprovedConfig extends Config {
             position = 4,
             section = general
         ) default boolean hideDestroy() { return true; }
+
+        @ConfigItem(
+            keyName = "show_unlimited_charges",
+            name = "Show unlimited charges",
+            description = "Show infinity symbol for items with unlimited charges",
+            position = 5,
+            section = general
+        ) default boolean showUnlimited() { return true; }
 
     @ConfigSection(
         name = "Colors",
@@ -685,4 +694,11 @@ public interface ChargesImprovedConfig extends Config {
             description = warped_sceptre,
             section = debug
         ) default int getWarpedSceptreCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = crystal_saw,
+            name = crystal_saw,
+            description = crystal_saw,
+            section = debug
+        ) default int getCrystalSawCharges() { return Charges.UNKNOWN; }
 }

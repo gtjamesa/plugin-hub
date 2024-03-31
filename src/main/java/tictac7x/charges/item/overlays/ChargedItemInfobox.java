@@ -7,6 +7,7 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemBase;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 
 import java.awt.Color;
@@ -60,12 +61,16 @@ public class ChargedItemInfobox extends InfoBox {
     public boolean render() {
         updateInfobox();
 
-        return (
-            config.showInfoboxes() &&
-            !config.getHiddenInfoboxes().contains(chargedItem.itemKey) &&
-            !chargedItem.getCharges().equals("∞") &&
-            (chargedItem.inInventory() || chargedItem.isEquipped())
-        );
+        if (
+            !config.showInfoboxes() ||
+            config.getHiddenInfoboxes().contains(chargedItem.itemKey) ||
+            chargedItem.getCharges().equals("∞") && !config.showUnlimited() ||
+            (!chargedItem.inInventory() && !chargedItem.isEquipped())
+        ) {
+            return false;
+        }
+
+        return true;
     }
 
     private void updateInfobox() {

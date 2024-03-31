@@ -102,21 +102,9 @@ public abstract class ChargedItemBase {
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
-
-        clientThread.invokeLater(() -> {
-            loadCharges();
-        });
     }
 
-
-    public String getCharges() {
-        final Optional<TriggerItem> currentItem = getCurrentItem();
-        if (currentItem.isPresent() && currentItem.get().fixedCharges.isPresent()) {
-            return String.valueOf(currentItem.get().fixedCharges.get());
-        }
-
-        return "?";
-    }
+    public abstract String getCharges();
 
     public boolean inInventory() {
         return inInventory;
@@ -125,8 +113,6 @@ public abstract class ChargedItemBase {
     public boolean isEquipped() {
         return inEquipment;
     }
-
-    public abstract void loadCharges();
 
     Optional<TriggerItem> getCurrentItem() {
         for (final TriggerItem triggerItem : items) {

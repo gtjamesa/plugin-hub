@@ -15,8 +15,6 @@ import tictac7x.charges.store.ItemKey;
 import tictac7x.charges.store.Store;
 
 public class ChargedItem extends ChargedItemBase {
-    public int charges = Charges.UNKNOWN;
-
     public ChargedItem(String configKey, ItemKey itemKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
         super(configKey, itemKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
     }
@@ -27,49 +25,52 @@ public class ChargedItem extends ChargedItemBase {
 
     @Override
     public String getCharges() {
-        if (charges >= 0) {
-            return getChargesMinified(charges);
+        for (final TriggerItem triggerItem : items) {
+            if (triggerItem.itemId == itemId && triggerItem.fixedCharges.isPresent()) {
+                return getChargesMinified(triggerItem.fixedCharges.get());
+            }
         }
 
-        if (charges == Charges.UNLIMITED) {
+        if (getChargesFromConfig() == Charges.UNLIMITED) {
             return "∞";
         }
 
-        return super.getCharges();
-    }
-
-    @Override
-    public void loadCharges() {
-        if (configKey.isPresent()) {
-            try {
-                charges = Integer.parseInt(configManager.getConfiguration(ChargesImprovedConfig.group, configKey.get()));
-            } catch (final Exception ignored) {}
+        if (getChargesFromConfig() >= 0) {
+            return getChargesMinified(getChargesFromConfig());
         }
+
+        return "?";
     }
 
-    public void setCharges(final int charges) {
-        final int newCharges =
+    public void setCharges(int charges) {
+        if (!configKey.isPresent()) return;
+
+        charges =
             // Unlimited
             charges == Charges.UNLIMITED ? charges :
 
             // 0 -> charges
             Math.max(0, charges);
 
-        if (this.charges != newCharges) {
-            this.charges = newCharges;
-
-            if (configKey.isPresent()) {
-                configManager.setConfiguration(ChargesImprovedConfig.group, configKey.get(), this.charges);
-            }
+        if (this.getChargesFromConfig() != charges) {
+            configManager.setConfiguration(ChargesImprovedConfig.group, configKey.get(), charges);
         }
     }
 
     public void decreaseCharges(final int charges) {
-        setCharges(this.charges - charges);
+        setCharges(this.getChargesFromConfig() - charges);
     }
 
     public void increaseCharges(final int charges) {
-        setCharges(this.charges + charges);
+        setCharges(this.getChargesFromConfig() + charges);
+    }
+
+    private int getChargesFromConfig() {
+        if (configKey.isPresent()) {
+            return Integer.parseInt(configManager.getConfiguration(ChargesImprovedConfig.group, configKey.get()));
+        }
+
+        return Charges.UNKNOWN;
     }
 }
 
