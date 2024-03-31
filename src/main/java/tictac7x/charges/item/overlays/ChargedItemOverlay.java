@@ -2,6 +2,7 @@ package tictac7x.charges.item.overlays;
 
 import net.runelite.api.Client;
 import net.runelite.api.widgets.WidgetItem;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.FontManager;
 import net.runelite.client.ui.JagexColors;
@@ -24,6 +25,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
     private final TooltipManager tooltipManager;
     private final ItemManager itemManager;
+    private final ConfigManager configManager;
     private final ChargesImprovedConfig config;
     private final ChargedItemBase[] chargedItems;
 
@@ -31,12 +33,14 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         final Client client,
         final TooltipManager tooltipManager,
         final ItemManager itemManager,
+        final ConfigManager configManager,
         final ChargesImprovedConfig config,
         final ChargedItemBase[] chargedItems
     ) {
         this.client = client;
         this.tooltipManager = tooltipManager;
         this.itemManager = itemManager;
+        this.configManager = configManager;
         this.config = config;
         this.chargedItems = chargedItems;
         showOnInventory();
@@ -58,23 +62,29 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int itemId, final WidgetItem widgetItem) {
         Optional<ChargedItemBase> chargedItem = Optional.empty();
+        Optional<TriggerItem> triggerItem = Optional.empty();
 
         // Find correct charged item.
         chargedItemFinder: for (final ChargedItemBase chargedItemBase : chargedItems) {
-            for (final TriggerItem triggerItem : chargedItemBase.items) {
-                if (triggerItem.itemId == itemId) {
+            for (final TriggerItem chargedItemTriggerItem : chargedItemBase.items) {
+                if (chargedItemTriggerItem.itemId == itemId) {
                     chargedItem = Optional.of(chargedItemBase);
+                    triggerItem = Optional.of(chargedItemTriggerItem);
                     break chargedItemFinder;
                 }
             }
         }
 
         // Invalid item.
-        if (!chargedItem.isPresent()) return;
+        if (!chargedItem.isPresent() || !triggerItem.isPresent()) return;
 
         if (
+            // Item overlay disabled.
+            !isChargedItemOverlayEnabled(chargedItem.get()) ||
+
             // Infinity charges hidden.
             !config.showUnlimited() && chargedItem.get().getCharges().equals("∞") ||
+            !config.showUnlimited() && triggerItem.get().fixedCharges.isPresent() && triggerItem.get().fixedCharges.get().equals(Charges.UNLIMITED) ||
 
             // Hide overlays in bank.
             !config.showBankOverlays() && isBankWidget(widgetItem)
@@ -140,5 +150,15 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         if (!tooltip.isEmpty()) {
             tooltipManager.addFront(new Tooltip(tooltip));
         }
+    }
+
+    private boolean isChargedItemOverlayEnabled(final ChargedItemBase chargedItem) {
+        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, chargedItem.configKey + "_overlay"));
+
+        if (visible.isPresent() && visible.get().equals("false")) {
+            return false;
+        }
+
+        return true;
     }
 }

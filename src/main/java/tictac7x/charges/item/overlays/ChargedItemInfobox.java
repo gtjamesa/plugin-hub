@@ -1,6 +1,7 @@
 package tictac7x.charges.item.overlays;
 
 import net.runelite.client.callback.ClientThread;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
@@ -11,12 +12,14 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 
 import java.awt.Color;
+import java.util.Optional;
 
 public class ChargedItemInfobox extends InfoBox {
     private final ChargedItemBase chargedItem;
     private final ItemManager items;
     private final InfoBoxManager infoboxes;
     private final ChargesImprovedConfig config;
+    private final ConfigManager configManager;
 
     private int itemId;
     private String tooltip = "";
@@ -24,15 +27,16 @@ public class ChargedItemInfobox extends InfoBox {
     public ChargedItemInfobox(
         final ChargedItemBase chargedItem,
         final ItemManager items,
-        final InfoBoxManager infoboxes,
-        final ClientThread clientThread,
+        final InfoBoxManager infoBoxManager,
+        final ConfigManager configManager,
         final ChargesImprovedConfig config,
         final ChargesImprovedPlugin plugin
     ) {
         super(items.getImage(chargedItem.itemId), plugin);
         this.chargedItem = chargedItem;
         this.items = items;
-        this.infoboxes = infoboxes;
+        this.infoboxes = infoBoxManager;
+        this.configManager = configManager;
         this.config = config;
         this.itemId = chargedItem.itemId;
     }
@@ -62,7 +66,7 @@ public class ChargedItemInfobox extends InfoBox {
         updateInfobox();
 
         if (
-            !chargedItem.isInfoboxVisible() ||
+            !isChargedItemInfoboxEnabled() ||
             chargedItem.getCharges().equals("∞") && !config.showUnlimited() ||
             (!chargedItem.inInventory() && !chargedItem.isEquipped())
         ) {
@@ -86,6 +90,16 @@ public class ChargedItemInfobox extends InfoBox {
         tooltip =
             chargedItem.getItemName() +
             (chargedItem.needsToBeEquipped() && !chargedItem.isEquipped() ? " (needs to be equipped)" : "");
+    }
+
+    private boolean isChargedItemInfoboxEnabled() {
+        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, chargedItem.configKey + "_infobox"));
+
+        if (visible.isPresent() && visible.get().equals("false")) {
+            return false;
+        }
+
+        return true;
     }
 }
 

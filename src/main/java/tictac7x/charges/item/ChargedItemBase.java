@@ -1,7 +1,9 @@
 package tictac7x.charges.item;
 
 import net.runelite.api.Client;
+import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
+import net.runelite.api.ItemContainer;
 import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -20,7 +22,7 @@ import java.awt.Color;
 import java.util.Optional;
 
 public abstract class ChargedItemBase {
-    protected final String configKey;
+    public final String configKey;
     protected final Client client;
     protected final ClientThread clientThread;
     protected final ItemManager itemManager;
@@ -89,26 +91,6 @@ public abstract class ChargedItemBase {
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
-    }
-
-    public boolean isInfoboxVisible() {
-        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, configKey + "_infobox"));
-
-        if (visible.isPresent() && visible.get().equals("false")) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean isOverlayVisible() {
-        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, configKey + "_overlay"));
-
-        if (visible.isPresent() && visible.get().equals("false")) {
-            return false;
-        }
-
-        return true;
     }
 
     public abstract String getCharges();
@@ -219,15 +201,23 @@ public abstract class ChargedItemBase {
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
-        chargedItemIdChecker: for (final Item item : event.getItemContainer().getItems()) {
+        // Only check inventory.
+        if (event.getItemContainer().getId() != InventoryID.INVENTORY.getId()) return;
+
+        // Find best id for item to use.
+        for (final Item item : event.getItemContainer().getItems()) {
+            boolean itemFound = false;
             for (final TriggerItem triggerItem : items) {
-                if (triggerItem.itemId == item.getId() && !triggerItem.fixedCharges.isPresent()) {
+                if (item.getId() == triggerItem.itemId) {
                     this.itemId = item.getId();
-                    break chargedItemIdChecker;
+                    itemFound = true;
                 }
             }
+
+            if (itemFound) break;
         }
 
+        // Update inventory and equipment statuses.
         inInventory = store.inventoryContainsItem(itemId);
         inEquipment = store.equipmentContainsItem(itemId);
 

@@ -316,12 +316,12 @@ public class ChargesImprovedPlugin extends Plugin {
 		store.setChargedItems(chargedItems);
 
 		// Items overlays.
-		overlayChargedItems = new ChargedItemOverlay(client, tooltipManager, itemManager, config, chargedItems);
+		overlayChargedItems = new ChargedItemOverlay(client, tooltipManager, itemManager, configManager, config, chargedItems);
 		overlayManager.add(overlayChargedItems);
 
 		// Items infoboxes.
 		chargedItemsInfoboxes.clear();
-		Arrays.stream(chargedItems).forEach(chargedItem -> chargedItemsInfoboxes.add(new ChargedItemInfobox(chargedItem, itemManager, infoBoxManager, clientThread, config, this)));
+		Arrays.stream(chargedItems).forEach(chargedItem -> chargedItemsInfoboxes.add(new ChargedItemInfobox(chargedItem, itemManager, infoBoxManager, configManager, config, this)));
 		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoBoxManager.addInfoBox(chargedItemInfobox));
 	}
 
