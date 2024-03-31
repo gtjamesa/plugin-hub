@@ -80,6 +80,7 @@ public interface ChargesImprovedConfig extends Config {
     String herb_sack = "herb_sack";
     String strange_old_lockpick = "strange_old_lockpick";
     String desert_amulet = "desert_amulet";
+    String western_banner = "western_banner";
     String tome_of_fire = "tome_of_fire";
     String tome_of_water = "tome_of_water";
     String necklace_of_dodgy = "dodgy_necklace";
@@ -186,6 +187,13 @@ public interface ChargesImprovedConfig extends Config {
         position = 3,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
+
+        @ConfigItem(
+            keyName = western_banner + "_infobox",
+            name = "Western banner",
+            description = "",
+            section = infoboxes
+        ) default boolean westernBannerInfobox() { return true; }
 
         @ConfigItem(
             keyName = barrows_set + "_infobox",
@@ -783,6 +791,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean braceletOfSlaughterOverlay() { return true; }
 
         @ConfigItem(
+            keyName = western_banner + "_overlay",
+            name = "Western banner",
+            description = "",
+            section = overlays
+        ) default boolean westernBannerOverlay() { return true; }
+
+        @ConfigItem(
             keyName = camulet + "_overlay",
             name = "Camulet",
             description = "",
@@ -1213,12 +1228,12 @@ public interface ChargesImprovedConfig extends Config {
             section = debug
         ) default int getAshSanctifierCharges() { return Charges.UNKNOWN; }
 
-            @ConfigItem(
+        @ConfigItem(
             keyName = ash_sanctifier_status,
             name = ash_sanctifier_status,
             description = ash_sanctifier_status,
             section = debug
-            ) default ItemActivity getAshSanctifierStatus() { return ItemActivity.ACTIVATED; }
+        ) default ItemActivity getAshSanctifierStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
             keyName = bonecrusher,
@@ -1227,12 +1242,12 @@ public interface ChargesImprovedConfig extends Config {
             section = debug
         ) default int getBoneCrusherCharges() { return Charges.UNKNOWN; }
 
-            @ConfigItem(
+        @ConfigItem(
             keyName = bone_crusher_status,
             name = bone_crusher_status,
             description = bone_crusher_status,
             section = debug
-            ) default ItemActivity getBoneCrusherStatus() { return ItemActivity.ACTIVATED; }
+        ) default ItemActivity getBoneCrusherStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
             keyName = kharedsts_memoirs,
@@ -1346,12 +1361,12 @@ public interface ChargesImprovedConfig extends Config {
             section = debug
         ) default int getRingOfSufferingCharges() { return Charges.UNKNOWN; }
 
-            @ConfigItem(
+        @ConfigItem(
             keyName = ring_of_suffering_status,
             name = ring_of_suffering_status,
             description = ring_of_suffering_status,
             section = debug
-            ) default ItemActivity getRingOfSufferingStatus() { return ItemActivity.ACTIVATED; }
+        ) default ItemActivity getRingOfSufferingStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
             keyName = sanguinesti_staff,
