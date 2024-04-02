@@ -27,7 +27,7 @@ public class DharoksPlatelegs extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.barrows_set, ItemID.DHAROKS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_gear, ItemID.DHAROKS_PLATELEGS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DHAROKS_PLATELEGS).fixedCharges(100),
             new TriggerItem(ItemID.DHAROKS_PLATELEGS_100).fixedCharges(100),

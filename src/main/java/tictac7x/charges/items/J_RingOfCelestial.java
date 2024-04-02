@@ -29,7 +29,7 @@ public class J_RingOfCelestial extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ring_of_celestial, ItemID.CELESTIAL_RING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.celestial_ring, ItemID.CELESTIAL_RING, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CELESTIAL_RING_UNCHARGED).fixedCharges(0),

@@ -27,7 +27,7 @@ public class VeracsBrassard extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.barrows_set, ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_gear, ItemID.VERACS_BRASSARD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_BRASSARD).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_BRASSARD_100).fixedCharges(100),

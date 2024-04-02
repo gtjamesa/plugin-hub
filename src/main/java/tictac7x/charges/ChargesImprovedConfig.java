@@ -16,82 +16,81 @@ public interface ChargesImprovedConfig extends Config {
     String date = "date";
     String debug_ids = "debug_ids";
 
-    String barrows_set = "barrows_set";
-    String ogre_bellows = "ogre_bellows";
-    String ring_of_slayer = "slayer_ring";
-    String forestry_kit = "forestry_kit";
-    String necklace_of_passage = "necklage_of_passage";
-    String necklace_of_phoenix = "necklage_of_phoenix";
-    String fungicide_spray = "fungicide_spray";
-    String tackle_box = "tackle_box";
-    String waterskin = "waterskin";
-
     String arclight = "arclight";
+    String ardougne_cloak = "ardougne_cloak";
     String ash_sanctifier = "ash_sanctifier";
     String ash_sanctifier_status = "ash_sanctifier_status";
-    String bonecrusher = "bone_crusher";
-    String bone_crusher_status = "bone_crusher_status";
-    String kharedsts_memoirs = "kharedsts_memoirs";
+    String barrows_gear = "barrows_gear";
+    String bonecrusher = "bonecrusher";
+    String bonecrusher_status = "bonecrusher_status";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
     String bottomless_compost_bucket_type = "bottomless_compost_bucket_type";
+    String bracelet_of_clay = "bracelet_of_clay";
+    String bracelet_of_expeditious = "bracelet_of_expeditious";
+    String bracelet_of_flamtaer = "bracelet_of_flamtaer";
     String bracelet_of_slaughter = "bracelet_of_slaughter";
     String bryophytas_staff = "bryophytas_staff";
-    String ring_of_celestial = "celestial_ring";
-    String ring_of_the_elements = "ring_of_elements";
-    String escape_crystal = "escape_crystal";
-    String escape_crystal_status = "escape_crystal_status";
+    String camulet = "camulet";
+    String celestial_ring = "celestial_ring";
     String chronicle = "chronicle";
-    String crystal_shield = "crystal_shield";
+    String circlet_of_water = "circlet_of_water";
+    String coal_bag = "coal_bag";
+    String coffin = "coffin";
+    String crystal_body = "crystal_body";
     String crystal_bow = "crystal_bow";
     String crystal_halberd = "crystal_halberd";
-    String bracelet_of_expeditious = "expeditious_bracelet";
+    String crystal_helm = "crystal_helm";
+    String crystal_legs = "crystal_legs";
+    String crystal_saw = "crystal_saw";
+    String crystal_shield = "crystal_shield";
+    String desert_amulet = "desert_amulet";
+    String dodgy_necklace = "dodgy_necklace";
+    String dragonfire_shield = "dragonfire_shield";
+    String enchanted_lyre = "enchanted_lyre";
+    String escape_crystal = "escape_crystal";
+    String escape_crystal_status = "escape_crystal_status";
+    String explorers_ring = "explorers_ring";
     String falador_shield = "falador_shield";
     String fish_barrel = "fish_barrel";
+    String forestry_kit = "forestry_kit";
+    String fremennik_sea_boots = "fremennik_sea_boots";
+    String fungicide_spray = "fungicide_spray";
+    String gem_bag = "gem_bag";
     String gricollers_can = "gricollers_can";
+    String herb_sack = "herb_sack";
     String ibans_staff = "ibans_staff";
+    String jar_generator = "jar_generator";
+    String kandarin_headgear = "kandarin_headgear";
+    String kharedsts_memoirs = "kharedsts_memoirs";
+    String log_basket = "log_basket";
+    String magic_cape = "magic_cape";
+    String necklace_of_passage = "necklage_of_passage";
+    String ogre_bellows = "ogre_bellows";
     String pharaohs_sceptre = "pharaohs_sceptre";
+    String phoenix_necklace = "phoenix_necklace";
+    String plank_sack = "plank_sack";
+    String ring_of_recoil = "ring_of_recoil";
+    String ring_of_shadows = "ring_of_shadows";
     String ring_of_suffering = "ring_of_suffering";
     String ring_of_suffering_status = "ring_of_suffering_status";
+    String ring_of_the_elements = "ring_of_the_elements";
     String sanguinesti_staff = "sanguinesti_staff";
-    String skull_sceptre = "skull_sceptre";
-    String enchanted_lyre = "enchanted_lyre";
-    String soul_bearer = "soul_bearer";
-    String trident_of_the_seas = "trident_of_the_seas";
-    String xerics_talisman = "xerics_talisman";
-    String dragonfire_shield = "dragonfire_shield";
-    String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
-    String camulet = "camulet";
-    String circlet_of_water = "circlet_of_water";
-    String teleport_crystal = "teleport_crystal";
-    String bracelet_of_clay = "bracelet_of_clay";
-    String coffin = "coffin";
-    String bracelet_of_flamtaer = "bracelet_of_flamtaer";
-    String ring_of_recoil = "ring_of_recoil";
-    String log_basket = "log_basket";
-    String ardougne_cloak = "ardougne_cloak";
-    String magic_cape = "magic_cape";
-    String gem_bag = "gem_bag";
     String seed_box = "seed_box";
-    String crystal_helm = "crystal_helm";
-    String crystal_body = "crystal_body";
-    String crystal_legs = "crystal_legs";
-    String ring_of_shadows = "ring_of_shadows";
-    String coal_bag = "coal_bag";
-    String herb_sack = "herb_sack";
+    String skull_sceptre = "skull_sceptre";
+    String slayer_ring = "slayer_ring";
+    String slayer_staff_e = "slayer_staff_e";
+    String soul_bearer = "soul_bearer";
     String strange_old_lockpick = "strange_old_lockpick";
-    String desert_amulet = "desert_amulet";
-    String western_banner = "western_banner";
+    String tackle_box = "tackle_box";
+    String teleport_crystal = "teleport_crystal";
     String tome_of_fire = "tome_of_fire";
     String tome_of_water = "tome_of_water";
-    String necklace_of_dodgy = "dodgy_necklace";
-    String kandarin_headgear = "kandarin_headgear";
-    String fremennik_sea_boots = "fremennik_sea_boots";
-    String jar_generator = "jar_generator";
-    String ring_of_explorers = "explorers_ring";
-    String plank_sack = "plank_sack";
-    String slayer_staff_e = "slayer_staff_e";
+    String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
+    String trident_of_the_seas = "trident_of_the_seas";
+    String xerics_talisman = "xerics_talisman";
     String warped_sceptre = "warped_sceptre";
-    String crystal_saw = "crystal_saw";
+    String waterskin = "waterskin";
+    String western_banner = "western_banner";
 
     @ConfigSection(
         name = "General",
@@ -196,7 +195,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean westernBannerInfobox() { return true; }
 
         @ConfigItem(
-            keyName = barrows_set + "_infobox",
+            keyName = barrows_gear + "_infobox",
             name = "Barrows set",
             description = "",
             section = infoboxes
@@ -322,7 +321,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean escapeCrystalInfobox() { return true; }
 
         @ConfigItem(
-            keyName = necklace_of_dodgy + "_infobox",
+            keyName = dodgy_necklace + "_infobox",
             name = "Dodgy necklace",
             description = "",
             section = infoboxes
@@ -336,14 +335,14 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean necklaceOfPassageInfobox() { return true; }
 
         @ConfigItem(
-            keyName = necklace_of_phoenix + "_infobox",
+            keyName = phoenix_necklace + "_infobox",
             name = "Phoenix necklace",
             description = "",
             section = infoboxes
         ) default boolean phoenixNecklaceInfobox() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_celestial + "_infobox",
+            keyName = celestial_ring + "_infobox",
             name = "Celestial ring",
             description = "",
             section = infoboxes
@@ -357,7 +356,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean ringOfTheElementsInfobox() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_explorers + "_infobox",
+            keyName = explorers_ring + "_infobox",
             name = "Explorer's ring",
             description = "",
             section = infoboxes
@@ -378,7 +377,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean ringOfShadowsInfobox() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_slayer + "_infobox",
+            keyName = slayer_ring + "_infobox",
             name = "Slayer ring",
             description = "",
             section = infoboxes
@@ -686,7 +685,7 @@ public interface ChargesImprovedConfig extends Config {
     ) String overlays = "overlays";
 
         @ConfigItem(
-            keyName = barrows_set + "_overlay",
+            keyName = barrows_gear + "_overlay",
             name = "Barrows set",
             description = "",
             section = overlays
@@ -819,7 +818,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean escapeCrystalOverlay() { return true; }
 
         @ConfigItem(
-            keyName = necklace_of_dodgy + "_overlay",
+            keyName = dodgy_necklace + "_overlay",
             name = "Dodgy necklace",
             description = "",
             section = overlays
@@ -833,14 +832,14 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean necklaceOfPassageOverlay() { return true; }
 
         @ConfigItem(
-            keyName = necklace_of_phoenix + "_overlay",
+            keyName = phoenix_necklace + "_overlay",
             name = "Phoenix necklace",
             description = "",
             section = overlays
         ) default boolean phoenixNecklaceOverlay() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_celestial + "_overlay",
+            keyName = celestial_ring + "_overlay",
             name = "Celestial ring",
             description = "",
             section = overlays
@@ -854,7 +853,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean ringOfTheElementsOverlay() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_explorers + "_overlay",
+            keyName = explorers_ring + "_overlay",
             name = "Explorer's ring",
             description = "",
             section = overlays
@@ -875,7 +874,7 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean ringOfShadowsOverlay() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_slayer + "_overlay",
+            keyName = slayer_ring + "_overlay",
             name = "Slayer ring",
             description = "",
             section = overlays
@@ -1243,9 +1242,9 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getBoneCrusherCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = bone_crusher_status,
-            name = bone_crusher_status,
-            description = bone_crusher_status,
+            keyName = bonecrusher_status,
+            name = bonecrusher_status,
+            description = bonecrusher_status,
             section = debug
         ) default ItemActivity getBoneCrusherStatus() { return ItemActivity.ACTIVATED; }
 
@@ -1285,9 +1284,9 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getBryophytasStaffCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = ring_of_celestial,
-            name = ring_of_celestial,
-            description = ring_of_celestial,
+            keyName = celestial_ring,
+            name = celestial_ring,
+            description = celestial_ring,
             section = debug
         ) default int getCelestialRingCharges() { return Charges.UNKNOWN; }
 
@@ -1579,9 +1578,9 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getTomeOfFireCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = necklace_of_dodgy,
-            name = necklace_of_dodgy,
-            description = necklace_of_dodgy,
+            keyName = dodgy_necklace,
+            name = dodgy_necklace,
+            description = dodgy_necklace,
             section = debug
         ) default int getDodgyNecklaceCharges() { return Charges.UNKNOWN; }
 
@@ -1607,9 +1606,9 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getJarGeneratorCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = ring_of_explorers + "_storage",
-            name = ring_of_explorers + "_storage",
-            description = ring_of_explorers + "_storage",
+            keyName = explorers_ring + "_storage",
+            name = explorers_ring + "_storage",
+            description = explorers_ring + "_storage",
             section = debug
         ) default String getExplorersRingCharges() { return ""; }
 

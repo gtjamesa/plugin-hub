@@ -27,7 +27,7 @@ public class GuthansWarspear extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.barrows_set, ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_gear, ItemID.GUTHANS_WARSPEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.GUTHANS_WARSPEAR).fixedCharges(100),
             new TriggerItem(ItemID.GUTHANS_WARSPEAR_100).fixedCharges(100),

@@ -27,7 +27,7 @@ public class VeracsFlail extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.barrows_set, ItemID.VERACS_FLAIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_gear, ItemID.VERACS_FLAIL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.VERACS_FLAIL).fixedCharges(100),
             new TriggerItem(ItemID.VERACS_FLAIL_100).fixedCharges(100),

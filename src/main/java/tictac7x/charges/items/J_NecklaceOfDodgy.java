@@ -30,7 +30,7 @@ public class J_NecklaceOfDodgy extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.necklace_of_dodgy, ItemID.DODGY_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.dodgy_necklace, ItemID.DODGY_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.DODGY_NECKLACE).needsToBeEquipped(),

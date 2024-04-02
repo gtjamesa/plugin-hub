@@ -27,7 +27,7 @@ public class J_RingOfSlayer extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ring_of_slayer, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.slayer_ring, ItemID.SLAYER_RING_8, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.SLAYER_RING_1).fixedCharges(1),
             new TriggerItem(ItemID.SLAYER_RING_2).fixedCharges(2),

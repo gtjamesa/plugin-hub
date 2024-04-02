@@ -34,7 +34,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ring_of_explorers, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.explorers_ring, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.storeableItems(
             new StorageItem(ChargesItemID.EXPLORER_RING_LOW_ALCHEMY).displayName("Low alchemies"),
             new StorageItem(ChargesItemID.EXPLORER_RING_HIGH_ALCHEMY).displayName("High alchemies"),

@@ -27,7 +27,7 @@ public class AhrimsHood extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.barrows_set, ItemID.AHRIMS_HOOD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_gear, ItemID.AHRIMS_HOOD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_HOOD).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_HOOD_100).fixedCharges(100),

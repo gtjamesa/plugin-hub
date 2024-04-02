@@ -58,6 +58,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @PluginDescriptor(
 	name = "Item Charges Improved",
@@ -196,6 +197,8 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void startUp() {
+		configMigration();
+
 		store = new Store(client, itemManager, configManager);
 
 		chargedItems = new ChargedItemBase[]{
@@ -531,6 +534,52 @@ public class ChargesImprovedPlugin extends Plugin {
 			.runeLiteFormattedMessage("<colHIGHLIGHT>Daily item charges have been reset.")
 			.build()
 		);
+	}
+
+	private void configMigration() {
+		// Migrate old hidden infoboxes multi-select to checkboxes.
+		final Optional<String> hiddenInfoboxes = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "infoboxes_hidden"));
+		if (hiddenInfoboxes.isPresent()) {
+			final String[] hiddenInfoboxesKeys = Arrays.stream(hiddenInfoboxes.get().replace("[", "").replace("]", "").split(",")).map(a -> a.replaceAll("\"", "")).toArray(String[]::new);
+
+			for (String hiddenInfoboxKey : hiddenInfoboxesKeys) {
+				switch (hiddenInfoboxKey) {
+					case "BONE_CRUSHER":
+						hiddenInfoboxKey = "bonecrusher";
+						break;
+					case "RING_OF_ELEMENTS":
+						hiddenInfoboxKey = "ring_of_the_elements";
+						break;
+				}
+
+				hiddenInfoboxKey = hiddenInfoboxKey.toLowerCase() + "_infobox";
+				configManager.setConfiguration(ChargesImprovedConfig.group, hiddenInfoboxKey, false);
+			}
+
+			configManager.unsetConfiguration(ChargesImprovedConfig.group, "infoboxes_hidden");
+		}
+
+		// Migrate old hidden overlays multi-select to checkboxes.
+		final Optional<String> hiddenOverlays = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "item_overlays_hidden"));
+		if (hiddenOverlays.isPresent()) {
+			final String[] hiddenOverlaysKeys = Arrays.stream(hiddenOverlays.get().replace("[", "").replace("]", "").split(",")).map(a -> a.replaceAll("\"", "")).toArray(String[]::new);
+
+			for (String hiddenOverlayKey : hiddenOverlaysKeys) {
+				switch (hiddenOverlayKey) {
+					case "BONE_CRUSHER":
+						hiddenOverlayKey = "bonecrusher";
+						break;
+					case "RING_OF_ELEMENTS":
+						hiddenOverlayKey = "ring_of_the_elements";
+						break;
+				}
+
+				hiddenOverlayKey = hiddenOverlayKey.toLowerCase() + "_overlay";
+				configManager.setConfiguration(ChargesImprovedConfig.group, hiddenOverlayKey, false);
+			}
+
+			configManager.unsetConfiguration(ChargesImprovedConfig.group, "item_overlays_hidden");
+		}
 	}
 }
 

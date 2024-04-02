@@ -29,7 +29,7 @@ public class AhrimsRobeskirt extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.barrows_set, ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.barrows_gear, ItemID.AHRIMS_ROBESKIRT, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT).fixedCharges(100),
             new TriggerItem(ItemID.AHRIMS_ROBESKIRT_100).fixedCharges(100),
