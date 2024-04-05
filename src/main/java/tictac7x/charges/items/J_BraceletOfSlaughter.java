@@ -36,9 +36,17 @@ public class J_BraceletOfSlaughter extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
+            // Check.
             new OnChatMessage("Your bracelet of slaughter has (?<charges>.+) charges? left.").setDynamically(),
+
+            // Charge used.
             new OnChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It has (?<charges>.+) charges? left.").setDynamically(),
-            new OnChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30).notification("Your slaughter bracelet crumbles to dust.")
+
+            // Bracelet fully used.
+            new OnChatMessage("Your bracelet of slaughter prevents your slayer count from decreasing. It then crumbles to dust.").fixedCharges(30).notification("Your slaughter bracelet crumbles to dust."),
+
+            // Break.
+            new OnChatMessage("The bracelet shatters. Your next bracelet of slaughter will start afresh from (?<charges>.+) charges.").setDynamically(),
         };
     }
 }

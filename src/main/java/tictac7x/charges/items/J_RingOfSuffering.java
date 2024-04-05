@@ -54,6 +54,12 @@ public class J_RingOfSuffering extends ChargedItemWithStatus {
 
             // Get hit.
             new OnHitsplatApplied(HitsplatTarget.SELF).moreThanZeroDamage().isEquipped().isActivated().decreaseCharges(1),
+
+            // Disable.
+            new OnChatMessage("You disable the recoil effect of your ring.").deactivate(),
+
+            // Enable.
+            new OnChatMessage("You enable the recoil effect of your ring.").activate(),
         };
     }
 }

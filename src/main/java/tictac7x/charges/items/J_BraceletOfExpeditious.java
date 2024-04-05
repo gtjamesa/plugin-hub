@@ -36,10 +36,17 @@ public class J_BraceletOfExpeditious extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("The bracelet shatters. Your next expeditious bracelet will start afresh from 30 charges.").fixedCharges(30),
-            new OnChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your expeditious bracelet crumbles to dust."),
+            // Check.
             new OnChatMessage("Your expeditious bracelet has (?<charges>.+) charges? left.").setDynamically(),
+
+            // Charge used.
             new OnChatMessage("Your expeditious bracelet helps you progress your slayer( task)? faster. It has (?<charges>.+) charges? left.").setDynamically(),
+
+            // Bracelet fully used.
+            new OnChatMessage("Your expeditious bracelet helps you progress your slayer faster. It then crumbles to dust.").fixedCharges(30).notification("Your expeditious bracelet crumbles to dust."),
+
+            // Break.
+            new OnChatMessage("The bracelet shatters. Your next expeditious bracelet will start afresh from (?<charges>.+) charges.").setDynamically(),
         };
     }
 }

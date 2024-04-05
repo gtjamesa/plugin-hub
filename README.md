@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.5
+# Item Charges Improved - v0.5.6
 
 Show charges of various items that are in inventory or equipped
 
@@ -18,6 +18,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 ### Weapons
 
 - [x] Arclight
+- [x] Bow of faerdhinen
 - [x] Bryophyta's staff
 - [x] Crystal bow
 - [x] Crystal halberd
@@ -28,6 +29,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Skull sceptre
 - [x] Slayer staff (e)
 - [x] Trident of the seas / swamp
+- [x] Venator bow
 - [x] Warped sceptre
 - [x] Western banner
 
