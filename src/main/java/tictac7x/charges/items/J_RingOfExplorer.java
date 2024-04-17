@@ -49,7 +49,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
 
         this.triggers = new TriggerBase[]{
             // Check with all available.
-            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").consumer(m -> {
+            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").matcherConsumer(m -> {
                 final int alchemy = Integer.parseInt(m.group("alchemy"));
                 final int restores = Integer.parseInt(m.group("restores"));
 
@@ -61,7 +61,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
             }).onItemClick(),
 
             // Check with all available.
-            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").consumer(m -> {
+            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").matcherConsumer(m -> {
                 final int alchemy = Integer.parseInt(m.group("alchemy"));
                 final int restores = Integer.parseInt(m.group("restores"));
 
@@ -73,7 +73,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
             }).onItemClick(),
 
             // Check with restores used.
-            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and have exhausted the ring's run restore power for today.").consumer(m -> {
+            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and have exhausted the ring's run restore power for today.").matcherConsumer(m -> {
                 final int alchemy = Integer.parseInt(m.group("alchemy"));
 
                 storage.empty();
@@ -92,14 +92,14 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
             }),
 
             // Run energy used.
-            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) restores for today.").consumer(m -> {
+            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) restores for today.").matcherConsumer(m -> {
                 final int total = Integer.parseInt(m.group("total"));
                 final int used = Integer.parseInt(m.group("used"));
                 storage.put(ChargesItemID.EXPLORER_RING_RESTORES, total - used);
             }).onItemClick(),
 
             // Try to use restores without any left.
-            new OnChatMessage("You have exhausted the ring's run restore power for today.").consumer(m -> {
+            new OnChatMessage("You have exhausted the ring's run restore power for today.").matcherConsumer(m -> {
                 storage.put(ChargesItemID.EXPLORER_RING_RESTORES, 0);
             }).onItemClick(),
 
@@ -110,7 +110,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
             }),
 
             // Teleport.
-            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Cabbage teleports for today.").consumer(m -> {
+            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Cabbage teleports for today.").matcherConsumer(m -> {
                 final int total = Integer.parseInt(m.group("total"));
                 final int used = Integer.parseInt(m.group("used"));
                 storage.put(ChargesItemID.EXPLORER_RING_TELEPORTS, total - used);

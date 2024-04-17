@@ -48,7 +48,7 @@ public class U_PlankSack extends ChargedItemWithStorage {
 
         this.triggers = new TriggerBase[]{
             // Empty to bank or inventory.
-            new OnChatMessage("Basic planks: (?<basic>.+), Oak planks: (?<oak>.+), Teak planks: (?<teak>.+), Mahogany planks: (?<mahogany>.+)").consumer(m -> {
+            new OnChatMessage("Basic planks: (?<basic>.+), Oak planks: (?<oak>.+), Teak planks: (?<teak>.+), Mahogany planks: (?<mahogany>.+)").matcherConsumer(m -> {
                 storage.put(ItemID.PLANK, Integer.parseInt(m.group("basic")));
                 storage.put(ItemID.OAK_PLANK, Integer.parseInt(m.group("oak")));
                 storage.put(ItemID.TEAK_PLANK, Integer.parseInt(m.group("teak")));

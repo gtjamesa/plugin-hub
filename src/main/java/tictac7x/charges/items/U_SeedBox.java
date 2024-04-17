@@ -41,21 +41,21 @@ public class U_SeedBox extends ChargedItemWithStorage {
             new OnChatMessage("(The|Your) seed box is( now| already)? empty.").emptyStorage(),
 
             // Empty into inventory.
-            new OnChatMessage("Emptied (?<quantity>.+) x (?<seed>.+)( seed)? to your inventory.").consumer(m -> {
+            new OnChatMessage("Emptied (?<quantity>.+) x (?<seed>.+)( seed)? to your inventory.").matcherConsumer(m -> {
                 final int seed = getSeedIdFromName(m.group("seed"));
                 final int quantity = Integer.parseInt(m.group("quantity"));
                 storage.remove(seed, quantity);
             }),
 
             // Store.
-            new OnChatMessage("Stored (?<quantity>.+) x (?<seed>.+)( seed)? in your seed box.").consumer(m -> {
+            new OnChatMessage("Stored (?<quantity>.+) x (?<seed>.+)( seed)? in your seed box.").matcherConsumer(m -> {
                 final int seed = getSeedIdFromName(m.group("seed"));
                 final int quantity = Integer.parseInt(m.group("quantity"));
                 storage.add(seed, quantity);
             }),
 
             // Pickup.
-            new OnChatMessage("You put (?<quantity>.+) x (?<seed>.+)( seed)? straight into your open seed box.").consumer(m -> {
+            new OnChatMessage("You put (?<quantity>.+) x (?<seed>.+)( seed)? straight into your open seed box.").matcherConsumer(m -> {
                 final int seed = getSeedIdFromName(m.group("seed"));
                 final int quantity = Integer.parseInt(m.group("quantity"));
                 storage.put(seed, quantity);
@@ -65,7 +65,7 @@ public class U_SeedBox extends ChargedItemWithStorage {
             new OnChatMessage("The seed box contains:").emptyStorage(),
 
             // Check.
-            new OnChatMessage("(?<quantity>.+) x (?<seed>.+)( seed)?.").consumer(m -> {
+            new OnChatMessage("(?<quantity>.+) x (?<seed>.+)( seed)?.").matcherConsumer(m -> {
                 final int seed = getSeedIdFromName(m.group("seed"));
                 final int quantity = Integer.parseInt(m.group("quantity"));
                 storage.put(seed, quantity);

@@ -25,7 +25,7 @@ public class OnChatMessage extends TriggerBase {
         return this;
     }
 
-    public OnChatMessage consumer(final Consumer<Matcher> consumer) {
+    public OnChatMessage matcherConsumer(final Consumer<Matcher> consumer) {
         this.matcherConsumer = Optional.of(consumer);
         return this;
     }

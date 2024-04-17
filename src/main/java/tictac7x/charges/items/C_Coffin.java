@@ -58,12 +58,12 @@ public class C_Coffin extends ChargedItemWithStorage {
 
         this.triggers = new TriggerBase[] {
             // Add remains to coffin.
-            new OnChatMessage("You put the (?<remains>.+) remains into your open coffin.").consumer(m -> {
+            new OnChatMessage("You put the (?<remains>.+) remains into your open coffin.").matcherConsumer(m -> {
                 storage.add(getStorageItemFromName(m.group("remains")), 1);
             }),
 
             // Check.
-            new OnChatMessage("Loar (?<loar>.+) / Phrin (?<phrin>.+) / Riyl (?<riyl>.+) / Asyn (?<asyn>.+) / Fiyr (?<fiyr>.+) / Urium (?<urium>.+)").consumer(m -> {
+            new OnChatMessage("Loar (?<loar>.+) / Phrin (?<phrin>.+) / Riyl (?<riyl>.+) / Asyn (?<asyn>.+) / Fiyr (?<fiyr>.+) / Urium (?<urium>.+)").matcherConsumer(m -> {
                 storage.empty();
                 storage.put(ItemID.LOAR_REMAINS, Integer.parseInt(m.group("loar")));
                 storage.put(ItemID.PHRIN_REMAINS, Integer.parseInt(m.group("phrin")));

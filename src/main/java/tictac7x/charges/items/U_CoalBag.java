@@ -49,7 +49,7 @@ public class U_CoalBag extends ChargedItemWithStorage {
             }),
 
             // Check or empty with not enough inventory space.
-            new OnChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal.").consumer((m) -> {
+            new OnChatMessage("The coal bag( still)? contains (?<charges>.+) pieces of coal.").matcherConsumer((m) -> {
                 storage.put(ItemID.COAL, Integer.parseInt(m.group("charges")));
             }),
 

@@ -95,7 +95,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
             }).onItemClick(),
 
             // Chop.
-            new OnChatMessage("You get some (?<logs>.+).").consumer(m -> {
+            new OnChatMessage("You get some (?<logs>.+).").matcherConsumer(m -> {
                 lastLogs = getStorageItemFromName(m.group("logs"));
                 storage.add(lastLogs, 1);
                 infernalQuantityTracker++;

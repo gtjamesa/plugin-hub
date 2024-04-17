@@ -52,6 +52,8 @@ public interface ChargesImprovedConfig extends Config {
     String enchanted_lyre = "enchanted_lyre";
     String escape_crystal = "escape_crystal";
     String escape_crystal_status = "escape_crystal_status";
+    String escape_crystal_inactivity_period = "escape_crystal_inactivity_period";
+    String escape_crystal_time_remaining_warning = "escape_crystal_time_remaining_warning";
     String explorers_ring = "explorers_ring";
     String falador_shield = "falador_shield";
     String fish_barrel = "fish_barrel";
@@ -185,9 +187,23 @@ public interface ChargesImprovedConfig extends Config {
         ) default Color getColorActivated() { return Color.green; }
 
     @ConfigSection(
+        name = "Escape Crystal",
+        description = "Escape Crystal",
+        position = 3
+    ) String escape_crystal_section = "escape_crystal_section";
+
+        @ConfigItem(
+            keyName = escape_crystal_time_remaining_warning,
+            name = "Time remaining warning",
+            description = "How many seconds before you are warned before Escape crystal activates",
+            position = 4,
+            section = escape_crystal_section
+        ) default int getEscapeCrystalTimeRemainingWarning() { return 5; }
+
+    @ConfigSection(
         name = "Infoboxes",
         description = "Choose for which charged items infobox is visible",
-        position = 3,
+        position = 4,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
 
@@ -1587,6 +1603,13 @@ public interface ChargesImprovedConfig extends Config {
             description = escape_crystal_status,
             section = debug
         ) default ItemActivity getEscapeCrystalStatus() { return ItemActivity.DEACTIVATED; }
+
+        @ConfigItem(
+            keyName = escape_crystal_inactivity_period,
+            name = escape_crystal_inactivity_period,
+            description = escape_crystal_inactivity_period,
+            section = debug
+        ) default int getEscapeCrystalInactivityPeriod() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = strange_old_lockpick,

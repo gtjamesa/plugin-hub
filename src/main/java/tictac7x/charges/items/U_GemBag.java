@@ -56,7 +56,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             new OnChatMessage("The gem bag is( now)? empty.").emptyStorage(),
 
             // Empty and Check.
-            new OnChatMessage("(Left in bag: )?Sapphires: (?<sapphires>.+) / Emeralds: (?<emeralds>.+) / Rubies: (?<rubies>.+) Diamonds: (?<diamonds>.+) / Dragonstones: (?<dragonstones>.+)").consumer(m -> {
+            new OnChatMessage("(Left in bag: )?Sapphires: (?<sapphires>.+) / Emeralds: (?<emeralds>.+) / Rubies: (?<rubies>.+) Diamonds: (?<diamonds>.+) / Dragonstones: (?<dragonstones>.+)").matcherConsumer(m -> {
                 storage.put(ItemID.UNCUT_SAPPHIRE, Integer.parseInt(m.group("sapphires")));
                 storage.put(ItemID.UNCUT_EMERALD, Integer.parseInt(m.group("emeralds")));
                 storage.put(ItemID.UNCUT_RUBY, Integer.parseInt(m.group("rubies")));
@@ -65,12 +65,12 @@ public class U_GemBag extends ChargedItemWithStorage {
             }),
 
             // Mining regular or gem rocks.
-            new OnChatMessage("You just (found|mined) (a|an) (?<gem>.+)!").consumer(m -> {
+            new OnChatMessage("You just (found|mined) (a|an) (?<gem>.+)!").matcherConsumer(m -> {
                 storage.add(getStorageItemFromName(m.group("gem")), 1);
             }).onSpecificItem(ItemID.OPEN_GEM_BAG),
 
             // Pickpocketing.
-            new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+).").consumer(m -> {
+            new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+).").matcherConsumer(m -> {
                 storage.add(getStorageItemFromName(m.group("gem")), Integer.parseInt(m.group("quantity")));
             }),
 

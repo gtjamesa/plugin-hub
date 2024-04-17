@@ -83,7 +83,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new OnChatMessage("(Your|The) barrel is empty.").onItemClick().emptyStorage(),
 
             // Catch fish.
-            new OnChatMessage("You catch (a|an|some) (?<fish>.+).").consumer(m -> {
+            new OnChatMessage("You catch (a|an|some) (?<fish>.+).").matcherConsumer(m -> {
                 lastCaughtFish = getStorageItemFromName(m.group("fish"));
                 storage.add(lastCaughtFish, 1);
             }).onSpecificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL),
