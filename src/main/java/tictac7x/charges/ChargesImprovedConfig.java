@@ -74,6 +74,7 @@ public interface ChargesImprovedConfig extends Config {
     String pharaohs_sceptre = "pharaohs_sceptre";
     String phoenix_necklace = "phoenix_necklace";
     String plank_sack = "plank_sack";
+    String quetzal_whistle = "quetzal_whistle";
     String ring_of_recoil = "ring_of_recoil";
     String ring_of_shadows = "ring_of_shadows";
     String ring_of_suffering = "ring_of_suffering";
@@ -579,6 +580,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean plankSackInfobox() { return true; }
 
         @ConfigItem(
+            keyName = quetzal_whistle + infobox,
+            name = "Quetzal whistle",
+            description = "",
+            section = infoboxes
+        ) default boolean quetzalWhistleInfobox() { return true; }
+
+        @ConfigItem(
             keyName = seed_box + infobox,
             name = "Seed box",
             description = "",
@@ -719,53 +727,11 @@ public interface ChargesImprovedConfig extends Config {
     ) String overlays = "overlays";
 
         @ConfigItem(
-            keyName = bow_of_faerdhinen + overlay,
-            name = "Bow of faerdhinen",
+            keyName = arclight + overlay,
+            name = "Arclight",
             description = "",
             section = overlays
-        ) default boolean bowOfFaerdhinenOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = venator_bow + overlay,
-            name = "Venator bow",
-            description = "",
-            section = overlays
-        ) default boolean venatorBowOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = barrows_gear + overlay,
-            name = "Barrows set",
-            description = "",
-            section = overlays
-        ) default boolean barrowsOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = crystal_body + overlay,
-            name = "Crystal body",
-            description = "",
-            section = overlays
-        ) default boolean crystalBodyOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = crystal_helm + overlay,
-            name = "Crystal helm",
-            description = "",
-            section = overlays
-        ) default boolean crystalHelmOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = crystal_legs + overlay,
-            name = "Crystal legs",
-            description = "",
-            section = overlays
-        ) default boolean crystalLegsOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = fremennik_sea_boots + overlay,
-            name = "Fremennik sea boots",
-            description = "",
-            section = overlays
-        ) default boolean fremennikSeaBootsOverlay() { return true; }
+        ) default boolean arclightOverlay() { return true; }
 
         @ConfigItem(
             keyName = ardougne_cloak + overlay,
@@ -775,39 +741,39 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean ardougneCloakOverlay() { return true; }
 
         @ConfigItem(
-            keyName = coffin + overlay,
-            name = "Coffin",
+            keyName = ash_sanctifier + overlay,
+            name = "Ash sanctifier",
             description = "",
             section = overlays
-        ) default boolean coffinOverlay() { return true; }
+        ) default boolean ashSanctifierOverlay() { return true; }
 
         @ConfigItem(
-            keyName = forestry_kit + overlay,
-            name = "Forestry kit",
+            keyName = barrows_gear + overlay,
+            name = "Barrows set",
             description = "",
             section = overlays
-        ) default boolean forestryKitOverlay() { return true; }
+        ) default boolean barrowsOverlay() { return true; }
 
         @ConfigItem(
-            keyName = magic_cape + overlay,
-            name = "Magic cape",
+            keyName = bonecrusher + overlay,
+            name = "Bonecrusher",
             description = "",
             section = overlays
-        ) default boolean magicCapeOverlay() { return true; }
+        ) default boolean bonecrusherOverlay() { return true; }
 
         @ConfigItem(
-            keyName = circlet_of_water + overlay,
-            name = "Circlet of water",
+            keyName = bottomless_compost_bucket + overlay,
+            name = "Bottomless compost bucket",
             description = "",
             section = overlays
-        ) default boolean circletOfWaterOverlay() { return true; }
+        ) default boolean bottomlessCompostBucketOverlay() { return true; }
 
         @ConfigItem(
-            keyName = kandarin_headgear + overlay,
-            name = "Kandarin Headgear",
+            keyName = bow_of_faerdhinen + overlay,
+            name = "Bow of faerdhinen",
             description = "",
             section = overlays
-        ) default boolean kandarinHeadgearOverlay() { return true; }
+        ) default boolean bowOfFaerdhinenOverlay() { return true; }
 
         @ConfigItem(
             keyName = bracelet_of_clay + overlay,
@@ -838,53 +804,11 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean braceletOfSlaughterOverlay() { return true; }
 
         @ConfigItem(
-            keyName = western_banner + overlay,
-            name = "Western banner",
-            description = "",
-            section = overlays
-        ) default boolean westernBannerOverlay() { return true; }
-
-        @ConfigItem(
             keyName = camulet + overlay,
             name = "Camulet",
             description = "",
             section = overlays
         ) default boolean camuletOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = desert_amulet + overlay,
-            name = "Desert amulet",
-            description = "",
-            section = overlays
-        ) default boolean desertAmuletOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = escape_crystal + overlay,
-            name = "Escape crystal",
-            description = "",
-            section = overlays
-        ) default boolean escapeCrystalOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = dodgy_necklace + overlay,
-            name = "Dodgy necklace",
-            description = "",
-            section = overlays
-        ) default boolean dodgyNecklaceOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = necklace_of_passage + overlay,
-            name = "Necklace of passage",
-            description = "",
-            section = overlays
-        ) default boolean necklaceOfPassageOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = phoenix_necklace + overlay,
-            name = "Phoenix necklace",
-            description = "",
-            section = overlays
-        ) default boolean phoenixNecklaceOverlay() { return true; }
 
         @ConfigItem(
             keyName = celestial_ring + overlay,
@@ -894,55 +818,6 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean celestialRingOverlay() { return true; }
 
         @ConfigItem(
-            keyName = ring_of_the_elements + overlay,
-            name = "Ring of the elements",
-            description = "",
-            section = overlays
-        ) default boolean ringOfTheElementsOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = explorers_ring + overlay,
-            name = "Explorer's ring",
-            description = "",
-            section = overlays
-        ) default boolean explorersRingOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = ring_of_recoil + overlay,
-            name = "Ring of recoil",
-            description = "",
-            section = overlays
-        ) default boolean ringOfRecoilOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = ring_of_shadows + overlay,
-            name = "Ring of shadows",
-            description = "",
-            section = overlays
-        ) default boolean ringOfShadowsOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = slayer_ring + overlay,
-            name = "Slayer ring",
-            description = "",
-            section = overlays
-        ) default boolean slayerRingOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = ring_of_suffering + overlay,
-            name = "Ring of suffering",
-            description = "",
-            section = overlays
-        ) default boolean ringOfSufferingOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = xerics_talisman + overlay,
-            name = "Xeric's talisman",
-            description = "",
-            section = overlays
-        ) default boolean xericsTalismanOverlay() { return true; }
-
-        @ConfigItem(
             keyName = chronicle + overlay,
             name = "Chronicle",
             description = "",
@@ -950,11 +825,67 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean chronicleOverlay() { return true; }
 
         @ConfigItem(
+            keyName = circlet_of_water + overlay,
+            name = "Circlet of water",
+            description = "",
+            section = overlays
+        ) default boolean circletOfWaterOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = coal_bag + overlay,
+            name = "Coal bag",
+            description = "",
+            section = overlays
+        ) default boolean coalBagOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = coffin + overlay,
+            name = "Coffin",
+            description = "",
+            section = overlays
+        ) default boolean coffinOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = crystal_body + overlay,
+            name = "Crystal body",
+            description = "",
+            section = overlays
+        ) default boolean crystalBodyOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = crystal_helm + overlay,
+            name = "Crystal helm",
+            description = "",
+            section = overlays
+        ) default boolean crystalHelmOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = crystal_legs + overlay,
+            name = "Crystal legs",
+            description = "",
+            section = overlays
+        ) default boolean crystalLegsOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = crystal_saw + overlay,
+            name = "Crystal saw",
+            description = "",
+            section = overlays
+        ) default boolean crystalSawOverlay() { return true; }
+
+        @ConfigItem(
             keyName = crystal_shield + overlay,
             name = "Crystal shield",
             description = "",
             section = overlays
         ) default boolean crystalShieldOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = desert_amulet + overlay,
+            name = "Desert amulet",
+            description = "",
+            section = overlays
+        ) default boolean desertAmuletOverlay() { return true; }
 
         @ConfigItem(
             keyName = dragonfire_shield + overlay,
@@ -971,60 +902,25 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean faladorShieldOverlay() { return true; }
 
         @ConfigItem(
-            keyName = kharedsts_memoirs + overlay,
-            name = "Kharedst's memoirs",
+            keyName = escape_crystal + overlay,
+            name = "Escape crystal",
             description = "",
             section = overlays
-        ) default boolean kharedstsMemoirsOverlay() { return true; }
+        ) default boolean escapeCrystalOverlay() { return true; }
 
         @ConfigItem(
-            keyName = tome_of_fire + overlay,
-            name = "Tome of fire",
+            keyName = explorers_ring + overlay,
+            name = "Explorer's ring",
             description = "",
             section = overlays
-        ) default boolean tomeOfFireOverlay() { return true; }
+        ) default boolean explorersRingOverlay() { return true; }
 
         @ConfigItem(
-            keyName = tome_of_water + overlay,
-            name = "Tome of water",
+            keyName = dodgy_necklace + overlay,
+            name = "Dodgy necklace",
             description = "",
             section = overlays
-        ) default boolean tomeOfWaterOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = ash_sanctifier + overlay,
-            name = "Ash sanctifier",
-            description = "",
-            section = overlays
-        ) default boolean ashSanctifierOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = bonecrusher + overlay,
-            name = "Bonecrusher",
-            description = "",
-            section = overlays
-        ) default boolean bonecrusherOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = bottomless_compost_bucket + overlay,
-            name = "Bottomless compost bucket",
-            description = "",
-            section = overlays
-        ) default boolean bottomlessCompostBucketOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = coal_bag + overlay,
-            name = "Coal bag",
-            description = "",
-            section = overlays
-        ) default boolean coalBagOverlay() { return true; }
-
-        @ConfigItem(
-            keyName = crystal_saw + overlay,
-            name = "Crystal saw",
-            description = "",
-            section = overlays
-        ) default boolean crystalSawOverlay() { return true; }
+        ) default boolean dodgyNecklaceOverlay() { return true; }
 
         @ConfigItem(
             keyName = fish_barrel + overlay,
@@ -1032,6 +928,20 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean fishBarrelOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = forestry_kit + overlay,
+            name = "Forestry kit",
+            description = "",
+            section = overlays
+        ) default boolean forestryKitOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = fremennik_sea_boots + overlay,
+            name = "Fremennik sea boots",
+            description = "",
+            section = overlays
+        ) default boolean fremennikSeaBootsOverlay() { return true; }
 
         @ConfigItem(
             keyName = fungicide_spray + overlay,
@@ -1069,11 +979,39 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean jarGeneratorOverlay() { return true; }
 
         @ConfigItem(
+            keyName = kandarin_headgear + overlay,
+            name = "Kandarin Headgear",
+            description = "",
+            section = overlays
+        ) default boolean kandarinHeadgearOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = kharedsts_memoirs + overlay,
+            name = "Kharedst's memoirs",
+            description = "",
+            section = overlays
+        ) default boolean kharedstsMemoirsOverlay() { return true; }
+
+        @ConfigItem(
             keyName = log_basket + overlay,
             name = "Log basket",
             description = "",
             section = overlays
         ) default boolean logBasketOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = magic_cape + overlay,
+            name = "Magic cape",
+            description = "",
+            section = overlays
+        ) default boolean magicCapeOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = necklace_of_passage + overlay,
+            name = "Necklace of passage",
+            description = "",
+            section = overlays
+        ) default boolean necklaceOfPassageOverlay() { return true; }
 
         @ConfigItem(
             keyName = ogre_bellows + overlay,
@@ -1083,6 +1021,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean ogreBellowsOverlay() { return true; }
 
         @ConfigItem(
+            keyName = phoenix_necklace + overlay,
+            name = "Phoenix necklace",
+            description = "",
+            section = overlays
+        ) default boolean phoenixNecklaceOverlay() { return true; }
+
+        @ConfigItem(
             keyName = plank_sack + overlay,
             name = "Plank sack",
             description = "",
@@ -1090,11 +1035,46 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean plankSackOverlay() { return true; }
 
         @ConfigItem(
+            keyName = ring_of_recoil + overlay,
+            name = "Ring of recoil",
+            description = "",
+            section = overlays
+        ) default boolean ringOfRecoilOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_shadows + overlay,
+            name = "Ring of shadows",
+            description = "",
+            section = overlays
+        ) default boolean ringOfShadowsOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_suffering + overlay,
+            name = "Ring of suffering",
+            description = "",
+            section = overlays
+        ) default boolean ringOfSufferingOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_the_elements + overlay,
+            name = "Ring of the elements",
+            description = "",
+            section = overlays
+        ) default boolean ringOfTheElementsOverlay() { return true; }
+
+        @ConfigItem(
             keyName = seed_box + overlay,
             name = "Seed box",
             description = "",
             section = overlays
         ) default boolean seedBoxOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = slayer_ring + overlay,
+            name = "Slayer ring",
+            description = "",
+            section = overlays
+        ) default boolean slayerRingOverlay() { return true; }
 
         @ConfigItem(
             keyName = soul_bearer + overlay,
@@ -1125,6 +1105,27 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean teleportCrystalOverlay() { return true; }
 
         @ConfigItem(
+            keyName = tome_of_fire + overlay,
+            name = "Tome of fire",
+            description = "",
+            section = overlays
+        ) default boolean tomeOfFireOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = tome_of_water + overlay,
+            name = "Tome of water",
+            description = "",
+            section = overlays
+        ) default boolean tomeOfWaterOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = venator_bow + overlay,
+            name = "Venator bow",
+            description = "",
+            section = overlays
+        ) default boolean venatorBowOverlay() { return true; }
+
+        @ConfigItem(
             keyName = waterskin + overlay,
             name = "Waterskin",
             description = "",
@@ -1132,11 +1133,11 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean waterskinOverlay() { return true; }
 
         @ConfigItem(
-            keyName = arclight + overlay,
-            name = "Arclight",
+            keyName = western_banner + overlay,
+            name = "Western banner",
             description = "",
             section = overlays
-        ) default boolean arclightOverlay() { return true; }
+        ) default boolean westernBannerOverlay() { return true; }
 
         @ConfigItem(
             keyName = bryophytas_staff + overlay,
@@ -1181,6 +1182,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean pharaohsSceptreOverlay() { return true; }
 
         @ConfigItem(
+            keyName = quetzal_whistle + overlay,
+            name = "Quetzal whistle",
+            description = "",
+            section = overlays
+        ) default boolean quetzalWhistleOverlay() { return true; }
+
+        @ConfigItem(
             keyName = sanguinesti_staff + overlay,
             name = "Sanguinesti staff",
             description = "",
@@ -1221,6 +1229,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean warpedSceptreOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = xerics_talisman + overlay,
+            name = "Xeric's talisman",
+            description = "",
+            section = overlays
+        ) default boolean xericsTalismanOverlay() { return true; }
 
     @ConfigSection(
         name = "Debug",
@@ -1708,4 +1723,11 @@ public interface ChargesImprovedConfig extends Config {
             description = crystal_saw,
             section = debug
         ) default int getCrystalSawCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = quetzal_whistle,
+            name = quetzal_whistle,
+            description = quetzal_whistle,
+            section = debug
+        ) default int getQuetzalWhistleCharges() { return Charges.UNKNOWN; }
 }
