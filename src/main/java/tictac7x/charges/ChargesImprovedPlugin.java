@@ -143,7 +143,7 @@ import java.util.Optional;
 )
 
 public class ChargesImprovedPlugin extends Plugin {
-	private final String pluginVersion = "v0.5.6";
+	private final String pluginVersion = "v0.5.7";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
 		"<colHIGHLIGHT>* General fixes<br>" +

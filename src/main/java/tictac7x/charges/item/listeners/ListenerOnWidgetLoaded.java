@@ -20,6 +20,7 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
     public void trigger(final WidgetLoaded event) {
         for (final TriggerBase triggerBase : chargedItem.triggers) {
             if (!isValidTrigger(triggerBase, event)) continue;
+
             boolean triggerUsed = false;
             final OnWidgetLoaded trigger = (OnWidgetLoaded) triggerBase;
             final Widget widget = getWidget(trigger);
@@ -30,6 +31,11 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
 
             if (trigger.setDynamically.isPresent()) {
                 ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
+                triggerUsed = true;
+            }
+
+            if (trigger.matcherConsumer.isPresent()) {
+                trigger.matcherConsumer.get().accept(matcher);
                 triggerUsed = true;
             }
 

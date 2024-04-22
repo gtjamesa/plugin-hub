@@ -15,10 +15,7 @@ import net.runelite.client.input.MouseManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnVarbitChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
@@ -69,6 +66,11 @@ public class J_EscapeCrystal extends ChargedItemWithStatus implements KeyListene
 
             // Inactivity period from game message when activating.
             new OnChatMessage("Your escape crystals will now auto-activate if you take damage after a (?<seconds>.+?) seconds.*").matcherConsumer(matcher -> {
+                configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.escape_crystal_inactivity_period, matcher.group("seconds"));
+            }),
+
+            // Inactivity period from widget.
+            new OnWidgetLoaded(219, 1, 3, "Set auto-activation inactivity period \\(in seconds\\)\\(current: (?<seconds>.+?)s\\)").matcherConsumer(matcher -> {
                 configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.escape_crystal_inactivity_period, matcher.group("seconds"));
             }),
         };
