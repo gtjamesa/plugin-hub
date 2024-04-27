@@ -65,7 +65,7 @@ public class U_SeedBox extends ChargedItemWithStorage {
             new OnChatMessage("The seed box contains:").emptyStorage(),
 
             // Check.
-            new OnChatMessage("(?<quantity>.+) x (?<seed>.+)( seed)?.").matcherConsumer(m -> {
+            new OnChatMessage("^(?<quantity>.+) x (?<seed>.+)( seed)?.").matcherConsumer(m -> {
                 final int seed = getSeedIdFromName(m.group("seed"));
                 final int quantity = Integer.parseInt(m.group("quantity"));
                 storage.put(seed, quantity);
