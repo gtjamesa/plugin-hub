@@ -33,28 +33,24 @@ public class J_RingOfCelestial extends ChargedItem {
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.CELESTIAL_RING_UNCHARGED).fixedCharges(0),
-            new TriggerItem(ItemID.CELESTIAL_RING).needsToBeEquipped()
+            new TriggerItem(ItemID.CELESTIAL_SIGNET_UNCHARGED).fixedCharges(0),
+            new TriggerItem(ItemID.CELESTIAL_RING).needsToBeEquipped(),
+            new TriggerItem(ItemID.CELESTIAL_SIGNET).needsToBeEquipped()
         };
 
         this.triggers = new TriggerBase[] {
             // Charge.
-            new OnChatMessage("You add .+ charges? to your Celestial ring. It now has (?<charges>.+) charges?.").setDynamically(),
-            new OnChatMessage("You add (?<charges>.+) charges? to your Celestial ring.").setDynamically(),
-
-            // Uncharge.
-            new OnChatMessage("You fully uncharge your Celestial ring.").fixedCharges(0),
+            new OnChatMessage("You add .+ charges? to your Celestial (ring|signet). It now has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to your Celestial (ring|signet).").setDynamically(),
 
             // Check.
-            new OnChatMessage("Your Celestial ring has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("Your Celestial (ring|signet) has (?<charges>.+) charges?.").setDynamically(),
 
             // Ran out of charges.
-            new OnChatMessage("Your Celestial ring has run out of charges").notification().fixedCharges(0),
+            new OnChatMessage("Your Celestial (ring|signet) has run out of charges.").notification().fixedCharges(0),
 
             // Mine.
             new OnChatMessage("You manage to (mine|quarry) some (clay|copper|tin|guardian fragments|guardian essence|tephra|blurite|limestone|iron|silver|coal|sandstone|gold|granite|mithril|lovakite|adamantite|soft clay)( ore)?.").isEquipped().decreaseCharges(1),
-
-            // Mine amalgamation.
-//            new OnXpDrop(Skill.MINING).onMenuOption("Mine").onMenuTarget("Amalgamation").decreaseCharges(1),
         };
     }
 }

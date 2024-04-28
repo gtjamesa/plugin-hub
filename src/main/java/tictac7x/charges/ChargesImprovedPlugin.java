@@ -2,10 +2,7 @@ package tictac7x.charges;
 
 import com.google.gson.Gson;
 import com.google.inject.Provides;
-import net.runelite.api.ActorSpotAnim;
-import net.runelite.api.ChatMessageType;
-import net.runelite.api.Client;
-import net.runelite.api.GameState;
+import net.runelite.api.*;
 import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -146,8 +143,10 @@ public class ChargesImprovedPlugin extends Plugin {
 	private final String pluginVersion = "v0.5.7";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* General fixes<br>" +
-		"<colHIGHLIGHT>* Crystal saw basic support added"
+		"<colHIGHLIGHT>* Escape crystal inactivity timer support<br>" +
+		"<colHIGHLIGHT>* Quetzal whistle added<br>" +
+		"<colHIGHLIGHT>* Celestial signet added<br>" +
+		"<colHIGHLIGHT>* Fishing barrel fixes"
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -370,7 +369,7 @@ public class ChargesImprovedPlugin extends Plugin {
 //		String itemContainer = "ITEM CONTAINER | " + event.getContainerId();
 //		for (final Item item : event.getItemContainer().getItems()) {
 //			itemContainer += "\r\n" +
-//				item.getId() + ": " + items.getItemComposition(item.getId()).getName() +
+//				item.getId() + ": " + itemManager.getItemComposition(item.getId()).getName() +
 //				", quantity: " + item.getQuantity();
 //		}
 //		System.out.println(itemContainer);
