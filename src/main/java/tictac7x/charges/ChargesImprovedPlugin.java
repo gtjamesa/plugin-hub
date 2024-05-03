@@ -12,10 +12,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.input.KeyListener;
-import net.runelite.client.input.KeyManager;
-import net.runelite.client.input.MouseListener;
-import net.runelite.client.input.MouseManager;
+import net.runelite.client.input.*;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.OverlayManager;
@@ -55,6 +52,7 @@ import tictac7x.charges.store.Store;
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -141,7 +139,7 @@ import java.util.Optional;
 	}
 )
 
-public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener {
+public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
 	private final String pluginVersion = "v0.5.7";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
@@ -210,6 +208,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	protected void startUp() {
 		keyManager.registerKeyListener(this);
 		mouseManager.registerMouseListener(this);
+		mouseManager.registerMouseWheelListener(this);
 		configMigration();
 
 		store = new Store(client, itemManager, configManager);
@@ -349,6 +348,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	protected void shutDown() {
 		keyManager.unregisterKeyListener(this);
 		mouseManager.unregisterMouseListener(this);
+		mouseManager.unregisterMouseWheelListener(this);
 
 		overlayManager.remove(overlayChargedItems);
 		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoBoxManager.removeInfoBox(chargedItemInfobox));
@@ -632,6 +632,12 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	public MouseEvent mouseMoved(final MouseEvent mouseEvent) {
 		onUserAction();
 		return mouseEvent;
+	}
+
+	@Override
+	public MouseWheelEvent mouseWheelMoved(final MouseWheelEvent mouseWheelEvent) {
+		onUserAction();
+		return mouseWheelEvent;
 	}
 
 	@Override
