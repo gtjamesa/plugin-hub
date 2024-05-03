@@ -14,6 +14,7 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.input.KeyListener;
 import net.runelite.client.input.KeyManager;
+import net.runelite.client.input.MouseListener;
 import net.runelite.client.input.MouseManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -53,6 +54,7 @@ import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -139,7 +141,7 @@ import java.util.Optional;
 	}
 )
 
-public class ChargesImprovedPlugin extends Plugin {
+public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener {
 	private final String pluginVersion = "v0.5.7";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
@@ -206,6 +208,8 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void startUp() {
+		keyManager.registerKeyListener(this);
+		mouseManager.registerMouseListener(this);
 		configMigration();
 
 		store = new Store(client, itemManager, configManager);
@@ -257,7 +261,7 @@ public class ChargesImprovedPlugin extends Plugin {
 			new J_BraceletOfSlaughter(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_Camulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_DesertAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
-			new J_EscapeCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson, keyManager, mouseManager),
+			new J_EscapeCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfPassage(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfPhoenix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfDodgy(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -343,6 +347,9 @@ public class ChargesImprovedPlugin extends Plugin {
 
 	@Override
 	protected void shutDown() {
+		keyManager.unregisterKeyListener(this);
+		mouseManager.unregisterMouseListener(this);
+
 		overlayManager.remove(overlayChargedItems);
 		chargedItemsInfoboxes.forEach(chargedItemInfobox -> infoBoxManager.removeInfoBox(chargedItemInfobox));
 	}
@@ -534,6 +541,10 @@ public class ChargesImprovedPlugin extends Plugin {
 		}
 	}
 
+	private void onUserAction() {
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onUserAction());
+	}
+
 	private void checkForChargesReset() {
 		final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 		if (date.equals(config.getResetDate())) return;
@@ -592,6 +603,55 @@ public class ChargesImprovedPlugin extends Plugin {
 
 			configManager.unsetConfiguration(ChargesImprovedConfig.group, "item_overlays_hidden");
 		}
+	}
+
+	@Override
+	public void keyPressed(final KeyEvent keyEvent) {
+		onUserAction();
+	}
+
+	@Override
+	public void keyTyped(final KeyEvent keyEvent) {}
+
+	@Override
+	public void keyReleased(final KeyEvent keyEvent) {}
+
+	@Override
+	public MouseEvent mousePressed(final MouseEvent mouseEvent) {
+		onUserAction();
+		return mouseEvent;
+	}
+
+	@Override
+	public MouseEvent mouseDragged(final MouseEvent mouseEvent) {
+		onUserAction();
+		return mouseEvent;
+	}
+
+	@Override
+	public MouseEvent mouseMoved(final MouseEvent mouseEvent) {
+		onUserAction();
+		return mouseEvent;
+	}
+
+	@Override
+	public MouseEvent mouseClicked(final MouseEvent mouseEvent) {
+		return mouseEvent;
+	}
+
+	@Override
+	public MouseEvent mouseReleased(final MouseEvent mouseEvent) {
+		return mouseEvent;
+	}
+
+	@Override
+	public MouseEvent mouseEntered(final MouseEvent mouseEvent) {
+		return mouseEvent;
+	}
+
+	@Override
+	public MouseEvent mouseExited(final MouseEvent mouseEvent) {
+		return mouseEvent;
 	}
 }
 

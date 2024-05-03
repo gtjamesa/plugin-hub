@@ -8,10 +8,6 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
-import net.runelite.client.input.KeyListener;
-import net.runelite.client.input.KeyManager;
-import net.runelite.client.input.MouseListener;
-import net.runelite.client.input.MouseManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStatus;
@@ -21,12 +17,10 @@ import tictac7x.charges.store.ItemActivity;
 import tictac7x.charges.store.Store;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.time.Duration;
 import java.time.Instant;
 
-public class J_EscapeCrystal extends ChargedItemWithStatus implements KeyListener, MouseListener {
+public class J_EscapeCrystal extends ChargedItemWithStatus {
     private Instant instant = Instant.now();
     private boolean alertedAboutActivation = false;
 
@@ -40,13 +34,9 @@ public class J_EscapeCrystal extends ChargedItemWithStatus implements KeyListene
         final Notifier notifier,
         final ChargesImprovedConfig config,
         final Store store,
-        final Gson gson,
-        final KeyManager keyManager,
-        final MouseManager mouseManager
+        final Gson gson
     ) {
         super(ChargesImprovedConfig.escape_crystal, ItemID.ESCAPE_CRYSTAL, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
-        keyManager.registerKeyListener(this);
-        mouseManager.registerMouseListener(this);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.ESCAPE_CRYSTAL).quantityCharges().hideOverlay(),
@@ -73,6 +63,11 @@ public class J_EscapeCrystal extends ChargedItemWithStatus implements KeyListene
             new OnWidgetLoaded(219, 1, 3, "Set auto-activation inactivity period \\(in seconds\\)\\(current: (?<seconds>.+?)s\\)").matcherConsumer(matcher -> {
                 configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.escape_crystal_inactivity_period, matcher.group("seconds"));
             }),
+
+            // Keyboard or mouse action resets idle timer.
+            new OnUserAction().consumer(() -> {
+                resetIdleTimer();
+            })
         };
     }
 
@@ -80,7 +75,7 @@ public class J_EscapeCrystal extends ChargedItemWithStatus implements KeyListene
         return client.getLocalPlayer().getHealthScale() != -1;
     }
 
-    private void resetIdleInstant() {
+    private void resetIdleTimer() {
         instant = Instant.now();
         alertedAboutActivation = false;
     }
@@ -110,54 +105,5 @@ public class J_EscapeCrystal extends ChargedItemWithStatus implements KeyListene
         }
 
         return secondsRemainingUntilActivation / 60 + ":" + String.format("%02d", secondsRemainingUntilActivation % 60);
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        resetIdleInstant();
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {}
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {}
-
-    @Override
-    public MouseEvent mousePressed(MouseEvent mouseEvent) {
-        resetIdleInstant();
-        return mouseEvent;
-    }
-
-    @Override
-    public MouseEvent mouseDragged(MouseEvent mouseEvent) {
-        resetIdleInstant();
-        return mouseEvent;
-    }
-
-    @Override
-    public MouseEvent mouseMoved(MouseEvent mouseEvent) {
-        resetIdleInstant();
-        return mouseEvent;
-    }
-
-    @Override
-    public MouseEvent mouseClicked(MouseEvent mouseEvent) {
-        return mouseEvent;
-    }
-
-    @Override
-    public MouseEvent mouseReleased(MouseEvent mouseEvent) {
-        return mouseEvent;
-    }
-
-    @Override
-    public MouseEvent mouseEntered(MouseEvent mouseEvent) {
-        return mouseEvent;
-    }
-
-    @Override
-    public MouseEvent mouseExited(MouseEvent mouseEvent) {
-        return mouseEvent;
     }
 }

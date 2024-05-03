@@ -3,7 +3,6 @@ package tictac7x.charges.item;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
-import net.runelite.api.ItemContainer;
 import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -50,6 +49,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnHitsplatApplied listenerOnHitsplatApplied;
     private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
     private final ListenerOnVarbitChanged listenerOnVarbitChanged;
+    private final ListenerOnUserAction listenerOnUserAction;
 
     private boolean inInventory = false;
     private boolean inEquipment = false;
@@ -91,6 +91,7 @@ public abstract class ChargedItemBase {
         listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
+        listenerOnUserAction = new ListenerOnUserAction(client, this, notifier, config);
     }
 
     public abstract String getCharges();
@@ -207,7 +208,7 @@ public abstract class ChargedItemBase {
             event.getItemContainer().getId() != InventoryID.EQUIPMENT.getId()
         ) return;
 
-        // Find best id for item to use.
+        // Find the best id for item to use.
         for (final Item item : event.getItemContainer().getItems()) {
             boolean itemFound = false;
             for (final TriggerItem triggerItem : items) {
@@ -243,5 +244,11 @@ public abstract class ChargedItemBase {
 
     public void onResetDaily() {
         listenerOnResetDaily.trigger();
+    }
+
+    public void onUserAction() {
+        if (inInventory() || isEquipped()) {
+            listenerOnUserAction.trigger();
+        }
     }
 }

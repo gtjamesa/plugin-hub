@@ -36,7 +36,10 @@ public class J_RingOfRecoil extends ChargedItem {
 
         this.triggers = new TriggerBase[]{
             // Check.
-            new OnChatMessage("You can inflict (?<charges>.+) more points? of damage before a ring will shatter.").setDynamically(),
+            new OnChatMessage("You can inflict one more point of damage before a ring will shatter.").fixedCharges(1),
+
+            // Check.
+            new OnChatMessage("You can inflict (?<charges>.+) more points of damage before a ring will shatter.").setDynamically(),
 
             // Trying to break when full.
             new OnChatMessage("The ring is fully charged. There would be no point in breaking it.").onItemClick().fixedCharges(40),
