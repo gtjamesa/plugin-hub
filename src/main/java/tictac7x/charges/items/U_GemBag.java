@@ -14,7 +14,7 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
-import tictac7x.charges.item.triggers.OnItemDespawned;
+import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -84,7 +84,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUse(storage.getStoreableItems()),
 
             // Pick up.
-            new OnItemDespawned(storage.getStoreableItems()).onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
+            new OnItemPickup(storage.getStoreableItems()).onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

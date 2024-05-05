@@ -82,8 +82,8 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onUse(final Optional<StorageItem[]> storeableItems) {
-        this.onUse = storeableItems;
+    public TriggerBase onUse(final StorageItem[] storeableItems) {
+        this.onUse = Optional.of(storeableItems);
         return this;
     }
 

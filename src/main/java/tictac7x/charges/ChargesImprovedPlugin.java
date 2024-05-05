@@ -23,30 +23,7 @@ import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.overlays.ChargedItemInfobox;
 import tictac7x.charges.item.overlays.ChargedItemOverlay;
 import tictac7x.charges.items.*;
-import tictac7x.charges.items.barrows.AhrimsHood;
-import tictac7x.charges.items.barrows.AhrimsRobeskirt;
-import tictac7x.charges.items.barrows.AhrimsRobetop;
-import tictac7x.charges.items.barrows.AhrimsStaff;
-import tictac7x.charges.items.barrows.DharoksGreataxe;
-import tictac7x.charges.items.barrows.DharoksHelm;
-import tictac7x.charges.items.barrows.DharoksPlatebody;
-import tictac7x.charges.items.barrows.DharoksPlatelegs;
-import tictac7x.charges.items.barrows.GuthansChainskirt;
-import tictac7x.charges.items.barrows.GuthansHelm;
-import tictac7x.charges.items.barrows.GuthansPlatebody;
-import tictac7x.charges.items.barrows.GuthansWarspear;
-import tictac7x.charges.items.barrows.KarilsCoif;
-import tictac7x.charges.items.barrows.KarilsCrossbow;
-import tictac7x.charges.items.barrows.KarilsLeatherskirt;
-import tictac7x.charges.items.barrows.KarilsLeathertop;
-import tictac7x.charges.items.barrows.ToragsHammers;
-import tictac7x.charges.items.barrows.ToragsHelm;
-import tictac7x.charges.items.barrows.ToragsPlatebody;
-import tictac7x.charges.items.barrows.ToragsPlatelegs;
-import tictac7x.charges.items.barrows.VeracsBrassard;
-import tictac7x.charges.items.barrows.VeracsFlail;
-import tictac7x.charges.items.barrows.VeracsHelm;
-import tictac7x.charges.items.barrows.VeracsPlateskirt;
+import tictac7x.charges.items.barrows.*;
 import tictac7x.charges.store.Store;
 
 import javax.inject.Inject;
@@ -486,13 +463,10 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	}
 
 	@Subscribe
-	public void onItemDespawned(final ItemDespawned event) {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemDespawned(event));
-
-//		System.out.println("ITEM DESPAWNED | " +
-//			event.getItem().getId() +
-//			", quantity: " + event.getItem().getQuantity()
-//		);
+	public void onSoundEffectPlayed(final SoundEffectPlayed event) {
+		if (event.getSoundId() == SoundEffectID.ITEM_PICKUP) {
+			Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemPickup());
+		}
 	}
 
 	@Subscribe

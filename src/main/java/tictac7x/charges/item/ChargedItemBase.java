@@ -40,7 +40,7 @@ public abstract class ChargedItemBase {
 
     private final ListenerOnChatMessage listenerOnChatMessage;
     private final ListenerOnItemContainerChanged listenerOnItemContainerChanged;
-    private final ListenerOnItemDespawned listenerOnItemDespawned;
+    private final ListenerOnItemPickup listenerOnItemPickup;
     private final ListenerOnXpDrop listenerOnXpDrop;
     private final ListenerOnMenuEntryAdded listenerOnMenuEntryAdded;
     private final ListenerOnResetDaily listenerOnResetDaily;
@@ -82,7 +82,7 @@ public abstract class ChargedItemBase {
 
         listenerOnChatMessage = new ListenerOnChatMessage(client, this, notifier, config);
         listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(client, this, notifier, config);
-        listenerOnItemDespawned = new ListenerOnItemDespawned(client, this, notifier, config);
+        listenerOnItemPickup = new ListenerOnItemPickup(client, this, notifier, config);
         listenerOnXpDrop = new ListenerOnXpDrop(client, this, notifier, config);
         listenerOnMenuEntryAdded = new ListenerOnMenuEntryAdded(client, this, notifier, config);
         listenerOnResetDaily = new ListenerOnResetDaily(client, this, notifier, config);
@@ -236,9 +236,9 @@ public abstract class ChargedItemBase {
         }
     }
 
-    public void onItemDespawned(final ItemDespawned event) {
+    public void onItemPickup() {
         if (inInventory() || isEquipped()) {
-            listenerOnItemDespawned.trigger(event);
+            listenerOnItemPickup.trigger();
         }
     }
 
