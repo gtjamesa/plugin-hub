@@ -202,10 +202,11 @@ public abstract class ChargedItemBase {
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
-        // Only check inventory and equipment.
+        // Only check inventory, equipment and bank.
         if (
             event.getItemContainer().getId() != InventoryID.INVENTORY.getId() &&
-            event.getItemContainer().getId() != InventoryID.EQUIPMENT.getId()
+            event.getItemContainer().getId() != InventoryID.EQUIPMENT.getId() &&
+            event.getItemContainer().getId() != InventoryID.BANK.getId()
         ) return;
 
         // Find the best id for item to use.
