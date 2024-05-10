@@ -236,9 +236,9 @@ public abstract class ChargedItemBase {
         }
     }
 
-    public void onItemPickup() {
+    public void onItemDespawned(final ItemDespawned event) {
         if (inInventory() || isEquipped()) {
-            listenerOnItemPickup.trigger();
+            listenerOnItemPickup.trigger(event);
         }
     }
 

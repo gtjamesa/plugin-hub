@@ -463,10 +463,8 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	}
 
 	@Subscribe
-	public void onSoundEffectPlayed(final SoundEffectPlayed event) {
-		if (event.getSoundId() == SoundEffectID.ITEM_PICKUP) {
-			Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemPickup());
-		}
+	public void onItemDespawned(final ItemDespawned event) {
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onItemDespawned(event));
 	}
 
 	@Subscribe

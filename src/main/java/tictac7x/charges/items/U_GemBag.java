@@ -84,7 +84,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUse(storage.getStoreableItems()),
 
             // Pick up.
-            new OnItemPickup(storage.getStoreableItems()).onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
+            new OnItemPickup(storage.getStoreableItems()).isByOne().onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

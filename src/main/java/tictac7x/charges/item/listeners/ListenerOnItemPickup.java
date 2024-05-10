@@ -1,11 +1,11 @@
 package tictac7x.charges.item.listeners;
 
 import net.runelite.api.Client;
+import net.runelite.api.events.ItemDespawned;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.TriggerBase;
 
@@ -14,22 +14,16 @@ public class ListenerOnItemPickup extends ListenerBase {
         super(client, chargedItem, notifier, config);
     }
 
-    public void trigger() {
+    public void trigger(final ItemDespawned event) {
         for (final TriggerBase triggerBase : chargedItem.triggers) {
-            if (!isValidTrigger(triggerBase)) continue;
+            if (!isValidTrigger(triggerBase, event)) continue;
 
             final OnItemPickup trigger = (OnItemPickup) triggerBase;
             boolean triggerUsed = false;
 
             if (trigger.pickUpToStorage.isPresent()) {
-                // Find picked up item.
-                for (final StorageItem item : trigger.items) {
-                    if (chargedItem.store.inMenuTargets(item.itemId)) {
-                        ((ChargedItemWithStorage) chargedItem).storage.add(item.itemId, 1);
-                        triggerUsed = true;
-                        break;
-                    }
-                }
+                ((ChargedItemWithStorage) chargedItem).storage.add(event.getItem().getId(), event.getItem().getQuantity());
+                triggerUsed = true;
             }
 
             if (super.trigger(trigger)) {
@@ -40,7 +34,7 @@ public class ListenerOnItemPickup extends ListenerBase {
         }
     }
 
-    public boolean isValidTrigger(final TriggerBase triggerBase) {
+    public boolean isValidTrigger(final TriggerBase triggerBase, final ItemDespawned event) {
         if (!(triggerBase instanceof OnItemPickup)) return false;
         final OnItemPickup trigger = (OnItemPickup) triggerBase;
 
@@ -49,20 +43,23 @@ public class ListenerOnItemPickup extends ListenerBase {
             return false;
         }
 
-        // Take check.
+        // By one check.
+        if (trigger.isByOne.isPresent() && trigger.isByOne.get() && event.getItem().getQuantity() > 1) {
+            return false;
+        }
+
+        // Menu option check.
         if (!chargedItem.store.inMenuOptions("Take")) {
             return false;
         }
 
-        // Item check.
-        boolean validItem = false;
-        for (final StorageItem item : trigger.items) {
-            if (chargedItem.store.inMenuTargets(item.itemId)) {
-                validItem = true;
-                break;
-            }
+        // Menu target check.
+        if (!chargedItem.store.inMenuTargets(event.getItem().getId())) {
+            return false;
         }
-        if (!validItem) {
+
+        // Player location check.
+        if (client.getLocalPlayer().getWorldLocation().distanceTo(event.getTile().getWorldLocation()) > 1) {
             return false;
         }
 
