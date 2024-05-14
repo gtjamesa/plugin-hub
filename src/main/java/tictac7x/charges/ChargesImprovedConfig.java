@@ -658,7 +658,7 @@ public interface ChargesImprovedConfig extends Config {
 
         @ConfigItem(
             keyName = enchanted_lyre + infobox,
-            name = "Enchanged Lyre",
+            name = "Enchanted Lyre",
             description = "",
             section = infoboxes
         ) default boolean enchantedLyreInfobox() { return true; }
@@ -1162,7 +1162,7 @@ public interface ChargesImprovedConfig extends Config {
 
         @ConfigItem(
             keyName = enchanted_lyre + overlay,
-            name = "Enchanged Lyre",
+            name = "Enchanted Lyre",
             description = "",
             section = overlays
         ) default boolean enchantedLyreOverlay() { return true; }
