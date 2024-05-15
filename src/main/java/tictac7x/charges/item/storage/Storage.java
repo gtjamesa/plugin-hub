@@ -145,7 +145,16 @@ public class Storage {
 
     public void fillFromInventory() {
         for (final StorageItem storageItem : storeableItems) {
-            add(storageItem.itemId, store.getPreviousInventoryItemQuantity(storageItem.itemId));
+            add(storageItem.getId(), store.getPreviousInventoryItemQuantity(storageItem.getId()));
+        }
+    }
+
+    public void fillFromInventoryIndividually(final int itemId) {
+        for (final StorageItem storageItem : storeableItems) {
+            if (storageItem.getId() == itemId) {
+                add(storageItem.getId(), store.getPreviousInventoryItemQuantity(storageItem.getId()));
+                return;
+            }
         }
     }
 

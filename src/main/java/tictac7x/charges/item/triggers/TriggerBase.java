@@ -13,6 +13,7 @@ public abstract class TriggerBase {
     public Optional<Boolean> onItemClick = Optional.empty();
     public Optional<StorageItem[]> onUse = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
+    public Optional<Boolean> atBank = Optional.empty();
 
     // Actions.
     public Optional<Integer> fixedCharges = Optional.empty();
@@ -124,6 +125,11 @@ public abstract class TriggerBase {
 
     public TriggerBase addToStorage(final int itemId) {
         this.addToStorage = Optional.of(new int[]{itemId, 1});
+        return this;
+    }
+
+    public TriggerBase atBank() {
+        this.atBank = Optional.of(true);
         return this;
     }
 }

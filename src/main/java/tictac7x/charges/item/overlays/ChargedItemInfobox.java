@@ -53,7 +53,7 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public String getTooltip() {
-        return tooltip;
+        return tooltip + " - " + chargedItem.getCharges();
     }
 
     @Override

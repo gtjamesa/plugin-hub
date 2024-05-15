@@ -15,6 +15,7 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
@@ -23,7 +24,6 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tictac7x.charges.store.ItemContainerType.BANK;
 import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 public class U_FishBarrel extends ChargedItemWithStorage {
@@ -129,10 +129,14 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             }).onItemClick(),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
+
+            // Use fish on bag.
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventorySingle().onUse(storage.getStoreableItems()),
 
             // Empty to bank.
-            new OnChatMessage("You take some fish out of the barrel.").onItemClick().emptyStorage(),
+            new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
+
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

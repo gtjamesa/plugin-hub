@@ -416,6 +416,10 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		store.onMenuOptionClicked(event);
+
+		for (final ChargedItemBase chargedItem : chargedItems) {
+			chargedItem.onMenuOptionClicked(event);
+		}
 //		int impostorId = -1;
 //		try {
 //			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();

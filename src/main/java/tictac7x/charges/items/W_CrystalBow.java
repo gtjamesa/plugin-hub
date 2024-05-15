@@ -11,6 +11,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
+import tictac7x.charges.item.triggers.OnAnimationChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -70,7 +71,7 @@ public class W_CrystalBow extends ChargedItem {
             new OnChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.").setDynamically(),
 
             // Attack.
-            new OnHitsplatApplied(ENEMY).isEquipped().decreaseCharges(1)
+            new OnAnimationChanged(426).isEquipped().decreaseCharges(1),
         };
     }
 }

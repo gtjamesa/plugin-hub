@@ -3,6 +3,7 @@ package tictac7x.charges.item.listeners;
 import net.runelite.api.Client;
 import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -16,13 +17,8 @@ public class ListenerOnResetDaily extends ListenerBase {
         for (final TriggerBase triggerBase : chargedItem.triggers) {
             if (!isValidTrigger(triggerBase)) continue;
             final OnResetDaily trigger = (OnResetDaily) triggerBase;
-            boolean triggerUsed = false;
-
-            if (super.trigger(trigger)) {
-                triggerUsed = true;
-            }
-
-            if (triggerUsed) return;
+            ((ChargedItem) chargedItem).setCharges(trigger.resetCharges);
+            return;
         }
     }
 

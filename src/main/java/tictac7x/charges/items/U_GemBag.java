@@ -16,11 +16,11 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
-import static tictac7x.charges.store.ItemContainerType.BANK;
 import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 
@@ -75,13 +75,13 @@ public class U_GemBag extends ChargedItemWithStorage {
             }),
 
             // Fill from inventory.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
 
             // Empty to bank.
-            new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),
+            new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
 
             // Use gem on bag
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUse(storage.getStoreableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUse(storage.getStoreableItems()),
 
             // Pick up.
             new OnItemPickup(storage.getStoreableItems()).isByOne().onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),

@@ -50,6 +50,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnWidgetLoaded listenerOnWidgetLoaded;
     private final ListenerOnVarbitChanged listenerOnVarbitChanged;
     private final ListenerOnUserAction listenerOnUserAction;
+    private final ListenerOnMenuOptionClicked listenerOnMenuOptionClicked;
 
     private boolean inInventory = false;
     private boolean inEquipment = false;
@@ -92,6 +93,7 @@ public abstract class ChargedItemBase {
         listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
         listenerOnUserAction = new ListenerOnUserAction(client, this, notifier, config);
+        listenerOnMenuOptionClicked = new ListenerOnMenuOptionClicked(client, this, notifier, config);
     }
 
     public abstract String getCharges();
@@ -250,6 +252,12 @@ public abstract class ChargedItemBase {
     public void onUserAction() {
         if (inInventory() || isEquipped()) {
             listenerOnUserAction.trigger();
+        }
+    }
+
+    public void onMenuOptionClicked(final MenuOptionClicked event) {
+        if (inInventory() || isEquipped()) {
+            listenerOnMenuOptionClicked.trigger(event);
         }
     }
 }

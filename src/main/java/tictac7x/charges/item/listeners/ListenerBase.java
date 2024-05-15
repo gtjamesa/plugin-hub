@@ -137,6 +137,11 @@ public abstract class ListenerBase {
             return false;
         }
 
+        // At bank check.
+        if (trigger.atBank.isPresent() && (client.getWidget(12, 1) == null) && client.getWidget(192, 0) == null) {
+            return false;
+        }
+
         return true;
     }
 }

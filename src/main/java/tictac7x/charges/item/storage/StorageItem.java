@@ -29,8 +29,12 @@ public class StorageItem {
         return this;
     }
 
+    public int getId() {
+        return itemId;
+    }
+
     public int getQuantity() {
-        return this.quantity;
+        return quantity;
     }
 
     public void setQuantity(final int quantity) {
