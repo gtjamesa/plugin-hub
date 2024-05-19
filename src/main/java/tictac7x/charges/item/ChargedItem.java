@@ -2,6 +2,7 @@ package tictac7x.charges.item;
 
 import com.google.gson.Gson;
 import net.runelite.api.Client;
+import net.runelite.api.ItemID;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -37,6 +38,27 @@ public class ChargedItem extends ChargedItemBase {
         }
 
         return "?";
+    }
+
+    @Override
+    public String getTotalCharges() {
+        int totalFixedCharges = 0;
+        boolean fixedItemsFound = false;
+
+        for (final TriggerItem triggerItem : items) {
+            if (triggerItem.itemId == itemId && triggerItem.fixedCharges.isPresent()) {
+                totalFixedCharges += store.getInventoryItemQuantity(triggerItem.itemId) * triggerItem.fixedCharges.get();
+                fixedItemsFound = true;
+            }
+        }
+
+        try {
+            if (getChargesFromConfig() == Charges.UNKNOWN && fixedItemsFound) {
+                return getChargesMinified(totalFixedCharges);
+            }
+        } catch (final Exception ignored) {}
+
+        return getCharges();
     }
 
     public void setCharges(int charges) {

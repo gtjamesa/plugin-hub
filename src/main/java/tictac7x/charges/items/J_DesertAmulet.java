@@ -31,16 +31,18 @@ public class J_DesertAmulet extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.desert_amulet, ItemID.DESERT_AMULET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.desert_amulet, ItemID.DESERT_AMULET_2, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.DESERT_AMULET_3).maxCharges(1),
+            new TriggerItem(ItemID.DESERT_AMULET_2),
+            new TriggerItem(ItemID.DESERT_AMULET_3),
             new TriggerItem(ItemID.DESERT_AMULET_4).fixedCharges(Charges.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[]{
             new OnChatMessage("You have already used your available teleports for today.").fixedCharges(0),
-            new OnResetDaily(1).specificItem(ItemID.DESERT_AMULET_3)
+            new OnResetDaily(1).specificItem(ItemID.DESERT_AMULET_2),
+            new OnResetDaily(1).specificItem(ItemID.DESERT_AMULET_3),
         };
     }
 }

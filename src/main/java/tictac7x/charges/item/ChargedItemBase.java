@@ -3,6 +3,7 @@ package tictac7x.charges.item;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
+import net.runelite.api.ItemID;
 import net.runelite.api.events.*;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
@@ -17,8 +18,8 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
+import javax.annotation.Nonnull;
 import java.awt.Color;
-import java.util.Optional;
 
 public abstract class ChargedItemBase {
     public final String configKey;
@@ -98,22 +99,29 @@ public abstract class ChargedItemBase {
 
     public abstract String getCharges();
 
+    public abstract String getTotalCharges();
+
     public boolean inInventory() {
         return inInventory;
     }
 
-    public boolean isEquipped() {
+    public boolean inEquipment() {
         return inEquipment;
     }
 
-    Optional<TriggerItem> getCurrentItem() {
+    private boolean inInventoryOrEquipment() {
+        return inInventory || inEquipment;
+    }
+
+    @Nonnull
+    private TriggerItem getCurrentItem() {
         for (final TriggerItem triggerItem : items) {
             if (triggerItem.itemId == itemId) {
-                return Optional.of(triggerItem);
+                return triggerItem;
             }
         }
 
-        return Optional.empty();
+        return null;
     }
 
     public String getItemName() {
@@ -121,11 +129,7 @@ public abstract class ChargedItemBase {
     }
 
     public boolean needsToBeEquipped() {
-        if (getCurrentItem().isPresent()) {
-            return getCurrentItem().get().needsToBeEquipped.isPresent();
-        }
-
-        return false;
+        return getCurrentItem().needsToBeEquipped.isPresent();
     }
 
     public Color getTextColor() {
@@ -133,7 +137,7 @@ public abstract class ChargedItemBase {
             return config.getColorUnknown();
         }
 
-        if (getCharges().equals("0") || needsToBeEquipped() && !isEquipped()) {
+        if (getCharges().equals("0") || needsToBeEquipped() && !inEquipment()) {
             return config.getColorEmpty();
         }
 
@@ -160,89 +164,57 @@ public abstract class ChargedItemBase {
     }
 
     public void onChatMessage(final ChatMessage event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnChatMessage.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnChatMessage.trigger(event);
     }
 
     public void onHitsplatApplied(final HitsplatApplied event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnHitsplatApplied.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnHitsplatApplied.trigger(event);
     }
 
     public void onWidgetLoaded(final WidgetLoaded event) {
-        if (inInventory() || isEquipped()) {
-            clientThread.invokeLater(() -> {
-                listenerOnWidgetLoaded.trigger(event);
-            });
-        }
+        if (!inInventoryOrEquipment()) return;
+        clientThread.invokeLater(() -> {
+            listenerOnWidgetLoaded.trigger(event);
+        });
     }
 
     public void onVarbitChanged(final VarbitChanged event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnVarbitChanged.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnVarbitChanged.trigger(event);
     }
 
     public void onStatChanged(final StatChanged event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnXpDrop.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnXpDrop.trigger(event);
     }
 
     public void onGraphicChanged(final GraphicChanged event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnGraphicChanged.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnGraphicChanged.trigger(event);
     }
 
     public void onAnimationChanged(final AnimationChanged event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnAnimationChanged.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnAnimationChanged.trigger(event);
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
-        // Only check inventory, equipment and bank.
-        if (
-            event.getItemContainer().getId() != InventoryID.INVENTORY.getId() &&
-            event.getItemContainer().getId() != InventoryID.EQUIPMENT.getId() &&
-            event.getItemContainer().getId() != InventoryID.BANK.getId()
-        ) return;
+        updateItem(event);
 
-        // Find the best id for item to use.
-        for (final Item item : event.getItemContainer().getItems()) {
-            boolean itemFound = false;
-            for (final TriggerItem triggerItem : items) {
-                if (item.getId() == triggerItem.itemId) {
-                    this.itemId = item.getId();
-                    itemFound = true;
-                }
-            }
-
-            if (itemFound) break;
-        }
-
-        // Update inventory and equipment statuses.
-        inInventory = store.inventoryContainsItem(itemId);
-        inEquipment = store.equipmentContainsItem(itemId);
-
-        if (inInventory || inEquipment) {
-            listenerOnItemContainerChanged.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnItemContainerChanged.trigger(event);
     }
 
     public void onMenuEntryAdded(final MenuEntryAdded event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnMenuEntryAdded.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnMenuEntryAdded.trigger(event);
     }
 
     public void onItemDespawned(final ItemDespawned event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnItemPickup.trigger(event);
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnItemPickup.trigger(event);
     }
 
     public void onResetDaily() {
@@ -250,14 +222,53 @@ public abstract class ChargedItemBase {
     }
 
     public void onUserAction() {
-        if (inInventory() || isEquipped()) {
-            listenerOnUserAction.trigger();
-        }
+        if (!inInventoryOrEquipment()) return;
+        listenerOnUserAction.trigger();
     }
 
     public void onMenuOptionClicked(final MenuOptionClicked event) {
-        if (inInventory() || isEquipped()) {
-            listenerOnMenuOptionClicked.trigger(event);
+        if (!inInventoryOrEquipment()) return;
+        listenerOnMenuOptionClicked.trigger(event);
+    }
+
+    private void updateItem(final ItemContainerChanged event) {
+        if (
+            event.getContainerId() != InventoryID.INVENTORY.getId() &&
+            event.getContainerId() != InventoryID.EQUIPMENT.getId()
+        ) return;
+
+        Integer itemId = null;
+        boolean inEquipment = false;
+        boolean inInventory = false;
+
+        if (store.equipment.isPresent()) {
+            equipmentLooper: for (final Item item : store.equipment.get().getItems()) {
+                for (final TriggerItem triggerItem : items) {
+                    if (triggerItem.itemId == item.getId()) {
+                        itemId = triggerItem.itemId;
+                        inEquipment = true;
+                        break equipmentLooper;
+                    }
+                }
+            }
         }
+
+        if (store.inventory.isPresent()) {
+            inventoryLooper: for (final Item item : store.inventory.get().getItems()) {
+                for (final TriggerItem triggerItem : items) {
+                    if (triggerItem.itemId == item.getId()) {
+                        if (itemId == null) {
+                            itemId = triggerItem.itemId;
+                        }
+                        inInventory = true;
+                        break inventoryLooper;
+                    }
+                }
+            }
+        }
+
+        if (itemId !=null )this.itemId = itemId;
+        this.inEquipment = inEquipment;
+        this.inInventory = inInventory;
     }
 }

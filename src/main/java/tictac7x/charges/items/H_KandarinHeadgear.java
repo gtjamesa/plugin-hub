@@ -16,6 +16,7 @@ import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 public class H_KandarinHeadgear extends ChargedItem {
@@ -31,21 +32,22 @@ public class H_KandarinHeadgear extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.kandarin_headgear, ItemID.KANDARIN_HEADGEAR, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.kandarin_headgear, ItemID.KANDARIN_HEADGEAR_3, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.KANDARIN_HEADGEAR_3)
+            new TriggerItem(ItemID.KANDARIN_HEADGEAR_3),
+            new TriggerItem(ItemID.KANDARIN_HEADGEAR_4).fixedCharges(Charges.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[] {
             // Try to teleport while empty.
             new OnChatMessage("You have already used your available teleports for today. Your headgear will recharge tomorrow.").onItemClick().fixedCharges(0),
 
-            // Daily reset.
-            new OnResetDaily(1).specificItem(ItemID.KANDARIN_HEADGEAR_3),
-
             // Teleport.
             new OnGraphicChanged(111).onItemClick().decreaseCharges(1),
+
+            // Daily reset.
+            new OnResetDaily(1).specificItem(ItemID.KANDARIN_HEADGEAR_3),
         };
     }
 }

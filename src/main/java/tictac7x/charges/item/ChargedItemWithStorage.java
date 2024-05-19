@@ -61,6 +61,11 @@ public class ChargedItemWithStorage extends ChargedItemBase {
         return getChargesMinified(quantity);
     }
 
+    @Override
+    public String getTotalCharges() {
+        return getCharges();
+    }
+
     private void loadCharges() {
         storage.loadStorage();
     }

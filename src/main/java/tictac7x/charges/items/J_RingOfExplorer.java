@@ -43,6 +43,8 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
         ).showIndividualCharges();
 
         this.items = new TriggerItem[]{
+            new TriggerItem(ItemID.EXPLORERS_RING_1),
+            new TriggerItem(ItemID.EXPLORERS_RING_2),
             new TriggerItem(ItemID.EXPLORERS_RING_3),
             new TriggerItem(ItemID.EXPLORERS_RING_4),
         };

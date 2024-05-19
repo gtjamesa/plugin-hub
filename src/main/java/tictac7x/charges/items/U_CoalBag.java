@@ -29,7 +29,7 @@ public class U_CoalBag extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.coal_bag, ItemID.COAL_BAG, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.coal_bag, ItemID.COAL_BAG_12019, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         this.storage = storage
             .storeableItems(new StorageItem(ItemID.COAL).checkName("Coal"))
             .maximumTotalQuantity(27)
@@ -84,7 +84,6 @@ public class U_CoalBag extends ChargedItemWithStorage {
             ).consumer(() -> {
                 storage.removeAndPrioritizeInventory(ItemID.COAL, 8);
             }),
-
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

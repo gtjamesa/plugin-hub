@@ -1,6 +1,5 @@
 package tictac7x.charges.item.overlays;
 
-import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
@@ -8,8 +7,6 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemBase;
-import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
 
 import java.awt.Color;
 import java.util.Optional;
@@ -48,7 +45,7 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public String getText() {
-        return chargedItem.getCharges();
+        return chargedItem.getTotalCharges();
     }
 
     @Override
@@ -68,7 +65,7 @@ public class ChargedItemInfobox extends InfoBox {
         if (
             !isChargedItemInfoboxEnabled() ||
             chargedItem.getCharges().equals("∞") && !config.showUnlimited() ||
-            (!chargedItem.inInventory() && !chargedItem.isEquipped())
+            (!chargedItem.inInventory() && !chargedItem.inEquipment())
         ) {
             return false;
         }
@@ -89,7 +86,7 @@ public class ChargedItemInfobox extends InfoBox {
         // Update tooltip.
         tooltip =
             chargedItem.getItemName() +
-            (chargedItem.needsToBeEquipped() && !chargedItem.isEquipped() ? " (needs to be equipped)" : "");
+            (chargedItem.needsToBeEquipped() && !chargedItem.inEquipment() ? " (needs to be equipped)" : "");
     }
 
     private boolean isChargedItemInfoboxEnabled() {

@@ -95,7 +95,7 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
 
     @Override
     public String getCharges() {
-        if (config.getEscapeCrystalStatus() == ItemActivity.DEACTIVATED || (!inInventory() && !isEquipped())) { return "∞"; }
+        if (config.getEscapeCrystalStatus() == ItemActivity.DEACTIVATED || (!inInventory() && !inEquipment())) { return "∞"; }
         if (config.getEscapeCrystalInactivityPeriod() == Charges.UNKNOWN) { return "?"; }
 
         final long secondsRemainingUntilActivation = getSecondsRemainingUntilActivation();

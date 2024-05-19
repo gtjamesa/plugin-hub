@@ -31,12 +31,13 @@ public class C_ArdougneCloak extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.ardougne_cloak, ItemID.ARDOUGNE_CLOAK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.ardougne_cloak, ItemID.ARDOUGNE_CLOAK_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
+            new TriggerItem(ItemID.ARDOUGNE_CLOAK_1).fixedCharges(Charges.UNLIMITED),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_2),
             new TriggerItem(ItemID.ARDOUGNE_CLOAK_3),
-            new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(Charges.UNLIMITED)
+            new TriggerItem(ItemID.ARDOUGNE_CLOAK_4).fixedCharges(Charges.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[] {

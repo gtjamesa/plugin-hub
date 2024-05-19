@@ -31,9 +31,11 @@ public class S_FaladorShield extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.falador_shield, ItemID.FALADOR_SHIELD, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.falador_shield, ItemID.FALADOR_SHIELD_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
+            new TriggerItem(ItemID.FALADOR_SHIELD_1),
+            new TriggerItem(ItemID.FALADOR_SHIELD_2),
             new TriggerItem(ItemID.FALADOR_SHIELD_3),
             new TriggerItem(ItemID.FALADOR_SHIELD_4),
         };
@@ -51,6 +53,8 @@ public class S_FaladorShield extends ChargedItem {
             new OnGraphicChanged(321).onItemClick().decreaseCharges(1),
 
             // Daily resets.
+            new OnResetDaily(1).specificItem(ItemID.FALADOR_SHIELD_1),
+            new OnResetDaily(1).specificItem(ItemID.FALADOR_SHIELD_2),
             new OnResetDaily(1).specificItem(ItemID.FALADOR_SHIELD_3),
             new OnResetDaily(2).specificItem(ItemID.FALADOR_SHIELD_4),
         };

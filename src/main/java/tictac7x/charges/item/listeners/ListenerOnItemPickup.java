@@ -8,6 +8,7 @@ import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.item.triggers.TriggerItem;
 
 public class ListenerOnItemPickup extends ListenerBase {
     public ListenerOnItemPickup(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
@@ -37,6 +38,17 @@ public class ListenerOnItemPickup extends ListenerBase {
     public boolean isValidTrigger(final TriggerBase triggerBase, final ItemDespawned event) {
         if (!(triggerBase instanceof OnItemPickup)) return false;
         final OnItemPickup trigger = (OnItemPickup) triggerBase;
+
+        // Correct item check.
+        boolean correctItem = false;
+        for (final TriggerItem triggerItem : chargedItem.items) {
+            if (triggerItem.itemId == event.getItem().getId()) {
+                correctItem = true;
+                break;
+            }
+        } if (!correctItem) {
+            return false;
+        }
 
         // Pick up to storage check.
         if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {

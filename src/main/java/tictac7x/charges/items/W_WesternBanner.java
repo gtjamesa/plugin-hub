@@ -11,7 +11,6 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -31,10 +30,15 @@ public class W_WesternBanner extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.western_banner, ItemID.WESTERN_BANNER_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.western_banner, ItemID.WESTERN_BANNER_3, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
+            new TriggerItem(ItemID.WESTERN_BANNER_3),
             new TriggerItem(ItemID.WESTERN_BANNER_4).fixedCharges(Charges.UNLIMITED),
+        };
+
+        this.triggers = new TriggerBase[]{
+            new OnResetDaily(1).onSpecificItem(ItemID.WESTERN_BANNER_3),
         };
     }
 }

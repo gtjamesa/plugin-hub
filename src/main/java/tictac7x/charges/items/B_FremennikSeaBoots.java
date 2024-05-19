@@ -16,6 +16,7 @@ import tictac7x.charges.item.triggers.OnGraphicChanged;
 import tictac7x.charges.item.triggers.OnResetDaily;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 public class B_FremennikSeaBoots extends ChargedItem {
@@ -31,10 +32,13 @@ public class B_FremennikSeaBoots extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.fremennik_sea_boots, ItemID.FREMENNIK_SEA_BOOTS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.fremennik_sea_boots, ItemID.FREMENNIK_SEA_BOOTS_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.FREMENNIK_SEA_BOOTS_3)
+            new TriggerItem(ItemID.FREMENNIK_SEA_BOOTS_1),
+            new TriggerItem(ItemID.FREMENNIK_SEA_BOOTS_2),
+            new TriggerItem(ItemID.FREMENNIK_SEA_BOOTS_3),
+            new TriggerItem(ItemID.FREMENNIK_SEA_BOOTS_4).fixedCharges(Charges.UNLIMITED),
         };
 
         this.triggers = new TriggerBase[]{
@@ -45,6 +49,8 @@ public class B_FremennikSeaBoots extends ChargedItem {
             new OnGraphicChanged(111).onItemClick().decreaseCharges(1),
 
             // Daily reset.
+            new OnResetDaily(1).specificItem(ItemID.FREMENNIK_SEA_BOOTS_1),
+            new OnResetDaily(1).specificItem(ItemID.FREMENNIK_SEA_BOOTS_2),
             new OnResetDaily(1).specificItem(ItemID.FREMENNIK_SEA_BOOTS_3),
         };
     }
