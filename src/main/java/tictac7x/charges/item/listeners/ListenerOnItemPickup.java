@@ -6,6 +6,7 @@ import net.runelite.client.Notifier;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -37,16 +38,22 @@ public class ListenerOnItemPickup extends ListenerBase {
 
     public boolean isValidTrigger(final TriggerBase triggerBase, final ItemDespawned event) {
         if (!(triggerBase instanceof OnItemPickup)) return false;
+        if (!(chargedItem instanceof ChargedItemWithStorage)) return false;
         final OnItemPickup trigger = (OnItemPickup) triggerBase;
+        final ChargedItemWithStorage chargedItem = (ChargedItemWithStorage) this.chargedItem;
+
 
         // Correct item check.
         boolean correctItem = false;
-        for (final TriggerItem triggerItem : chargedItem.items) {
-            if (triggerItem.itemId == event.getItem().getId()) {
+        for (final StorageItem storageItem : chargedItem.getStorage()) {
+            if (event.getItem().getId() == storageItem.itemId) {
                 correctItem = true;
                 break;
             }
-        } if (!correctItem) {
+        }
+
+        if (!correctItem) {
+            System.out.println("invalid item " + event.getItem().getId());
             return false;
         }
 
