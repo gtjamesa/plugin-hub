@@ -10,7 +10,9 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
+import net.runelite.client.ui.JagexColors;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
+import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.listeners.*;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -111,6 +113,10 @@ public abstract class ChargedItemBase {
 
     private boolean inInventoryOrEquipment() {
         return inInventory || inEquipment;
+    }
+
+    public String getTooltip() {
+        return getItemName() + (needsToBeEquipped() && !inEquipment() ? " (needs to be equipped)" : "") + ": " + ColorUtil.wrapWithColorTag(String.valueOf(getCharges()), JagexColors.MENU_TARGET);
     }
 
     @Nonnull

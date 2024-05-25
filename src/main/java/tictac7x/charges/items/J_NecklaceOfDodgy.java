@@ -49,7 +49,7 @@ public class J_NecklaceOfDodgy extends ChargedItem {
             // Break.
             new OnChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges.").setDynamically(),
 
-            new OnWidgetLoaded(219, 1, 0, "Status: (?<charges>.+) charges? left.").setDynamically(),
+            new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) charges? left.").setDynamically(),
         };
     }
 }

@@ -7,7 +7,9 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
+import net.runelite.client.ui.JagexColors;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
+import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.storage.Storage;
 import tictac7x.charges.item.storage.StorageItem;
@@ -28,6 +30,19 @@ public class ChargedItemWithStorage extends ChargedItemBase {
         clientThread.invokeLater(() -> {
             loadCharges();
         });
+    }
+
+    @Override
+    public String getTooltip() {
+        String tooltip = "";
+        for (final StorageItem storageItem : storage.getStorage()) {
+            if (storageItem.getQuantity() > 0) {
+                tooltip += (storageItem.displayName.isPresent() ? storageItem.displayName.get() : itemManager.getItemComposition(storageItem.itemId).getName()) + ": ";
+                tooltip += ColorUtil.wrapWithColorTag(String.valueOf(storageItem.getQuantity()), JagexColors.MENU_TARGET) + "</br>";
+            }
+        }
+
+        return tooltip.replaceAll("</br>$", "");
     }
 
     public List<StorageItem> getStorage() {

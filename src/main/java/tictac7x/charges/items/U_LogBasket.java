@@ -103,10 +103,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
 
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUse(storage.getStoreableItems()),
-
-            // Empty to inventory.
-            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventorySingle().onUse(storage.getStoreableItems()),
 
             // Empty to bank.
             new OnItemContainerChanged(BANK).onMenuOption("Empty").emptyStorage(),

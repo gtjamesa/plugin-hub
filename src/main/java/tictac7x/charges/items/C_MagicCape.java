@@ -43,7 +43,7 @@ public class C_MagicCape extends ChargedItem {
             new OnChatMessage("You have changed your spellbook (?<used>.+)/(?<total>.+) times today.").useDifference(),
 
             // Spellbook swap widget.
-            new OnWidgetLoaded(219, 1, 0, "Choose spellbook: \\((?<charges>.+)/5 left\\)").setDynamically(),
+            new OnWidgetLoaded(219, 1, 0).text("Choose spellbook: \\((?<charges>.+)/5 left\\)").setDynamically(),
 
             // Daily reset.
             new OnResetDaily(5),

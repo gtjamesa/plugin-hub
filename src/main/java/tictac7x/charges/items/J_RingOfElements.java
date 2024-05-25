@@ -48,7 +48,7 @@ public class J_RingOfElements extends ChargedItem {
             new OnChatMessage("The Ring of the Elements has (?<charges>.+) charges?. You can uncharge it at a bank.").setDynamically(),
 
             // Check from uncharge dialog at bank.
-            new OnWidgetLoaded(219, 1, 0, "Ring of the Elements charges: (?<charges>.+). Uncharge it?").setDynamically(),
+            new OnWidgetLoaded(219, 1, 0).text("Ring of the Elements charges: (?<charges>.+). Uncharge it?").setDynamically(),
 
             // Teleport to air/water/earth/fire altars.
             new OnGraphicChanged(2060, 2061, 2062, 2063).onItemClick().decreaseCharges(1),

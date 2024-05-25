@@ -60,7 +60,7 @@ public class J_EscapeCrystal extends ChargedItemWithStatus {
             }),
 
             // Inactivity period from widget.
-            new OnWidgetLoaded(219, 1, 3, "Set auto-activation inactivity period \\(in seconds\\)\\(current: (?<seconds>.+?)s\\)").matcherConsumer(matcher -> {
+            new OnWidgetLoaded(219, 1, 3).text("Set auto-activation inactivity period \\(in seconds\\)\\(current: (?<seconds>.+?)s\\)").matcherConsumer(matcher -> {
                 configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.escape_crystal_inactivity_period, matcher.group("seconds"));
             }),
 

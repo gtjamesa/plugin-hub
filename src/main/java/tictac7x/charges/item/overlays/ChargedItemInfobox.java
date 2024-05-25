@@ -19,7 +19,6 @@ public class ChargedItemInfobox extends InfoBox {
     private final ConfigManager configManager;
 
     private int itemId;
-    private String tooltip = "";
 
     public ChargedItemInfobox(
         final ChargedItemBase chargedItem,
@@ -50,7 +49,7 @@ public class ChargedItemInfobox extends InfoBox {
 
     @Override
     public String getTooltip() {
-        return tooltip + " - " + chargedItem.getCharges();
+        return chargedItem.getTooltip();
     }
 
     @Override
@@ -82,11 +81,6 @@ public class ChargedItemInfobox extends InfoBox {
             setImage(items.getImage(itemId));
             infoboxes.updateInfoBoxImage(this);
         }
-
-        // Update tooltip.
-        tooltip =
-            chargedItem.getItemName() +
-            (chargedItem.needsToBeEquipped() && !chargedItem.inEquipment() ? " (needs to be equipped)" : "");
     }
 
     private boolean isChargedItemInfoboxEnabled() {

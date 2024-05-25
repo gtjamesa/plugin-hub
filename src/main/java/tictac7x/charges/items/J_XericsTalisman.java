@@ -47,7 +47,7 @@ public class J_XericsTalisman extends ChargedItem {
             new OnGraphicChanged(1612).decreaseCharges(1),
 
             // Teleport widget.
-            new OnWidgetLoaded(187, 0, 1, "The talisman has (?<charges>.+) charges.").setDynamically(),
+            new OnWidgetLoaded(187, 0, 1).text("The talisman has (?<charges>.+) charges.").setDynamically(),
         };
     }
 }

@@ -14,6 +14,7 @@ public abstract class TriggerBase {
     public Optional<StorageItem[]> onUse = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
     public Optional<Boolean> atBank = Optional.empty();
+    public boolean multiTrigger = false;
 
     // Actions.
     public Optional<Integer> fixedCharges = Optional.empty();
@@ -130,6 +131,11 @@ public abstract class TriggerBase {
 
     public TriggerBase atBank() {
         this.atBank = Optional.of(true);
+        return this;
+    }
+
+    public TriggerBase multiTrigger() {
+        this.multiTrigger = true;
         return this;
     }
 }

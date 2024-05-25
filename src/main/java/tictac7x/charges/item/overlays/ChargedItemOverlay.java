@@ -138,15 +138,8 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         final net.runelite.api.Point mousePosition = client.getMouseCanvasPosition();
         if (!widgetItem.getCanvasBounds().contains(mousePosition.getX(), mousePosition.getY())) return;
 
-        String tooltip = "";
-        for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
-            if (storageItem.getQuantity() > 0) {
-                tooltip += (storageItem.displayName.isPresent() ? storageItem.displayName.get() : itemManager.getItemComposition(storageItem.itemId).getName()) + ": ";
-                tooltip += ColorUtil.wrapWithColorTag(String.valueOf(storageItem.getQuantity()), JagexColors.MENU_TARGET) + "</br>";
-            }
-        }
-        tooltip = tooltip.replaceAll("</br>$", "");
 
+        final String tooltip = chargedItem.getTooltip();
         if (!tooltip.isEmpty()) {
             tooltipManager.addFront(new Tooltip(tooltip));
         }

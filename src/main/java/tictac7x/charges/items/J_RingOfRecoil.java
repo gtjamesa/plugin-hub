@@ -51,7 +51,7 @@ public class J_RingOfRecoil extends ChargedItem {
             new OnHitsplatApplied(HitsplatTarget.SELF).moreThanZeroDamage().isEquipped().decreaseCharges(1),
 
             // Check from break dialog.
-            new OnWidgetLoaded(219, 1, 0, "Status: (?<charges>.+) damage points? left.").setDynamically(),
+            new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) damage points? left.").setDynamically(),
 
             // Break.
             new OnChatMessage("The ring shatters. Your next ring of recoil will start afresh from (?<charges>.+) damage points?.").setDynamically(),

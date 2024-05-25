@@ -25,25 +25,31 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
             final OnWidgetLoaded trigger = (OnWidgetLoaded) triggerBase;
             final Widget widget = getWidget(trigger);
 
-            final String text = getCleanText(widget.getText());
-            final Matcher matcher = trigger.text.matcher(text);
-            matcher.find();
+            if (trigger.text.isPresent()) {
+                final String text = getCleanText(widget.getText());
+                final Matcher matcher = trigger.text.get().matcher(text);
+                matcher.find();
 
-            if (trigger.setDynamically.isPresent()) {
-                ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
-                triggerUsed = true;
+                if (trigger.setDynamically.isPresent()) {
+                    ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
+                    triggerUsed = true;
+                }
+
+                if (trigger.matcherConsumer.isPresent()) {
+                    trigger.matcherConsumer.get().accept(matcher);
+                    triggerUsed = true;
+                }
             }
 
-            if (trigger.matcherConsumer.isPresent()) {
-                trigger.matcherConsumer.get().accept(matcher);
-                triggerUsed = true;
+            if (trigger.itemQuantityConsumer.isPresent()) {
+                trigger.itemQuantityConsumer.get().accept(widget.getItemQuantity());
             }
 
             if (super.trigger(trigger)) {
                 triggerUsed = true;
             }
 
-            if (triggerUsed) return;
+            if (triggerUsed && !trigger.multiTrigger) return;
         }
     }
 
@@ -63,10 +69,11 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
         }
 
         // Text check.
-        final String text = getCleanText(widget.getText());
-        final Matcher matcher = trigger.text.matcher(text);
-        if (!matcher.find()) {
-            return false;
+        if (trigger.text.isPresent()) {
+            final Matcher matcher = trigger.text.get().matcher(getCleanText(widget.getText()));
+            if (!matcher.find()) {
+                return false;
+            }
         }
 
         return super.isValidTrigger(trigger);
