@@ -46,7 +46,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.log_basket, ItemID.LOG_BASKET, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumTotalQuantity(28).storeableItems(
-            new StorageItem(ItemID.LOGS).checkName("Logs"),
+            new StorageItem(ItemID.LOGS).displayName("Regular logs").checkName("Logs"),
             new StorageItem(ItemID.ACHEY_TREE_LOGS).checkName("Achey tree logs"),
             new StorageItem(ItemID.OAK_LOGS).checkName("Oak logs"),
             new StorageItem(ItemID.WILLOW_LOGS).checkName("Willow logs"),
