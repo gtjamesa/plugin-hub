@@ -117,13 +117,11 @@ import java.util.Optional;
 )
 
 public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.7";
+	private final String pluginVersion = "v0.5.8";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Escape crystal inactivity timer support<br>" +
-		"<colHIGHLIGHT>* Quetzal whistle added<br>" +
-		"<colHIGHLIGHT>* Celestial signet added<br>" +
-		"<colHIGHLIGHT>* Fishing barrel fixes"
+		"<colHIGHLIGHT>* Gem bag, herb sack emptying fixed<br>" +
+		"<colHIGHLIGHT>* Other minor fixes"
 	;
 
 	private final int VARBIT_MINUTES = 8354;

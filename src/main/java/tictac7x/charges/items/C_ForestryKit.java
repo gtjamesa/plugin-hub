@@ -15,12 +15,15 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.Storage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
+
+import static tictac7x.charges.store.ItemContainerType.INVENTORY;
 
 public class C_ForestryKit extends ChargedItemWithStorage {
     public C_ForestryKit(
@@ -76,6 +79,9 @@ public class C_ForestryKit extends ChargedItemWithStorage {
             new OnChatMessage("You've been awarded (?<bark>.+) Anima-infused bark.").matcherConsumer(m -> {
                 storage.add(ItemID.ANIMAINFUSED_BARK, Integer.parseInt(m.group("bark")));
             }),
+
+            // Fill from inventory.
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onItemClick().onMenuOption("Fill"),
 
             new OnMenuEntryAdded("Destroy").hide(),
         };

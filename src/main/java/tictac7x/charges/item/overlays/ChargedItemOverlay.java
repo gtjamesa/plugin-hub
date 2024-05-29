@@ -5,26 +5,25 @@ import net.runelite.api.widgets.WidgetItem;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.FontManager;
-import net.runelite.client.ui.JagexColors;
 import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
 import net.runelite.client.ui.overlay.tooltip.Tooltip;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
-import net.runelite.client.util.ColorUtil;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StorageItem;
-import tictac7x.charges.store.Charges;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.Charges;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.Optional;
 
 public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
     private final TooltipManager tooltipManager;
-    private final ItemManager itemManager;
     private final ConfigManager configManager;
     private final ChargesImprovedConfig config;
     private final ChargedItemBase[] chargedItems;
@@ -39,7 +38,6 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
     ) {
         this.client = client;
         this.tooltipManager = tooltipManager;
-        this.itemManager = itemManager;
         this.configManager = configManager;
         this.config = config;
         this.chargedItems = chargedItems;
@@ -61,6 +59,8 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
     @Override
     public void renderItemOverlay(final Graphics2D graphics, final int itemId, final WidgetItem widgetItem) {
+        if (!config.showOverlays()) return;
+
         Optional<ChargedItemBase> chargedItem = Optional.empty();
         Optional<TriggerItem> triggerItem = Optional.empty();
 

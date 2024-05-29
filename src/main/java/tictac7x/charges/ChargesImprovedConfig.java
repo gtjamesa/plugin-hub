@@ -209,6 +209,14 @@ public interface ChargesImprovedConfig extends Config {
     ) String infoboxes = "infoboxes";
 
         @ConfigItem(
+            keyName = "show_infoboxes",
+            name = "Show infoboxes",
+            description = "Show or hide all charges infoboxes simultaneously.",
+            section = infoboxes,
+            position = -100
+        ) default boolean showInfoboxes() { return true; }
+
+        @ConfigItem(
             keyName = bow_of_faerdhinen + infobox,
             name = "Bow of faerdhinen",
             description = "",
@@ -725,6 +733,14 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String overlays = "overlays";
+
+        @ConfigItem(
+            keyName = "show_overlays",
+            name = "Show overlays",
+            description = "Show or hide all charges overlays on top of items simultaneously.",
+            section = overlays,
+            position = -100
+        ) default boolean showOverlays() { return true; }
 
         @ConfigItem(
             keyName = arclight + overlay,
