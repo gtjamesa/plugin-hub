@@ -120,6 +120,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	private final String pluginVersion = "v0.5.8";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
+		"<colHIGHLIGHT>* Forestry kit added<br>" +
 		"<colHIGHLIGHT>* Gem bag, herb sack emptying fixed<br>" +
 		"<colHIGHLIGHT>* Other minor fixes"
 	;

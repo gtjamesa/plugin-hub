@@ -75,9 +75,19 @@ public class C_ForestryKit extends ChargedItemWithStorage {
                 storage.add(getStorageItemFromName(m.group("leaves")), 1);
             }),
 
+            // Get leaves from event.
+            new OnChatMessage("You've been awarded (?<amount>.+) piles of (?<leaves>.+) leaves which you put into your Forestry kit.").matcherConsumer(m -> {
+                storage.add(getStorageItemFromName(m.group("leaves")), Integer.parseInt(m.group("amount")));
+            }),
+
             // Get bark from an event.
             new OnChatMessage("You've been awarded (?<bark>.+) Anima-infused bark.").matcherConsumer(m -> {
                 storage.add(ItemID.ANIMAINFUSED_BARK, Integer.parseInt(m.group("bark")));
+            }),
+
+            // Use ration when choping.
+            new OnChatMessage("You consume a Forester's ration to fuel a mighty chop.").consumer(() -> {
+                storage.remove(ItemID.FORESTERS_RATION, 1);
             }),
 
             // Fill from inventory.
