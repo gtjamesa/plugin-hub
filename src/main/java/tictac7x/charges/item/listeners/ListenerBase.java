@@ -2,21 +2,26 @@ package tictac7x.charges.item.listeners;
 
 import net.runelite.api.Client;
 import net.runelite.client.Notifier;
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStatus;
 import tictac7x.charges.item.ChargedItemWithStorage;
+import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.store.AdvancedMenuEntry;
 
 public abstract class ListenerBase {
     protected final Client client;
+    protected final ItemManager itemManager;
     protected final ChargedItemBase chargedItem;
     protected final Notifier notifier;
     protected final ChargesImprovedConfig config;
 
-    public ListenerBase(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerBase(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         this.client = client;
+        this.itemManager = itemManager;
         this.chargedItem = chargedItem;
         this.notifier = notifier;
         this.config = config;
@@ -46,6 +51,12 @@ public abstract class ListenerBase {
         // Empty storage.
         if (trigger.emptyStorage.isPresent() && (chargedItem instanceof ChargedItemWithStorage)) {
             ((ChargedItemWithStorage) chargedItem).storage.empty();
+            triggerUsed = true;
+        }
+
+        // Empty storage to inventory.
+        if (trigger.emptyStorageToInventory.isPresent() && (chargedItem instanceof ChargedItemWithStorage)) {
+            ((ChargedItemWithStorage) chargedItem).storage.emptyToInventory();
             triggerUsed = true;
         }
 
@@ -127,9 +138,40 @@ public abstract class ListenerBase {
             return false;
         }
 
-        // Use check.
-        if (trigger.onUse.isPresent() && (chargedItem.store.notInMenuTargets(chargedItem.itemId) || chargedItem.store.notInMenuTargets(trigger.onUse.get()))) {
-            return false;
+        // Use storage item on charged item check.
+        if (trigger.onUseStorageItemOnChargedItem.isPresent() && chargedItem instanceof ChargedItemWithStorage) {
+            boolean useCheck = false;
+            useCheckLooper: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
+                if (!menuEntry.option.equals("Use") || !menuEntry.target.contains(" -> ") || !menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(chargedItem.itemId).getName())) continue;
+
+                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+                    if (menuEntry.target.split(" -> ")[0].equals(itemManager.getItemComposition(storageItem.itemId).getName())) {
+                        useCheck = true;
+                        break useCheckLooper;
+                    }
+                }
+            }
+            if (!useCheck) {
+                return false;
+            }
+        }
+
+        // Use charged item on storage item check.
+        if (trigger.onUseChargedItemOnStorageItem.isPresent() && chargedItem instanceof ChargedItemWithStorage) {
+            boolean useCheck = false;
+            useCheckLooper: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
+                if (!menuEntry.option.equals("Use") || !menuEntry.target.contains(" -> ") || !menuEntry.target.split(" -> ")[0].equals(itemManager.getItemComposition(chargedItem.itemId).getName())) continue;
+
+                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+                    if (menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(storageItem.itemId).getName())) {
+                        useCheck = true;
+                        break useCheckLooper;
+                    }
+                }
+            }
+            if (!useCheck) {
+                return false;
+            }
         }
 
         // Activated check.
@@ -139,6 +181,10 @@ public abstract class ListenerBase {
 
         // At bank check.
         if (trigger.atBank.isPresent() && (client.getWidget(12, 1) == null) && client.getWidget(192, 0) == null) {
+            return false;
+        }
+
+        if (trigger.emptyStorageToInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
             return false;
         }
 

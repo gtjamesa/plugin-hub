@@ -12,7 +12,6 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnResetDaily;
@@ -38,7 +37,7 @@ public class Store {
     public List<StorageItem> currentItems = new ArrayList<>();
     public List<StorageItem> previousItems = new ArrayList<>();
 
-    public final List<MenuEntry> menuOptionsClicked = new ArrayList<>();
+    public final List<AdvancedMenuEntry> menuOptionsClicked = new ArrayList<>();
     private final Map<Skill, Integer> skillsXp = new HashMap<>();
 
     public Store(final Client client, final ItemManager itemManager, final ConfigManager configManager) {
@@ -116,7 +115,7 @@ public class Store {
         }
 
         // Save menu option and target for other triggers to use.
-        menuOptionsClicked.add(new MenuEntry(menuTarget, menuOption, impostorId));
+        menuOptionsClicked.add(new AdvancedMenuEntry(menuTarget, menuOption, impostorId));
     }
 
     public void onGameTick(final GameTick ignored) {
@@ -161,8 +160,8 @@ public class Store {
 
     public boolean inMenuTargets(final String ...targets) {
         for (final String target : targets) {
-            for (final MenuEntry menuEntry : menuOptionsClicked) {
-                if (menuEntry.target.contains(target)) {
+            for (final AdvancedMenuEntry advancedMenuEntry : menuOptionsClicked) {
+                if (advancedMenuEntry.target.contains(target)) {
                     return true;
                 }
             }
@@ -190,9 +189,9 @@ public class Store {
     }
 
     public boolean inMenuOptions(final String ...options) {
-        for (final MenuEntry menuEntry : menuOptionsClicked) {
+        for (final AdvancedMenuEntry advancedMenuEntry : menuOptionsClicked) {
             for (final String option : options) {
-                if (menuEntry.option.contains(option)) {
+                if (advancedMenuEntry.option.contains(option)) {
                     return true;
                 }
             }
@@ -206,9 +205,9 @@ public class Store {
     }
 
     public boolean inMenuImpostors(final int ...impostorIds) {
-        for (final MenuEntry menuEntry : menuOptionsClicked) {
+        for (final AdvancedMenuEntry advancedMenuEntry : menuOptionsClicked) {
             for (final int impostorId : impostorIds) {
-                if (menuEntry.impostorId == impostorId) {
+                if (advancedMenuEntry.impostorId == impostorId) {
                     return true;
                 }
             }

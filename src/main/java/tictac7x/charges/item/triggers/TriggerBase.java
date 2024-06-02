@@ -11,7 +11,8 @@ public abstract class TriggerBase {
     public Optional<String[]> onMenuTarget = Optional.empty();
     public Optional<int[]> onMenuImpostor = Optional.empty();
     public Optional<Boolean> onItemClick = Optional.empty();
-    public Optional<StorageItem[]> onUse = Optional.empty();
+    public Optional<StorageItem[]> onUseStorageItemOnChargedItem = Optional.empty();
+    public Optional<StorageItem[]> onUseChargedItemOnStorageItem = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
     public Optional<Boolean> atBank = Optional.empty();
     public boolean multiTrigger = false;
@@ -26,6 +27,7 @@ public abstract class TriggerBase {
 
     // Storage.
     public Optional<Boolean> emptyStorage = Optional.empty();
+    public Optional<Boolean> emptyStorageToInventory = Optional.empty();
     public Optional<Boolean> pickUpToStorage = Optional.empty();
     public Optional<int[]> addToStorage = Optional.empty();
 
@@ -51,6 +53,11 @@ public abstract class TriggerBase {
 
     public TriggerBase emptyStorage() {
         this.emptyStorage = Optional.of(true);
+        return this;
+    }
+
+    public TriggerBase emptyStorageToInventory() {
+        this.emptyStorageToInventory = Optional.of(true);
         return this;
     }
 
@@ -84,8 +91,13 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onUse(final StorageItem[] storeableItems) {
-        this.onUse = Optional.of(storeableItems);
+    public TriggerBase onUseStorageItemOnChargedItem(final StorageItem[] storeableItems) {
+        this.onUseStorageItemOnChargedItem = Optional.of(storeableItems);
+        return this;
+    }
+
+    public TriggerBase onUseChargedItemOnStorageItem(final StorageItem[] storeableItems) {
+        this.onUseChargedItemOnStorageItem = Optional.of(storeableItems);
         return this;
     }
 

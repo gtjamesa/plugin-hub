@@ -4,8 +4,10 @@ import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
+import net.runelite.api.ItemID;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.Notifier;
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
@@ -15,13 +17,13 @@ import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemContainerType;
-import tictac7x.charges.store.MenuEntry;
+import tictac7x.charges.store.AdvancedMenuEntry;
 
 import java.util.Optional;
 
 public class ListenerOnItemContainerChanged extends ListenerBase {
-    public ListenerOnItemContainerChanged(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
-        super(client, chargedItem, notifier, config);
+    public ListenerOnItemContainerChanged(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+        super(client, itemManager, chargedItem, notifier, config);
     }
 
     public void trigger(final ItemContainerChanged event) {
@@ -50,12 +52,13 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
 
             // Fill storage from inventory single item.
             if (trigger.fillStorageFromInventorySingle.isPresent()) {
-                for (final MenuEntry entry : chargedItem.store.menuOptionsClicked) {
-                    final Optional<StorageItem> usedItem = ((ChargedItemWithStorage) chargedItem).getStorageItemFromName(entry.target);
-                    if (usedItem.isPresent()) {
-                        ((ChargedItemWithStorage) chargedItem).storage.fillFromInventoryIndividually(usedItem.get().getId());
-                        triggerUsed = true;
-                        break;
+                checkLooper: for (final AdvancedMenuEntry entry : chargedItem.store.menuOptionsClicked) {
+                    for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+                        if (entry.target.toLowerCase().contains(storageItem.checkName.isPresent() ? storageItem.checkName.get().toLowerCase() : itemManager.getItemComposition(storageItem.itemId).getName().toLowerCase()) && chargedItem.store.getPreviousInventoryItemQuantity(storageItem.getId()) > 0) {
+                            ((ChargedItemWithStorage) chargedItem).storage.fillFromInventoryIndividually(storageItem.getId());
+                            triggerUsed = true;
+                            break checkLooper;
+                        }
                     }
                 }
             }

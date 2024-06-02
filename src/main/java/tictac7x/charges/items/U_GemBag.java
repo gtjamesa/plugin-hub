@@ -81,7 +81,8 @@ public class U_GemBag extends ChargedItemWithStorage {
             new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
 
             // Use gem on bag
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUse(storage.getStoreableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUseChargedItemOnStorageItem(storage.getStoreableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUseStorageItemOnChargedItem(storage.getStoreableItems()),
 
             // Pick up.
             new OnItemPickup(storage.getStoreableItems()).isByOne().onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),

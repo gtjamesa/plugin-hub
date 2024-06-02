@@ -5,6 +5,7 @@ import net.runelite.api.Hitsplat;
 import net.runelite.api.HitsplatID;
 import net.runelite.api.events.HitsplatApplied;
 import net.runelite.client.Notifier;
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnHitsplatApplied;
@@ -13,8 +14,8 @@ import tictac7x.charges.store.HitsplatGroup;
 import tictac7x.charges.store.HitsplatTarget;
 
 public class ListenerOnHitsplatApplied extends ListenerBase {
-    public ListenerOnHitsplatApplied(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
-        super(client, chargedItem, notifier, config);
+    public ListenerOnHitsplatApplied(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+        super(client, itemManager, chargedItem, notifier, config);
     }
 
     public void trigger(final HitsplatApplied event) {

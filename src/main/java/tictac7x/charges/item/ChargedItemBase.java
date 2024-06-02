@@ -84,19 +84,19 @@ public abstract class ChargedItemBase {
         this.config = config;
         this.store = store;
 
-        listenerOnChatMessage = new ListenerOnChatMessage(client, this, notifier, config);
-        listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(client, this, notifier, config);
-        listenerOnItemPickup = new ListenerOnItemPickup(client, this, notifier, config);
-        listenerOnXpDrop = new ListenerOnXpDrop(client, this, notifier, config);
-        listenerOnMenuEntryAdded = new ListenerOnMenuEntryAdded(client, this, notifier, config);
-        listenerOnResetDaily = new ListenerOnResetDaily(client, this, notifier, config);
-        listenerOnGraphicChanged = new ListenerOnGraphicChanged(client, this, notifier, config);
-        listenerOnAnimationChanged = new ListenerOnAnimationChanged(client, this, notifier, config);
-        listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, this, notifier, config);
-        listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, this, notifier, config);
-        listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, this, notifier, config);
-        listenerOnUserAction = new ListenerOnUserAction(client, this, notifier, config);
-        listenerOnMenuOptionClicked = new ListenerOnMenuOptionClicked(client, this, notifier, config);
+        listenerOnChatMessage = new ListenerOnChatMessage(client, itemManager, this, notifier, config);
+        listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(client, itemManager, this, notifier, config);
+        listenerOnItemPickup = new ListenerOnItemPickup(client, itemManager, this, notifier, config);
+        listenerOnXpDrop = new ListenerOnXpDrop(client, itemManager, this, notifier, config);
+        listenerOnMenuEntryAdded = new ListenerOnMenuEntryAdded(client, itemManager, this, notifier, config);
+        listenerOnResetDaily = new ListenerOnResetDaily(client, itemManager, this, notifier, config);
+        listenerOnGraphicChanged = new ListenerOnGraphicChanged(client, itemManager, this, notifier, config);
+        listenerOnAnimationChanged = new ListenerOnAnimationChanged(client, itemManager, this, notifier, config);
+        listenerOnHitsplatApplied = new ListenerOnHitsplatApplied(client, itemManager, this, notifier, config);
+        listenerOnWidgetLoaded = new ListenerOnWidgetLoaded(client, itemManager, this, notifier, config);
+        listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, itemManager, this, notifier, config);
+        listenerOnUserAction = new ListenerOnUserAction(client, itemManager, this, notifier, config);
+        listenerOnMenuOptionClicked = new ListenerOnMenuOptionClicked(client, itemManager, this, notifier, config);
     }
 
     public abstract String getCharges();

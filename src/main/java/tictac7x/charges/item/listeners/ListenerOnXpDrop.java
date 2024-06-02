@@ -4,14 +4,15 @@ import net.runelite.api.Client;
 import net.runelite.api.Skill;
 import net.runelite.api.events.StatChanged;
 import net.runelite.client.Notifier;
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 
 public class ListenerOnXpDrop extends ListenerBase {
-    public ListenerOnXpDrop(final Client client, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
-        super(client, chargedItem, notifier, config);
+    public ListenerOnXpDrop(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+        super(client, itemManager, chargedItem, notifier, config);
     }
 
     public void trigger(final StatChanged event) {

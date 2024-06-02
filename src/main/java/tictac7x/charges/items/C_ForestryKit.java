@@ -90,6 +90,11 @@ public class C_ForestryKit extends ChargedItemWithStorage {
                 storage.remove(ItemID.FORESTERS_RATION, 1);
             }),
 
+            // Out of rations.
+            new OnChatMessage("You've eaten your last Forester's ration.").consumer(() -> {
+                storage.put(ItemID.FORESTERS_RATION, 0);
+            }),
+
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onItemClick().onMenuOption("Fill"),
 
