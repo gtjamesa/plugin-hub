@@ -232,6 +232,20 @@ public class Store {
         return quantity;
     }
 
+    public int getEquipmentItemQuantity(final int itemId) {
+        int quantity = 0;
+
+        if (equipment.isPresent()) {
+            for (final Item item : equipment.get().getItems()) {
+                if (item.getId() == itemId) {
+                    quantity += item.getQuantity();
+                }
+            }
+        }
+
+        return quantity;
+    }
+
     public int getPreviousInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 

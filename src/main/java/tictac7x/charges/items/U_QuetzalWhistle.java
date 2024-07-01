@@ -30,7 +30,7 @@ public class U_QuetzalWhistle extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.crystal_saw, ItemID.BASIC_QUETZAL_WHISTLE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(ChargesImprovedConfig.quetzal_whistle, ItemID.BASIC_QUETZAL_WHISTLE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BASIC_QUETZAL_WHISTLE).maxCharges(5),

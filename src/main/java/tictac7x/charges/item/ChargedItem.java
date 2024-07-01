@@ -43,18 +43,22 @@ public class ChargedItem extends ChargedItemBase {
     @Override
     public String getTotalCharges() {
         int totalFixedCharges = 0;
+        int equipmentFixedCharges = 0;
         boolean fixedItemsFound = false;
 
         for (final TriggerItem triggerItem : items) {
-            if (triggerItem.itemId == itemId && triggerItem.fixedCharges.isPresent()) {
+            if (triggerItem.fixedCharges.isPresent()) {
                 totalFixedCharges += store.getInventoryItemQuantity(triggerItem.itemId) * triggerItem.fixedCharges.get();
+                equipmentFixedCharges += store.getEquipmentItemQuantity(triggerItem.itemId) * triggerItem.fixedCharges.get();
                 fixedItemsFound = true;
             }
         }
 
         try {
             if (getChargesFromConfig() == Charges.UNKNOWN && fixedItemsFound) {
-                return getChargesMinified(totalFixedCharges);
+                return equipmentFixedCharges > 0 ?
+                    getChargesMinified(equipmentFixedCharges) :
+                    getChargesMinified(totalFixedCharges);
             }
         } catch (final Exception ignored) {}
 
@@ -89,7 +93,11 @@ public class ChargedItem extends ChargedItemBase {
             return Charges.UNKNOWN;
         }
 
-        return Integer.parseInt(charges.get());
+        try {
+            return Integer.parseInt(charges.get());
+        } catch (final Exception ignored) {
+            return Charges.UNKNOWN;
+        }
     }
 }
 
