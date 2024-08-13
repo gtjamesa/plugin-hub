@@ -37,13 +37,13 @@ public class J_RingOfShadows extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your ring of shadows has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Charge.
-            new OnChatMessage("You add (?<charges>.+) charges? to the ring of shadows.$").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to the ring of shadows.$").setDynamicallyCharges(),
 
             // Charge.
-            new OnChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("You add .+ charges? to the ring of shadows. It now has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // TODO - teleport
         };

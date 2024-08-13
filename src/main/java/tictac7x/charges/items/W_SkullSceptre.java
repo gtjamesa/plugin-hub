@@ -39,11 +39,11 @@ public class W_SkullSceptre extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Teleport.
-            new OnChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your Skull Sceptre has (?<charges>.+) charges? left.").setDynamicallyCharges(),
             // Check.
-            new OnChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Concentrating deeply, you divine that the sceptre has (?<charges>.+) charges? left.").setDynamicallyCharges(),
             // Charge.
-            new OnChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.").setDynamically(),
+            new OnChatMessage("You charge the Skull Sceptre with .+ fragments?. It now contains( the maximum number of charges,)? (?<charges>.+)( charges?)?.").setDynamicallyCharges(),
             // Common menu entries.
             new OnMenuEntryAdded("Divine").replaceOption("Check"),
             new OnMenuEntryAdded("Invoke").replaceOption("Teleport"),

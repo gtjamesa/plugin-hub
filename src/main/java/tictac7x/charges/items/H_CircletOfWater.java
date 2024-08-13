@@ -41,13 +41,13 @@ public class H_CircletOfWater extends ChargedItem {
             new OnChatMessage("Your circlet protects you from the desert heat.").decreaseCharges(1),
 
             // Check.
-            new OnChatMessage("Your circlet has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your circlet has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
             // Charge while empty.
-            new OnChatMessage("You add (?<charges>.+) charges? to your circlet.$").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to your circlet.$").setDynamicallyCharges(),
 
             // Charge while not empty.
-            new OnChatMessage("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("You add .+ charges? to your circlet. It now has (?<charges>.+) charges?.").setDynamicallyCharges(),
         };
     }
 }

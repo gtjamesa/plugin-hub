@@ -37,7 +37,7 @@ public class W_ToxicStaffOfTheDead extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("Scales: (?<charges>.+)").setDynamically(),
+            new OnChatMessage("Scales: (?<charges>.+)").setDynamicallyCharges(),
         };
     }
 }

@@ -40,7 +40,7 @@ public class U_QuetzalWhistle extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your quetzal whistle has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your quetzal whistle has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Teleport menu entry.
             new OnMenuEntryAdded("Signal").replaceOption("Teleport"),

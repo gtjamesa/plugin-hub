@@ -47,7 +47,7 @@ public class W_BowOfFaerdhinen extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your bow of Faerdhinen has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your bow of Faerdhinen has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Attack.
             new OnGraphicChanged(1888).isEquipped().decreaseCharges(1),

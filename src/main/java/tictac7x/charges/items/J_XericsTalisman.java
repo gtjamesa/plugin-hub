@@ -40,8 +40,8 @@ public class J_XericsTalisman extends ChargedItem {
 
         this.triggers = new TriggerBase[]{
             // Check.
-            new OnChatMessage("(The|Your) talisman( now)? has one charge.").onItemClick().fixedCharges(1),
-            new OnChatMessage("(The|Your) talisman( now)? has (?<charges>.+) charges.").setDynamically().onItemClick(),
+            new OnChatMessage("(The|Your) talisman( now)? has one charge.").onItemClick().setFixedCharges(1),
+            new OnChatMessage("(The|Your) talisman( now)? has (?<charges>.+) charges.").setDynamicallyCharges().onItemClick(),
 
             // Teleport.
             new OnGraphicChanged(1612).decreaseCharges(1),

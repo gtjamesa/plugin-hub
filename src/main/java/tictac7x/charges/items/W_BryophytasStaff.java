@@ -40,13 +40,13 @@ public class W_BryophytasStaff extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("The nature staff has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("The nature staff has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // Save a nature rune.
             new OnChatMessage("Your staff saved you a nature rune.").increaseCharges(1),
 
             // Charge.
-            new OnChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("Your Bryophyta's staff now has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // Regular spellbook.
             new OnXpDrop(Skill.MAGIC).isEquipped().onMenuOption("Cast").onMenuTarget(

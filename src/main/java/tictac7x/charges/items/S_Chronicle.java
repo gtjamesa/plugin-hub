@@ -36,7 +36,7 @@ public class S_Chronicle extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("Your book has (?<charges>.+) charges? left.").setDynamically().onItemClick()
+            new OnChatMessage("Your book has (?<charges>.+) charges? left.").setDynamicallyCharges().onItemClick()
         };
     }
 }

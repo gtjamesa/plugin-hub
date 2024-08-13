@@ -20,7 +20,7 @@ public class OnChatMessage extends TriggerBase {
         this.message = Pattern.compile(message);
     }
 
-    public TriggerBase setDynamically() {
+    public TriggerBase setDynamicallyCharges() {
         this.setDynamically = Optional.of(true);
         return this;
     }

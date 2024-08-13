@@ -36,16 +36,16 @@ public class J_RingOfElements extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check uncharged.
-            new OnChatMessage("Your ring of the elements has no charges remaining.").fixedCharges(0),
+            new OnChatMessage("Your ring of the elements has no charges remaining.").setFixedCharges(0),
 
             // Uncharge.
-            new OnChatMessage("You uncharge your Ring of the Elements.").fixedCharges(0),
+            new OnChatMessage("You uncharge your Ring of the Elements.").setFixedCharges(0),
 
             // Teleport.
-            new OnChatMessage("Your ring of elements has (?<charges>.+) charge remaining.").setDynamically(),
+            new OnChatMessage("Your ring of elements has (?<charges>.+) charge remaining.").setDynamicallyCharges(),
 
             // Check from uncharge dialog not near bank.
-            new OnChatMessage("The Ring of the Elements has (?<charges>.+) charges?. You can uncharge it at a bank.").setDynamically(),
+            new OnChatMessage("The Ring of the Elements has (?<charges>.+) charges?. You can uncharge it at a bank.").setDynamicallyCharges(),
 
             // Check from uncharge dialog at bank.
             new OnWidgetLoaded(219, 1, 0).text("Ring of the Elements charges: (?<charges>.+). Uncharge it?").setDynamically(),

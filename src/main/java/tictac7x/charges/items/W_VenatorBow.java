@@ -36,7 +36,7 @@ public class W_VenatorBow extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your venator bow has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your venator bow has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Attack.
             new OnGraphicChanged(2289).decreaseCharges(1),

@@ -40,14 +40,14 @@ public class J_RingOfCelestial extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Charge.
-            new OnChatMessage("You add .+ charges? to your Celestial (ring|signet). It now has (?<charges>.+) charges?.").setDynamically(),
-            new OnChatMessage("You add (?<charges>.+) charges? to your Celestial (ring|signet).").setDynamically(),
+            new OnChatMessage("You add .+ charges? to your Celestial (ring|signet). It now has (?<charges>.+) charges?.").setDynamicallyCharges(),
+            new OnChatMessage("You add (?<charges>.+) charges? to your Celestial (ring|signet).").setDynamicallyCharges(),
 
             // Check.
-            new OnChatMessage("Your Celestial (ring|signet) has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("Your Celestial (ring|signet) has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // Ran out of charges.
-            new OnChatMessage("Your Celestial (ring|signet) has run out of charges.").notification().fixedCharges(0),
+            new OnChatMessage("Your Celestial (ring|signet) has run out of charges.").notification().setFixedCharges(0),
 
             // Mine.
             new OnChatMessage("You manage to (mine|quarry) some (clay|copper|tin|guardian fragments|guardian essence|tephra|blurite|limestone|iron|silver|coal|sandstone|gold|granite|mithril|lovakite|adamantite|soft clay)( ore)?.").isEquipped().decreaseCharges(1),

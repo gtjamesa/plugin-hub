@@ -41,16 +41,16 @@ public class S_DragonfireShield extends ChargedItem {
 
         this.triggers = new TriggerBase[]{
             // Check.
-            new OnChatMessage("The shield has (?<charges>.+) charges?.").setDynamically().onItemClick(),
+            new OnChatMessage("The shield has (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
 
             // Uncharge.
-            new OnChatMessage("You vent the shield's remaining charges harmlessly into the air.").fixedCharges(0),
+            new OnChatMessage("You vent the shield's remaining charges harmlessly into the air.").setFixedCharges(0),
 
             // Charge collected.
             new OnChatMessage("Your dragonfire (shield|ward) glows more brightly.").increaseCharges(1),
 
             // Already full.
-            new OnChatMessage("Your dragonfire shield is already fully charged.").fixedCharges(50),
+            new OnChatMessage("Your dragonfire shield is already fully charged.").setFixedCharges(50),
 
             // Attack.
             new OnGraphicChanged(1165).isEquipped().decreaseCharges(1),

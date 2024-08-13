@@ -38,13 +38,13 @@ public class U_GricollersCan extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Watering can charges remaining: (?<charges>.+)%").setDynamically().onItemClick(),
+            new OnChatMessage("Watering can charges remaining: (?<charges>.+)%").setDynamicallyCharges().onItemClick(),
 
             // Water inventory item.
             new OnChatMessage("You water").onItemClick().decreaseCharges(1),
 
             // Fill.
-            new OnChatMessage("You fill the watering can").onItemClick().fixedCharges(1000),
+            new OnChatMessage("You fill the watering can").onItemClick().setFixedCharges(1000),
 
             // Water.
             new OnGraphicChanged(410).decreaseCharges(1),

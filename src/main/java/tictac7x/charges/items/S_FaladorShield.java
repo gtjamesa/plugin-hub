@@ -42,12 +42,12 @@ public class S_FaladorShield extends ChargedItem {
         
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("You have one remaining charge for today.").onItemClick().fixedCharges(1),
-            new OnChatMessage("You have two remaining charges for today.").onItemClick().fixedCharges(2),
+            new OnChatMessage("You have one remaining charge for today.").onItemClick().setFixedCharges(1),
+            new OnChatMessage("You have two remaining charges for today.").onItemClick().setFixedCharges(2),
 
             // Teleport when empty.
-            new OnChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().fixedCharges(0),
-            new OnChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().fixedCharges(0),
+            new OnChatMessage("You have already used (both )?your charge(s)? for today.").onItemClick().setFixedCharges(0),
+            new OnChatMessage("You have already used all available recharges today. Try again tomorrow when the shield has recharged.").onItemClick().setFixedCharges(0),
 
             // Recharge prayer.
             new OnGraphicChanged(321).onItemClick().decreaseCharges(1),

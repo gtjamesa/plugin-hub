@@ -36,7 +36,7 @@ public abstract class TriggerBase {
     public Optional<Boolean> activate = Optional.empty();
     public Optional<Boolean> deactivate = Optional.empty();
 
-    public TriggerBase fixedCharges(final int charges) {
+    public TriggerBase setFixedCharges(final int charges) {
         this.fixedCharges = Optional.of(charges);
         return this;
     }

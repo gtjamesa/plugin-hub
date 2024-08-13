@@ -53,7 +53,7 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             }).onItemClick(),
 
             // Check.
-            new OnChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").fixedCharges(1),
+            new OnChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").setFixedCharges(1),
 
             // Automatic chat message after use.
             new OnChatMessage("Your bottomless compost bucket has (?<quantity>.+) uses of (?<compost>.+) ?compost remaining.").matcherConsumer(m -> {

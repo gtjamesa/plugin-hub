@@ -35,7 +35,7 @@ public class U_CrystalSaw extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your saw has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your saw has (?<charges>.+) charges? left.").setDynamicallyCharges(),
         };
     }
 }

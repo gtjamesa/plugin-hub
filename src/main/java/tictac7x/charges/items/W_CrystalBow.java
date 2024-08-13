@@ -13,12 +13,9 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnAnimationChanged;
 import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
-
-import static tictac7x.charges.store.HitsplatTarget.ENEMY;
 
 public class W_CrystalBow extends ChargedItem {
     public W_CrystalBow(
@@ -68,7 +65,7 @@ public class W_CrystalBow extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your crystal bow has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Attack.
             new OnAnimationChanged(426).isEquipped().decreaseCharges(1),

@@ -38,16 +38,16 @@ public class J_NecklaceOfDodgy extends ChargedItem {
         
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your dodgy necklace has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your dodgy necklace has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
             // Protects.
-            new OnChatMessage("Your dodgy necklace protects you. It has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your dodgy necklace protects you. It has (?<charges>.+) charges? left.").setDynamicallyCharges(),
 
             // Breaks.
-            new OnChatMessage("Your dodgy necklace protects you. It then crumbles to dust.").fixedCharges(10).notification("Your dodgy necklace crumbles to dust."),
+            new OnChatMessage("Your dodgy necklace protects you. It then crumbles to dust.").setFixedCharges(10).notification("Your dodgy necklace crumbles to dust."),
 
             // Break.
-            new OnChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges.").setDynamically(),
+            new OnChatMessage("The necklace shatters. Your next dodgy necklace will start afresh from (?<charges>.+) charges.").setDynamicallyCharges(),
 
             new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) charges? left.").setDynamically(),
         };

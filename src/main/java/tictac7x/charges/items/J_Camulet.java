@@ -39,16 +39,17 @@ public class J_Camulet extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your Camulet has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("Your Camulet has one charge left.").setFixedCharges(1),
+            new OnChatMessage("Your Camulet has (?<charges>.+) charges left.").setDynamicallyCharges(),
 
             // Recharge.
-            new OnChatMessage("You recharge the Camulet using camel dung. Yuck!").fixedCharges(4),
+            new OnChatMessage("You recharge the Camulet using camel dung. Yuck!").setFixedCharges(4),
 
             // Trying to charge fully charged.
-            new OnChatMessage("The Camulet is already fully charged.").fixedCharges(4),
+            new OnChatMessage("The Camulet is already fully charged.").setFixedCharges(4),
 
             // Unlimited charges.
-            new OnChatMessage("The Camulet has unlimited charges.").fixedCharges(Charges.UNLIMITED),
+            new OnChatMessage("The Camulet has unlimited charges.").setFixedCharges(Charges.UNLIMITED),
 
             // Replace check.
             new OnMenuEntryAdded("Check-charge").replaceOption("Check"),

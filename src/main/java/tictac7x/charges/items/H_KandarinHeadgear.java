@@ -41,7 +41,7 @@ public class H_KandarinHeadgear extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Try to teleport while empty.
-            new OnChatMessage("You have already used your available teleports for today. Your headgear will recharge tomorrow.").onItemClick().fixedCharges(0),
+            new OnChatMessage("You have already used your available teleports for today. Your headgear will recharge tomorrow.").onItemClick().setFixedCharges(0),
 
             // Teleport.
             new OnGraphicChanged(111).onItemClick().decreaseCharges(1),

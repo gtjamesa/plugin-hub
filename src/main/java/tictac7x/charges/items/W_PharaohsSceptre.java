@@ -57,11 +57,11 @@ public class W_PharaohsSceptre extends ChargedItem {
         
         this.triggers = new TriggerBase[]{
             // Check and automatic messages.
-            new OnChatMessage("Your sceptre has (?<charges>.+) charges? left.").setDynamically().onItemClick(),
+            new OnChatMessage("Your sceptre has (?<charges>.+) charges? left.").setDynamicallyCharges().onItemClick(),
             // Charge non-empty sceptre.
             new OnChatMessage("Right, you already had .+ charges?, and I don't give discounts. That means .+ artefacts gives you (?<charges>.+) charges?. Now be on your way.").increaseDynamically(),
             // Charge empty sceptre.
-            new OnChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way.").setDynamically(),
+            new OnChatMessage("Right, .+ artefacts gives you (?<charges>.+) charges. Now be on your way.").setDynamicallyCharges(),
             // Teleport.
             new OnGraphicChanged(715).onItemClick().decreaseCharges(1),
         };

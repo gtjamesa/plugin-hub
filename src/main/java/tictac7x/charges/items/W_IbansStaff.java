@@ -40,7 +40,7 @@ public class W_IbansStaff extends ChargedItem {
 
         this.triggers = new TriggerBase[]{
             // Check.
-            new OnChatMessage("You have (?<charges>.+) charges left on the staff.").setDynamically().onItemClick(),
+            new OnChatMessage("You have (?<charges>.+) charges left on the staff.").setDynamicallyCharges().onItemClick(),
             // Attack.
             new OnGraphicChanged(87).isEquipped().decreaseCharges(1),
         };

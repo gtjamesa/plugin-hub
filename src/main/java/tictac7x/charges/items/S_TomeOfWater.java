@@ -39,7 +39,7 @@ public class S_TomeOfWater extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").setDynamically().onItemClick(),
+            new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
 
             // Attack with regular spellbook water spells.
             new OnGraphicChanged(93, 120, 135, 161, 1458).isEquipped().decreaseCharges(1)

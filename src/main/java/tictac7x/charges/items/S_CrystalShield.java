@@ -40,7 +40,7 @@ public class S_CrystalShield extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("Your crystal shield has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your crystal shield has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Get hit.
             new OnHitsplatApplied(HitsplatTarget.SELF).moreThanZeroDamage().isEquipped().decreaseCharges(1)

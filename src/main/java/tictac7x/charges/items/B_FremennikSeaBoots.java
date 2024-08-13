@@ -43,7 +43,7 @@ public class B_FremennikSeaBoots extends ChargedItem {
 
         this.triggers = new TriggerBase[]{
             // Try to teleport while empty.
-            new OnChatMessage("You have already used your available teleport for today. Try again tomorrow when the boots have recharged.").fixedCharges(0),
+            new OnChatMessage("You have already used your available teleport for today. Try again tomorrow when the boots have recharged.").setFixedCharges(0),
 
             // Teleport.
             new OnGraphicChanged(111).onItemClick().decreaseCharges(1),

@@ -36,10 +36,10 @@ public class J_BraceletOfFlamtaer extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[]{
-            new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left.").setDynamically(),
-            new OnChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left.").setDynamically(),
-            new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").fixedCharges(80).notification("Your flamtaer bracelet crumbles to dust."),
-            new OnChatMessage("The bracelet shatters. Your next Flamtaer bracelet will star afresh from 80 charges.").fixedCharges(80)
+            new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It has (?<charges>.+) charges? left.").setDynamicallyCharges(),
+            new OnChatMessage("Your flamtaer bracelet has (?<charges>.+) charges? left.").setDynamicallyCharges(),
+            new OnChatMessage("Your Flamtaer bracelet helps you build the temple quicker. It then crumbles to dust.").setFixedCharges(80).notification("Your flamtaer bracelet crumbles to dust."),
+            new OnChatMessage("The bracelet shatters. Your next Flamtaer bracelet will star afresh from 80 charges.").setFixedCharges(80)
         };
     }
 }

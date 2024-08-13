@@ -37,7 +37,7 @@ public class U_StrangeOldLockpick extends ChargedItem {
         };
         
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your Strange old lockpick( now)? has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
             new OnChatMessage("The Strange old lockpick crumbles to dust as you use it one last time.").notification("Your strange old lockpick crumbles to dust."),
         };
     }

@@ -54,7 +54,7 @@ public class A_CrystalLegs extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[]{
-            new OnChatMessage("Your crystal legs has (?<charges>.+) charges? remaining").setDynamically().onItemClick(),
+            new OnChatMessage("Your crystal legs has (?<charges>.+) charges? remaining").setDynamicallyCharges().onItemClick(),
             new OnHitsplatApplied(SELF).isEquipped().decreaseCharges(1)
         };
     }

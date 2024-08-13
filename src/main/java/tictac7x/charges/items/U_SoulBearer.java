@@ -37,12 +37,12 @@ public class U_SoulBearer extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("You remove the runes from the soul bearer.").fixedCharges(0),
-            new OnChatMessage("(The|Your) soul bearer( now)? has one charge.").fixedCharges(1),
-            new OnChatMessage("Your soul bearer carries the ensouled heads to your bank. It has run out of charges.").notification().fixedCharges(0),
-            new OnChatMessage("The soul bearer has (?<charges>.+) charges?.").setDynamically(),
-            new OnChatMessage("You add .+ charges? to your soul bearer. It now has (?<charges>.+) charges?.").setDynamically(),
-            new OnChatMessage("Your soul bearer carries the ensouled heads to your bank. It has (?<charges>.+) charges? left.").setDynamically()
+            new OnChatMessage("You remove the runes from the soul bearer.").setFixedCharges(0),
+            new OnChatMessage("(The|Your) soul bearer( now)? has one charge.").setFixedCharges(1),
+            new OnChatMessage("Your soul bearer carries the ensouled heads to your bank. It has run out of charges.").notification().setFixedCharges(0),
+            new OnChatMessage("The soul bearer has (?<charges>.+) charges?.").setDynamicallyCharges(),
+            new OnChatMessage("You add .+ charges? to your soul bearer. It now has (?<charges>.+) charges?.").setDynamicallyCharges(),
+            new OnChatMessage("Your soul bearer carries the ensouled heads to your bank. It has (?<charges>.+) charges? left.").setDynamicallyCharges()
         };
     }
 }

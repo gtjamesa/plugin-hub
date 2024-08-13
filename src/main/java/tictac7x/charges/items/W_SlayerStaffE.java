@@ -35,10 +35,10 @@ public class W_SlayerStaffE extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Enchant.
-            new OnChatMessage("The spell enchants your staff. The tatty parchment crumbles to dust.").fixedCharges(2500),
+            new OnChatMessage("The spell enchants your staff. The tatty parchment crumbles to dust.").setFixedCharges(2500),
 
             // Check.
-            new OnChatMessage("Your staff has (?<charges>.+) charges?.").setDynamically(),
+            new OnChatMessage("Your staff has (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // Attack.
             new OnAnimationChanged(1576).isEquipped().decreaseCharges(1),

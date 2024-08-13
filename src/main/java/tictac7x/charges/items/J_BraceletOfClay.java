@@ -39,7 +39,7 @@ public class J_BraceletOfClay extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust.").setDynamically(),
+            new OnChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust.").setDynamicallyCharges(),
 
             // Mine clay.
             new OnItemContainerChanged(ItemContainerType.INVENTORY).isEquipped().onMenuOption("Mine").onMenuTarget("Clay rocks").consumer(() -> {
@@ -60,7 +60,7 @@ public class J_BraceletOfClay extends ChargedItem {
             }),
 
             // Crumbles.
-            new OnChatMessage("Your bracelet of clay crumbles to dust.").fixedCharges(28).notification("Your clay bracelet crumbles to dust.")
+            new OnChatMessage("Your bracelet of clay crumbles to dust.").setFixedCharges(28).notification("Your clay bracelet crumbles to dust.")
         };
     }
 }

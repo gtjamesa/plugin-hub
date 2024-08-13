@@ -36,22 +36,22 @@ public class W_WarpedSceptre extends ChargedItem {
 
         this.triggers = new TriggerBase[] {
             // Charge additional.
-            new OnChatMessage("You add an additional .+ charges? to your warped sceptre. It now has (?<charges>.+) charges in total.").setDynamically(),
+            new OnChatMessage("You add an additional .+ charges? to your warped sceptre. It now has (?<charges>.+) charges in total.").setDynamicallyCharges(),
 
             // Charge empty.
-            new OnChatMessage("You add (?<charges>.+) charges? to your warped sceptre.").setDynamically(),
+            new OnChatMessage("You add (?<charges>.+) charges? to your warped sceptre.").setDynamicallyCharges(),
 
             // Check.
-            new OnChatMessage("Your warped sceptre( only)? has (?<charges>.+) charges? remaining.").setDynamically(),
+            new OnChatMessage("Your warped sceptre( only)? has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
 
             // Attack.
             new OnGraphicChanged(2567).decreaseCharges(1),
 
             // Uncharge.
-            new OnChatMessage("You uncharge your warped sceptre").fixedCharges(0),
+            new OnChatMessage("You uncharge your warped sceptre").setFixedCharges(0),
 
             // Ran out of charges.
-            new OnChatMessage("Your warped sceptre has run out of charges!").fixedCharges(0),
+            new OnChatMessage("Your warped sceptre has run out of charges!").setFixedCharges(0),
         };
     }
 }

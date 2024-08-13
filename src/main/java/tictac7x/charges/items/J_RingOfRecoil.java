@@ -36,16 +36,16 @@ public class J_RingOfRecoil extends ChargedItem {
 
         this.triggers = new TriggerBase[]{
             // Check.
-            new OnChatMessage("You can inflict one more point of damage before a ring will shatter.").fixedCharges(1),
+            new OnChatMessage("You can inflict one more point of damage before a ring will shatter.").setFixedCharges(1),
 
             // Check.
-            new OnChatMessage("You can inflict (?<charges>.+) more points of damage before a ring will shatter.").setDynamically(),
+            new OnChatMessage("You can inflict (?<charges>.+) more points of damage before a ring will shatter.").setDynamicallyCharges(),
 
             // Trying to break when full.
-            new OnChatMessage("The ring is fully charged. There would be no point in breaking it.").onItemClick().fixedCharges(40),
+            new OnChatMessage("The ring is fully charged. There would be no point in breaking it.").onItemClick().setFixedCharges(40),
 
             // Shattered.
-            new OnChatMessage("Your Ring of Recoil has shattered.").notification().fixedCharges(40),
+            new OnChatMessage("Your Ring of Recoil has shattered.").notification().setFixedCharges(40),
 
             // Take damage.
             new OnHitsplatApplied(HitsplatTarget.SELF).moreThanZeroDamage().isEquipped().decreaseCharges(1),
@@ -54,7 +54,7 @@ public class J_RingOfRecoil extends ChargedItem {
             new OnWidgetLoaded(219, 1, 0).text("Status: (?<charges>.+) damage points? left.").setDynamically(),
 
             // Break.
-            new OnChatMessage("The ring shatters. Your next ring of recoil will start afresh from (?<charges>.+) damage points?.").setDynamically(),
+            new OnChatMessage("The ring shatters. Your next ring of recoil will start afresh from (?<charges>.+) damage points?.").setDynamicallyCharges(),
         };
     }
 }

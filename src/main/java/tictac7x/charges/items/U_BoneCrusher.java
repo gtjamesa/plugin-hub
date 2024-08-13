@@ -41,15 +41,15 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
 
         this.triggers = new TriggerBase[] {
             // Check.
-            new OnChatMessage("The bonecrusher( necklace)? has no charges.").fixedCharges(0),
-            new OnChatMessage("The bonecrusher( necklace)? has one charge.").fixedCharges(1),
-            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").setDynamically().activate(),
-            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamically().deactivate(),
+            new OnChatMessage("The bonecrusher( necklace)? has no charges.").setFixedCharges(0),
+            new OnChatMessage("The bonecrusher( necklace)? has one charge.").setFixedCharges(1),
+            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").setDynamicallyCharges().activate(),
+            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamicallyCharges().deactivate(),
             // Uncharge.
-            new OnChatMessage("You remove all the charges from the bonecrusher( necklace)?.").fixedCharges(0),
-            new OnChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left.").setDynamically(),
+            new OnChatMessage("You remove all the charges from the bonecrusher( necklace)?.").setFixedCharges(0),
+            new OnChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left.").setDynamicallyCharges(),
             // Ran out.
-            new OnChatMessage("Your bonecrusher( necklace)? has run out of charges.").notification().fixedCharges(0),
+            new OnChatMessage("Your bonecrusher( necklace)? has run out of charges.").notification().setFixedCharges(0),
             // Activate.
             new OnChatMessage("The bonecrusher( necklace)? has been deactivated").deactivate(),
             // Deactivate.

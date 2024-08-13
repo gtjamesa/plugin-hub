@@ -39,9 +39,9 @@ public class W_Arclight extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[] {
-            new OnChatMessage("Your arclight has (?<charges>.+) charges?( left)?.").setDynamically(),
-            new OnChatMessage("Your arclight can perform (?<charges>.+) more attacks.").setDynamically(),
-            new OnChatMessage("Your arclight has degraded.").notification().fixedCharges(0),
+            new OnChatMessage("Your arclight has (?<charges>.+) charges?( left)?.").setDynamicallyCharges(),
+            new OnChatMessage("Your arclight can perform (?<charges>.+) more attacks.").setDynamicallyCharges(),
+            new OnChatMessage("Your arclight has degraded.").notification().setFixedCharges(0),
             new OnHitsplatApplied(ENEMY).isEquipped().decreaseCharges(1),
         };
     }
