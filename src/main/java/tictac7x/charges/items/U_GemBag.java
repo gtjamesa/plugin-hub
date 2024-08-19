@@ -74,6 +74,11 @@ public class U_GemBag extends ChargedItemWithStorage {
                 storage.add(getStorageItemFromName(m.group("gem")), Integer.parseInt(m.group("quantity")));
             }),
 
+            // Stealing from stalls.
+            new OnChatMessage("You steal an uncut (?<gem>.+) and add it to your gem bag.").matcherConsumer(m -> {
+                storage.add(getStorageItemFromName(m.group("gem")), 1);
+            }),
+
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
 
