@@ -113,15 +113,19 @@ import java.util.Optional;
 		"toxic",
 		"jar",
 		"tome",
+		"fur",
+		"meat",
+		"pouch",
 	}
 )
 
 public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.9";
+	private final String pluginVersion = "v0.5.10";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Stealing from stalls updates gem bag.<br>" +
-		"<colHIGHLIGHT>* Other minor fixes."
+		"<colHIGHLIGHT>* Fur pouches added.<br>" +
+		"<colHIGHLIGHT>* Meat pouches added.<br>" +
+		"<colHIGHLIGHT>* Telegrabbing gems updates gem back storage."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -256,11 +260,14 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new U_CrystalSaw(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_FishBarrel(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_FungicideSpray(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_FurPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_GemBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_GricollersCan(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_HerbSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_HuntsmansKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_JarGenerator(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_LogBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_MeatPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_OgreBellows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_QuetzalWhistle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_SeedBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -331,11 +338,12 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	@Subscribe
 	public void onChatMessage(final ChatMessage event) {
+		store.setLastChatMessage(event);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onChatMessage(event));
 
 //		System.out.println("MESSAGE | " +
 //			"type: " + event.getType().name() +
-//			", message: " + event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ") +
+//			", message: " + getCleanChatMessage(event) +
 //			", sender: " + event.getSender()
 //		);
 	}
@@ -632,6 +640,10 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	@Override
 	public MouseEvent mouseExited(final MouseEvent mouseEvent) {
 		return mouseEvent;
+	}
+
+	public static String getCleanChatMessage(final ChatMessage event) {
+		return event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ");
 	}
 }
 

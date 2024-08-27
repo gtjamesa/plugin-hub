@@ -1,8 +1,11 @@
 package tictac7x.charges.item.triggers;
 
 import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.store.ItemWithQuantity;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public abstract class TriggerBase {
     // Checks.
@@ -35,6 +38,8 @@ public abstract class TriggerBase {
     public Optional<Boolean> isActivated = Optional.empty();
     public Optional<Boolean> activate = Optional.empty();
     public Optional<Boolean> deactivate = Optional.empty();
+
+    public Optional<Consumer<List<ItemWithQuantity>>> onItemContainerDifference = Optional.empty();
 
     public TriggerBase setFixedCharges(final int charges) {
         this.fixedCharges = Optional.of(charges);
@@ -148,6 +153,11 @@ public abstract class TriggerBase {
 
     public TriggerBase multiTrigger() {
         this.multiTrigger = true;
+        return this;
+    }
+
+    public TriggerBase onItemContainerDifference(Consumer<List<ItemWithQuantity>> consumer) {
+        this.onItemContainerDifference = Optional.of(consumer);
         return this;
     }
 }

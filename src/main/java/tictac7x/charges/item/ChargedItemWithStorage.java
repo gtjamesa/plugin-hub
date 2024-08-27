@@ -17,8 +17,11 @@ import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 import java.awt.Color;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ChargedItemWithStorage extends ChargedItemBase {
     public Storage storage;
@@ -35,7 +38,10 @@ public class ChargedItemWithStorage extends ChargedItemBase {
     @Override
     public String getTooltip() {
         String tooltip = "";
-        for (final StorageItem storageItem : storage.getStorage()) {
+        for (final StorageItem storageItem : storage.getStorage().values().stream()
+            .sorted(Comparator.comparing(item -> item.order.orElse(Integer.MAX_VALUE)))
+            .collect(Collectors.toList())
+        ) {
             if (storageItem.getQuantity() > 0) {
                 tooltip += (storageItem.displayName.isPresent() ? storageItem.displayName.get() : itemManager.getItemComposition(storageItem.itemId).getName()) + ": ";
                 tooltip += ColorUtil.wrapWithColorTag(String.valueOf(storageItem.getQuantity()), JagexColors.MENU_TARGET) + "</br>";
@@ -45,7 +51,7 @@ public class ChargedItemWithStorage extends ChargedItemBase {
         return tooltip.replaceAll("</br>$", "");
     }
 
-    public List<StorageItem> getStorage() {
+    public Map<Integer, StorageItem> getStorage() {
         return this.storage.getStorage();
     }
 
@@ -56,7 +62,7 @@ public class ChargedItemWithStorage extends ChargedItemBase {
     public int getQuantity() {
         int quantity = 0;
 
-        for (final StorageItem storageItem : getStorage()) {
+        for (final StorageItem storageItem : getStorage().values()) {
             if (storageItem.getQuantity() >= 0) {
                 quantity += storageItem.getQuantity();
             }

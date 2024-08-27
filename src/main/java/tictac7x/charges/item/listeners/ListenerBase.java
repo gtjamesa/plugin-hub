@@ -90,6 +90,10 @@ public abstract class ListenerBase {
             triggerUsed = true;
         }
 
+        if (trigger.onItemContainerDifference.isPresent()) {
+
+        }
+
         return triggerUsed;
     }
 
@@ -144,7 +148,7 @@ public abstract class ListenerBase {
             useCheckLooper: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
                 if (!menuEntry.option.equals("Use") || !menuEntry.target.contains(" -> ") || !menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(chargedItem.itemId).getName())) continue;
 
-                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage().values()) {
                     if (menuEntry.target.split(" -> ")[0].equals(itemManager.getItemComposition(storageItem.itemId).getName())) {
                         useCheck = true;
                         break useCheckLooper;
@@ -162,7 +166,7 @@ public abstract class ListenerBase {
             useCheckLooper: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
                 if (!menuEntry.option.equals("Use") || !menuEntry.target.contains(" -> ") || !menuEntry.target.split(" -> ")[0].equals(itemManager.getItemComposition(chargedItem.itemId).getName())) continue;
 
-                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage().values()) {
                     if (menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(storageItem.itemId).getName())) {
                         useCheck = true;
                         break useCheckLooper;

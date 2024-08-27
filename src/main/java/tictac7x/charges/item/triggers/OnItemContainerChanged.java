@@ -1,18 +1,19 @@
 package tictac7x.charges.item.triggers;
 
-import tictac7x.charges.store.ItemContainerType;
-
 import java.util.Optional;
 
 public class OnItemContainerChanged extends TriggerBase {
-    public final ItemContainerType itemContainerType;
+    public final int itemContainerId;
 
+    public Optional<Boolean> updateStorage = Optional.empty();
     public Optional<Boolean> fillStorageFromInventory = Optional.empty();
     public Optional<Boolean> fillStorageFromInventorySingle = Optional.empty();
     public Optional<Boolean> emptyStorageToInventory = Optional.empty();
+    public Optional<Boolean> emptyStorageToInventoryReversed = Optional.empty();
+    public Optional<String> hasChatMessage = Optional.empty();
 
-    public OnItemContainerChanged(final ItemContainerType itemContainerType) {
-        this.itemContainerType = itemContainerType;
+    public OnItemContainerChanged(final int itemContainerId) {
+        this.itemContainerId = itemContainerId;
     }
 
     public OnItemContainerChanged fillStorageFromInventoryAll() {
@@ -27,6 +28,21 @@ public class OnItemContainerChanged extends TriggerBase {
 
     public OnItemContainerChanged emptyStorageToInventory() {
         this.emptyStorageToInventory = Optional.of(true);
+        return this;
+    }
+
+    public OnItemContainerChanged emptyStorageToInventoryReversed() {
+        this.emptyStorageToInventoryReversed = Optional.of(true);
+        return this;
+    }
+
+    public OnItemContainerChanged updateStorage() {
+        this.updateStorage = Optional.of(true);
+        return this;
+    }
+
+    public OnItemContainerChanged hasChatMessage(final String message) {
+        this.hasChatMessage = Optional.of(message);
         return this;
     }
 }

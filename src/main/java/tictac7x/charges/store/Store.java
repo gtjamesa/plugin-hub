@@ -1,10 +1,12 @@
 package tictac7x.charges.store;
 
+import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.api.Skill;
+import net.runelite.api.events.ChatMessage;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.api.events.MenuOptionClicked;
@@ -12,6 +14,7 @@ import net.runelite.api.events.StatChanged;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnResetDaily;
@@ -30,12 +33,13 @@ public class Store {
     private int gametick_before = 0;
 
     private Optional<ChargedItemBase[]> chargedItems = Optional.empty();
+    private Optional<String> lastChatMessage = Optional.empty();
     public Optional<ItemContainer> inventory = Optional.empty();
     public Optional<ItemContainer> equipment = Optional.empty();
     public Optional<ItemContainer> bank = Optional.empty();
-    
-    public List<StorageItem> currentItems = new ArrayList<>();
-    public List<StorageItem> previousItems = new ArrayList<>();
+
+    public Map<Integer, StorageItem> currentItems = new LinkedHashMap<>();
+    public Map<Integer, StorageItem> previousItems = new LinkedHashMap<>();
 
     public final List<AdvancedMenuEntry> menuOptionsClicked = new ArrayList<>();
     private final Map<Skill, Integer> skillsXp = new HashMap<>();
@@ -44,6 +48,16 @@ public class Store {
         this.client = client;
         this.itemManager = itemManager;
         this.configManager = configManager;
+    }
+
+    public Optional<String> getLastChatMessage() {
+        return this.lastChatMessage;
+    }
+
+    public void setLastChatMessage(final ChatMessage event) {
+        if (event.getType() == ChatMessageType.GAMEMESSAGE || event.getType() == ChatMessageType.DIALOG) {
+            lastChatMessage = Optional.of(ChargesImprovedPlugin.getCleanChatMessage(event));
+        }
     }
 
     public void setChargedItems(final ChargedItemBase[] chargedItems) {
@@ -71,14 +85,13 @@ public class Store {
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             inventory = Optional.of(event.getItemContainer());
             previousItems = currentItems;
-            currentItems = new ArrayList<>();
+            currentItems = new LinkedHashMap<>();
             for (final Item item : event.getItemContainer().getItems()) {
-                if (item.getId() != -1) {
-                    currentItems.add(new StorageItem(item.getId())
-                        .displayName(itemManager.getItemComposition(item.getId()).getName())
-                        .quantity(item.getQuantity())
-                    );
-                }
+                if (isInvalidItem(item)) continue;
+                currentItems.put(item.getId(), new StorageItem(item.getId())
+                    .displayName(itemManager.getItemComposition(item.getId()).getName())
+                    .quantity(event.getItemContainer().count(item.getId()))
+                );
             }
         } else if (event.getContainerId() == InventoryID.EQUIPMENT.getId()) {
             equipment = Optional.of(event.getItemContainer());
@@ -223,7 +236,7 @@ public class Store {
     public int getInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 
-        for (final StorageItem storageItem : currentItems) {
+        for (final StorageItem storageItem : currentItems.values()) {
             if (storageItem.itemId == itemId) {
                 quantity += storageItem.getQuantity();
             }
@@ -249,7 +262,7 @@ public class Store {
     public int getPreviousInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 
-        for (final StorageItem storageItem : previousItems) {
+        for (final StorageItem storageItem : previousItems.values()) {
             if (storageItem.itemId == itemId) {
                 quantity += storageItem.getQuantity();
             }
@@ -259,13 +272,7 @@ public class Store {
     }
 
     public boolean inventoryContainsItem(final int itemId) {
-        for (final StorageItem storageItem : currentItems) {
-            if (storageItem.itemId == itemId) {
-                return true;
-            }
-        }
-
-        return false;
+        return currentItems.containsKey(itemId);
     }
 
     public boolean equipmentContainsItem(final int ...itemIds) {
@@ -354,5 +361,42 @@ public class Store {
         }
 
         return false;
+    }
+
+    public List<ItemWithQuantity> getInventoryItemsDifference() {
+        final List<ItemWithQuantity> itemsDifference = new ArrayList<>();
+
+        if (inventory.isPresent()) {
+            for (final Item itemNew : inventory.get().getItems()) {
+                if (isInvalidItem(itemNew)) continue;
+                final Optional<StorageItem> previousItem = previousItems.containsKey(itemNew.getId()) ? Optional.of(previousItems.get(itemNew.getId())) : Optional.empty();
+
+                // Item was previously not in inventory.
+                if (!previousItem.isPresent()) {
+                    itemsDifference.add(new ItemWithQuantity(itemNew.getId(), itemNew.getQuantity()));
+                // Item was previously in inventory.
+                } else if (itemNew.getQuantity() - previousItem.get().getQuantity() != 0) {
+                    itemsDifference.add(new ItemWithQuantity(itemNew.getId(), itemNew.getQuantity() - previousItem.get().getQuantity()));
+                }
+            }
+
+            // Items that are no longer in inventory, but were there before.
+            for (final StorageItem itemOld : previousItems.values()) {
+                if (!currentItems.containsKey(itemOld.itemId)) {
+                    itemsDifference.add(new ItemWithQuantity(itemOld.itemId, itemOld.quantity));
+                }
+            }
+        }
+
+        System.out.println("ITEMS DIFFERENCE");
+        for (final ItemWithQuantity i : itemsDifference) {
+            System.out.println(i.itemId + " : " + i.quantity);
+        }
+
+        return itemsDifference;
+    }
+
+    private boolean isInvalidItem(final Item item) {
+        return item == null | item.getId() == -1 || item.getId() == 6512;
     }
 }

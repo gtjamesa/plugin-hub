@@ -10,9 +10,7 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.Storage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
@@ -20,10 +18,10 @@ import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ItemContainerId;
 import tictac7x.charges.store.Store;
 
-import static tictac7x.charges.store.ItemContainerType.INVENTORY;
+import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class C_ForestryKit extends ChargedItemWithStorage {
     public C_ForestryKit(
@@ -58,17 +56,8 @@ public class C_ForestryKit extends ChargedItemWithStorage {
         };
 
         this.triggers = new TriggerBase[]{
-            // Check.
-            new OnWidgetLoaded(823,21,10).itemQuantityConsumer(quantity -> storage.put(ItemID.ANIMAINFUSED_BARK, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,22).itemQuantityConsumer(quantity -> storage.put(ItemID.NATURE_OFFERINGS, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,34).itemQuantityConsumer(quantity -> storage.put(ItemID.FORESTERS_RATION, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,46).itemQuantityConsumer(quantity -> storage.put(ItemID.SECATEURS_ATTACHMENT, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,58).itemQuantityConsumer(quantity -> storage.put(ItemID.LEAVES, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,70).itemQuantityConsumer(quantity -> storage.put(ItemID.OAK_LEAVES, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,82).itemQuantityConsumer(quantity -> storage.put(ItemID.WILLOW_LEAVES, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,94).itemQuantityConsumer(quantity -> storage.put(ItemID.MAPLE_LEAVES, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,106).itemQuantityConsumer(quantity -> storage.put(ItemID.YEW_LEAVES, quantity)).multiTrigger(),
-            new OnWidgetLoaded(823,21,118).itemQuantityConsumer(quantity -> storage.put(ItemID.MAGIC_LEAVES, quantity)).multiTrigger(),
+            // View contents.
+            new OnItemContainerChanged(ItemContainerId.FORESTRY_KIT).updateStorage(),
 
             // Get leaves while chopping wood.
             new OnChatMessage("Some (?<leaves>.+) leaves fall to the ground and you place them into your Forestry kit.").matcherConsumer(m -> {

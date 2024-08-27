@@ -10,6 +10,7 @@ import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnWidgetLoaded;
 import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.store.ItemWithQuantity;
 
 import java.util.regex.Matcher;
 
@@ -44,6 +45,12 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
 
             if (trigger.itemQuantityConsumer.isPresent()) {
                 trigger.itemQuantityConsumer.get().accept(widget.getItemQuantity());
+                triggerUsed = true;
+            }
+
+            if (trigger.itemWithQuantityConsumer.isPresent()) {
+                trigger.itemWithQuantityConsumer.get().accept(new ItemWithQuantity(widget.getItemId(), widget.getItemQuantity()));
+                triggerUsed = true;
             }
 
             if (super.trigger(trigger)) {

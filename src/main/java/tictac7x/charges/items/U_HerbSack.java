@@ -23,7 +23,7 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ReplaceTarget;
 import tictac7x.charges.store.Store;
 
-import static tictac7x.charges.store.ItemContainerType.INVENTORY;
+import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_HerbSack extends ChargedItemWithStorage {
     public U_HerbSack(

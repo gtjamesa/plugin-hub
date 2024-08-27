@@ -1,5 +1,7 @@
 package tictac7x.charges.item.triggers;
 
+import tictac7x.charges.store.ItemWithQuantity;
+
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -13,6 +15,7 @@ public class OnWidgetLoaded extends TriggerBase {
     public Optional<Pattern> text = Optional.empty();
     public Optional<Consumer<Matcher>> matcherConsumer = Optional.empty();
     public Optional<Consumer<Integer>> itemQuantityConsumer = Optional.empty();
+    public Optional<Consumer<ItemWithQuantity>> itemWithQuantityConsumer = Optional.empty();
     public Optional<Boolean> setDynamically = Optional.empty();
 
     public OnWidgetLoaded setDynamically() {
@@ -38,6 +41,11 @@ public class OnWidgetLoaded extends TriggerBase {
 
     public OnWidgetLoaded itemQuantityConsumer(final Consumer<Integer> consumer) {
         this.itemQuantityConsumer = Optional.of(consumer);
+        return this;
+    }
+
+    public OnWidgetLoaded itemWithQuantityConsumer(final Consumer<ItemWithQuantity> consumer) {
+        this.itemWithQuantityConsumer = Optional.of(consumer);
         return this;
     }
 }

@@ -15,7 +15,7 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemContainerType;
+import tictac7x.charges.store.ItemContainerId;
 import tictac7x.charges.store.Store;
 
 public class J_BraceletOfClay extends ChargedItem {
@@ -42,14 +42,14 @@ public class J_BraceletOfClay extends ChargedItem {
             new OnChatMessage("You can mine (?<charges>.+) more pieces? of soft clay before your bracelet crumbles to dust.").setDynamicallyCharges(),
 
             // Mine clay.
-            new OnItemContainerChanged(ItemContainerType.INVENTORY).isEquipped().onMenuOption("Mine").onMenuTarget("Clay rocks").consumer(() -> {
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).isEquipped().onMenuOption("Mine").onMenuTarget("Clay rocks").consumer(() -> {
                 final int clayBefore = store.getPreviousInventoryItemQuantity(ItemID.SOFT_CLAY);
                 final int clayAfter = store.getInventoryItemQuantity(ItemID.SOFT_CLAY);
                 decreaseCharges(clayAfter - clayBefore);
             }),
 
             // Mine soft clay.
-            new OnItemContainerChanged(ItemContainerType.INVENTORY).isEquipped().onMenuOption("Mine").onMenuTarget("Soft clay rocks").consumer(() -> {
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).isEquipped().onMenuOption("Mine").onMenuTarget("Soft clay rocks").consumer(() -> {
                 final int clayBefore = store.getPreviousInventoryItemQuantity(ItemID.SOFT_CLAY);
                 final int clayAfter = store.getInventoryItemQuantity(ItemID.SOFT_CLAY);
 

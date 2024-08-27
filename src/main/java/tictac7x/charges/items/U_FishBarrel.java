@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tictac7x.charges.store.ItemContainerType.INVENTORY;
+import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_FishBarrel extends ChargedItemWithStorage {
     private Optional<StorageItem> lastCaughtFish = Optional.empty();

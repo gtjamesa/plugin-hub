@@ -16,7 +16,7 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemContainerType;
+import tictac7x.charges.store.ItemContainerId;
 import tictac7x.charges.store.Store;
 
 public class C_Coffin extends ChargedItemWithStorage {
@@ -77,7 +77,7 @@ public class C_Coffin extends ChargedItemWithStorage {
             new OnChatMessage("Your coffin is empty.").onItemClick().emptyStorage(),
 
             // Fill from inventory.
-            new OnItemContainerChanged(ItemContainerType.INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
         };
     }
 }

@@ -5,6 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.runelite.api.Item;
+import net.runelite.api.ItemContainer;
+import net.runelite.api.ItemID;
 import net.runelite.client.config.ConfigManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
@@ -13,7 +16,9 @@ import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Storage {
@@ -23,7 +28,7 @@ public class Storage {
     private final Store store;
     private final Gson gson;
 
-    protected List<StorageItem> storage = new ArrayList<>();
+    protected Map<Integer, StorageItem> storage = new LinkedHashMap<>();
 
     public Optional<Integer> maximumTotalQuantity = Optional.empty();
     public Optional<Integer> maximumTotalQuantityWithItemEquipped = Optional.empty();
@@ -68,7 +73,7 @@ public class Storage {
     }
 
     public void empty() {
-        storage = getNewStorage();
+        storage = new LinkedHashMap<>();
         save();
     }
 
@@ -114,7 +119,9 @@ public class Storage {
     }
 
     public void put(final int itemId, int quantity) {
-        if (itemId == Charges.UNKNOWN) return;
+        // -1 = item that was previously in the array, but that slot no longer has an item.
+        // 6512 = empty item inside huntsmans kit.
+        if (itemId == -1 || itemId == 6512) return;
 
         // Check for individual maximum quantity.
         if (maximumIndividualQuantity.isPresent() && quantity > maximumIndividualQuantity.get()) {
@@ -124,7 +131,7 @@ public class Storage {
         final Optional<Integer> maximumTotalQuantity = getMaximumTotalQuantity();
         if (maximumTotalQuantity.isPresent()) {
             int newTotalQuantity = 0;
-            for (final StorageItem storageItem : storage) {
+            for (final StorageItem storageItem : storage.values()) {
                 newTotalQuantity += storageItem.itemId == itemId ? quantity : storageItem.getQuantity();
             }
 
@@ -134,10 +141,12 @@ public class Storage {
         }
 
         final Optional<StorageItem> item = getItem(itemId);
-        if (item.isPresent()) {
+        if (quantity == 0) {
+            storage.remove(itemId);
+        } else if (item.isPresent()) {
             item.get().setQuantity(quantity);
         } else {
-            storage.add(new StorageItem(itemId).quantity(quantity));
+            storage.put(itemId, new StorageItem(itemId, quantity));
         }
 
         save();
@@ -163,7 +172,7 @@ public class Storage {
 
         int inventoryEmptySlots = store.getInventoryPreviouslyEmptySlots();
 
-        for (final StorageItem storageItem : storage) {
+        for (final StorageItem storageItem : storage.values()) {
             // Empty storage until 0 inventory slots left.
             if (inventoryEmptySlots == 0) break;
 
@@ -173,35 +182,52 @@ public class Storage {
         }
     }
 
+    public void emptyToInventoryReversed() {
+        if (!store.inventory.isPresent()) return;
+
+        int inventoryEmptySlots = store.getInventoryPreviouslyEmptySlots();
+
+        // Reverse loop through the storage list
+        for (int i = storage.size() - 1; i >= 0; i--) {
+            final StorageItem storageItem = storage.get(i);
+
+            // Empty storage until 0 inventory slots left.
+            if (inventoryEmptySlots == 0) break;
+
+            final int toEmptyStorageSlots = Math.min(inventoryEmptySlots, storageItem.getQuantity());
+            put(storageItem.itemId, storageItem.getQuantity() - toEmptyStorageSlots);
+            inventoryEmptySlots -= toEmptyStorageSlots;
+        }
+    }
+
+    public void updateFromItemContainer(final ItemContainer itemContainer) {
+        if (itemContainer == null) return;
+
+        storage = new LinkedHashMap<>();
+
+        for (final Item item : itemContainer.getItems()) {
+            if (item != null) {
+                put(item.getId(), item.getQuantity());
+            }
+        }
+    }
+
     public int getCharges() {
         int charges = 0;
 
-        for (final StorageItem item : storage) {
+        for (final StorageItem item : storage.values()) {
             charges += item.getQuantity();
         }
 
         return charges;
     }
 
-    public String getIndividualCharges() {
-        String charges = "";
-
-        for (final StorageItem item : storage) {
-            if (item.getQuantity() != Charges.UNLIMITED) {
-                charges += item.getQuantity() + "/";
-            }
-        }
-
-        return charges.replaceAll("/$", "");
-    }
-
-    public List<StorageItem> getStorage() {
+    public Map<Integer, StorageItem> getStorage() {
         return storage;
     }
 
     public void loadStorage() {
-        // Create new empty storage to have specific items in correct order.
-        this.storage = getNewStorage();
+        storage = new LinkedHashMap<>();
 
         // Load storage from config.
         try {
@@ -209,16 +235,14 @@ public class Storage {
             final JsonArray jsonStorage = (JsonArray) (new JsonParser()).parse(jsonString);
 
             for (final JsonElement jsonStorageItem : jsonStorage) {
-                // Load item id.
-                final StorageItem loadedItem = new StorageItem(jsonStorageItem.getAsJsonObject().get("itemId").getAsInt());
-
-                // Load quantity.
-                loadedItem.setQuantity(jsonStorageItem.getAsJsonObject().get("quantity").getAsInt());
+                final StorageItem loadedItem = new StorageItem(
+                    jsonStorageItem.getAsJsonObject().get("itemId").getAsInt(),
+                    jsonStorageItem.getAsJsonObject().get("quantity").getAsInt()
+                );
 
                 // Update previous item quantity or put new into the storage.
-                final Optional<StorageItem> item = getItem(loadedItem.itemId);
-                if (item.isPresent()) {
-                    item.get().setQuantity(loadedItem.getQuantity());
+                if (storage.containsKey(loadedItem.itemId)) {
+                    storage.get(loadedItem.itemId).setQuantity(loadedItem.quantity);
                 } else {
                     put(loadedItem.itemId, loadedItem.getQuantity());
                 }
@@ -229,7 +253,7 @@ public class Storage {
     private void save() {
         final JsonArray jsonStorage = new JsonArray();
 
-        for (final StorageItem storageItem : storage) {
+        for (final StorageItem storageItem : storage.values()) {
             final JsonObject jsonItem = new JsonObject();
             jsonItem.addProperty("itemId", storageItem.itemId);
             jsonItem.addProperty("quantity", storageItem.getQuantity());
@@ -239,36 +263,12 @@ public class Storage {
         configManager.setConfiguration(ChargesImprovedConfig.group, storageConfigKey, gson.toJson(jsonStorage));
     }
 
-    private List<StorageItem> getNewStorage() {
-        final List<StorageItem> storage = new ArrayList<>();
-
-        for (final StorageItem storeableItem : storeableItems) {
-            final StorageItem storageItem = new StorageItem(storeableItem.itemId);
-
-            storageItem.setQuantity(0);
-
-            if (storeableItem.checkName.isPresent()) {
-                storageItem.setCheckName(storeableItem.checkName.get());
-            }
-
-            if (storeableItem.displayName.isPresent()) {
-                storageItem.setDisplayName(storeableItem.displayName.get());
-            }
-
-            storage.add(storageItem);
-        }
-
-        return storage;
-    }
-
     private Optional<StorageItem> getItem(final int itemId) {
-        for (final StorageItem item : storage) {
-            if (item.itemId == itemId) {
-                return Optional.of(item);
-            }
+        if (storage.containsKey(itemId)) {
+            return Optional.of(storage.get(itemId));
+        } else {
+            return Optional.empty();
         }
-
-        return Optional.empty();
     }
 
     public Optional<Integer> getMaximumTotalQuantity() {

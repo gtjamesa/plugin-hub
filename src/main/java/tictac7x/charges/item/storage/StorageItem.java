@@ -8,14 +8,25 @@ public class StorageItem {
     public final int itemId;
     public Optional<String> checkName = Optional.empty();
     public Optional<String> displayName = Optional.empty();
+    public Optional<Integer> order = Optional.empty();
     public int quantity = Charges.UNKNOWN;
 
     public StorageItem(final int itemId) {
         this.itemId = itemId;
     }
 
+    public StorageItem(final int itemId, final int quantity) {
+        this.itemId = itemId;
+        this.quantity = quantity;
+    }
+
     public StorageItem checkName(final String checkName) {
         this.checkName = Optional.of(checkName);
+        return this;
+    }
+
+    public StorageItem specificOrder(final int order) {
+        this.order = Optional.of(order);
         return this;
     }
 

@@ -14,14 +14,16 @@ import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
+import tictac7x.charges.item.triggers.OnMenuEntryAdded;
+import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
 import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
-public class U_PlankSack extends ChargedItemWithStorage {
-    public U_PlankSack(
+public class U_MeatPouch extends ChargedItemWithStorage {
+    public U_MeatPouch(
         final Client client,
         final ClientThread client_thread,
         final ConfigManager configs,
@@ -33,33 +35,31 @@ public class U_PlankSack extends ChargedItemWithStorage {
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.plank_sack, ItemID.PLANK_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
-        storage.maximumTotalQuantity(28).storeableItems(
-            new StorageItem(ItemID.PLANK).checkName("Plank"),
-            new StorageItem(ItemID.OAK_PLANK).checkName("Oak plank"),
-            new StorageItem(ItemID.TEAK_PLANK).checkName("Teak plank"),
-            new StorageItem(ItemID.MAHOGANY_PLANK).checkName("Mahogany plank")
+        super(ChargesImprovedConfig.meat_pouch, ItemID.SMALL_MEAT_POUCH, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        this.storage = storage.storeableItems(
+            new StorageItem(ItemID.RAW_SUNLIGHT_ANTELOPE).checkName("Raw sunlight antelope"),
+            new StorageItem(ItemID.RAW_KYATT).checkName("Raw kyatt")
         );
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.PLANK_SACK),
-            new TriggerItem(ItemID.PLANK_SACK_25629),
+            new TriggerItem(ItemID.SMALL_MEAT_POUCH).maxCharges(14),
+            new TriggerItem(ItemID.SMALL_MEAT_POUCH_OPEN).maxCharges(14),
+            new TriggerItem(ItemID.LARGE_MEAT_POUCH).maxCharges(28),
+            new TriggerItem(ItemID.LARGE_MEAT_POUCH_OPEN).maxCharges(28),
         };
 
         this.triggers = new TriggerBase[]{
-            // Empty to bank or inventory.
-            new OnChatMessage("Basic planks: (?<basic>.+), Oak planks: (?<oak>.+), Teak planks: (?<teak>.+), Mahogany planks: (?<mahogany>.+)").matcherConsumer(m -> {
-                storage.put(ItemID.PLANK, Integer.parseInt(m.group("basic")));
-                storage.put(ItemID.OAK_PLANK, Integer.parseInt(m.group("oak")));
-                storage.put(ItemID.TEAK_PLANK, Integer.parseInt(m.group("teak")));
-                storage.put(ItemID.MAHOGANY_PLANK, Integer.parseInt(m.group("mahogany")));
-            }),
-
-            // Empty to inventory.
-            new OnItemContainerChanged(INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
-
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
+
+            // Empty to bank.
+            new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
+
+            // Hide destroy option.
+            new OnMenuEntryAdded("Destroy").hide(),
+
+            new OnChatMessage("You've caught a sunlight antelope!").onSpecificItem(ItemID.SMALL_MEAT_POUCH_OPEN, ItemID.LARGE_MEAT_POUCH_OPEN).addToStorage(ItemID.RAW_SUNLIGHT_ANTELOPE),
+            new OnChatMessage("You've caught a sabretoothed kyatt!").onSpecificItem(ItemID.SMALL_MEAT_POUCH_OPEN, ItemID.LARGE_MEAT_POUCH_OPEN).addToStorage(ItemID.RAW_KYATT),
         };
     }
 }

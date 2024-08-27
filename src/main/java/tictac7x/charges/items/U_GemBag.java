@@ -3,6 +3,7 @@ package tictac7x.charges.items;
 import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.Skill;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -17,11 +18,12 @@ import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
 import tictac7x.charges.item.triggers.OnMenuOptionClicked;
+import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
-import static tictac7x.charges.store.ItemContainerType.INVENTORY;
+import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 
 public class U_GemBag extends ChargedItemWithStorage {
@@ -39,11 +41,11 @@ public class U_GemBag extends ChargedItemWithStorage {
     ) {
         super(ChargesImprovedConfig.gem_bag, ItemID.GEM_BAG_12020, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage.maximumIndividualQuantity(60).storeableItems(
-            new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire"),
-            new StorageItem(ItemID.UNCUT_EMERALD).checkName("Emerald"),
-            new StorageItem(ItemID.UNCUT_RUBY).checkName("Ruby"),
-            new StorageItem(ItemID.UNCUT_DIAMOND).checkName("Diamond"),
-            new StorageItem(ItemID.UNCUT_DRAGONSTONE).checkName("Dragonstone")
+            new StorageItem(ItemID.UNCUT_SAPPHIRE).checkName("Sapphire").specificOrder(1),
+            new StorageItem(ItemID.UNCUT_EMERALD).checkName("Emerald").specificOrder(2),
+            new StorageItem(ItemID.UNCUT_RUBY).checkName("Ruby").specificOrder(3),
+            new StorageItem(ItemID.UNCUT_DIAMOND).checkName("Diamond").specificOrder(4),
+            new StorageItem(ItemID.UNCUT_DRAGONSTONE).checkName("Dragonstone").specificOrder(5)
         );
 
         this.items = new TriggerItem[]{
@@ -91,6 +93,23 @@ public class U_GemBag extends ChargedItemWithStorage {
 
             // Pick up.
             new OnItemPickup(storage.getStoreableItems()).isByOne().onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
+
+            // Telegrab.
+            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+                "Uncut sapphire"
+            ).addToStorage(ItemID.UNCUT_SAPPHIRE, 1),
+            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+                "Uncut emerald"
+            ).addToStorage(ItemID.UNCUT_EMERALD, 1),
+            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+                "Uncut ruby"
+            ).addToStorage(ItemID.UNCUT_RUBY, 1),
+            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+                "Uncut diamond"
+            ).addToStorage(ItemID.UNCUT_DIAMOND, 1),
+            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+                "Uncut dragonstone"
+            ).addToStorage(ItemID.UNCUT_DRAGONSTONE, 1),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

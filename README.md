@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.9
+# Item Charges Improved - v0.5.10
 
 Show charges of various items that are in inventory or equipped
 
@@ -88,11 +88,13 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Crystal saw
 - [x] Fish barrel
 - [x] Fungicide spray
+- [x] Fur pouches
 - [x] Gem bag
 - [x] Gricoller's can
 - [x] Herb sack
 - [x] Jar generator
 - [x] Log basket
+- [x] Meat pouches
 - [x] Ogre bellows
 - [x] Seed box
 - [x] Soul bearer

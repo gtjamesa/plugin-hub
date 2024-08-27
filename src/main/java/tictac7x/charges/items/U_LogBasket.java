@@ -25,8 +25,8 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static tictac7x.charges.store.ItemContainerType.BANK;
-import static tictac7x.charges.store.ItemContainerType.INVENTORY;
+import static tictac7x.charges.store.ItemContainerId.BANK;
+import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_LogBasket extends ChargedItemWithStorage {
     private Optional<StorageItem> lastLogs = Optional.empty();

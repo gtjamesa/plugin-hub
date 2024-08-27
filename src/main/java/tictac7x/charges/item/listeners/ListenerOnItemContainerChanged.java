@@ -1,10 +1,8 @@
 package tictac7x.charges.item.listeners;
 
 import net.runelite.api.Client;
-import net.runelite.api.InventoryID;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
-import net.runelite.api.ItemID;
 import net.runelite.api.events.ItemContainerChanged;
 import net.runelite.client.Notifier;
 import net.runelite.client.game.ItemManager;
@@ -16,10 +14,7 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
-import tictac7x.charges.store.ItemContainerType;
 import tictac7x.charges.store.AdvancedMenuEntry;
-
-import java.util.Optional;
 
 public class ListenerOnItemContainerChanged extends ListenerBase {
     public ListenerOnItemContainerChanged(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
@@ -53,7 +48,7 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
             // Fill storage from inventory single item.
             if (trigger.fillStorageFromInventorySingle.isPresent()) {
                 checkLooper: for (final AdvancedMenuEntry entry : chargedItem.store.menuOptionsClicked) {
-                    for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage()) {
+                    for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage().values()) {
                         if (entry.target.toLowerCase().contains(storageItem.checkName.isPresent() ? storageItem.checkName.get().toLowerCase() : itemManager.getItemComposition(storageItem.itemId).getName().toLowerCase()) && chargedItem.store.getPreviousInventoryItemQuantity(storageItem.getId()) > 0) {
                             ((ChargedItemWithStorage) chargedItem).storage.fillFromInventoryIndividually(storageItem.getId());
                             triggerUsed = true;
@@ -66,6 +61,23 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
             // Empty storage to inventory.
             if (trigger.emptyStorageToInventory.isPresent()) {
                 ((ChargedItemWithStorage) chargedItem).storage.emptyToInventory();
+                triggerUsed = true;
+            }
+
+            // Empty storage to inventory.
+            if (trigger.emptyStorageToInventoryReversed.isPresent()) {
+                ((ChargedItemWithStorage) chargedItem).storage.emptyToInventoryReversed();
+                triggerUsed = true;
+            }
+
+            // Update storage directly from item container.
+            if (trigger.updateStorage.isPresent()) {
+                ((ChargedItemWithStorage) chargedItem).storage.updateFromItemContainer(event.getItemContainer());
+                triggerUsed = true;
+            }
+
+            if (trigger.onItemContainerDifference.isPresent()) {
+                trigger.onItemContainerDifference.get().accept(chargedItem.store.getInventoryItemsDifference());
                 triggerUsed = true;
             }
 
@@ -84,15 +96,20 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
         // Item container type check.
         final ItemContainer itemContainer = event.getItemContainer();
         if (
-            itemContainer == null ||
-            trigger.itemContainerType == ItemContainerType.INVENTORY && itemContainer.getId() != InventoryID.INVENTORY.getId() ||
-            trigger.itemContainerType == ItemContainerType.BANK && itemContainer.getId() != InventoryID.BANK.getId()
-        ) {
+            itemContainer == null || itemContainer.getId() != trigger.itemContainerId) {
             return false;
         }
 
         // Fill storage from inventory check.
         if (trigger.fillStorageFromInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
+            return false;
+        }
+
+        // Additional chat message check.
+        if (trigger.hasChatMessage.isPresent() && (
+            !chargedItem.store.getLastChatMessage().isPresent() ||
+            !chargedItem.store.getLastChatMessage().get().equals(trigger.hasChatMessage.get())
+        )) {
             return false;
         }
 

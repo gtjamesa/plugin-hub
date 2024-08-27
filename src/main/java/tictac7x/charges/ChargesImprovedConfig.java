@@ -60,6 +60,7 @@ public interface ChargesImprovedConfig extends Config {
     String forestry_kit = "forestry_kit";
     String fremennik_sea_boots = "fremennik_sea_boots";
     String fungicide_spray = "fungicide_spray";
+    String fur_pouch = "fur_pouch";
     String gem_bag = "gem_bag";
     String gricollers_can = "gricollers_can";
     String herb_sack = "herb_sack";
@@ -69,6 +70,8 @@ public interface ChargesImprovedConfig extends Config {
     String kharedsts_memoirs = "kharedsts_memoirs";
     String log_basket = "log_basket";
     String magic_cape = "magic_cape";
+    String meat_pouch = "meat_pouch";
+    String huntsmans_kit = "huntsmans_kit";
     String necklace_of_passage = "necklage_of_passage";
     String ogre_bellows = "ogre_bellows";
     String pharaohs_sceptre = "pharaohs_sceptre";
@@ -217,6 +220,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean showInfoboxes() { return true; }
 
         @ConfigItem(
+            keyName = huntsmans_kit + infobox,
+            name = "Huntsman's kit",
+            description = "",
+            section = infoboxes
+        ) default boolean huntsmansKitInfobox() { return true; }
+
+        @ConfigItem(
             keyName = bow_of_faerdhinen + infobox,
             name = "Bow of faerdhinen",
             description = "",
@@ -229,6 +239,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean venatorBowInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = meat_pouch + infobox,
+            name = "Meat pouch",
+            description = "",
+            section = infoboxes
+        ) default boolean meatPouchInfobox() { return true; }
 
         @ConfigItem(
             keyName = western_banner + infobox,
@@ -292,6 +309,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean forestryKitInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = fur_pouch + infobox,
+            name = "Fur pouch",
+            description = "",
+            section = infoboxes
+        ) default boolean furPouchInfobox() { return true; }
 
         @ConfigItem(
             keyName = magic_cape + infobox,
@@ -743,6 +767,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean showOverlays() { return true; }
 
         @ConfigItem(
+            keyName = huntsmans_kit + overlay,
+            name = "Huntsman's kit",
+            description = "",
+            section = overlays
+        ) default boolean huntsmansKitOverlay() { return true; }
+
+        @ConfigItem(
             keyName = arclight + overlay,
             name = "Arclight",
             description = "",
@@ -918,6 +949,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean faladorShieldOverlay() { return true; }
 
         @ConfigItem(
+            keyName = fur_pouch + overlay,
+            name = "Fur pouch",
+            description = "",
+            section = overlays
+        ) default boolean furPouchOverlay() { return true; }
+
+        @ConfigItem(
             keyName = escape_crystal + overlay,
             name = "Escape crystal",
             description = "",
@@ -1021,6 +1059,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean magicCapeOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = meat_pouch + overlay,
+            name = "Meat pouch",
+            description = "",
+            section = overlays
+        ) default boolean meatPouchOverlay() { return true; }
 
         @ConfigItem(
             keyName = necklace_of_passage + overlay,
@@ -1531,6 +1576,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getLogBasketCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
+            keyName = huntsmans_kit + "_storage",
+            name = huntsmans_kit + "_storage",
+            description = huntsmans_kit + "_storage",
+            section = debug
+        ) default String getHuntsmansKitStorage() { return ""; }
+
+        @ConfigItem(
             keyName = log_basket + "_storage",
             name = log_basket + "_storage",
             description = log_basket + "_storage",
@@ -1552,11 +1604,11 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getMagicCapeCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = gem_bag,
-            name = gem_bag,
-            description = gem_bag,
+            keyName = meat_pouch + "_storage",
+            name = meat_pouch + "_storage",
+            description = meat_pouch + "_storage",
             section = debug
-        ) default int getGemBagCharges() { return Charges.UNKNOWN; }
+        ) default String getMeatPouchStorageCharges() { return ""; }
 
         @ConfigItem(
             keyName = gem_bag + "_storage",
@@ -1683,6 +1735,13 @@ public interface ChargesImprovedConfig extends Config {
             description = fremennik_sea_boots,
             section = debug
         ) default int getFremennikSeaBootsCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = fur_pouch + "_storage",
+            name = fur_pouch + "_storage",
+            description = fur_pouch + "_storage",
+            section = debug
+        ) default String getFurPouchStorageCharges() { return ""; }
 
         @ConfigItem(
             keyName = jar_generator,
