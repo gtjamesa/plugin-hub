@@ -55,7 +55,7 @@ public class Store {
     }
 
     public void setLastChatMessage(final ChatMessage event) {
-        if (event.getType() == ChatMessageType.GAMEMESSAGE || event.getType() == ChatMessageType.DIALOG) {
+        if (event.getType() == ChatMessageType.GAMEMESSAGE || event.getType() == ChatMessageType.DIALOG || event.getType() == ChatMessageType.SPAM) {
             lastChatMessage = Optional.of(ChargesImprovedPlugin.getCleanChatMessage(event));
         }
     }
@@ -363,7 +363,7 @@ public class Store {
         return false;
     }
 
-    public List<ItemWithQuantity> getInventoryItemsDifference() {
+    public ItemsDifference getInventoryItemsDifference() {
         final List<ItemWithQuantity> itemsDifference = new ArrayList<>();
 
         if (inventory.isPresent()) {
@@ -388,12 +388,7 @@ public class Store {
             }
         }
 
-        System.out.println("ITEMS DIFFERENCE");
-        for (final ItemWithQuantity i : itemsDifference) {
-            System.out.println(i.itemId + " : " + i.quantity);
-        }
-
-        return itemsDifference;
+        return new ItemsDifference(itemsDifference);
     }
 
     private boolean isInvalidItem(final Item item) {

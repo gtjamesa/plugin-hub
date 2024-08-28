@@ -12,6 +12,8 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.store.AdvancedMenuEntry;
 
+import java.util.regex.Matcher;
+
 public abstract class ListenerBase {
     protected final Client client;
     protected final ItemManager itemManager;
@@ -66,6 +68,12 @@ public abstract class ListenerBase {
             triggerUsed = true;
         }
 
+        // Add to storage.
+        if (trigger.removeFromStorage.isPresent() && (chargedItem instanceof ChargedItemWithStorage)) {
+            ((ChargedItemWithStorage) chargedItem).storage.remove(trigger.removeFromStorage.get().itemId, trigger.removeFromStorage.get().quantity);
+            triggerUsed = true;
+        }
+
         // Consumer.
         if (trigger.consumer.isPresent()) {
             trigger.consumer.get().run();
@@ -88,10 +96,6 @@ public abstract class ListenerBase {
         if (trigger.notificationCustom.isPresent()) {
             notifier.notify(trigger.notificationCustom.get());
             triggerUsed = true;
-        }
-
-        if (trigger.onItemContainerDifference.isPresent()) {
-
         }
 
         return triggerUsed;
@@ -186,6 +190,19 @@ public abstract class ListenerBase {
         // At bank check.
         if (trigger.atBank.isPresent() && (client.getWidget(12, 1) == null) && client.getWidget(192, 0) == null) {
             return false;
+        }
+
+        // Chat message check.
+        if (trigger.hasChatMessage.isPresent()) {
+            if (!chargedItem.store.getLastChatMessage().isPresent()) {
+                return false;
+            }
+
+            final Matcher matcher = trigger.hasChatMessage.get().matcher(chargedItem.store.getLastChatMessage().get());
+            if (!matcher.find()) {
+                System.out.println(trigger.hasChatMessage.get() + " not matching with " + chargedItem.store.getLastChatMessage().get());
+                return false;
+            }
         }
 
         if (trigger.emptyStorageToInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {

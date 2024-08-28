@@ -2,10 +2,12 @@ package tictac7x.charges.item.triggers;
 
 import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.ItemWithQuantity;
+import tictac7x.charges.store.ItemsDifference;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 
 public abstract class TriggerBase {
     // Checks.
@@ -18,6 +20,7 @@ public abstract class TriggerBase {
     public Optional<StorageItem[]> onUseChargedItemOnStorageItem = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
     public Optional<Boolean> atBank = Optional.empty();
+    public Optional<Pattern> hasChatMessage = Optional.empty();
     public boolean multiTrigger = false;
 
     // Actions.
@@ -33,13 +36,14 @@ public abstract class TriggerBase {
     public Optional<Boolean> emptyStorageToInventory = Optional.empty();
     public Optional<Boolean> pickUpToStorage = Optional.empty();
     public Optional<int[]> addToStorage = Optional.empty();
+    public Optional<ItemWithQuantity> removeFromStorage = Optional.empty();
 
     // Activity.
     public Optional<Boolean> isActivated = Optional.empty();
     public Optional<Boolean> activate = Optional.empty();
     public Optional<Boolean> deactivate = Optional.empty();
 
-    public Optional<Consumer<List<ItemWithQuantity>>> onItemContainerDifference = Optional.empty();
+    public Optional<Consumer<ItemsDifference>> onItemContainerDifference = Optional.empty();
 
     public TriggerBase setFixedCharges(final int charges) {
         this.fixedCharges = Optional.of(charges);
@@ -156,8 +160,18 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onItemContainerDifference(Consumer<List<ItemWithQuantity>> consumer) {
+    public TriggerBase onItemContainerDifference(Consumer<ItemsDifference> consumer) {
         this.onItemContainerDifference = Optional.of(consumer);
+        return this;
+    }
+
+    public TriggerBase removeFromStorage(final int itemId, final int quantity) {
+        this.removeFromStorage = Optional.of(new ItemWithQuantity(itemId, quantity));
+        return this;
+    }
+
+    public TriggerBase hasChatMessage(final String message) {
+        this.hasChatMessage = Optional.of(Pattern.compile(message));
         return this;
     }
 }

@@ -47,6 +47,14 @@ public class ListenerOnXpDrop extends ListenerBase {
             return false;
         }
 
+        // Amount check.
+        if (trigger.amount.isPresent() && (
+            !chargedItem.store.getSkillXp(trigger.skill).isPresent() ||
+            trigger.amount.get() != (event.getXp() - chargedItem.store.getSkillXp(trigger.skill).get()))
+        ) {
+            return false;
+        }
+
         return super.isValidTrigger(trigger);
     }
 }

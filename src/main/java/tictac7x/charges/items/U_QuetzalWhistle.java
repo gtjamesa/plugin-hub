@@ -62,7 +62,7 @@ public class U_QuetzalWhistle extends ChargedItem {
 
             // Partially charged.
             new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("Soar Leader Pitri|There you go. Some whistle charges for you!").onItemContainerDifference(itemsDifference -> {
-                for (final ItemWithQuantity item : itemsDifference) {
+                for (final ItemWithQuantity item : itemsDifference.items) {
                     switch (item.itemId) {
                         case ItemID.QUETZAL_FEED:
                         case ItemID.RAW_WILD_KEBBIT:
@@ -73,6 +73,7 @@ public class U_QuetzalWhistle extends ChargedItem {
                         case ItemID.RAW_GRAAHK:
                         case ItemID.RAW_KYATT:
                         case ItemID.RAW_PYRE_FOX:
+                            System.out.println("YAS");
                             increaseCharges(item.quantity * 2);
                             break;
                         case ItemID.RAW_DASHING_KEBBIT:

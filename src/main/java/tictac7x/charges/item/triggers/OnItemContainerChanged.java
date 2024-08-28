@@ -10,7 +10,6 @@ public class OnItemContainerChanged extends TriggerBase {
     public Optional<Boolean> fillStorageFromInventorySingle = Optional.empty();
     public Optional<Boolean> emptyStorageToInventory = Optional.empty();
     public Optional<Boolean> emptyStorageToInventoryReversed = Optional.empty();
-    public Optional<String> hasChatMessage = Optional.empty();
 
     public OnItemContainerChanged(final int itemContainerId) {
         this.itemContainerId = itemContainerId;
@@ -38,11 +37,6 @@ public class OnItemContainerChanged extends TriggerBase {
 
     public OnItemContainerChanged updateStorage() {
         this.updateStorage = Optional.of(true);
-        return this;
-    }
-
-    public OnItemContainerChanged hasChatMessage(final String message) {
-        this.hasChatMessage = Optional.of(message);
         return this;
     }
 }

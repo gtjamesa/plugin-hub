@@ -16,6 +16,8 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.AdvancedMenuEntry;
 
+import java.util.regex.Matcher;
+
 public class ListenerOnItemContainerChanged extends ListenerBase {
     public ListenerOnItemContainerChanged(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, itemManager, chargedItem, notifier, config);
@@ -102,14 +104,6 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
 
         // Fill storage from inventory check.
         if (trigger.fillStorageFromInventory.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
-            return false;
-        }
-
-        // Additional chat message check.
-        if (trigger.hasChatMessage.isPresent() && (
-            !chargedItem.store.getLastChatMessage().isPresent() ||
-            !chargedItem.store.getLastChatMessage().get().equals(trigger.hasChatMessage.get())
-        )) {
             return false;
         }
 

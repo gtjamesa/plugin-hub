@@ -465,11 +465,13 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
 		store.onStatChanged(event);
 
-//		System.out.println("STAT CHANGED | " +
-//			event.getSkill().getName() +
-//			", level: " + event.getLevel() +
-//			", xp: " + event.getXp()
-//		);
+		System.out.println("STAT CHANGED | " +
+			event.getSkill().getName() +
+			", level: " + event.getLevel() +
+			", xp: " + event.getXp()
+		);
+
+		System.out.println(chargedItems[0].store.getLastChatMessage());
 	}
 
 	@Subscribe
