@@ -116,6 +116,7 @@ import java.util.Optional;
 		"fur",
 		"meat",
 		"pouch",
+		"pursuit"
 	}
 )
 
@@ -125,6 +126,8 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
 		"<colHIGHLIGHT>* Fur pouches added.<br>" +
 		"<colHIGHLIGHT>* Meat pouches added.<br>" +
+		"<colHIGHLIGHT>* Hunter's kit added.<br>" +
+		"<colHIGHLIGHT>* Ring of putsuit added.<br>" +
 		"<colHIGHLIGHT>* Telegrabbing gems updates gem back storage."
 	;
 
@@ -246,6 +249,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new J_RingOfCelestial(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfElements(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfExplorer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_RingOfPursuit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfRecoil(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfShadows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfSlayer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -465,13 +469,11 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
 		store.onStatChanged(event);
 
-		System.out.println("STAT CHANGED | " +
-			event.getSkill().getName() +
-			", level: " + event.getLevel() +
-			", xp: " + event.getXp()
-		);
-
-		System.out.println(chargedItems[0].store.getLastChatMessage());
+//		System.out.println("STAT CHANGED | " +
+//			event.getSkill().getName() +
+//			", level: " + event.getLevel() +
+//			", xp: " + event.getXp()
+//		);
 	}
 
 	@Subscribe

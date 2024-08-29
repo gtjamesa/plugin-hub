@@ -78,6 +78,7 @@ public interface ChargesImprovedConfig extends Config {
     String phoenix_necklace = "phoenix_necklace";
     String plank_sack = "plank_sack";
     String quetzal_whistle = "quetzal_whistle";
+    String ring_of_pursuit = "ring_of_pursuit";
     String ring_of_recoil = "ring_of_recoil";
     String ring_of_shadows = "ring_of_shadows";
     String ring_of_suffering = "ring_of_suffering";
@@ -218,6 +219,13 @@ public interface ChargesImprovedConfig extends Config {
             section = infoboxes,
             position = -100
         ) default boolean showInfoboxes() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_pursuit + infobox,
+            name = "Ring of pursuit",
+            description = "",
+            section = infoboxes
+        ) default boolean ringOfPursuitInfobox() { return true; }
 
         @ConfigItem(
             keyName = huntsmans_kit + infobox,
@@ -765,6 +773,13 @@ public interface ChargesImprovedConfig extends Config {
             section = overlays,
             position = -100
         ) default boolean showOverlays() { return true; }
+
+        @ConfigItem(
+            keyName = ring_of_pursuit + overlay,
+            name = "Ring of pursuit",
+            description = "",
+            section = overlays
+        ) default boolean ringOfPursuitOverlay() { return true; }
 
         @ConfigItem(
             keyName = huntsmans_kit + overlay,
@@ -1336,6 +1351,13 @@ public interface ChargesImprovedConfig extends Config {
             section = debug,
             position = 4
         ) default boolean showDebugIds() { return false; }
+
+        @ConfigItem(
+                keyName = ring_of_pursuit,
+                name = ring_of_pursuit,
+                description = ring_of_pursuit,
+                section = debug
+        ) default int ringOfPursuitCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = arclight,

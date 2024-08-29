@@ -73,6 +73,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - [x] Ring of celestial
 - [x] Ring of elements
 - [x] Ring of explorer
+- [x] Ring of pursuit
 - [x] Ring of recoil
 - [x] Ring of shadows
 - [x] Ring of slayer
