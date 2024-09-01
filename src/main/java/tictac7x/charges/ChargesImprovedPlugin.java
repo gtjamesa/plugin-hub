@@ -547,47 +547,17 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	private void configMigration() {
 		// Migrate old hidden infoboxes multi-select to checkboxes.
-		final Optional<String> hiddenInfoboxes = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "infoboxes_hidden"));
-		if (hiddenInfoboxes.isPresent()) {
-			final String[] hiddenInfoboxesKeys = Arrays.stream(hiddenInfoboxes.get().replace("[", "").replace("]", "").split(",")).map(a -> a.replaceAll("\"", "")).toArray(String[]::new);
+		final Optional<String> necklaceOfPassageOverlay = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_overlay"));
+		final Optional<String> necklaceOfPassageInfobox = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_infobox"));
 
-			for (String hiddenInfoboxKey : hiddenInfoboxesKeys) {
-				switch (hiddenInfoboxKey) {
-					case "BONE_CRUSHER":
-						hiddenInfoboxKey = "bonecrusher";
-						break;
-					case "RING_OF_ELEMENTS":
-						hiddenInfoboxKey = "ring_of_the_elements";
-						break;
-				}
-
-				hiddenInfoboxKey = hiddenInfoboxKey.toLowerCase() + "_infobox";
-				configManager.setConfiguration(ChargesImprovedConfig.group, hiddenInfoboxKey, false);
-			}
-
-			configManager.unsetConfiguration(ChargesImprovedConfig.group, "infoboxes_hidden");
+		if (necklaceOfPassageOverlay.isPresent()) {
+			configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.necklace_of_passage + ChargesImprovedConfig.overlay, necklaceOfPassageOverlay.get().equals("true"));
+			configManager.unsetConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_overlay");
 		}
 
-		// Migrate old hidden overlays multi-select to checkboxes.
-		final Optional<String> hiddenOverlays = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "item_overlays_hidden"));
-		if (hiddenOverlays.isPresent()) {
-			final String[] hiddenOverlaysKeys = Arrays.stream(hiddenOverlays.get().replace("[", "").replace("]", "").split(",")).map(a -> a.replaceAll("\"", "")).toArray(String[]::new);
-
-			for (String hiddenOverlayKey : hiddenOverlaysKeys) {
-				switch (hiddenOverlayKey) {
-					case "BONE_CRUSHER":
-						hiddenOverlayKey = "bonecrusher";
-						break;
-					case "RING_OF_ELEMENTS":
-						hiddenOverlayKey = "ring_of_the_elements";
-						break;
-				}
-
-				hiddenOverlayKey = hiddenOverlayKey.toLowerCase() + "_overlay";
-				configManager.setConfiguration(ChargesImprovedConfig.group, hiddenOverlayKey, false);
-			}
-
-			configManager.unsetConfiguration(ChargesImprovedConfig.group, "item_overlays_hidden");
+		if (necklaceOfPassageInfobox.isPresent()) {
+			configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.necklace_of_passage + ChargesImprovedConfig.infobox, necklaceOfPassageInfobox.get().equals("true"));
+			configManager.unsetConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_infobox");
 		}
 	}
 

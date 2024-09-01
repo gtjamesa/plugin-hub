@@ -72,7 +72,7 @@ public interface ChargesImprovedConfig extends Config {
     String magic_cape = "magic_cape";
     String meat_pouch = "meat_pouch";
     String huntsmans_kit = "huntsmans_kit";
-    String necklace_of_passage = "necklage_of_passage";
+    String necklace_of_passage = "necklace_of_passage";
     String ogre_bellows = "ogre_bellows";
     String pharaohs_sceptre = "pharaohs_sceptre";
     String phoenix_necklace = "phoenix_necklace";
