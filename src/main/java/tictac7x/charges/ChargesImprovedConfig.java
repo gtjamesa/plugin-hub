@@ -116,43 +116,67 @@ public interface ChargesImprovedConfig extends Config {
     ) String general = "general";
 
         @ConfigItem(
+            keyName = "show_infoboxes",
+            name = "Show infoboxes",
+            description = "Show or hide all charges infoboxes simultaneously.",
+            section = general,
+            position = 1
+        ) default boolean showInfoboxes() { return true; }
+
+        @ConfigItem(
+            keyName = "show_overlays",
+            name = "Show overlays",
+            description = "Show or hide all charges overlays on top of items simultaneously.",
+            section = general,
+            position = 2
+        ) default boolean showOverlays() { return true; }
+
+        @ConfigItem(
             keyName = "bank_overlays",
-            name = "Show in bank",
+            name = "Show overlays in bank",
             description = "Show charges of the items in bank",
-            position = 1,
-            section = general
+            section = general,
+            position = 3
         ) default boolean showBankOverlays() { return true; }
+
+        @ConfigItem(
+            keyName = "hide_outside_bank_overlays",
+            name = "Show overlays only while in bank",
+            description = "Shows item charges overlays onmly when in bank",
+            section = general,
+            position = 4
+        ) default boolean showOverlaysOnlyInBank() { return false; }
 
         @ConfigItem(
             keyName = "storage_tooltips",
             name = "Show storage tooltips",
             description = "Show tooltips for items with storage",
-            position = 2,
-            section = general
+            section = general,
+            position = 5
         ) default boolean showStorageTooltips() { return true; }
 
         @ConfigItem(
             keyName = "menu_replacements",
             name = "Unify menu entries",
             description = "Replace obscure menu entries like \"Reminisce\" and \"Divine\" with \"Teleport\" and \"Check\" and show detailed herb patches names.",
-            position = 3,
-            section = general
+            section = general,
+            position = 6
         ) default boolean useCommonMenuEntries() { return true; }
 
         @ConfigItem(
             keyName = "hide_destroy",
             name = "Hide destroy menu entries",
             description = "Hide destroy menu entry from items that make no sense to destroy",
-            position = 4,
-            section = general
+            section = general,
+            position = 7
         ) default boolean hideDestroy() { return true; }
 
         @ConfigItem(
             keyName = "show_unlimited_charges",
             name = "Show unlimited charges",
             description = "Show infinity symbol for items with unlimited charges",
-            position = 5,
-            section = general
+            section = general,
+            position = 8
         ) default boolean showUnlimited() { return true; }
 
     @ConfigSection(
@@ -200,7 +224,8 @@ public interface ChargesImprovedConfig extends Config {
     @ConfigSection(
         name = "Escape Crystal",
         description = "Escape Crystal",
-        position = 3
+        position = 3,
+        closedByDefault = true
     ) String escape_crystal_section = "escape_crystal_section";
 
         @ConfigItem(
@@ -217,14 +242,6 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
-
-        @ConfigItem(
-            keyName = "show_infoboxes",
-            name = "Show infoboxes",
-            description = "Show or hide all charges infoboxes simultaneously.",
-            section = infoboxes,
-            position = -100
-        ) default boolean showInfoboxes() { return true; }
 
         @ConfigItem(
             keyName = ruby_harvest_mix + infobox,
@@ -813,14 +830,6 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String overlays = "overlays";
-
-        @ConfigItem(
-            keyName = "show_overlays",
-            name = "Show overlays",
-            description = "Show or hide all charges overlays on top of items simultaneously.",
-            section = overlays,
-            position = -100
-        ) default boolean showOverlays() { return true; }
 
         @ConfigItem(
             keyName = ruby_harvest_mix + overlay,

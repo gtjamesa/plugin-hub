@@ -87,7 +87,10 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
             !config.showUnlimited() && triggerItem.get().fixedCharges.isPresent() && triggerItem.get().fixedCharges.get().equals(Charges.UNLIMITED) ||
 
             // Hide overlays in bank.
-            !config.showBankOverlays() && isBankWidget(widgetItem)
+            !config.showBankOverlays() && isBankWidget(widgetItem) ||
+
+            // Show overlays only in bank.
+            config.showOverlaysOnlyInBank() && client.getWidget(12, 1) == null
         ) return;
 
         // Get default charges from charged item.
