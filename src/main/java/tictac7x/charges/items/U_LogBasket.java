@@ -95,6 +95,9 @@ public class U_LogBasket extends ChargedItemWithStorage {
                 infernalQuantityTracker = getQuantity();
             }).onItemClick(),
 
+            // Miscellania support.
+            new OnChatMessage("You get some maple logs and give them to Lumberjack Leif.").onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).addToStorage(ItemID.MAPLE_LOGS, 0),
+
             // Chop.
             new OnChatMessage("You get some (?<logs>.+).").matcherConsumer(m -> {
                 lastLogs = getStorageItemFromName(m.group("logs"));
