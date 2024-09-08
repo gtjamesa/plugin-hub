@@ -200,7 +200,6 @@ public abstract class ListenerBase {
 
             final Matcher matcher = trigger.hasChatMessage.get().matcher(chargedItem.store.getLastChatMessage().get());
             if (!matcher.find()) {
-                System.out.println(trigger.hasChatMessage.get() + " not matching with " + chargedItem.store.getLastChatMessage().get());
                 return false;
             }
         }

@@ -126,9 +126,9 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
 		"<colHIGHLIGHT>* Fur pouches added.<br>" +
 		"<colHIGHLIGHT>* Meat pouches added.<br>" +
-		"<colHIGHLIGHT>* Hunter's kit added.<br>" +
-		"<colHIGHLIGHT>* Ring of putsuit added.<br>" +
-		"<colHIGHLIGHT>* Telegrabbing gems updates gem back storage."
+		"<colHIGHLIGHT>* Huntsman's kit added.<br>" +
+		"<colHIGHLIGHT>* Ring of pursuit added.<br>" +
+		"<colHIGHLIGHT>* Telegrabbing gems updates gem bag storage."
 	;
 
 	private final int VARBIT_MINUTES = 8354;

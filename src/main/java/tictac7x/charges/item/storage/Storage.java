@@ -170,7 +170,7 @@ public class Storage {
     public void emptyToInventory() {
         if (!store.inventory.isPresent()) return;
 
-        int inventoryEmptySlots = store.getInventoryPreviouslyEmptySlots();
+        int inventoryEmptySlots = store.getInventoryEmptySlots();
 
         for (final StorageItem storageItem : storage.values()) {
             // Empty storage until 0 inventory slots left.

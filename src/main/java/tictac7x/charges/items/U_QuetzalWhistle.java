@@ -73,7 +73,6 @@ public class U_QuetzalWhistle extends ChargedItem {
                         case ItemID.RAW_GRAAHK:
                         case ItemID.RAW_KYATT:
                         case ItemID.RAW_PYRE_FOX:
-                            System.out.println("YAS");
                             increaseCharges(item.quantity * 2);
                             break;
                         case ItemID.RAW_DASHING_KEBBIT:

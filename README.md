@@ -12,94 +12,95 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Armor sets
 
-- [x] Barrows gear
-- [x] Crystal armor
+- Barrows gear
+- Crystal armor
 
 ### Weapons
 
-- [x] Arclight
-- [x] Bow of faerdhinen
-- [x] Bryophyta's staff
-- [x] Crystal bow
-- [x] Crystal halberd
-- [x] Enchanted lyre
-- [x] Iban's staff
-- [x] Pharaoh's sceptre
-- [x] Sanguinesti staff
-- [x] Skull sceptre
-- [x] Slayer staff (e)
-- [x] Trident of the seas / swamp
-- [x] Venator bow
-- [x] Warped sceptre
-- [x] Western banner
+- Arclight
+- Bow of faerdhinen
+- Bryophyta's staff
+- Crystal bow
+- Crystal halberd
+- Enchanted lyre
+- Iban's staff
+- Pharaoh's sceptre
+- Sanguinesti staff
+- Skull sceptre
+- Slayer staff (e)
+- Trident of the seas / swamp
+- Venator bow
+- Warped sceptre
+- Western banner
 
 ### Shields
 
-- [x] Chronicle
-- [x] Crystal shield
-- [x] Dragonfire shield / ward
-- [x] Falador shield
-- [x] Kharedst's memoirs / Book of the dead
-- [x] Tome of fire
-- [x] Tome of water
+- Chronicle
+- Crystal shield
+- Dragonfire shield / ward
+- Falador shield
+- Kharedst's memoirs / Book of the dead
+- Tome of fire
+- Tome of water
 
 ### Boots
-- [x] Fremennik sea boots
+- Fremennik sea boots
 
 ### Helms
 
-- [x] Circlet of water
-- [x] Kandarin headgear
+- Circlet of water
+- Kandarin headgear
 
 ### Capes
 
-- [x] Ardougle cloak
-- [x] Coffin
-- [x] Forestry kit
-- [x] Magic cape
+- Ardougle cloak
+- Coffin
+- Forestry kit
+- Magic cape
 
 ### Jewellery
 
-- [x] Bracelet of clay
-- [x] Bracelet of expeditious
-- [x] Bracelet of flamtaer
-- [x] Bracelet of slaughter
-- [x] Camulet
-- [x] Desert amulet
-- [x] Escape crystal
-- [x] Necklace of passage
-- [x] Necklace of phoenix
-- [x] Necklace of dodgy
-- [x] Ring of celestial
-- [x] Ring of elements
-- [x] Ring of explorer
-- [x] Ring of pursuit
-- [x] Ring of recoil
-- [x] Ring of shadows
-- [x] Ring of slayer
-- [x] Ring of suffering
-- [x] Xeric's talisman
+- Bracelet of clay
+- Bracelet of expeditious
+- Bracelet of flamtaer
+- Bracelet of slaughter
+- Camulet
+- Desert amulet
+- Escape crystal
+- Necklace of passage
+- Necklace of phoenix
+- Necklace of dodgy
+- Ring of celestial
+- Ring of elements
+- Ring of explorer
+- Ring of pursuit
+- Ring of recoil
+- Ring of shadows
+- Ring of slayer
+- Ring of suffering
+- Xeric's talisman
 
 ### Utilities
 
-- [x] Ash sanctifier
-- [x] Bonecrusher
-- [x] Bottomless compost bucket
-- [x] Coal bag
-- [x] Crystal saw
-- [x] Fish barrel
-- [x] Fungicide spray
-- [x] Fur pouches
-- [x] Gem bag
-- [x] Gricoller's can
-- [x] Herb sack
-- [x] Jar generator
-- [x] Log basket
-- [x] Meat pouches
-- [x] Ogre bellows
-- [x] Seed box
-- [x] Soul bearer
-- [x] Strange old lockpick
-- [x] Tackle box
-- [x] Teleport crystal
-- [x] Waterskins
+- Ash sanctifier
+- Bonecrusher
+- Bottomless compost bucket
+- Coal bag
+- Crystal saw
+- Fish barrel
+- Fungicide spray
+- Fur pouches
+- Gem bag
+- Gricoller's can
+- Herb sack
+- Huntsman's kit
+- Jar generator
+- Log basket
+- Meat pouches
+- Ogre bellows
+- Seed box
+- Soul bearer
+- Strange old lockpick
+- Tackle box
+- Teleport crystal
+- Waterskins
