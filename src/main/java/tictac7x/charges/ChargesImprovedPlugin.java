@@ -128,6 +128,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		"<colHIGHLIGHT>* Meat pouches added.<br>" +
 		"<colHIGHLIGHT>* Huntsman's kit added.<br>" +
 		"<colHIGHLIGHT>* Ring of pursuit added.<br>" +
+		"<colHIGHLIGHT>* Hunter mixes added.<br>" +
 		"<colHIGHLIGHT>* Telegrabbing gems updates gem bag storage."
 	;
 
@@ -280,6 +281,15 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new U_TackleBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_TeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_Waterskin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+
+			// Foods
+			new F_BlackWarlockMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new F_MoonlightMothMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new F_RubyHarvestMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new F_SapphireGlacialisMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new F_SnowyKnightMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new F_SunlightMothMix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+
 
 			// Crystal armor set
 			new A_CrystalBody(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),

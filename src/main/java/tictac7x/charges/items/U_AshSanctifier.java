@@ -40,6 +40,7 @@ public class U_AshSanctifier extends ChargedItemWithStatus {
             // Check.
             new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamicallyCharges().deactivate(),
             new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?. It is active").setDynamicallyCharges().activate(),
+            new OnChatMessage("(The|Your) ash sanctifier has (?<charges>.+) charges?( left)?.").setDynamicallyCharges(),
 
             // Activate.
             new OnChatMessage("The ash sanctifier is active and ready to scatter ashes.").activate(),

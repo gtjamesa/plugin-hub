@@ -45,6 +45,7 @@ public class U_BoneCrusher extends ChargedItemWithStatus {
             new OnChatMessage("The bonecrusher( necklace)? has one charge.").setFixedCharges(1),
             new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It is active").setDynamicallyCharges().activate(),
             new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?. It has been deactivated").setDynamicallyCharges().deactivate(),
+            new OnChatMessage("(The|Your) bonecrusher( necklace)? has (?<charges>.+) charges?( left)?.").setDynamicallyCharges(),
             // Uncharge.
             new OnChatMessage("You remove all the charges from the bonecrusher( necklace)?.").setFixedCharges(0),
             new OnChatMessage("The bonecrusher( necklace)? has (?<charges>.+) charges? left.").setDynamicallyCharges(),

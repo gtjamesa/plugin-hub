@@ -102,6 +102,12 @@ public interface ChargesImprovedConfig extends Config {
     String waterskin = "waterskin";
     String western_banner = "western_banner";
     String xerics_talisman = "xerics_talisman";
+    String ruby_harvest_mix = "ruby_harvest_mix";
+    String sapphire_glacialis_mix = "sapphire_glacialis_mix";
+    String snowy_knight_mix = "snowy_knight_mix";
+    String black_warlock_mix = "black_warlock_mix";
+    String sunlight_moth_mix = "sunlight_moth_mix";
+    String moonlight_moth_mix = "moonlight_moth_mix";
 
     @ConfigSection(
         name = "General",
@@ -219,6 +225,48 @@ public interface ChargesImprovedConfig extends Config {
             section = infoboxes,
             position = -100
         ) default boolean showInfoboxes() { return true; }
+
+        @ConfigItem(
+            keyName = ruby_harvest_mix + infobox,
+            name = "Ruby harvest mix",
+            description = "",
+            section = infoboxes
+        ) default boolean rubyHarvestMixInfobox() { return false; }
+
+        @ConfigItem(
+            keyName = sapphire_glacialis_mix + infobox,
+            name = "Sapphire glacialis mix",
+            description = "",
+            section = infoboxes
+        ) default boolean sapphireGlacialisMixInfobox() { return false; }
+
+        @ConfigItem(
+            keyName = snowy_knight_mix + infobox,
+            name = "Snowy knight mix",
+            description = "",
+            section = infoboxes
+        ) default boolean snowyKnightMixInfobox() { return false; }
+
+        @ConfigItem(
+            keyName = black_warlock_mix + infobox,
+            name = "Black warlock mix",
+            description = "",
+            section = infoboxes
+        ) default boolean blackWarlockInfobox() { return false; }
+
+        @ConfigItem(
+            keyName = sunlight_moth_mix + infobox,
+            name = "Sunlight moth mix",
+            description = "",
+            section = infoboxes
+        ) default boolean sunlightMothMixInfobox() { return false; }
+
+        @ConfigItem(
+            keyName = moonlight_moth_mix + infobox,
+            name = "Moonlight moth mix",
+            description = "",
+            section = infoboxes
+        ) default boolean moonlightMothMixInfobox() { return false; }
 
         @ConfigItem(
             keyName = ring_of_pursuit + infobox,
@@ -773,6 +821,48 @@ public interface ChargesImprovedConfig extends Config {
             section = overlays,
             position = -100
         ) default boolean showOverlays() { return true; }
+
+        @ConfigItem(
+            keyName = ruby_harvest_mix + overlay,
+            name = "Ruby harvest mix",
+            description = "",
+            section = overlays
+        ) default boolean rubyHarvestMixOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = sapphire_glacialis_mix + overlay,
+            name = "Sapphire glacialis mix",
+            description = "",
+            section = overlays
+        ) default boolean sapphireGlacialisMixOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = snowy_knight_mix + overlay,
+            name = "Snowy knight mix",
+            description = "",
+            section = overlays
+        ) default boolean snowyKnightMixOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = black_warlock_mix + overlay,
+            name = "Black warlock mix",
+            description = "",
+            section = overlays
+        ) default boolean blackWarlockOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = sunlight_moth_mix + overlay,
+            name = "Sunlight moth mix",
+            description = "",
+            section = overlays
+        ) default boolean sunlightMothMixOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = moonlight_moth_mix + overlay,
+            name = "Moonlight moth mix",
+            description = "",
+            section = overlays
+        ) default boolean moonlightMothMixOverlay() { return true; }
 
         @ConfigItem(
             keyName = ring_of_pursuit + overlay,

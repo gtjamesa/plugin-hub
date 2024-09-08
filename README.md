@@ -104,3 +104,6 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Tackle box
 - Teleport crystal
 - Waterskins
+
+### Consumables
+- Hunter mixes
