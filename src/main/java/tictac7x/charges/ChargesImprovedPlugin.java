@@ -374,13 +374,15 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			infobox.onItemContainerChanged(event);
 		}
 
-//		String itemContainer = "ITEM CONTAINER | " + event.getContainerId();
+//		String itemContainer = String.valueOf(event.getContainerId());
 //		for (final Item item : event.getItemContainer().getItems()) {
 //			itemContainer += "\r\n" +
 //				item.getId() + ": " + itemManager.getItemComposition(item.getId()).getName() +
 //				", quantity: " + item.getQuantity();
 //		}
-//		System.out.println(itemContainer);
+//		System.out.println("ITEM CONTAINER | " +
+//			itemContainer
+//		);
 	}
 
 	@Subscribe

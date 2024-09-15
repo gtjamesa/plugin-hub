@@ -41,6 +41,9 @@ public class ChargedItemWithStorage extends ChargedItemBase {
             .sorted(Comparator.comparing(storageItem -> {
                 for (final StorageItem storeableItem : storage.getStoreableItems()) {
                     if (storeableItem.itemId == storageItem.itemId) {
+                        if (storeableItem.displayName.isPresent()) {
+                            storageItem.setDisplayName(storeableItem.displayName.get());
+                        }
                         return storeableItem.order.orElse(Integer.MAX_VALUE);
                     }
                 }
@@ -49,7 +52,7 @@ public class ChargedItemWithStorage extends ChargedItemBase {
             .collect(Collectors.toList())
         ) {
             if (storageItem.getQuantity() > 0) {
-                tooltip += (storageItem.displayName.isPresent() ? storageItem.displayName.get() : itemManager.getItemComposition(storageItem.itemId).getName()) + ": ";
+                tooltip += storageItem.getName(itemManager) + ": ";
                 tooltip += ColorUtil.wrapWithColorTag(String.valueOf(storageItem.getQuantity()), JagexColors.MENU_TARGET) + "</br>";
             }
         }

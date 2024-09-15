@@ -249,7 +249,7 @@ public interface ChargesImprovedConfig extends Config {
             name = "Master scroll book",
             description = "",
             section = infoboxes
-        ) default boolean masterScrollBookInfobox() { return false; }
+        ) default boolean masterScrollBookInfobox() { return true; }
 
         @ConfigItem(
             keyName = ruby_harvest_mix + infobox,

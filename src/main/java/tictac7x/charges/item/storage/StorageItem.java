@@ -1,5 +1,6 @@
 package tictac7x.charges.item.storage;
 
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.store.Charges;
 
 import java.util.Optional;
@@ -58,5 +59,9 @@ public class StorageItem {
 
     public void setDisplayName(final String displayName) {
         this.displayName = Optional.of(displayName);
+    }
+
+    public String getName(final ItemManager itemManager) {
+        return displayName.orElseGet(() -> itemManager.getItemComposition(itemId).getName());
     }
 }

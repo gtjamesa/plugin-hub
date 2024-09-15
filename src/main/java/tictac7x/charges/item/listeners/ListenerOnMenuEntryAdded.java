@@ -40,6 +40,13 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
                 }
             }
 
+            if (trigger.replaceTargetDynamically.isPresent() && event.getTarget().contains(trigger.replaceTargetDynamically.get().target)) {
+                try {
+                    event.getMenuEntry().setTarget(event.getTarget().replaceAll(trigger.replaceTargetDynamically.get().target, trigger.replaceTargetDynamically.get().replace.call()));
+                } catch (final Exception ignored) {}
+                triggerUsed = true;
+            }
+
             if (trigger.hide.isPresent() && trigger.menuEntryOption.isPresent()) {
                 final List<MenuEntry> newMenuEntries = new ArrayList<>();
 
@@ -109,6 +116,8 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
                     break menuReplaceTargetsCheck;
                 }
             }
+
+            return false;
         }
 
         // Menu replace impostor id check.

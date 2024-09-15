@@ -133,8 +133,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         // Config, not storage item, empty storage checks.
         if (
             !config.showStorageTooltips() ||
-            !(chargedItem instanceof ChargedItemWithStorage) ||
-            chargedItem.getCharges().equals("0")
+            !(chargedItem instanceof ChargedItemWithStorage)
         ) return;
 
         // Mouse position check.
