@@ -10,23 +10,29 @@ import java.util.regex.Pattern;
 public class OnWidgetLoaded extends TriggerBase {
     public final int groupId;
     public final int childId;
-    public final int subChildId;
+    public Optional<Integer> subChildId = Optional.empty();
 
     public Optional<Pattern> text = Optional.empty();
     public Optional<Consumer<Matcher>> matcherConsumer = Optional.empty();
     public Optional<Consumer<Integer>> itemQuantityConsumer = Optional.empty();
     public Optional<Consumer<ItemWithQuantity>> itemWithQuantityConsumer = Optional.empty();
+    public Optional<Consumer<Integer>> textAsChargesConsumer = Optional.empty();
     public Optional<Boolean> setDynamically = Optional.empty();
 
-    public OnWidgetLoaded setDynamically() {
-        this.setDynamically = Optional.of(true);
-        return this;
+    public OnWidgetLoaded(final int groupId, final int childId) {
+        this.groupId = groupId;
+        this.childId = childId;
     }
 
     public OnWidgetLoaded(final int groupId, final int childId, final int subChildId) {
         this.groupId = groupId;
         this.childId = childId;
-        this.subChildId = subChildId;
+        this.subChildId = Optional.of(subChildId);
+    }
+
+    public OnWidgetLoaded setDynamically() {
+        this.setDynamically = Optional.of(true);
+        return this;
     }
 
     public OnWidgetLoaded text(final String text) {
@@ -36,6 +42,11 @@ public class OnWidgetLoaded extends TriggerBase {
 
     public OnWidgetLoaded matcherConsumer(final Consumer<Matcher> consumer) {
         this.matcherConsumer = Optional.of(consumer);
+        return this;
+    }
+
+    public OnWidgetLoaded textAsChargesConsumer(final Consumer<Integer> consumer) {
+        this.textAsChargesConsumer = Optional.of(consumer);
         return this;
     }
 

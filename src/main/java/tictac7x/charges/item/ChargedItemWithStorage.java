@@ -18,7 +18,6 @@ import tictac7x.charges.store.Store;
 
 import java.awt.Color;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,7 +38,14 @@ public class ChargedItemWithStorage extends ChargedItemBase {
     public String getTooltip() {
         String tooltip = "";
         for (final StorageItem storageItem : storage.getStorage().values().stream()
-            .sorted(Comparator.comparing(item -> item.order.orElse(Integer.MAX_VALUE)))
+            .sorted(Comparator.comparing(storageItem -> {
+                for (final StorageItem storeableItem : storage.getStoreableItems()) {
+                    if (storeableItem.itemId == storageItem.itemId) {
+                        return storeableItem.order.orElse(Integer.MAX_VALUE);
+                    }
+                }
+                return Integer.MAX_VALUE;
+            }))
             .collect(Collectors.toList())
         ) {
             if (storageItem.getQuantity() > 0) {

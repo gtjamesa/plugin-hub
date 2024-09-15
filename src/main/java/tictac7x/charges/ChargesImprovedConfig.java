@@ -70,6 +70,7 @@ public interface ChargesImprovedConfig extends Config {
     String kharedsts_memoirs = "kharedsts_memoirs";
     String log_basket = "log_basket";
     String magic_cape = "magic_cape";
+    String master_scroll_book = "master_scroll_book";
     String meat_pouch = "meat_pouch";
     String huntsmans_kit = "huntsmans_kit";
     String necklace_of_passage = "necklace_of_passage";
@@ -242,6 +243,13 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
+
+        @ConfigItem(
+            keyName = master_scroll_book + infobox,
+            name = "Master scroll book",
+            description = "",
+            section = infoboxes
+        ) default boolean masterScrollBookInfobox() { return false; }
 
         @ConfigItem(
             keyName = ruby_harvest_mix + infobox,
@@ -830,6 +838,13 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String overlays = "overlays";
+
+        @ConfigItem(
+            keyName = master_scroll_book + overlay,
+            name = "Master scroll book",
+            description = "",
+            section = overlays
+        ) default boolean masterScrollBookOverlay() { return true; }
 
         @ConfigItem(
             keyName = ruby_harvest_mix + overlay,

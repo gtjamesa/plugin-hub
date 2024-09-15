@@ -43,6 +43,11 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
                 }
             }
 
+            if (trigger.textAsChargesConsumer.isPresent()) {
+                trigger.textAsChargesConsumer.get().accept(Integer.parseInt(widget.getText()));
+                triggerUsed = true;
+            }
+
             if (trigger.itemQuantityConsumer.isPresent()) {
                 trigger.itemQuantityConsumer.get().accept(widget.getItemQuantity());
                 triggerUsed = true;
@@ -98,8 +103,8 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
     private Widget getWidget(final OnWidgetLoaded trigger) {
         Widget widget = client.getWidget(trigger.groupId, trigger.childId);
 
-        if (widget != null) {
-            widget = widget.getChild(trigger.subChildId);
+        if (widget != null && trigger.subChildId.isPresent()) {
+            widget = widget.getChild(trigger.subChildId.get());
         }
 
         return widget;

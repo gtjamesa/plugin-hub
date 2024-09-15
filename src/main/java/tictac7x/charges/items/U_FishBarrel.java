@@ -133,11 +133,9 @@ public class U_FishBarrel extends ChargedItemWithStorage {
 
             // Use fish on barrel.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventorySingle().onUseStorageItemOnChargedItem(storage.getStoreableItems()),
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventorySingle().onUseChargedItemOnStorageItem(storage.getStoreableItems()),
 
             // Empty to bank.
             new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
-
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

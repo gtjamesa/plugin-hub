@@ -5,6 +5,7 @@ import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.Notifier;
 import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.triggers.OnVarbitChanged;
 import tictac7x.charges.item.triggers.TriggerBase;
@@ -20,9 +21,15 @@ public class ListenerOnVarbitChanged extends ListenerBase {
             final OnVarbitChanged trigger = (OnVarbitChanged) triggerBase;
             boolean triggerUsed = false;
 
+            // Set dynamically.
+            if (trigger.setDynamically.isPresent() && chargedItem instanceof ChargedItem) {
+                ((ChargedItem) chargedItem).setCharges(event.getValue());
+            }
+
             // Varbit value consumer.
             if (trigger.varbitValueConsumer.isPresent()) {
                 trigger.varbitValueConsumer.get().accept(event.getValue());
+                triggerUsed = true;
             }
 
             if (super.trigger(trigger)) {

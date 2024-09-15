@@ -30,28 +30,12 @@ public class J_RingOfElements extends ChargedItem {
         super(ChargesImprovedConfig.ring_of_the_elements, ItemID.RING_OF_THE_ELEMENTS, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.RING_OF_THE_ELEMENTS).fixedCharges(0),
+            new TriggerItem(ItemID.RING_OF_THE_ELEMENTS),
             new TriggerItem(ItemID.RING_OF_THE_ELEMENTS_26818),
         };
 
         this.triggers = new TriggerBase[] {
-            // Check uncharged.
-            new OnChatMessage("Your ring of the elements has no charges remaining.").setFixedCharges(0),
-
-            // Uncharge.
-            new OnChatMessage("You uncharge your Ring of the Elements.").setFixedCharges(0),
-
-            // Teleport.
-            new OnChatMessage("Your ring of elements has (?<charges>.+) charge remaining.").setDynamicallyCharges(),
-
-            // Check from uncharge dialog not near bank.
-            new OnChatMessage("The Ring of the Elements has (?<charges>.+) charges?. You can uncharge it at a bank.").setDynamicallyCharges(),
-
-            // Check from uncharge dialog at bank.
-            new OnWidgetLoaded(219, 1, 0).text("Ring of the Elements charges: (?<charges>.+). Uncharge it?").setDynamically(),
-
-            // Teleport to air/water/earth/fire altars.
-            new OnGraphicChanged(2060, 2061, 2062, 2063).onItemClick().decreaseCharges(1),
+            new OnVarbitChanged(13707).setDynamically(),
         };
     }
 }

@@ -148,20 +148,30 @@ public abstract class ListenerBase {
 
         // Use storage item on charged item check.
         if (trigger.onUseStorageItemOnChargedItem.isPresent() && chargedItem instanceof ChargedItemWithStorage) {
-            boolean useCheck = false;
-            useCheckLooper: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
-                if (!menuEntry.option.equals("Use") || !menuEntry.target.contains(" -> ") || !menuEntry.target.split(" -> ")[1].equals(itemManager.getItemComposition(chargedItem.itemId).getName())) continue;
+            boolean isValid = false;
+            loopChecker: for (final AdvancedMenuEntry menuEntry : chargedItem.store.menuOptionsClicked) {
+                if (!menuEntry.target.contains(" -> ")) {
+                    continue;
+                };
 
-                for (final StorageItem storageItem : ((ChargedItemWithStorage) chargedItem).getStorage().values()) {
-                    if (menuEntry.target.split(" -> ")[0].equals(itemManager.getItemComposition(storageItem.itemId).getName())) {
-                        useCheck = true;
-                        break useCheckLooper;
+                final String itemOne = menuEntry.target.split(" -> ")[0];
+                final String itemTwo = menuEntry.target.split(" -> ")[1];
+
+                if (!itemOne.equals(chargedItem.getItemName()) && !itemTwo.equals(chargedItem.getItemName())) {
+                    continue;
+                }
+                for (final StorageItem storeableItem : ((ChargedItemWithStorage) chargedItem).storage.getStoreableItems()) {
+                    if (
+                        itemOne.equals(itemManager.getItemComposition(storeableItem.itemId).getName()) ||
+                        itemTwo.equals(itemManager.getItemComposition(storeableItem.itemId).getName())
+                    ) {
+                        isValid = true;
+                        break loopChecker;
                     }
                 }
             }
-            if (!useCheck) {
-                return false;
-            }
+
+            if (!isValid) return false;
         }
 
         // Use charged item on storage item check.

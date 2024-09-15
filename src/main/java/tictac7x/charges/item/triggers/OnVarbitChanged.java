@@ -8,6 +8,7 @@ public class OnVarbitChanged extends TriggerBase {
 
     public Optional<Integer> isVarbitValue = Optional.empty();
     public Optional<Consumer<Integer>> varbitValueConsumer = Optional.empty();
+    public Optional<Boolean> setDynamically = Optional.empty();
 
     public OnVarbitChanged(final int varbitId) {
         this.varbitId = varbitId;
@@ -20,6 +21,11 @@ public class OnVarbitChanged extends TriggerBase {
 
     public OnVarbitChanged varbitValueConsumer(final Consumer<Integer> consumer) {
         this.varbitValueConsumer = Optional.of(consumer);
+        return this;
+    }
+
+    public OnVarbitChanged setDynamically() {
+        this.setDynamically = Optional.of(true);
         return this;
     }
 }

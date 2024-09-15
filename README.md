@@ -96,6 +96,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Huntsman's kit
 - Jar generator
 - Log basket
+- Master scroll book
 - Meat pouches
 - Ogre bellows
 - Seed box

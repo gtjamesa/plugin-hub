@@ -116,7 +116,9 @@ import java.util.Optional;
 		"fur",
 		"meat",
 		"pouch",
-		"pursuit"
+		"pursuit",
+		"book",
+		"scroll"
 	}
 )
 
@@ -129,7 +131,8 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		"<colHIGHLIGHT>* Huntsman's kit added.<br>" +
 		"<colHIGHLIGHT>* Ring of pursuit added.<br>" +
 		"<colHIGHLIGHT>* Hunter mixes added.<br>" +
-		"<colHIGHLIGHT>* Telegrabbing gems updates gem bag storage."
+		"<colHIGHLIGHT>* Telegrabbing gems updates gem bag storage.<br>" +
+		"<colHIGHLIGHT>* Master scroll book added."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -272,6 +275,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new U_HuntsmansKit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_JarGenerator(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_LogBasket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_MasterScrollBook(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_MeatPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_OgreBellows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_QuetzalWhistle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -440,11 +444,11 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		for (final ChargedItemBase chargedItem : chargedItems) {
 			chargedItem.onMenuOptionClicked(event);
 		}
+
 //		int impostorId = -1;
 //		try {
 //			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
 //		} catch (final Exception ignored) {}
-//
 //		System.out.println("MENU OPTION | " +
 //			"option: " + event.getMenuOption() +
 //			", target: " + event.getMenuTarget() +
