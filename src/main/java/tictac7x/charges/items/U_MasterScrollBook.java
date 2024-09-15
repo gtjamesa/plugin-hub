@@ -46,7 +46,7 @@ public class U_MasterScrollBook extends ChargedItemWithStorage {
             new StorageItem(ItemID.IORWERTH_CAMP_TELEPORT).displayName("Iorwerth Camp").specificOrder(9),
             new StorageItem(ItemID.MOS_LEHARMLESS_TELEPORT).displayName("Mos Le' Harmless").specificOrder(10),
             new StorageItem(ItemID.LUMBERYARD_TELEPORT).displayName("Lumberyard").specificOrder(11),
-            new StorageItem(ItemID.ZULANDRA_TELEPORT).displayName("Zul-Anda").specificOrder(12),
+            new StorageItem(ItemID.ZULANDRA_TELEPORT).displayName("Zul-Andra").specificOrder(12),
             new StorageItem(ItemID.KEY_MASTER_TELEPORT).displayName("Key Master").specificOrder(13),
             new StorageItem(ItemID.REVENANT_CAVE_TELEPORT).displayName("Revenant Caves").specificOrder(14),
             new StorageItem(ItemID.WATSON_TELEPORT).displayName("Watson").specificOrder(15),
