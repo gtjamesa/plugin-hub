@@ -23,6 +23,7 @@ public interface ChargesImprovedConfig extends Config {
     String ash_sanctifier = "ash_sanctifier";
     String ash_sanctifier_status = "ash_sanctifier_status";
     String barrows_gear = "barrows_gear";
+    String binding_necklace = "binding_necklace";
     String bonecrusher = "bonecrusher";
     String bonecrusher_status = "bonecrusher_status";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
