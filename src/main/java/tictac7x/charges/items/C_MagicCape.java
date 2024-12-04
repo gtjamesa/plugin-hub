@@ -46,7 +46,7 @@ public class C_MagicCape extends ChargedItem {
             new OnWidgetLoaded(219, 1, 0).text("Choose spellbook: \\((?<charges>.+)/5 left\\)").setDynamically(),
 
             // Daily reset.
-            new OnResetDaily(5),
+            new OnResetDaily().setFixedCharges(5),
         };
     }
 }

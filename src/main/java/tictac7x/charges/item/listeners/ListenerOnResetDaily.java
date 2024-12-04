@@ -14,13 +14,20 @@ public class ListenerOnResetDaily extends ListenerBase {
         super(client, itemManager, chargedItem, notifier, config);
     }
 
-    public void trigger() {
+    public boolean trigger() {
         for (final TriggerBase triggerBase : chargedItem.triggers) {
             if (!isValidTrigger(triggerBase)) continue;
             final OnResetDaily trigger = (OnResetDaily) triggerBase;
-            ((ChargedItem) chargedItem).setCharges(trigger.resetCharges);
-            return;
+            boolean triggerUsed = false;
+
+            if (super.trigger(trigger)) {
+                triggerUsed = true;
+            }
+
+            if (triggerUsed) return true;
         }
+
+        return false;
     }
 
     public boolean isValidTrigger(final TriggerBase triggerBase) {
