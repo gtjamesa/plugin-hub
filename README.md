@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.10
+# Item Charges Improved - v0.5.11
 
 Show charges of various items that are in inventory or equipped
 

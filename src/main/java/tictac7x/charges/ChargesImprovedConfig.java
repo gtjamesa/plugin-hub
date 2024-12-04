@@ -110,6 +110,7 @@ public interface ChargesImprovedConfig extends Config {
     String black_warlock_mix = "black_warlock_mix";
     String sunlight_moth_mix = "sunlight_moth_mix";
     String moonlight_moth_mix = "moonlight_moth_mix";
+    String tumekens_shadow = "tumekens_shadow";
 
     @ConfigSection(
         name = "General",
@@ -244,6 +245,13 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
+
+        @ConfigItem(
+            keyName = tumekens_shadow + infobox,
+            name = "Tumeken's shadow",
+            description = "",
+            section = infoboxes
+        ) default boolean tumekensShadowInfobox() { return true; }
 
         @ConfigItem(
             keyName = master_scroll_book + infobox,
@@ -839,6 +847,13 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String overlays = "overlays";
+
+        @ConfigItem(
+            keyName = tumekens_shadow + overlay,
+            name = "Tumeken's shadow",
+            description = "",
+            section = overlays
+        ) default boolean tumekensShadowOverlay() { return true; }
 
         @ConfigItem(
             keyName = master_scroll_book + overlay,

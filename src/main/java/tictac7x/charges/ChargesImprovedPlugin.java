@@ -123,16 +123,10 @@ import java.util.Optional;
 )
 
 public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.10";
+	private final String pluginVersion = "v0.5.11";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Fur pouches added.<br>" +
-		"<colHIGHLIGHT>* Meat pouches added.<br>" +
-		"<colHIGHLIGHT>* Huntsman's kit added.<br>" +
-		"<colHIGHLIGHT>* Ring of pursuit added.<br>" +
-		"<colHIGHLIGHT>* Hunter mixes added.<br>" +
-		"<colHIGHLIGHT>* Telegrabbing gems updates gem bag storage.<br>" +
-		"<colHIGHLIGHT>* Master scroll book added."
+		"<colHIGHLIGHT>* Tumeken's shadow added."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
