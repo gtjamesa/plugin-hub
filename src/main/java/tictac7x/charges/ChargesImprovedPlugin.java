@@ -449,18 +449,18 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			chargedItem.onMenuOptionClicked(event);
 		}
 
-		int impostorId = -1;
-		try {
-			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
-		} catch (final Exception ignored) {}
-		System.out.println("MENU OPTION | " +
-			"option: " + event.getMenuOption() +
-			", target: " + event.getMenuTarget() +
-			", action name: " + event.getMenuAction().name() +
-			", action id: " + event.getMenuAction().getId() +
-			", item id: " + event.getItemId() +
-			", impostor id " + impostorId
-		);
+//		int impostorId = -1;
+//		try {
+//			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
+//		} catch (final Exception ignored) {}
+//		System.out.println("MENU OPTION | " +
+//			"option: " + event.getMenuOption() +
+//			", target: " + event.getMenuTarget() +
+//			", action name: " + event.getMenuAction().name() +
+//			", action id: " + event.getMenuAction().getId() +
+//			", item id: " + event.getItemId() +
+//			", impostor id " + impostorId
+//		);
 	}
 
 	@Subscribe
@@ -508,14 +508,10 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			checkForChargesReset();
 		}
 
-		System.out.println("VARBIT CHANGED | " +
-			"id: " + event.getVarbitId() +
-			", value: " + event.getValue()
-		);
-
-		System.out.println(client.getVarbitValue(Varbits.EXPLORER_RING_ALCHS));
-		System.out.println(client.getVarbitValue(Varbits.EXPLORER_RING_RUNENERGY));
-		System.out.println(client.getVarbitValue(Varbits.EXPLORER_RING_TELEPORTS));
+//		System.out.println("VARBIT CHANGED | " +
+//			"id: " + event.getVarbitId() +
+//			", value: " + event.getValue()
+//		);
 	}
 
 	@Subscribe

@@ -59,13 +59,13 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             }),
 
             // Use compost on a patch.
-            //new OnChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").matcherConsumer(m -> {
-//                storage.clearAndPut(getStorageItemFromName(m.group("type")), 1);
-//            }),
-//            new OnChatMessage("Your bottomless compost bucket has (?<quantity>.+) uses of (?<type>.+) ?compost remaining.").matcherConsumer(m -> {
-  //              final int quantity = getNumberFromCommaString(m.group("quantity"));
-    //            storage.clearAndPut(getStorageItemFromName(m.group("type")), quantity);
-      //      }),
+            new OnChatMessage("Your bottomless compost bucket has a single use of (?<type>.+) ?compost remaining.").matcherConsumer(m -> {
+                storage.clearAndPut(getStorageItemFromName(m.group("type")), 1);
+            }),
+            new OnChatMessage("Your bottomless compost bucket has (?<quantity>.+) uses of (?<type>.+) ?compost remaining.").matcherConsumer(m -> {
+                final int quantity = getNumberFromCommaString(m.group("quantity"));
+                storage.clearAndPut(getStorageItemFromName(m.group("type")), quantity);
+            }),
             new OnChatMessage("You treat the .* with (?<type>.*) ?compost.").matcherConsumer(m -> {
                 final String type = m.group("type");
                 storage.remove(getStorageItemFromName(type.isEmpty() ? "regular" : type), 1);

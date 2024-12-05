@@ -126,7 +126,5 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
                 break;
         }
-
-        // Teleports.
     }
 }
