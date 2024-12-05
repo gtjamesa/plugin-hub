@@ -52,7 +52,7 @@ public abstract class ListenerBase {
 
         // Empty storage.
         if (trigger.emptyStorage.isPresent() && (chargedItem instanceof ChargedItemWithStorage)) {
-            ((ChargedItemWithStorage) chargedItem).storage.empty();
+            ((ChargedItemWithStorage) chargedItem).storage.clear();
             triggerUsed = true;
         }
 

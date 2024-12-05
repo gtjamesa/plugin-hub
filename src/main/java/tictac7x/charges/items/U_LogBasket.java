@@ -83,7 +83,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
 
             // Check.
             new OnChatMessage("The basket contains:").stringConsumer(s -> {
-                storage.empty();
+                storage.clear();
 
                 final Pattern pattern = Pattern.compile("(?<quantity>\\d+).x.(?<logs>.*?)(,|$)");
                 final Matcher matcher = pattern.matcher(s);

@@ -64,7 +64,7 @@ public class C_Coffin extends ChargedItemWithStorage {
 
             // Check.
             new OnChatMessage("Loar (?<loar>.+) / Phrin (?<phrin>.+) / Riyl (?<riyl>.+) / Asyn (?<asyn>.+) / Fiyr (?<fiyr>.+) / Urium (?<urium>.+)").matcherConsumer(m -> {
-                storage.empty();
+                storage.clear();
                 storage.put(ItemID.LOAR_REMAINS, Integer.parseInt(m.group("loar")));
                 storage.put(ItemID.PHRIN_REMAINS, Integer.parseInt(m.group("phrin")));
                 storage.put(ItemID.RIYL_REMAINS, Integer.parseInt(m.group("riyl")));

@@ -14,6 +14,8 @@ import tictac7x.charges.store.ItemWithQuantity;
 
 import java.util.regex.Matcher;
 
+import static tictac7x.charges.ChargesImprovedPlugin.getNumberFromCommaString;
+
 public class ListenerOnWidgetLoaded extends ListenerBase {
     public ListenerOnWidgetLoaded(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, itemManager, chargedItem, notifier, config);
@@ -33,7 +35,7 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
                 matcher.find();
 
                 if (trigger.setDynamically.isPresent()) {
-                    ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
+                    ((ChargedItem) chargedItem).setCharges(getNumberFromCommaString(matcher.group("charges")));
                     triggerUsed = true;
                 }
 
@@ -94,10 +96,6 @@ public class ListenerOnWidgetLoaded extends ListenerBase {
 
     private String getCleanText(final String text) {
         return text.replaceAll("</?col.*?>", "").replaceAll("<br>", " ");
-    }
-
-    private int getCleanCharges(final String charges) {
-        return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
     }
 
     private Widget getWidget(final OnWidgetLoaded trigger) {

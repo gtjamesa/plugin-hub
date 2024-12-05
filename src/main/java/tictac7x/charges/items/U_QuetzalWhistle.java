@@ -68,17 +68,17 @@ public class U_QuetzalWhistle extends ChargedItem {
                         case ItemID.RAW_WILD_KEBBIT:
                         case ItemID.RAW_BARBTAILED_KEBBIT:
                         case ItemID.RAW_LARUPIA:
-                            increaseCharges(item.quantity);
+                            increaseCharges(Math.abs(item.quantity));
                             break;
                         case ItemID.RAW_GRAAHK:
                         case ItemID.RAW_KYATT:
                         case ItemID.RAW_PYRE_FOX:
-                            increaseCharges(item.quantity * 2);
+                            increaseCharges(Math.abs(item.quantity) * 2);
                             break;
                         case ItemID.RAW_DASHING_KEBBIT:
                         case ItemID.RAW_SUNLIGHT_ANTELOPE:
                         case ItemID.RAW_MOONLIGHT_ANTELOPE:
-                            increaseCharges(item.quantity * 3);
+                            increaseCharges(Math.abs(item.quantity) * 3);
                             break;
                     }
                 }

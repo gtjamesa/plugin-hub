@@ -126,7 +126,10 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	private final String pluginVersion = "v0.5.11";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Tumeken's shadow added."
+		"<colHIGHLIGHT>* Tumeken's shadow added.<br>" +
+		"<colHIGHLIGHT>* Digsite pendant added.<br>" +
+		"<colHIGHLIGHT>* Pendant of ates added.<br>" +
+		"<colHIGHLIGHT>* Fixes to other items."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -241,10 +244,12 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new J_BraceletOfSlaughter(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_Camulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_DesertAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_DigsitePendant(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_EscapeCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfPassage(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfPhoenix(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_NecklaceOfDodgy(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_PendantOfAtes(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfCelestial(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfElements(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfExplorer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -436,24 +441,26 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
+		if (event.getMenuOption().equals("Use") && !event.getMenuTarget().contains("->")) return;
+
 		store.onMenuOptionClicked(event);
 
 		for (final ChargedItemBase chargedItem : chargedItems) {
 			chargedItem.onMenuOptionClicked(event);
 		}
 
-//		int impostorId = -1;
-//		try {
-//			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
-//		} catch (final Exception ignored) {}
-//		System.out.println("MENU OPTION | " +
-//			"option: " + event.getMenuOption() +
-//			", target: " + event.getMenuTarget() +
-//			", action name: " + event.getMenuAction().name() +
-//			", action id: " + event.getMenuAction().getId() +
-//			", item id: " + event.getItemId() +
-//			", impostor id " + impostorId
-//		);
+		int impostorId = -1;
+		try {
+			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
+		} catch (final Exception ignored) {}
+		System.out.println("MENU OPTION | " +
+			"option: " + event.getMenuOption() +
+			", target: " + event.getMenuTarget() +
+			", action name: " + event.getMenuAction().name() +
+			", action id: " + event.getMenuAction().getId() +
+			", item id: " + event.getItemId() +
+			", impostor id " + impostorId
+		);
 	}
 
 	@Subscribe
@@ -501,10 +508,14 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			checkForChargesReset();
 		}
 
-//		System.out.println("VARBIT CHANGED | " +
-//			"id: " + event.getVarbitId() +
-//			", value: " + event.getValue()
-//		);
+		System.out.println("VARBIT CHANGED | " +
+			"id: " + event.getVarbitId() +
+			", value: " + event.getValue()
+		);
+
+		System.out.println(client.getVarbitValue(Varbits.EXPLORER_RING_ALCHS));
+		System.out.println(client.getVarbitValue(Varbits.EXPLORER_RING_RUNENERGY));
+		System.out.println(client.getVarbitValue(Varbits.EXPLORER_RING_TELEPORTS));
 	}
 
 	@Subscribe
@@ -629,6 +640,10 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	public static String getCleanChatMessage(final ChatMessage event) {
 		return event.getMessage().replaceAll("</?col.*?>", "").replaceAll("<br>", " ").replaceAll("\u00A0"," ");
+	}
+
+	public static int getNumberFromCommaString(final String charges) {
+		return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
 	}
 }
 

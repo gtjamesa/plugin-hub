@@ -29,6 +29,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Skull sceptre
 - Slayer staff (e)
 - Trident of the seas / swamp
+- Tumeken's shadow
 - Venator bow
 - Warped sceptre
 - Western banner
@@ -66,10 +67,12 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Bracelet of slaughter
 - Camulet
 - Desert amulet
+- Digsite pendant
 - Escape crystal
 - Necklace of passage
 - Necklace of phoenix
 - Necklace of dodgy
+- Pendant of ates
 - Ring of celestial
 - Ring of elements
 - Ring of explorer

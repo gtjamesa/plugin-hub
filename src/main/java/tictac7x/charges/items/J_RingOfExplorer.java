@@ -19,9 +19,8 @@ import tictac7x.charges.store.Store;
 
 class ExplorersRingStorageItemId {
     public static final int TELEPORTS = -1000;
-    public static final int LOW_ALCHEMY = -1001;
-    public static final int HIGH_ALCHEMY = -1002;
-    public static final int ENERGY_RESTORES = -1003;
+    public static final int ALCHEMY = -1001;
+    public static final int ENERGY_RESTORES = -1002;
 }
 
 public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
@@ -39,8 +38,7 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
     ) {
         super(ChargesImprovedConfig.explorers_ring, ItemID.EXPLORERS_RING_1, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
         storage = storage.storeableItems(
-            new StorageItem(ExplorersRingStorageItemId.LOW_ALCHEMY).displayName("Low alchemies"),
-            new StorageItem(ExplorersRingStorageItemId.HIGH_ALCHEMY).displayName("High alchemies"),
+            new StorageItem(ExplorersRingStorageItemId.ALCHEMY).displayName("Alchemy charges"),
             new StorageItem(ExplorersRingStorageItemId.TELEPORTS).displayName("Teleports"),
             new StorageItem(ExplorersRingStorageItemId.ENERGY_RESTORES).displayName("Energy restores")
         ).showIndividualCharges();
@@ -53,101 +51,82 @@ public class J_RingOfExplorer extends ChargedItemWithStorageMultipleCharges {
         };
 
         this.triggers = new TriggerBase[]{
-            // Check with all available.
-            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").matcherConsumer(m -> {
-                final int alchemy = Integer.parseInt(m.group("alchemy"));
-                final int restores = Integer.parseInt(m.group("restores"));
+            // Use.
+            new OnVarbitChanged(Varbits.EXPLORER_RING_ALCHS).consumer(() -> updateStorage()),
+            new OnVarbitChanged(Varbits.EXPLORER_RING_RUNENERGY).consumer(() -> updateStorage()),
+            new OnVarbitChanged(Varbits.EXPLORER_RING_TELEPORTS).consumer(() -> updateStorage()),
 
-                storage.empty();
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, Charges.UNLIMITED);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, alchemy);
-                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, restores);
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
-            }).onItemClick(),
-
-            // Check with all available.
-            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and (?<restores>.+) of your 3 energy restores left for today.").matcherConsumer(m -> {
-                final int alchemy = Integer.parseInt(m.group("alchemy"));
-                final int restores = Integer.parseInt(m.group("restores"));
-
-                storage.empty();
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, Charges.UNLIMITED);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, alchemy);
-                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, restores);
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
-            }).onItemClick(),
-
-            // Check with restores used.
-            new OnChatMessage("You have (?<alchemy>.+) out of 30 alchemy charges left and have exhausted the ring's run restore power for today.").matcherConsumer(m -> {
-                final int alchemy = Integer.parseInt(m.group("alchemy"));
-
-                storage.empty();
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, Charges.UNLIMITED);
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, alchemy);
-                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 0);
-            }).onItemClick(),
-
-            // Check with none available.
-            new OnChatMessage("You have no alchemy charges left and have exhausted the ring's run restore power for today.").onItemClick().consumer(() -> {
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, Charges.UNLIMITED);
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, 0);
-                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 0);
-            }),
-
-            // Run energy used.
-            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) restores for today.").matcherConsumer(m -> {
-                final int total = Integer.parseInt(m.group("total"));
-                final int used = Integer.parseInt(m.group("used"));
-                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, total - used);
-            }).onItemClick(),
-
-            // Try to use restores without any left.
-            new OnChatMessage("You have exhausted the ring's run restore power for today.").matcherConsumer(m -> {
-                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 0);
-            }).onItemClick(),
-
-            // Alchemy.
-            new OnVarbitChanged(Varbits.EXPLORER_RING_ALCHS).varbitValueConsumer(alchs -> {
-                storage.remove(ExplorersRingStorageItemId.LOW_ALCHEMY, 1);
-                storage.remove(ExplorersRingStorageItemId.HIGH_ALCHEMY, 1);
-            }),
-
-            // Teleport.
-            new OnChatMessage("You have used (?<used>.+) of your (?<total>.+) Cabbage teleports for today.").matcherConsumer(m -> {
-                final int total = Integer.parseInt(m.group("total"));
-                final int used = Integer.parseInt(m.group("used"));
-                storage.put(ExplorersRingStorageItemId.TELEPORTS, total - used);
-            }).onItemClick(),
+            // Check.
+            new OnMenuOptionClicked("Check").onItemClick().consumer(() -> updateStorage()),
 
             new OnResetDaily().specificItem(ItemID.EXPLORERS_RING_1).consumer(() -> {
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, 30);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, 0);
+                storage.clear();
+                storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 2);
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, 0);
             }),
 
             new OnResetDaily().specificItem(ItemID.EXPLORERS_RING_2).consumer(() -> {
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, 30);
+                storage.clear();
+                storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 3);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, 0);
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, 3);
             }),
 
             new OnResetDaily().specificItem(ItemID.EXPLORERS_RING_3).consumer(() -> {
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, 30);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, 0);
+                storage.clear();
+                storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 4);
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
             }),
 
             new OnResetDaily().specificItem(ItemID.EXPLORERS_RING_4).consumer(() -> {
-                storage.put(ExplorersRingStorageItemId.LOW_ALCHEMY, 30);
-                storage.put(ExplorersRingStorageItemId.HIGH_ALCHEMY, 30);
+                storage.clear();
+                storage.put(ExplorersRingStorageItemId.ALCHEMY, 30);
                 storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 3);
                 storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
             }),
         };
+    }
+
+    private void updateStorage() {
+        storage.clear();
+
+        // Alchemy.
+        storage.put(ExplorersRingStorageItemId.ALCHEMY, 30 - client.getVarbitValue(Varbits.EXPLORER_RING_ALCHS));
+
+        // Energy restores.
+        final int energyRestoresUsed = client.getVarbitValue(Varbits.EXPLORER_RING_RUNENERGY);
+        switch (itemId) {
+            case ItemID.EXPLORERS_RING_1:
+                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 2 - energyRestoresUsed);
+                break;
+            case ItemID.EXPLORERS_RING_2:
+                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 3 - energyRestoresUsed);
+                break;
+            case ItemID.EXPLORERS_RING_3:
+                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 4 - energyRestoresUsed);
+                break;
+            case ItemID.EXPLORERS_RING_4:
+                storage.put(ExplorersRingStorageItemId.ENERGY_RESTORES, 3 - energyRestoresUsed);
+                break;
+        }
+
+        // Teleports.
+        final int teleportsUsed = client.getVarbitValue(Varbits.EXPLORER_RING_TELEPORTS);
+        switch (itemId) {
+            case ItemID.EXPLORERS_RING_1:
+                storage.put(ExplorersRingStorageItemId.TELEPORTS, 0);
+                break;
+            case ItemID.EXPLORERS_RING_2:
+                storage.put(ExplorersRingStorageItemId.TELEPORTS, 3 - teleportsUsed);
+                break;
+            case ItemID.EXPLORERS_RING_3:
+            case ItemID.EXPLORERS_RING_4:
+                storage.put(ExplorersRingStorageItemId.TELEPORTS, Charges.UNLIMITED);
+                break;
+        }
+
+        // Teleports.
     }
 }

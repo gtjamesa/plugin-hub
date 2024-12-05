@@ -111,6 +111,8 @@ public interface ChargesImprovedConfig extends Config {
     String sunlight_moth_mix = "sunlight_moth_mix";
     String moonlight_moth_mix = "moonlight_moth_mix";
     String tumekens_shadow = "tumekens_shadow";
+    String digsite_pendant = "digsite_pendant";
+    String pendant_of_ates = "pendant_of_ates";
 
     @ConfigSection(
         name = "General",
@@ -145,7 +147,7 @@ public interface ChargesImprovedConfig extends Config {
         @ConfigItem(
             keyName = "hide_outside_bank_overlays",
             name = "Show overlays only while in bank",
-            description = "Shows item charges overlays onmly when in bank",
+            description = "Shows item charges overlays only when in bank",
             section = general,
             position = 4
         ) default boolean showOverlaysOnlyInBank() { return false; }
@@ -245,6 +247,20 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String infoboxes = "infoboxes";
+
+        @ConfigItem(
+            keyName = pendant_of_ates + infobox,
+            name = "Pendant of ates",
+            description = "",
+            section = infoboxes
+        ) default boolean pendantOfAtesInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = digsite_pendant + infobox,
+            name = "Digsite pendant",
+            description = "",
+            section = infoboxes
+        ) default boolean digsitePendantInfobox() { return true; }
 
         @ConfigItem(
             keyName = tumekens_shadow + infobox,
@@ -590,6 +606,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean kharedstsMemoirsInfobox() { return true; }
 
         @ConfigItem(
+            keyName = kharedsts_memoirs + infobox,
+            name = "Book of the dead",
+            description = "",
+            section = infoboxes
+        ) default boolean bookOfTheDeadInfobox() { return true; }
+
+        @ConfigItem(
             keyName = tome_of_fire + infobox,
             name = "Tome of fire",
             description = "",
@@ -847,6 +870,20 @@ public interface ChargesImprovedConfig extends Config {
         position = 4,
         closedByDefault = true
     ) String overlays = "overlays";
+
+        @ConfigItem(
+            keyName = pendant_of_ates + overlay,
+            name = "Pendant of ates",
+            description = "",
+            section = overlays
+        ) default boolean pendantOfAtesOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = digsite_pendant + overlay,
+            name = "Digsite pendant",
+            description = "",
+            section = overlays
+        ) default boolean digsitePendantOverlay() { return true; }
 
         @ConfigItem(
             keyName = tumekens_shadow + overlay,
@@ -1190,6 +1227,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean kharedstsMemoirsOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = kharedsts_memoirs + overlay,
+            name = "Book of the dead",
+            description = "",
+            section = overlays
+        ) default boolean bookOfTheDeadOverlay() { return true; }
 
         @ConfigItem(
             keyName = log_basket + overlay,

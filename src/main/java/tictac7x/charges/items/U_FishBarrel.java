@@ -118,7 +118,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
 
             // Check.
             new OnChatMessage("The barrel contains:").stringConsumer(s -> {
-                storage.empty();
+                storage.clear();
 
                 final Pattern pattern = Pattern.compile("(?<quantity>\\d+).x.(?<fish>.*?)(,|$)");
                 final Matcher matcher = pattern.matcher(s);

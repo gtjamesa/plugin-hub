@@ -49,6 +49,7 @@ public class U_HerbSack extends ChargedItemWithStorage {
             new StorageItem(ItemID.GRIMY_IRIT_LEAF).checkName("Irit leaf"),
             new StorageItem(ItemID.GRIMY_AVANTOE).checkName("Avantoe"),
             new StorageItem(ItemID.GRIMY_KWUARM).checkName("Kwuarm"),
+            new StorageItem(ItemID.GRIMY_HUASCA).checkName("Huasca"),
             new StorageItem(ItemID.GRIMY_SNAPDRAGON).checkName("Snapdragon"),
             new StorageItem(ItemID.GRIMY_CADANTINE).checkName("Cadantine"),
             new StorageItem(ItemID.GRIMY_LANTADYME).checkName("Lantadyme"),

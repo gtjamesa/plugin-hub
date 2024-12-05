@@ -39,6 +39,7 @@ public class W_TridentOfTheSeas extends ChargedItem {
             new TriggerItem(ItemID.UNCHARGED_TOXIC_TRIDENT_E).fixedCharges(0),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL).fixedCharges(2500),
+            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_E),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
             new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP_E),
         };

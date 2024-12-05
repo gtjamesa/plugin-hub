@@ -13,6 +13,8 @@ import tictac7x.charges.item.triggers.TriggerBase;
 
 import java.util.regex.Matcher;
 
+import static tictac7x.charges.ChargesImprovedPlugin.getNumberFromCommaString;
+
 public class ListenerOnChatMessage extends ListenerBase {
     public ListenerOnChatMessage(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
         super(client, itemManager, chargedItem, notifier, config);
@@ -29,22 +31,22 @@ public class ListenerOnChatMessage extends ListenerBase {
             matcher.find();
 
             if (trigger.setDynamically.isPresent() && (chargedItem instanceof ChargedItem)) {
-                ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("charges")));
+                ((ChargedItem) chargedItem).setCharges(getNumberFromCommaString(matcher.group("charges")));
                 triggerUsed = true;
             }
 
             if (trigger.increaseDynamically.isPresent() && (chargedItem instanceof ChargedItem)) {
-                ((ChargedItem) chargedItem).increaseCharges(getCleanCharges(matcher.group("charges")));
+                ((ChargedItem) chargedItem).increaseCharges(getNumberFromCommaString(matcher.group("charges")));
                 triggerUsed = true;
             }
 
             if (trigger.decreaseDynamically.isPresent() && (chargedItem instanceof ChargedItem)) {
-                ((ChargedItem) chargedItem).decreaseCharges(getCleanCharges(matcher.group("charges")));
+                ((ChargedItem) chargedItem).decreaseCharges(getNumberFromCommaString(matcher.group("charges")));
                 triggerUsed = true;
             }
 
             if (trigger.useDifference.isPresent() && (chargedItem instanceof ChargedItem)) {
-                ((ChargedItem) chargedItem).setCharges(getCleanCharges(matcher.group("total")) - getCleanCharges(matcher.group("used")));
+                ((ChargedItem) chargedItem).setCharges(getNumberFromCommaString(matcher.group("total")) - getNumberFromCommaString(matcher.group("used")));
                 triggerUsed = true;
             }
 
@@ -78,9 +80,5 @@ public class ListenerOnChatMessage extends ListenerBase {
         }
 
         return super.isValidTrigger(trigger);
-    }
-
-    private int getCleanCharges(final String charges) {
-        return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
     }
 }

@@ -43,21 +43,15 @@ public class ListenerOnItemPickup extends ListenerBase {
         final OnItemPickup trigger = (OnItemPickup) triggerBase;
         final ChargedItemWithStorage chargedItem = (ChargedItemWithStorage) this.chargedItem;
 
-
         // Correct item check.
         boolean correctItem = false;
-        for (final StorageItem storageItem : chargedItem.getStorage().values()) {
+        for (final StorageItem storageItem : chargedItem.storage.getStoreableItems()) {
             if (event.getItem().getId() == storageItem.itemId) {
                 correctItem = true;
                 break;
             }
         }
         if (!correctItem) {
-            return false;
-        }
-
-        // Pick up to storage check.
-        if (trigger.pickUpToStorage.isPresent() && !(chargedItem instanceof ChargedItemWithStorage)) {
             return false;
         }
 

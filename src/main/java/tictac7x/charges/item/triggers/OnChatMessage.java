@@ -50,7 +50,7 @@ public class OnChatMessage extends TriggerBase {
         return this;
     }
 
-    public OnChatMessage decreaseDynamically() {
+    public OnChatMessage decreaseDynamicallyCharges() {
         this.decreaseDynamically = Optional.of(true);
         return this;
     }

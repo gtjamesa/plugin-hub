@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
-import net.runelite.api.ItemID;
 import net.runelite.client.config.ConfigManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
@@ -15,9 +14,7 @@ import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -72,7 +69,7 @@ public class Storage {
         return this;
     }
 
-    public void empty() {
+    public void clear() {
         storage = new LinkedHashMap<>();
         save();
     }
@@ -95,6 +92,12 @@ public class Storage {
 
     public void put(final Optional<StorageItem> item, final int quantity) {
         if (!item.isPresent()) return;
+        put(item.get().itemId, quantity);
+    }
+
+    public void clearAndPut(final Optional<StorageItem> item, final int quantity) {
+        if (!item.isPresent()) return;
+        clear();
         put(item.get().itemId, quantity);
     }
 
