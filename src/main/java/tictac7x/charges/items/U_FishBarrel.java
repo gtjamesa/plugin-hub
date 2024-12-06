@@ -15,7 +15,6 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
@@ -24,6 +23,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static tictac7x.charges.store.ItemContainerId.BANK;
 import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_FishBarrel extends ChargedItemWithStorage {
@@ -109,10 +109,10 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new OnChatMessage("You catch (a|an|some) (?<fish>.+).").matcherConsumer(m -> {
                 lastCaughtFish = getStorageItemFromName(m.group("fish"));
                 storage.add(lastCaughtFish, 1);
-            }).onSpecificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL),
+            }).requiredItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL),
 
             // Extra fish.
-            new OnChatMessage(".* enabled you to catch an extra fish.").onSpecificItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).consumer(() -> {
+            new OnChatMessage(".* enabled you to catch an extra fish.").requiredItem(ItemID.OPEN_FISH_BARREL, ItemID.OPEN_FISH_SACK_BARREL).consumer(() -> {
                 storage.add(lastCaughtFish, 1);
             }),
 
@@ -135,7 +135,7 @@ public class U_FishBarrel extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventorySingle().onUseStorageItemOnChargedItem(storage.getStoreableItems()),
 
             // Empty to bank.
-            new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
+            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption("Empty"),
 
             // Hide destroy.
             new OnMenuEntryAdded("Destroy").hide(),

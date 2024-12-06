@@ -129,6 +129,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		"<colHIGHLIGHT>* Tumeken's shadow added.<br>" +
 		"<colHIGHLIGHT>* Digsite pendant added.<br>" +
 		"<colHIGHLIGHT>* Pendant of ates added.<br>" +
+		"<colHIGHLIGHT>* Binding necklace added.<br>" +
 		"<colHIGHLIGHT>* Fixes to other items."
 	;
 

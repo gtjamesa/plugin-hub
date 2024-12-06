@@ -60,6 +60,12 @@ public class ListenerOnItemContainerChanged extends ListenerBase {
                 }
             }
 
+            // Empty storage to bank.
+            if (trigger.emptyStorageToBank.isPresent()) {
+                ((ChargedItemWithStorage) chargedItem).storage.emptyToBank();
+                triggerUsed = true;
+            }
+
             // Empty storage to inventory.
             if (trigger.emptyStorageToInventory.isPresent()) {
                 ((ChargedItemWithStorage) chargedItem).storage.emptyToInventory();

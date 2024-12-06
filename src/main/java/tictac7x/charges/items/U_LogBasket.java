@@ -96,16 +96,16 @@ public class U_LogBasket extends ChargedItemWithStorage {
             }).onItemClick(),
 
             // Miscellania support.
-            new OnChatMessage("You get some maple logs and give them to Lumberjack Leif.").onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).addToStorage(ItemID.MAPLE_LOGS, 0),
+            new OnChatMessage("You get some maple logs and give them to Lumberjack Leif.").requiredItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET).addToStorage(ItemID.MAPLE_LOGS, 0),
 
             // Chop.
             new OnChatMessage("You get some (?<logs>.+).").matcherConsumer(m -> {
                 lastLogs = getStorageItemFromName(m.group("logs"));
                 storage.add(lastLogs, 1);
                 infernalQuantityTracker++;
-            }).onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
+            }).requiredItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
 
-                new OnItemPickup(storage.getStoreableItems()).isByOne().onSpecificItem(ItemID.OPEN_LOG_BASKET).pickUpToStorage(),
+                new OnItemPickup(storage.getStoreableItems()).isByOne().requiredItem(ItemID.OPEN_LOG_BASKET).pickUpToStorage(),
 
             // Fill from inventory.
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
@@ -128,7 +128,7 @@ public class U_LogBasket extends ChargedItemWithStorage {
                     storage.remove(lastLogs, 1);
                     infernalQuantityTracker--;
                 }
-            }).onSpecificItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
+            }).requiredItem(ItemID.OPEN_LOG_BASKET, ItemID.OPEN_FORESTRY_BASKET),
         };
     }
 

@@ -103,13 +103,22 @@ public abstract class ListenerBase {
 
     boolean isValidTrigger(final TriggerBase trigger) {
         // Specific item check.
-        specificItemCheck: if (trigger.onSpecificItem.isPresent()) {
-            for (final int itemId : trigger.onSpecificItem.get()) {
+        specificItemCheck: if (trigger.requiredItem.isPresent()) {
+            for (final int itemId : trigger.requiredItem.get()) {
                 if (chargedItem.store.inventoryContainsItem(itemId) || chargedItem.store.equipmentContainsItem(itemId)) {
                     break specificItemCheck;
                 }
             }
             return false;
+        }
+
+        // Unallowed items check.
+        if (trigger.unallowedItem.isPresent()) {
+            for (final int itemId : trigger.unallowedItem.get()) {
+                if (chargedItem.store.inventoryContainsItem(itemId) || chargedItem.store.equipmentContainsItem(itemId)) {
+                    return false;
+                }
+            }
         }
 
         // On item click check.
@@ -194,11 +203,6 @@ public abstract class ListenerBase {
 
         // Activated check.
         if ((chargedItem instanceof ChargedItemWithStatus) && trigger.isActivated.isPresent() && trigger.isActivated.get() && !((ChargedItemWithStatus) chargedItem).isActivated()) {
-            return false;
-        }
-
-        // At bank check.
-        if (trigger.atBank.isPresent() && (client.getWidget(12, 1) == null) && client.getWidget(192, 0) == null) {
             return false;
         }
 

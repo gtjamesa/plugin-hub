@@ -10,6 +10,7 @@ public class OnItemContainerChanged extends TriggerBase {
     public Optional<Boolean> fillStorageFromInventorySingle = Optional.empty();
     public Optional<Boolean> emptyStorageToInventory = Optional.empty();
     public Optional<Boolean> emptyStorageToInventoryReversed = Optional.empty();
+    public Optional<Boolean> emptyStorageToBank = Optional.empty();
 
     public OnItemContainerChanged(final int itemContainerId) {
         this.itemContainerId = itemContainerId;
@@ -37,6 +38,11 @@ public class OnItemContainerChanged extends TriggerBase {
 
     public OnItemContainerChanged updateStorage() {
         this.updateStorage = Optional.of(true);
+        return this;
+    }
+
+    public OnItemContainerChanged emptyStorageToBank() {
+        this.emptyStorageToBank = Optional.of(true);
         return this;
     }
 }

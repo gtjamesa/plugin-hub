@@ -4,14 +4,14 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.store.ItemWithQuantity;
 import tictac7x.charges.store.ItemsDifference;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 public abstract class TriggerBase {
     // Checks.
-    public Optional<int[]> onSpecificItem = Optional.empty();
+    public Optional<int[]> requiredItem = Optional.empty();
+    public Optional<int[]> unallowedItem = Optional.empty();
     public Optional<String[]> onMenuOption = Optional.empty();
     public Optional<String[]> onMenuTarget = Optional.empty();
     public Optional<int[]> onMenuImpostor = Optional.empty();
@@ -19,7 +19,6 @@ public abstract class TriggerBase {
     public Optional<StorageItem[]> onUseStorageItemOnChargedItem = Optional.empty();
     public Optional<StorageItem[]> onUseChargedItemOnStorageItem = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
-    public Optional<Boolean> atBank = Optional.empty();
     public Optional<Pattern> hasChatMessage = Optional.empty();
     public boolean multiTrigger = false;
 
@@ -70,8 +69,13 @@ public abstract class TriggerBase {
         return this;
     }
 
-    public TriggerBase onSpecificItem(final int ...itemIds) {
-        this.onSpecificItem = Optional.of(itemIds);
+    public TriggerBase requiredItem(final int ...itemIds) {
+        this.requiredItem = Optional.of(itemIds);
+        return this;
+    }
+
+    public TriggerBase unallowedItem(final int ...itemIds) {
+        this.unallowedItem = Optional.of(itemIds);
         return this;
     }
 
@@ -147,11 +151,6 @@ public abstract class TriggerBase {
 
     public TriggerBase addToStorage(final int itemId) {
         this.addToStorage = Optional.of(new int[]{itemId, 1});
-        return this;
-    }
-
-    public TriggerBase atBank() {
-        this.atBank = Optional.of(true);
         return this;
     }
 

@@ -17,13 +17,13 @@ import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnItemPickup;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
 import static tictac7x.charges.store.ItemContainerId.INVENTORY;
+import static tictac7x.charges.store.ItemContainerId.BANK;
 
 
 public class U_GemBag extends ChargedItemWithStorage {
@@ -69,7 +69,7 @@ public class U_GemBag extends ChargedItemWithStorage {
             // Mining regular or gem rocks.
             new OnChatMessage("You just (found|mined) (a|an) (?<gem>.+)!").matcherConsumer(m -> {
                 storage.add(getStorageItemFromName(m.group("gem")), 1);
-            }).onSpecificItem(ItemID.OPEN_GEM_BAG),
+            }).requiredItem(ItemID.OPEN_GEM_BAG),
 
             // Pickpocketing.
             new OnChatMessage("The following stolen loot gets added to your gem bag: Uncut (?<gem>.+) x (?<quantity>.+).").matcherConsumer(m -> {
@@ -85,29 +85,29 @@ public class U_GemBag extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
 
             // Empty to bank.
-            new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
+            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption("Empty"),
 
             // Use gem on bag
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUseChargedItemOnStorageItem(storage.getStoreableItems()),
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventoryAll().onUseStorageItemOnChargedItem(storage.getStoreableItems()),
 
             // Pick up.
-            new OnItemPickup(storage.getStoreableItems()).isByOne().onSpecificItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
+            new OnItemPickup(storage.getStoreableItems()).isByOne().requiredItem(ItemID.OPEN_GEM_BAG).pickUpToStorage(),
 
             // Telegrab.
-            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+            new OnXpDrop(Skill.MAGIC).requiredItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
                 "Uncut sapphire"
             ).addToStorage(ItemID.UNCUT_SAPPHIRE, 1),
-            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+            new OnXpDrop(Skill.MAGIC).requiredItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
                 "Uncut emerald"
             ).addToStorage(ItemID.UNCUT_EMERALD, 1),
-            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+            new OnXpDrop(Skill.MAGIC).requiredItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
                 "Uncut ruby"
             ).addToStorage(ItemID.UNCUT_RUBY, 1),
-            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+            new OnXpDrop(Skill.MAGIC).requiredItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
                 "Uncut diamond"
             ).addToStorage(ItemID.UNCUT_DIAMOND, 1),
-            new OnXpDrop(Skill.MAGIC).onSpecificItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
+            new OnXpDrop(Skill.MAGIC).requiredItem(ItemID.OPEN_GEM_BAG).onMenuOption("Cast").onMenuTarget(
                 "Uncut dragonstone"
             ).addToStorage(ItemID.UNCUT_DRAGONSTONE, 1),
 

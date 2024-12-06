@@ -1870,11 +1870,11 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getCoalBagCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = herb_sack,
-            name = herb_sack,
-            description = herb_sack,
+            keyName = herb_sack + "_storage",
+            name = herb_sack + "_storage",
+            description = herb_sack + "_storage",
             section = debug
-        ) default int getHerbSackCharges() { return Charges.UNKNOWN; }
+        ) default String getHerbSackStorage() { return ""; }
 
         @ConfigItem(
             keyName = escape_crystal_status,

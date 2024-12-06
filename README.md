@@ -69,6 +69,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Desert amulet
 - Digsite pendant
 - Escape crystal
+- Binding necklace
 - Necklace of passage
 - Necklace of phoenix
 - Necklace of dodgy

@@ -38,7 +38,7 @@ public class W_WesternBanner extends ChargedItem {
         };
 
         this.triggers = new TriggerBase[]{
-            new OnResetDaily().onSpecificItem(ItemID.WESTERN_BANNER_3).setFixedCharges(1),
+            new OnResetDaily().requiredItem(ItemID.WESTERN_BANNER_3).setFixedCharges(1),
         };
     }
 }

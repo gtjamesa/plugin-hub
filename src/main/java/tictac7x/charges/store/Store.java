@@ -38,8 +38,10 @@ public class Store {
     public Optional<ItemContainer> equipment = Optional.empty();
     public Optional<ItemContainer> bank = Optional.empty();
 
-    public List<StorageItem> currentItems = new ArrayList<>();
-    public List<StorageItem> previousItems = new ArrayList<>();
+    public List<StorageItem> currentInventoryItems = new ArrayList<>();
+    public List<StorageItem> previousInventoryItems = new ArrayList<>();
+    public List<StorageItem> currentBankItems = new ArrayList<>();
+    public List<StorageItem> previousBankItems = new ArrayList<>();
 
     public final List<AdvancedMenuEntry> menuOptionsClicked = new ArrayList<>();
     private final Map<Skill, Integer> skillsXp = new HashMap<>();
@@ -73,11 +75,11 @@ public class Store {
     }
 
     public int getInventoryPreviouslyEmptySlots() {
-        return 28 - previousItems.size();
+        return 28 - previousInventoryItems.size();
     }
 
     public int getInventoryEmptySlots() {
-        return 28 - currentItems.size();
+        return 28 - currentInventoryItems.size();
     }
 
     public void onStatChanged(final StatChanged event) {
@@ -88,15 +90,16 @@ public class Store {
         // Update inventory, save previous items.
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             inventory = Optional.of(event.getItemContainer());
-            previousItems = new ArrayList<>();
-            for (final StorageItem storageItem : currentItems) {
-                previousItems.add(new StorageItem(storageItem.itemId, storageItem.getQuantity()));
+
+            previousInventoryItems = new ArrayList<>();
+            for (final StorageItem storageItem : currentInventoryItems) {
+                previousInventoryItems.add(new StorageItem(storageItem.itemId, storageItem.getQuantity()));
             }
 
-            currentItems = new ArrayList<>();
+            currentInventoryItems = new ArrayList<>();
             for (final Item item : event.getItemContainer().getItems()) {
                 if (isInvalidItem(item)) continue;
-                currentItems.add(new StorageItem(item.getId())
+                currentInventoryItems.add(new StorageItem(item.getId())
                     .displayName(itemManager.getItemComposition(item.getId()).getName())
                     .quantity(item.getQuantity())
                 );
@@ -105,6 +108,20 @@ public class Store {
             equipment = Optional.of(event.getItemContainer());
         } else if (event.getContainerId() == InventoryID.BANK.getId()) {
             bank = Optional.of(event.getItemContainer());
+
+            previousBankItems = new ArrayList<>();
+            for (final StorageItem storageItem : currentBankItems) {
+                previousBankItems.add(new StorageItem(storageItem.itemId, storageItem.getQuantity()));
+            }
+
+            currentBankItems = new ArrayList<>();
+            for (final Item item : event.getItemContainer().getItems()) {
+                if (isInvalidItem(item)) continue;
+                currentBankItems.add(new StorageItem(item.getId())
+                    .displayName(itemManager.getItemComposition(item.getId()).getName())
+                    .quantity(item.getQuantity())
+                );
+            }
         }
 
         updateStorage(event);
@@ -244,7 +261,7 @@ public class Store {
     public int getInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 
-        for (final StorageItem storageItem : currentItems) {
+        for (final StorageItem storageItem : currentInventoryItems) {
             if (storageItem.itemId == itemId) {
                 quantity += storageItem.getQuantity();
             }
@@ -270,7 +287,7 @@ public class Store {
     public int getPreviousInventoryItemQuantity(final int itemId) {
         int quantity = 0;
 
-        for (final StorageItem storageItem : previousItems) {
+        for (final StorageItem storageItem : previousInventoryItems) {
             if (storageItem.itemId == itemId) {
                 quantity += storageItem.getQuantity();
             }
@@ -280,7 +297,7 @@ public class Store {
     }
 
     public boolean inventoryContainsItem(final int itemId) {
-        for (final StorageItem storageItem : currentItems) {
+        for (final StorageItem storageItem : currentInventoryItems) {
             if (storageItem.getId() == itemId) {
                 return true;
             }
@@ -389,7 +406,41 @@ public class Store {
                 quantitiesNew.put(itemNew.getId(), inventory.get().count(itemNew.getId()));
             }
 
-            for (final StorageItem itemOld : previousItems) {
+            for (final StorageItem itemOld : previousInventoryItems) {
+                if (quantitiesBefore.containsKey(itemOld.itemId)) {
+                    quantitiesBefore.put(itemOld.itemId, quantitiesBefore.get(itemOld.itemId) + itemOld.getQuantity());
+                } else {
+                    quantitiesBefore.put(itemOld.itemId, itemOld.getQuantity());
+                }
+            }
+        }
+
+        for (final int itemId : quantitiesNew.keySet()) {
+            itemsDifference.add(new ItemWithQuantity(itemId, quantitiesNew.get(itemId) - quantitiesBefore.getOrDefault(itemId, 0)));
+        }
+
+        for (final int itemId : quantitiesBefore.keySet()) {
+            if (!quantitiesNew.containsKey(itemId)) {
+                itemsDifference.add(new ItemWithQuantity(itemId, -quantitiesBefore.get(itemId)));
+            }
+        }
+
+        return new ItemsDifference(itemsDifference);
+    }
+
+    public ItemsDifference getBankItemsDifference() {
+        final List<ItemWithQuantity> itemsDifference = new ArrayList<>();
+
+        final Map<Integer, Integer> quantitiesNew = new HashMap<>();
+        final Map<Integer, Integer> quantitiesBefore = new HashMap<>();
+
+        if (bank.isPresent()) {
+            for (final Item itemNew : bank.get().getItems()) {
+                if (isInvalidItem(itemNew)) continue;
+                quantitiesNew.put(itemNew.getId(), bank.get().count(itemNew.getId()));
+            }
+
+            for (final StorageItem itemOld : previousBankItems) {
                 if (quantitiesBefore.containsKey(itemOld.itemId)) {
                     quantitiesBefore.put(itemOld.itemId, quantitiesBefore.get(itemOld.itemId) + itemOld.getQuantity());
                 } else {

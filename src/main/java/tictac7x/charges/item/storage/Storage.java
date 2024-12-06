@@ -12,8 +12,10 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ItemWithQuantity;
 import tictac7x.charges.store.Store;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -171,17 +173,18 @@ public class Storage {
     }
 
     public void emptyToInventory() {
-        if (!store.inventory.isPresent()) return;
+        for (final ItemWithQuantity itemDifference : store.getInventoryItemsDifference().items) {
+            if (storage.containsKey(itemDifference.itemId)) {
+                storage.get(itemDifference.itemId).quantity -= itemDifference.quantity;
+            }
+        }
+    }
 
-        int inventoryEmptySlots = store.getInventoryEmptySlots();
-
-        for (final StorageItem storageItem : storage.values()) {
-            // Empty storage until 0 inventory slots left.
-            if (inventoryEmptySlots == 0) break;
-
-            final int toEmptyStorageSlots = Math.min(inventoryEmptySlots, storageItem.getQuantity());
-            put(storageItem.itemId, storageItem.getQuantity() - toEmptyStorageSlots);
-            inventoryEmptySlots -= toEmptyStorageSlots;
+    public void emptyToBank() {
+        for (final ItemWithQuantity itemDifference : store.getBankItemsDifference().items) {
+            if (storage.containsKey(itemDifference.itemId)) {
+                storage.get(itemDifference.itemId).quantity -= itemDifference.quantity;
+            }
         }
     }
 

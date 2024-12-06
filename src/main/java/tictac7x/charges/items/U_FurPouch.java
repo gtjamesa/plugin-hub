@@ -16,12 +16,14 @@ import tictac7x.charges.item.storage.StorageItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
 import tictac7x.charges.item.triggers.OnItemContainerChanged;
 import tictac7x.charges.item.triggers.OnMenuEntryAdded;
-import tictac7x.charges.item.triggers.OnMenuOptionClicked;
 import tictac7x.charges.item.triggers.OnXpDrop;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.ItemContainerId;
 import tictac7x.charges.store.Store;
+
+import static tictac7x.charges.store.ItemContainerId.BANK;
+import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 
 public class U_FurPouch extends ChargedItemWithStorage {
     public U_FurPouch(
@@ -71,6 +73,9 @@ public class U_FurPouch extends ChargedItemWithStorage {
         };
 
         this.triggers = new TriggerBase[]{
+            // Empty.
+            new OnChatMessage("Your fur pouch is currently holding 0 fur.").emptyStorage(),
+
             // Fill from inventory.
             new OnItemContainerChanged(ItemContainerId.INVENTORY).fillStorageFromInventoryAll().onMenuOption("Fill"),
 
@@ -78,50 +83,53 @@ public class U_FurPouch extends ChargedItemWithStorage {
             new OnItemContainerChanged(ItemContainerId.INVENTORY).emptyStorageToInventory().onMenuOption("Empty"),
 
             // Empty to bank.
-            new OnMenuOptionClicked("Empty").atBank().emptyStorage(),
+            new OnItemContainerChanged(BANK).emptyStorageToBank().onMenuOption("Empty"),
+
+            // Use fur on pouch.
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventorySingle().onUseStorageItemOnChargedItem(storage.getStoreableItems()),
 
             // Hide destroy option.
             new OnMenuEntryAdded("Destroy").hide(),
 
             // Tracking.
-            new OnChatMessage("You manage to noose a polar kebbit that is hiding in the snowdrift.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.POLAR_KEBBIT_FUR),
-            new OnChatMessage("You manage to noose a common kebbit that is hiding in the bush.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.COMMON_KEBBIT_FUR),
-            new OnChatMessage("You manage to noose a Feldip weasel that is hiding in the bush.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.FELDIP_WEASEL_FUR),
-            new OnChatMessage("You manage to noose a desert devil that is hiding in the sand.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.DESERT_DEVIL_FUR),
+            new OnChatMessage("You manage to noose a polar kebbit that is hiding in the snowdrift.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.POLAR_KEBBIT_FUR),
+            new OnChatMessage("You manage to noose a common kebbit that is hiding in the bush.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.COMMON_KEBBIT_FUR),
+            new OnChatMessage("You manage to noose a Feldip weasel that is hiding in the bush.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.FELDIP_WEASEL_FUR),
+            new OnChatMessage("You manage to noose a desert devil that is hiding in the sand.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.DESERT_DEVIL_FUR),
 
             // Deadfalls.
-            new OnChatMessage("You've caught a pyre fox.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.FOX_FUR),
+            new OnChatMessage("You've caught a pyre fox.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.FOX_FUR),
 
             // Pitfalls.
-            new OnChatMessage("You've caught a spined larupia!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.LARUPIA_FUR),
-            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a spined larupia!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
+            new OnChatMessage("You've caught a spined larupia!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.LARUPIA_FUR),
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a spined larupia!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
                 if (itemsDifference.hasItem(ItemID.TATTY_LARUPIA_FUR)) {
                     storage.remove(ItemID.LARUPIA_FUR, 1);
                 }
             }),
-            new OnChatMessage("You've caught a horned graahk!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.GRAAHK_FUR),
-            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a horned graahk!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
+            new OnChatMessage("You've caught a horned graahk!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.GRAAHK_FUR),
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a horned graahk!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
                 if (itemsDifference.hasItem(ItemID.TATTY_GRAAHK_FUR)) {
                     storage.remove(ItemID.GRAAHK_FUR, 1);
                 }
             }),
-            new OnChatMessage("You've caught a sabre-?toothed kyatt!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.KYATT_FUR),
-            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a sabre-?toothed kyatt!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
+            new OnChatMessage("You've caught a sabre-?toothed kyatt!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.KYATT_FUR),
+            new OnItemContainerChanged(ItemContainerId.INVENTORY).hasChatMessage("You've caught a sabre-?toothed kyatt!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).onItemContainerDifference(itemsDifference -> {
                 if (itemsDifference.hasItem(ItemID.TATTY_KYATT_FUR)) {
                     storage.remove(ItemID.KYATT_FUR, 1);
                 }
             }),
-            new OnChatMessage("You've caught a sunlight antelope!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.SUNLIGHT_ANTELOPE_FUR),
-            new OnChatMessage("You've caught a moonlight antelope!").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.MOONLIGHT_ANTELOPE_FUR),
+            new OnChatMessage("You've caught a sunlight antelope!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.SUNLIGHT_ANTELOPE_FUR),
+            new OnChatMessage("You've caught a moonlight antelope!").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).addToStorage(ItemID.MOONLIGHT_ANTELOPE_FUR),
 
             // Aerial.
-            new OnXpDrop(Skill.HUNTER, 104).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).consumer(() -> {
+            new OnXpDrop(Skill.HUNTER, 104).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).consumer(() -> {
                 storage.add(ItemID.SPOTTED_KEBBIT_FUR, 1);
             }),
-            new OnXpDrop(Skill.HUNTER, 132).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).consumer(() -> {
+            new OnXpDrop(Skill.HUNTER, 132).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).consumer(() -> {
                 storage.add(ItemID.DARK_KEBBIT_FUR, 1);
             }),
-            new OnXpDrop(Skill.HUNTER, 156).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").onSpecificItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).consumer(() -> {
+            new OnXpDrop(Skill.HUNTER, 156).hasChatMessage("You retrieve the falcon as well as the fur of the dead kebbit.").requiredItem(ItemID.SMALL_FUR_POUCH_OPEN, ItemID.MEDIUM_FUR_POUCH_OPEN, ItemID.LARGE_FUR_POUCH_OPEN).consumer(() -> {
                 storage.add(ItemID.DASHING_KEBBIT_FUR, 1);
             }),
         };
