@@ -98,7 +98,12 @@ public class U_BottomlessCompostBucket extends ChargedItemWithStorage {
             }),
 
             // Fill compost from bin.
-            new OnXpDrop(Skill.FARMING).onMenuOption("Take").unallowedItem(ItemID.EMPTY_BUCKET).onMenuTarget("Compost Bin", "Big Compost Bin").consumer(() -> {
+            new OnXpDrop(Skill.FARMING).unallowedItem(ItemID.BUCKET).onMenuOption("Take").onMenuTarget("Compost Bin", "Big Compost Bin").consumer(() -> {
+                storage.add(getCompostType(), 2);
+            }),
+
+            // Use on compost bin.
+            new OnXpDrop(Skill.FARMING).onMenuOption("Use").onMenuTarget("Bottomless compost bucket -> Compost Bin", "Bottomless compost bucket -> Big Compost Bin").consumer(() -> {
                 storage.add(getCompostType(), 2);
             }),
         };
