@@ -51,7 +51,8 @@ public class U_MasterScrollBook extends ChargedItemWithStorage {
             new StorageItem(ItemID.REVENANT_CAVE_TELEPORT).displayName("Revenant Caves").specificOrder(14),
             new StorageItem(ItemID.WATSON_TELEPORT).displayName("Watson").specificOrder(15),
             new StorageItem(ItemID.GUTHIXIAN_TEMPLE_TELEPORT).displayName("Guthixian Temple").specificOrder(16),
-            new StorageItem(ItemID.SPIDER_CAVE_TELEPORT).displayName("Spider Cave").specificOrder(17)
+            new StorageItem(ItemID.SPIDER_CAVE_TELEPORT).displayName("Spider Cave").specificOrder(17),
+            new StorageItem(ItemID.COLOSSAL_WYRM_TELEPORT_SCROLL).displayName("Colossal Wyrm").specificOrder(18)
         );
 
         this.items = new TriggerItem[]{
@@ -77,6 +78,7 @@ public class U_MasterScrollBook extends ChargedItemWithStorage {
             new OnVarbitChanged(8253).varbitValueConsumer(charges -> storage.put(ItemID.WATSON_TELEPORT, charges)),
             new OnVarbitChanged(10967).varbitValueConsumer(charges -> storage.put(ItemID.GUTHIXIAN_TEMPLE_TELEPORT, charges)),
             new OnVarbitChanged(10995).varbitValueConsumer(charges -> storage.put(ItemID.SPIDER_CAVE_TELEPORT, charges)),
+            new OnVarbitChanged(11029).varbitValueConsumer(charges -> storage.put(ItemID.COLOSSAL_WYRM_TELEPORT_SCROLL, charges)),
 
             // Replace default teleport option.
             new OnMenuEntryAdded("Teleport").replaceTargetDynamically("Master scroll book", this::getDefaultTeleportLocation),
