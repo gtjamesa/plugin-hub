@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import net.runelite.api.Item;
 import net.runelite.api.ItemContainer;
 import net.runelite.client.config.ConfigManager;
+import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
@@ -15,7 +16,6 @@ import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemWithQuantity;
 import tictac7x.charges.store.Store;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -23,6 +23,7 @@ import java.util.Optional;
 public class Storage {
     private final ChargedItemWithStorage chargedItem;
     private final String storageConfigKey;
+    private final ItemManager itemManager;
     private final ConfigManager configManager;
     private final Store store;
     private final Gson gson;
@@ -33,30 +34,43 @@ public class Storage {
     public Optional<Integer> maximumTotalQuantityWithItemEquipped = Optional.empty();
     public Optional<int[]> maximumTotalQuantityWithItemEquippedItems = Optional.empty();
     public Optional<Boolean> showIndividualCharges = Optional.empty();
+    public boolean holdsSingleType = false;
+    public boolean emptyIsNegative = false;
     private Optional<Integer> maximumIndividualQuantity = Optional.empty();
     private StorageItem[] storeableItems = new StorageItem[]{};
 
 
-    public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ConfigManager configManager, final Store store, final Gson gson) {
+    public Storage(final ChargedItemWithStorage chargedItem, final String configKey, final ItemManager itemManager, final ConfigManager configManager, final Store store, final Gson gson) {
         this.chargedItem = chargedItem;
         this.storageConfigKey = configKey + "_storage";
+        this.itemManager = itemManager;
         this.configManager = configManager;
         this.store = store;
         this.gson = gson;
     }
 
-    public Storage maximumTotalQuantity(final int quantity) {
+    public Storage setMaximumTotalQuantity(final int quantity) {
         this.maximumTotalQuantity = Optional.of(quantity);
         return this;
     }
 
-    public Storage maximumTotalQuantityWithEquippedItem(int quantity, final int ...itemIds) {
+    public Storage emptyIsNegative() {
+        this.emptyIsNegative = true;
+        return this;
+    }
+    
+    public Storage setHoldsSingleType(final boolean holdsSingleType) {
+        this.holdsSingleType = holdsSingleType;
+        return this;
+    }
+
+    public Storage setMaximumTotalQuantityWithEquippedItem(int quantity, final int ...itemIds) {
         this.maximumTotalQuantityWithItemEquipped = Optional.of(quantity);
         this.maximumTotalQuantityWithItemEquippedItems = Optional.of(itemIds);
         return this;
     }
 
-    public Storage maximumIndividualQuantity(final int quantity) {
+    public Storage setMaximumIndividualQuantity(final int quantity) {
         this.maximumIndividualQuantity = Optional.of(quantity);
         return this;
     }
@@ -99,8 +113,12 @@ public class Storage {
 
     public void clearAndPut(final Optional<StorageItem> item, final int quantity) {
         if (!item.isPresent()) return;
+        clearAndPut(item.get().itemId, quantity);
+    }
+
+    public void clearAndPut(final int itemId, final int quantity) {
         clear();
-        put(item.get().itemId, quantity);
+        put(itemId, quantity);
     }
 
     public void remove(final Optional<StorageItem> item, final int quantity) {
@@ -123,10 +141,25 @@ public class Storage {
         this.remove(itemId, Math.max(quantity - store.getInventoryItemQuantity(itemId), 0));
     }
 
+    public void removeAndPrioritizeInventory(final Optional<Integer> itemId, final int quantity) {
+        if (itemId.isPresent()) {
+            this.removeAndPrioritizeInventory(itemId.get(), quantity);
+        }
+    }
+
     public void put(final int itemId, int quantity) {
         // -1 = item that was previously in the array, but that slot no longer has an item.
         // 6512 = empty item inside huntsmans kit.
         if (itemId == -1 || itemId == 6512) return;
+
+        // Storage holds only one unique item at once check.
+        if (holdsSingleType) {
+            for (final StorageItem storageItem : storage.values()) {
+                if (storageItem.itemId != itemId && storageItem.quantity > 0) {
+                    return;
+                }
+            }
+        }
 
         // Check for individual maximum quantity.
         if (maximumIndividualQuantity.isPresent() && quantity > maximumIndividualQuantity.get()) {
@@ -137,11 +170,13 @@ public class Storage {
         if (maximumTotalQuantity.isPresent()) {
             int newTotalQuantity = 0;
             for (final StorageItem storageItem : storage.values()) {
-                newTotalQuantity += storageItem.itemId == itemId ? quantity : storageItem.getQuantity();
+                if (storageItem.itemId == itemId) continue;
+                newTotalQuantity += storageItem.getQuantity();
             }
+            newTotalQuantity += quantity; //Add outside the loop in case the item is not currently stored
 
             if (newTotalQuantity > maximumTotalQuantity.get()) {
-                quantity = maximumTotalQuantity.get();
+                quantity -= newTotalQuantity - maximumTotalQuantity.get();
             }
         }
 
@@ -158,18 +193,21 @@ public class Storage {
     }
 
     public void fillFromInventory() {
-        for (final StorageItem storageItem : storeableItems) {
-            add(storageItem.getId(), store.getPreviousInventoryItemQuantity(storageItem.getId()));
+        for (final ItemWithQuantity itemDifference : store.getInventoryItemsDifference().items) {
+            if (isStorageItem(itemDifference) && itemDifference.quantity < 0) {
+                add(itemDifference.itemId, Math.abs(itemDifference.quantity));
+            }
         }
     }
 
-    public void fillFromInventoryIndividually(final int itemId) {
+    private boolean isStorageItem(final ItemWithQuantity item) {
         for (final StorageItem storageItem : storeableItems) {
-            if (storageItem.getId() == itemId) {
-                add(storageItem.getId(), store.getPreviousInventoryItemQuantity(storageItem.getId()));
-                return;
+            if (storageItem.itemId == item.itemId) {
+                return true;
             }
         }
+
+        return false;
     }
 
     public void emptyToInventory() {
@@ -180,29 +218,23 @@ public class Storage {
         }
     }
 
+    public void emptyToInventoryWithoutItemContainerChanged() {
+        int inventorySpaceFree = store.getInventoryEmptySlots();
+
+        for (final StorageItem storageItem : storage.values()) {
+            if (storageItem.quantity > 0) {
+                final int toRemove = Math.min(storageItem.quantity, inventorySpaceFree);
+                remove(storageItem.itemId, toRemove);
+                inventorySpaceFree -= toRemove;
+            }
+        }
+    }
+
     public void emptyToBank() {
         for (final ItemWithQuantity itemDifference : store.getBankItemsDifference().items) {
             if (storage.containsKey(itemDifference.itemId)) {
                 storage.get(itemDifference.itemId).quantity -= itemDifference.quantity;
             }
-        }
-    }
-
-    public void emptyToInventoryReversed() {
-        if (!store.inventory.isPresent()) return;
-
-        int inventoryEmptySlots = store.getInventoryPreviouslyEmptySlots();
-
-        // Reverse loop through the storage list
-        for (int i = storage.size() - 1; i >= 0; i--) {
-            final StorageItem storageItem = storage.get(i);
-
-            // Empty storage until 0 inventory slots left.
-            if (inventoryEmptySlots == 0) break;
-
-            final int toEmptyStorageSlots = Math.min(inventoryEmptySlots, storageItem.getQuantity());
-            put(storageItem.itemId, storageItem.getQuantity() - toEmptyStorageSlots);
-            inventoryEmptySlots -= toEmptyStorageSlots;
         }
     }
 
@@ -277,6 +309,30 @@ public class Storage {
         }
     }
 
+    public boolean isEmpty() {
+        for (final StorageItem storageItem : storage.values()) {
+            if (storageItem.quantity > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isFull() {
+        if (maximumTotalQuantity.isPresent()) {
+            int quantity = 0;
+
+            for (final StorageItem storageItem : storage.values()) {
+                quantity += storageItem.quantity;
+            }
+
+            return quantity == maximumTotalQuantity.get();
+        }
+
+        return false;
+    }
+
     public Optional<Integer> getMaximumTotalQuantity() {
         // Maximum storage from trigger item.
         for (final TriggerItem item : chargedItem.items) {
@@ -299,16 +355,13 @@ public class Storage {
     }
 
     public final Optional<StorageItem> getStorageItemFromName(final String name) {
-        // Perfect match.
+        // Based on checkName.
         for (final StorageItem storageItem : storeableItems) {
-            if (storageItem.checkName.isPresent() && name.equalsIgnoreCase(storageItem.checkName.get())) {
-                return Optional.of(storageItem);
-            }
-        }
-
-        // Partial match.
-        for (final StorageItem storageItem : storeableItems) {
-            if (storageItem.checkName.isPresent() && name.toLowerCase().contains(storageItem.checkName.get().toLowerCase())) {
+            if (
+                storageItem.checkName.isPresent() && name.equalsIgnoreCase(storageItem.checkName.get()) ||
+                storageItem.checkName.isPresent() && name.toLowerCase().contains(storageItem.checkName.get().toLowerCase()) ||
+                name.contains(itemManager.getItemComposition(storageItem.itemId).getName())
+            ) {
                 return Optional.of(storageItem);
             }
         }

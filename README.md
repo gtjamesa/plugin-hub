@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.11
+# Item Charges Improved - v0.5.12
 
 Show charges of various items that are in inventory or equipped
 
@@ -75,6 +75,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Necklace of dodgy
 - Pendant of ates
 - Ring of celestial
+- Ring of dueling
 - Ring of elements
 - Ring of explorer
 - Ring of pursuit
@@ -90,6 +91,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Bonecrusher
 - Bottomless compost bucket
 - Coal bag
+- Colossal Pouch
 - Crystal saw
 - Fish barrel
 - Fungicide spray
@@ -103,6 +105,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Master scroll book
 - Meat pouches
 - Ogre bellows
+- Plank sack
 - Seed box
 - Soul bearer
 - Strange old lockpick

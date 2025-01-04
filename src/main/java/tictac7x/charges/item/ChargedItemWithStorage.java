@@ -27,7 +27,7 @@ public class ChargedItemWithStorage extends ChargedItemBase {
 
     public ChargedItemWithStorage(String configKey, int itemId, Client client, ClientThread clientThread, ConfigManager configManager, ItemManager itemManager, InfoBoxManager infoBoxManager, ChatMessageManager chatMessageManager, Notifier notifier, ChargesImprovedConfig config, Store store, final Gson gson) {
         super(configKey, itemId, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store);
-        this.storage = new Storage(this, configKey, configManager, store, gson);
+        this.storage = new Storage(this, configKey, itemManager, configManager, store, gson);
 
         clientThread.invokeLater(() -> {
             loadCharges();
@@ -102,8 +102,16 @@ public class ChargedItemWithStorage extends ChargedItemBase {
 
     @Override
     public Color getTextColor() {
-        // Storage is full.
-        if (storage.getMaximumTotalQuantity().isPresent() && getCharges().equals(String.valueOf(storage.getMaximumTotalQuantity().get()))) {
+        // Full storage is positive.
+        if (storage.emptyIsNegative && storage.isFull()) {
+            return config.getColorActivated();
+        }
+
+        // Full storage is negative.
+        if (
+            storage.emptyIsNegative && storage.isEmpty() ||
+            !storage.emptyIsNegative && storage.getMaximumTotalQuantity().isPresent() && getCharges().equals(String.valueOf(storage.getMaximumTotalQuantity().get()))
+        ) {
             return config.getColorEmpty();
         }
 

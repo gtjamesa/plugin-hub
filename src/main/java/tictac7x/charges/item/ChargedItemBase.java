@@ -17,6 +17,7 @@ import tictac7x.charges.ChargesImprovedConfig;
 import tictac7x.charges.item.listeners.*;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.AdvancedMenuEntry;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
@@ -45,6 +46,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnItemContainerChanged listenerOnItemContainerChanged;
     private final ListenerOnItemPickup listenerOnItemPickup;
     private final ListenerOnXpDrop listenerOnXpDrop;
+    private final ListenerOnStatChanged listenerOnStatChanged;
     private final ListenerOnMenuEntryAdded listenerOnMenuEntryAdded;
     private final ListenerOnResetDaily listenerOnResetDaily;
     private final ListenerOnGraphicChanged listenerOnGraphicChanged;
@@ -54,6 +56,7 @@ public abstract class ChargedItemBase {
     private final ListenerOnVarbitChanged listenerOnVarbitChanged;
     private final ListenerOnUserAction listenerOnUserAction;
     private final ListenerOnMenuOptionClicked listenerOnMenuOptionClicked;
+    private final ListenerOnScriptPreFired listenerOnScriptPreFired;
 
     private boolean inInventory = false;
     private boolean inEquipment = false;
@@ -88,6 +91,7 @@ public abstract class ChargedItemBase {
         listenerOnItemContainerChanged = new ListenerOnItemContainerChanged(client, itemManager, this, notifier, config);
         listenerOnItemPickup = new ListenerOnItemPickup(client, itemManager, this, notifier, config);
         listenerOnXpDrop = new ListenerOnXpDrop(client, itemManager, this, notifier, config);
+        listenerOnStatChanged = new ListenerOnStatChanged(client, itemManager, this, notifier, config);
         listenerOnMenuEntryAdded = new ListenerOnMenuEntryAdded(client, itemManager, this, notifier, config);
         listenerOnResetDaily = new ListenerOnResetDaily(client, itemManager, this, notifier, config);
         listenerOnGraphicChanged = new ListenerOnGraphicChanged(client, itemManager, this, notifier, config);
@@ -97,6 +101,7 @@ public abstract class ChargedItemBase {
         listenerOnVarbitChanged = new ListenerOnVarbitChanged(client, itemManager, this, notifier, config);
         listenerOnUserAction = new ListenerOnUserAction(client, itemManager, this, notifier, config);
         listenerOnMenuOptionClicked = new ListenerOnMenuOptionClicked(client, itemManager, this, notifier, config);
+        listenerOnScriptPreFired = new ListenerOnScriptPreFired(client, itemManager, this, notifier, config);
     }
 
     public abstract String getCharges();
@@ -192,6 +197,7 @@ public abstract class ChargedItemBase {
     }
 
     public void onStatChanged(final StatChanged event) {
+        listenerOnStatChanged.trigger(event);
         if (!inInventoryOrEquipment()) return;
         listenerOnXpDrop.trigger(event);
     }
@@ -232,9 +238,14 @@ public abstract class ChargedItemBase {
         listenerOnUserAction.trigger();
     }
 
-    public void onMenuOptionClicked(final MenuOptionClicked event) {
+    public void onMenuOptionClicked(final AdvancedMenuEntry event) {
         if (!inInventoryOrEquipment()) return;
         listenerOnMenuOptionClicked.trigger(event);
+    }
+
+    public void onScriptPreFired(final ScriptPreFired event) {
+        if (!inInventoryOrEquipment()) return;
+        listenerOnScriptPreFired.trigger(event);
     }
 
     private void updateItem(final ItemContainerChanged event) {

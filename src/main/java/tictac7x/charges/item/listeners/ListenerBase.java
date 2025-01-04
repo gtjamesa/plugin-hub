@@ -4,6 +4,7 @@ import net.runelite.api.Client;
 import net.runelite.client.Notifier;
 import net.runelite.client.game.ItemManager;
 import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.ChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStatus;
@@ -76,7 +77,11 @@ public abstract class ListenerBase {
 
         // Consumer.
         if (trigger.consumer.isPresent()) {
-            trigger.consumer.get().run();
+            if (trigger.runConsumerOnNextGameTick.isPresent() && trigger.runConsumerOnNextGameTick.get()) {
+                chargedItem.store.nextTickQueue.add(trigger.consumer.get());
+            } else {
+                trigger.consumer.get().run();
+            }
             triggerUsed = true;
         }
 
@@ -126,17 +131,13 @@ public abstract class ListenerBase {
             return false;
         }
 
-        // Menu option without target or impostor needs to check for self charged item.
-        if (
-            trigger.onMenuOption.isPresent() &&
-            !trigger.onMenuTarget.isPresent() &&
-            !trigger.onMenuImpostor.isPresent() && chargedItem.store.notInMenuTargets(chargedItem.itemId)
-        ) {
+        // Menu option check.
+        if (trigger.onMenuOption.isPresent() && chargedItem.store.notInMenuOptions(trigger.onMenuOption.get())) {
             return false;
         }
 
-        // Menu option check.
-        if (trigger.onMenuOption.isPresent() && chargedItem.store.notInMenuOptions(trigger.onMenuOption.get())) {
+        // Menu option ids check.
+        if (trigger.onMenuOptionId.isPresent() && chargedItem.store.notInMenuOptionIds(trigger.onMenuOptionId.get())) {
             return false;
         }
 
@@ -180,7 +181,9 @@ public abstract class ListenerBase {
                 }
             }
 
-            if (!isValid) return false;
+            if (!isValid) {
+                return false;
+            }
         }
 
         // Use charged item on storage item check.

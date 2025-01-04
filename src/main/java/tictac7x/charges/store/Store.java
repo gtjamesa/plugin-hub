@@ -42,6 +42,7 @@ public class Store {
     public List<StorageItem> previousInventoryItems = new ArrayList<>();
     public List<StorageItem> currentBankItems = new ArrayList<>();
     public List<StorageItem> previousBankItems = new ArrayList<>();
+    public final Queue<Runnable> nextTickQueue = new ArrayDeque<>();
 
     public final List<AdvancedMenuEntry> menuOptionsClicked = new ArrayList<>();
     private final Map<Skill, Integer> skillsXp = new HashMap<>();
@@ -87,6 +88,8 @@ public class Store {
     }
 
     public void onItemContainerChanged(final ItemContainerChanged event) {
+        runNextGameTickQueue();
+
         // Update inventory, save previous items.
         if (event.getContainerId() == InventoryID.INVENTORY.getId()) {
             inventory = Optional.of(event.getItemContainer());
@@ -127,21 +130,14 @@ public class Store {
         updateStorage(event);
     }
 
-    public void onMenuOptionClicked(final MenuOptionClicked event) {
-        final String menuTarget = event.getMenuTarget().replaceAll("</?col.*?>", "");
-        final String menuOption = event.getMenuOption();
-        int impostorId = -1;
-
-        try {
-            impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
-        } catch (final Exception ignored) {}
-
+    public void onMenuOptionClicked(final AdvancedMenuEntry advancedMenuEntry) {
         if (
             // Not menu.
-            menuTarget.isEmpty() ||
+            advancedMenuEntry.target.isEmpty() && !advancedMenuEntry.option.contains("Buy-") ||
             // Menu option not found.
-            menuOption == null || menuOption.isEmpty() ||
-            event.getMenuAction().name().equals("RUNELITE")
+            advancedMenuEntry.option.isEmpty() ||
+            // RuneLite specific action.
+            advancedMenuEntry.action.equals("RUNELITE")
         ) {
             return;
         }
@@ -153,37 +149,53 @@ public class Store {
         }
 
         // Save menu option and target for other triggers to use.
-        menuOptionsClicked.add(new AdvancedMenuEntry(menuTarget, menuOption, impostorId));
+        menuOptionsClicked.add(advancedMenuEntry);
+    }
+
+    private void runNextGameTickQueue() {
+        while (!nextTickQueue.isEmpty()) {
+            final Runnable consumer = nextTickQueue.poll();
+            consumer.run();
+        }
     }
 
     public void onGameTick(final GameTick ignored) {
+        runNextGameTickQueue();
+
         // Automatically load all skill xps.
         if (!getSkillXp(Skill.MAGIC).isPresent()) {
-            skillsXp.put(Skill.AGILITY,       client.getSkillExperience(Skill.AGILITY));
-            skillsXp.put(Skill.ATTACK,        client.getSkillExperience(Skill.ATTACK));
-            skillsXp.put(Skill.CONSTRUCTION,  client.getSkillExperience(Skill.CONSTRUCTION));
-            skillsXp.put(Skill.COOKING,       client.getSkillExperience(Skill.COOKING));
-            skillsXp.put(Skill.CRAFTING,      client.getSkillExperience(Skill.CRAFTING));
-            skillsXp.put(Skill.DEFENCE,       client.getSkillExperience(Skill.DEFENCE));
-            skillsXp.put(Skill.FARMING,       client.getSkillExperience(Skill.FARMING));
-            skillsXp.put(Skill.FIREMAKING,    client.getSkillExperience(Skill.FIREMAKING));
-            skillsXp.put(Skill.FISHING,       client.getSkillExperience(Skill.FISHING));
-            skillsXp.put(Skill.FLETCHING,     client.getSkillExperience(Skill.FLETCHING));
-            skillsXp.put(Skill.HERBLORE,      client.getSkillExperience(Skill.HERBLORE));
-            skillsXp.put(Skill.HITPOINTS,     client.getSkillExperience(Skill.HITPOINTS));
-            skillsXp.put(Skill.HUNTER,        client.getSkillExperience(Skill.HUNTER));
-            skillsXp.put(Skill.MAGIC,         client.getSkillExperience(Skill.MAGIC));
-            skillsXp.put(Skill.MINING,        client.getSkillExperience(Skill.MINING));
-            skillsXp.put(Skill.PRAYER,        client.getSkillExperience(Skill.PRAYER));
-            skillsXp.put(Skill.RANGED,        client.getSkillExperience(Skill.RANGED));
-            skillsXp.put(Skill.RUNECRAFT,     client.getSkillExperience(Skill.RUNECRAFT));
-            skillsXp.put(Skill.SLAYER,        client.getSkillExperience(Skill.SLAYER));
-            skillsXp.put(Skill.SMITHING,      client.getSkillExperience(Skill.SMITHING));
-            skillsXp.put(Skill.STRENGTH,      client.getSkillExperience(Skill.STRENGTH));
-            skillsXp.put(Skill.THIEVING,      client.getSkillExperience(Skill.THIEVING));
-            skillsXp.put(Skill.WOODCUTTING,   client.getSkillExperience(Skill.WOODCUTTING));
+            skillsXp.put(Skill.AGILITY, client.getSkillExperience(Skill.AGILITY));
+            skillsXp.put(Skill.ATTACK, client.getSkillExperience(Skill.ATTACK));
+            skillsXp.put(Skill.CONSTRUCTION, client.getSkillExperience(Skill.CONSTRUCTION));
+            skillsXp.put(Skill.COOKING, client.getSkillExperience(Skill.COOKING));
+            skillsXp.put(Skill.CRAFTING, client.getSkillExperience(Skill.CRAFTING));
+            skillsXp.put(Skill.DEFENCE, client.getSkillExperience(Skill.DEFENCE));
+            skillsXp.put(Skill.FARMING, client.getSkillExperience(Skill.FARMING));
+            skillsXp.put(Skill.FIREMAKING, client.getSkillExperience(Skill.FIREMAKING));
+            skillsXp.put(Skill.FISHING, client.getSkillExperience(Skill.FISHING));
+            skillsXp.put(Skill.FLETCHING, client.getSkillExperience(Skill.FLETCHING));
+            skillsXp.put(Skill.HERBLORE, client.getSkillExperience(Skill.HERBLORE));
+            skillsXp.put(Skill.HITPOINTS, client.getSkillExperience(Skill.HITPOINTS));
+            skillsXp.put(Skill.HUNTER, client.getSkillExperience(Skill.HUNTER));
+            skillsXp.put(Skill.MAGIC, client.getSkillExperience(Skill.MAGIC));
+            skillsXp.put(Skill.MINING, client.getSkillExperience(Skill.MINING));
+            skillsXp.put(Skill.PRAYER, client.getSkillExperience(Skill.PRAYER));
+            skillsXp.put(Skill.RANGED, client.getSkillExperience(Skill.RANGED));
+            skillsXp.put(Skill.RUNECRAFT, client.getSkillExperience(Skill.RUNECRAFT));
+            skillsXp.put(Skill.SLAYER, client.getSkillExperience(Skill.SLAYER));
+            skillsXp.put(Skill.SMITHING, client.getSkillExperience(Skill.SMITHING));
+            skillsXp.put(Skill.STRENGTH, client.getSkillExperience(Skill.STRENGTH));
+            skillsXp.put(Skill.THIEVING, client.getSkillExperience(Skill.THIEVING));
+            skillsXp.put(Skill.WOODCUTTING, client.getSkillExperience(Skill.WOODCUTTING));
         }
         gametick++;
+
+        // Keep only last menu entry.
+        if (menuOptionsClicked.size() > 1) {
+            final AdvancedMenuEntry lastMenuEntry = menuOptionsClicked.get(menuOptionsClicked.size() - 1);
+            menuOptionsClicked.clear();
+            menuOptionsClicked.add(lastMenuEntry);
+        }
     }
 
     public boolean inMenuTargets(final int ...itemIds) {
@@ -229,7 +241,7 @@ public class Store {
     public boolean inMenuOptions(final String ...options) {
         for (final AdvancedMenuEntry advancedMenuEntry : menuOptionsClicked) {
             for (final String option : options) {
-                if (advancedMenuEntry.option.contains(option)) {
+                if (advancedMenuEntry.option.equals(option)) {
                     return true;
                 }
             }
@@ -240,6 +252,22 @@ public class Store {
 
     public boolean notInMenuOptions(final String ...options) {
         return !inMenuOptions(options);
+    }
+
+    public boolean inMenuOptionIds(final int ...menuOptionIds) {
+        for (final AdvancedMenuEntry advancedMenuEntry : menuOptionsClicked) {
+            for (final int menuOptionId : menuOptionIds) {
+                if (advancedMenuEntry.eventId == menuOptionId) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean notInMenuOptionIds(final int ...menuOptionsIds) {
+        return !inMenuOptionIds(menuOptionsIds);
     }
 
     public boolean inMenuImpostors(final int ...impostorIds) {

@@ -1,9 +1,11 @@
 package tictac7x.charges;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.inject.Provides;
 import net.runelite.api.*;
 import net.runelite.api.events.*;
+import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -24,8 +26,10 @@ import tictac7x.charges.item.overlays.ChargedItemInfobox;
 import tictac7x.charges.item.overlays.ChargedItemOverlay;
 import tictac7x.charges.items.*;
 import tictac7x.charges.items.barrows.*;
+import tictac7x.charges.store.AdvancedMenuEntry;
 import tictac7x.charges.store.Store;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -33,10 +37,7 @@ import java.awt.event.MouseWheelEvent;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @PluginDescriptor(
 	name = "Item Charges Improved",
@@ -123,14 +124,15 @@ import java.util.Optional;
 )
 
 public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.11";
+	private final String pluginVersion = "v0.5.12";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Tumeken's shadow added.<br>" +
-		"<colHIGHLIGHT>* Digsite pendant added.<br>" +
-		"<colHIGHLIGHT>* Pendant of ates added.<br>" +
-		"<colHIGHLIGHT>* Binding necklace added.<br>" +
-		"<colHIGHLIGHT>* Fixes to other items."
+		"<colHIGHLIGHT>* Plank sack added.<br>" +
+		"<colHIGHLIGHT>* Colossal pouch added.<br>" +
+		"<colHIGHLIGHT>* Ring of duelling added.<br>" +
+		"<colHIGHLIGHT>* Log basket and fish barrel fixes.<br>" +
+		"<colHIGHLIGHT>* Forestry kit shop support.<br>" +
+		"<colHIGHLIGHT>* Master scroll book now has Colossal Wyrm teleport scrolls support."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -252,6 +254,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new J_NecklaceOfDodgy(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_PendantOfAtes(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfCelestial(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new J_RingOfDueling(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfElements(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfExplorer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_RingOfPursuit(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -267,6 +270,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new U_BottomlessCompostBucket(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_CoalBag(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_CrystalSaw(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_ColossalPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_FishBarrel(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_FungicideSpray(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_FurPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -280,6 +284,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new U_MeatPouch(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_OgreBellows(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_QuetzalWhistle(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_PlankSack(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_SeedBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_SoulBearer(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_StrangeOldLockpick(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -442,26 +447,42 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	@Subscribe
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
-		if (event.getMenuOption().equals("Use") && !event.getMenuTarget().contains("->")) return;
+		final AdvancedMenuEntry advancedMenuEntry = new AdvancedMenuEntry(event, client);
+		if (
+			advancedMenuEntry.option.equals("Use") && advancedMenuEntry.action.equals("WIDGET_TARGET") ||
+			advancedMenuEntry.action.equals("CANCEL")
+		) return;
 
-		store.onMenuOptionClicked(event);
+		store.onMenuOptionClicked(advancedMenuEntry);
 
 		for (final ChargedItemBase chargedItem : chargedItems) {
-			chargedItem.onMenuOptionClicked(event);
+			chargedItem.onMenuOptionClicked(advancedMenuEntry);
 		}
 
-//		int impostorId = -1;
-//		try {
-//			impostorId = client.getObjectDefinition(event.getMenuEntry().getIdentifier()).getImpostor().getId();
-//		} catch (final Exception ignored) {}
 //		System.out.println("MENU OPTION | " +
-//			"option: " + event.getMenuOption() +
-//			", target: " + event.getMenuTarget() +
-//			", action name: " + event.getMenuAction().name() +
-//			", action id: " + event.getMenuAction().getId() +
-//			", item id: " + event.getItemId() +
-//			", impostor id " + impostorId
+//			"event id: " + advancedMenuEntry.eventId +
+//			", option: " + advancedMenuEntry.option +
+//			", target: " + advancedMenuEntry.target +
+//			", action id: " + advancedMenuEntry.actionId +
+//			", action name: " + advancedMenuEntry.action +
+//			", item id: " + advancedMenuEntry.itemId +
+//			", impostor id: " + advancedMenuEntry.impostorId
 //		);
+	}
+
+	@Subscribe
+	public void onScriptPreFired(final ScriptPreFired event) {
+		switch (event.getScriptId()) {
+			case 1004: case 2100: case 2512: case 3174: case 3350:
+			case 4029: case 4517: case 4518: case 4671: case 4716:
+			case 4721: case 4730: case 5933: case 5935: case 5939:
+				return;
+			default:
+				for (final ChargedItemBase chargedItem : chargedItems) {
+					chargedItem.onScriptPreFired(event);
+				}
+		}
+
 	}
 
 	@Subscribe
@@ -485,14 +506,20 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	@Subscribe
 	public void onStatChanged(final StatChanged event) {
-		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
-		store.onStatChanged(event);
-
-//		System.out.println("STAT CHANGED | " +
+//		String statChanged =
 //			event.getSkill().getName() +
 //			", level: " + event.getLevel() +
-//			", xp: " + event.getXp()
+//			", total xp: " + event.getXp();
+//
+//		if (store.getSkillXp(event.getSkill()).isPresent()) {
+//			statChanged += ", xp drop: " + (event.getXp() - store.getSkillXp(event.getSkill()).get());
+//		}
+//		System.out.println("STAT CHANGED | " +
+//			statChanged
 //		);
+
+		Arrays.stream(chargedItems).forEach(infobox -> infobox.onStatChanged(event));
+		store.onStatChanged(event);
 	}
 
 	@Subscribe
@@ -641,6 +668,50 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	public static int getNumberFromCommaString(final String charges) {
 		return Integer.parseInt(charges.replaceAll(",", "").replaceAll("\\.", ""));
+	}
+
+	public static Optional<Widget> getWidget(final Client client, final int parent, final int child) {
+		@Nullable
+		final Widget widget = client.getWidget(parent, child);
+		return Optional.ofNullable(widget);
+	}
+
+	public static Optional<Widget> getWidget(final Client client, final int parent, final int child, final int subChild) {
+		@Nullable
+		final Widget widget = client.getWidget(parent, child);
+		if (widget == null) return Optional.empty();
+
+		@Nullable
+		final Widget subWidget = widget.getChild(subChild);
+		return Optional.ofNullable(subWidget);
+	}
+	
+	private static final ImmutableMap<String, Integer> TEXT_TO_NUMBER_MAP = ImmutableMap.<String, Integer>builder()
+		.put("zero", 0).put("one", 1).put("two", 2).put("three", 3).put("four", 4).put("five", 5)
+		.put("six", 6).put("seven", 7).put("eight", 8).put("nine", 9).put("ten", 10)
+		.put("eleven", 11).put("twelve", 12).put("thirteen", 13).put("fourteen", 14).put("fifteen", 15)
+		.put("sixteen", 16).put("seventeen", 17).put("eighteen", 18).put("nineteen", 19).put("twenty", 20)
+		.put("thirty", 30).put("forty", 40).put("fifty", 50).put("sixty", 60).put("seventy", 70)
+		.put("eighty", 80).put("ninety", 90).put("hundred", 100).build();
+
+	public static int getNumberFromWordRepresentation(final String charges) {
+		// Support strings like "twenty two" and "twenty-two"
+		final String[] words = charges.toLowerCase().split("[ -]");
+		int result = 0;
+		int current = 0;
+
+		for (final String word : words) {
+			if (TEXT_TO_NUMBER_MAP.containsKey(word)) {
+				current += TEXT_TO_NUMBER_MAP.get(word);
+			} else if (word.equals("hundred")) {
+				current *= 100;
+			} else if (word.equals("thousand")) {
+				result += current * 1000;
+				current = 0;
+			}
+		}
+
+		return result + current;
 	}
 }
 

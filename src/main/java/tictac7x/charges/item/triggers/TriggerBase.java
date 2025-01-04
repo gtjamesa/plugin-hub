@@ -13,6 +13,7 @@ public abstract class TriggerBase {
     public Optional<int[]> requiredItem = Optional.empty();
     public Optional<int[]> unallowedItem = Optional.empty();
     public Optional<String[]> onMenuOption = Optional.empty();
+    public Optional<int[]> onMenuOptionId = Optional.empty();
     public Optional<String[]> onMenuTarget = Optional.empty();
     public Optional<int[]> onMenuImpostor = Optional.empty();
     public Optional<Boolean> onItemClick = Optional.empty();
@@ -20,6 +21,7 @@ public abstract class TriggerBase {
     public Optional<StorageItem[]> onUseChargedItemOnStorageItem = Optional.empty();
     public Optional<Boolean> isEquipped = Optional.empty();
     public Optional<Pattern> hasChatMessage = Optional.empty();
+    public Optional<Boolean> runConsumerOnNextGameTick = Optional.empty();
     public boolean multiTrigger = false;
 
     // Actions.
@@ -84,6 +86,11 @@ public abstract class TriggerBase {
         return this;
     }
 
+    public TriggerBase onMenuOptionId(final int ...menuOptionIds) {
+        this.onMenuOptionId = Optional.of(menuOptionIds);
+        return this;
+    }
+
     public TriggerBase onMenuTarget(final String ...targets) {
         this.onMenuTarget = Optional.of(targets);
         return this;
@@ -136,6 +143,11 @@ public abstract class TriggerBase {
 
     public TriggerBase consumer(final Runnable consumer) {
         this.consumer = Optional.of(consumer);
+        return this;
+    }
+
+    public TriggerBase runConsumerOnNextGameTick() {
+        this.runConsumerOnNextGameTick = Optional.of(true);
         return this;
     }
 
