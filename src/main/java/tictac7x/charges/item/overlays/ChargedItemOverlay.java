@@ -9,23 +9,21 @@ import net.runelite.client.ui.overlay.WidgetItemOverlay;
 import net.runelite.client.ui.overlay.components.TextComponent;
 import net.runelite.client.ui.overlay.tooltip.Tooltip;
 import net.runelite.client.ui.overlay.tooltip.TooltipManager;
-import tictac7x.charges.ChargesImprovedConfig;
+import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStorage;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Charges;
+import tictac7x.charges.store.ItemOverlayLocation;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.Optional;
 
 public class ChargedItemOverlay extends WidgetItemOverlay {
     private final Client client;
     private final TooltipManager tooltipManager;
     private final ConfigManager configManager;
-    private final ChargesImprovedConfig config;
+    private final TicTac7xChargesImprovedConfig config;
     private final ChargedItemBase[] chargedItems;
 
     public ChargedItemOverlay(
@@ -33,7 +31,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
         final TooltipManager tooltipManager,
         final ItemManager itemManager,
         final ConfigManager configManager,
-        final ChargesImprovedConfig config,
+        final TicTac7xChargesImprovedConfig config,
         final ChargedItemBase[] chargedItems
     ) {
         this.client = client;
@@ -111,9 +109,26 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
 
         final Rectangle bounds = widgetItem.getCanvasBounds();
         final TextComponent charges_component = new TextComponent();
-
-        charges_component.setPosition(new Point(bounds.x, (int) bounds.getMaxY()));
         charges_component.setText(charges);
+        final Dimension textDimension = charges_component.render(graphics);
+
+        final int itemOverlayX = (int) ((
+            config.itemOverlayLocation() == ItemOverlayLocation.BOTTOM_LEFT ||
+            config.itemOverlayLocation() == ItemOverlayLocation.TOP_LEFT
+        )
+            ? bounds.getMinX()
+            : bounds.getMaxX() - textDimension.getWidth() - 5
+        );
+
+        final int itemOverlayY = (int) ((
+            config.itemOverlayLocation() == ItemOverlayLocation.TOP_LEFT ||
+            config.itemOverlayLocation() == ItemOverlayLocation.TOP_RIGHT
+        )
+            ? bounds.getMinY() + textDimension.getHeight() - 2
+            : bounds.getMaxY()
+        );
+
+        charges_component.setPosition(new Point(itemOverlayX, itemOverlayY));
 
         // Set color.
         charges_component.setColor(color);
@@ -148,7 +163,7 @@ public class ChargedItemOverlay extends WidgetItemOverlay {
     }
 
     private boolean isChargedItemOverlayEnabled(final ChargedItemBase chargedItem) {
-        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, chargedItem.configKey + "_overlay"));
+        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, chargedItem.configKey + "_overlay"));
 
         if (visible.isPresent() && visible.get().equals("false")) {
             return false;

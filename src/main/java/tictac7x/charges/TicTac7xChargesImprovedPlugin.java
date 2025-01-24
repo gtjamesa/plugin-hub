@@ -123,13 +123,14 @@ import java.util.*;
 	}
 )
 
-public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.13";
+public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
+	private final String pluginVersion = "v0.5.14";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Fur/Meat pouches and binding necklace fixes.<br>" +
-		"<colHIGHLIGHT>* Tumeken's shadow enabled.<br>" +
-		"<colHIGHLIGHT>* Ring of endurance added."
+		"<colHIGHLIGHT>* Option to choose item overlay location.<br>" +
+		"<colHIGHLIGHT>* Alchemist's amulet added.<br>" +
+		"<colHIGHLIGHT>* Log basket fixes.<br>" +
+		"<colHIGHLIGHT>* Daily reset items fixes."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -153,7 +154,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	private OverlayManager overlayManager;
 
 	@Inject
-	private ChargesImprovedConfig config;
+	private TicTac7xChargesImprovedConfig config;
 
 	@Inject
 	private ChatMessageManager chatMessageManager;
@@ -174,8 +175,8 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	private Gson gson;
 
 	@Provides
-	ChargesImprovedConfig provideConfig(ConfigManager configManager) {
-		return configManager.getConfig(ChargesImprovedConfig.class);
+	TicTac7xChargesImprovedConfig provideConfig(ConfigManager configManager) {
+		return configManager.getConfig(TicTac7xChargesImprovedConfig.class);
 	}
 
 	private Store store;
@@ -238,6 +239,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new C_MagicCape(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
 			// Jewellery
+			new J_AlchemistsAmulet(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_BindingNecklace(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_BraceletOfClay(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new J_BraceletOfExpeditious(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
@@ -289,6 +291,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 			new U_StrangeOldLockpick(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_TackleBox(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_TeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new U_EternalTeleportCrystal(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new U_Waterskin(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 
 			// Foods
@@ -448,8 +451,19 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 	public void onMenuOptionClicked(final MenuOptionClicked event) {
 		final AdvancedMenuEntry advancedMenuEntry = new AdvancedMenuEntry(event, client);
 		if (
+			// Menu option not found.
+			advancedMenuEntry.option.isEmpty() ||
+			// Not menu.
+			advancedMenuEntry.target.isEmpty() && (
+				!advancedMenuEntry.option.contains("Buy-") &&
+				!advancedMenuEntry.option.equals("Continue")
+			) ||
+			// Start use by clicking on item.
 			advancedMenuEntry.option.equals("Use") && advancedMenuEntry.action.equals("WIDGET_TARGET") ||
-			advancedMenuEntry.action.equals("CANCEL")
+			// Cancel option.
+			advancedMenuEntry.action.equals("CANCEL") ||
+			// RuneLite specific action.
+			advancedMenuEntry.action.equals("RUNELITE")
 		) return;
 
 		store.onMenuOptionClicked(advancedMenuEntry);
@@ -469,19 +483,38 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 //		);
 	}
 
+	final List<Integer> scriptIdsToIgnore = Arrays.asList(
+		44, 85, 100, 839, 900, 1004, 1005, 1045, 1445, 1972, 2100, 2101,
+		2165, 2250, 2372, 2476, 2512, 2513, 3174, 3277, 3350, 3351, 4024,
+		4029, 4482, 4517, 4518, 4666, 4667, 4668, 4669, 4671, 4672, 4716,
+		4721, 4729, 4730, 4731, 4734, 5343, 5923, 5933, 5935, 5936, 5939,
+		5943, 5944, 6015, 6016, 6063, 6152
+	);
+
 	@Subscribe
 	public void onScriptPreFired(final ScriptPreFired event) {
-		switch (event.getScriptId()) {
-			case 1004: case 2100: case 2512: case 3174: case 3350:
-			case 4029: case 4517: case 4518: case 4671: case 4716:
-			case 4721: case 4730: case 5933: case 5935: case 5939:
-				return;
-			default:
-				for (final ChargedItemBase chargedItem : chargedItems) {
-					chargedItem.onScriptPreFired(event);
-				}
-		}
+		if (scriptIdsToIgnore.contains(event.getScriptId())) return;
 
+//		String scriptDebug = "script id: " + event.getScriptId();
+//		try {
+//			final Optional<Widget> widget = Optional.ofNullable(event.getScriptEvent().getSource());
+//			if (widget.isPresent()) {
+//				scriptDebug += ", widget id: " + widget.get().getId();
+//			}
+//		} catch (final Exception ignored) {}
+//		try {
+//			String arguments = ", arguments: [";
+//			for (final Object argument : event.getScriptEvent().getArguments()) {
+//				arguments += argument + ", ";
+//			}
+//			arguments += "]";
+//			scriptDebug += arguments.replaceAll(", ]", "]");
+//		} catch (final Exception ignored) {}
+//		System.out.println("SCRIPT FIRED | " + scriptDebug);
+
+		for (final ChargedItemBase chargedItem : chargedItems) {
+			chargedItem.onScriptPreFired(event);
+		}
 	}
 
 	@Subscribe
@@ -494,7 +527,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 		// Send message about plugin updates for once.
 		if (!config.getVersion().equals(pluginVersion)) {
-			configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.version, pluginVersion);
+			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.version, pluginVersion);
 			chatMessageManager.queue(QueuedMessage.builder()
 				.type(ChatMessageType.CONSOLE)
 				.runeLiteFormattedMessage(pluginMessage)
@@ -561,7 +594,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	@Subscribe
 	public void onConfigChanged(final ConfigChanged event) {
-		if (event.getGroup().equals(ChargesImprovedConfig.group) && event.getKey().equals(ChargesImprovedConfig.debug_ids)) {
+		if (event.getGroup().equals(TicTac7xChargesImprovedConfig.group) && event.getKey().equals(TicTac7xChargesImprovedConfig.debug_ids)) {
 			chatMessageManager.queue(QueuedMessage.builder()
 				.type(ChatMessageType.CONSOLE)
 				.runeLiteFormattedMessage(config.showDebugIds()
@@ -580,7 +613,7 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 		final String date = LocalDateTime.now(timezone).format(DateTimeFormatter.ISO_LOCAL_DATE);
 		if (date.equals(config.getResetDate())) return;
 
-		configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.date, date);
+		configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.date, date);
 		Arrays.stream(chargedItems).forEach(infobox -> infobox.onResetDaily());
 
 		chatMessageManager.queue(QueuedMessage.builder()
@@ -592,17 +625,17 @@ public class ChargesImprovedPlugin extends Plugin implements KeyListener, MouseL
 
 	private void configMigration() {
 		// Migrate old hidden infoboxes multi-select to checkboxes.
-		final Optional<String> necklaceOfPassageOverlay = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_overlay"));
-		final Optional<String> necklaceOfPassageInfobox = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_infobox"));
+		final Optional<String> necklaceOfPassageOverlay = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_overlay"));
+		final Optional<String> necklaceOfPassageInfobox = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_infobox"));
 
 		if (necklaceOfPassageOverlay.isPresent()) {
-			configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.necklace_of_passage + ChargesImprovedConfig.overlay, necklaceOfPassageOverlay.get().equals("true"));
-			configManager.unsetConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_overlay");
+			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig.overlay, necklaceOfPassageOverlay.get().equals("true"));
+			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_overlay");
 		}
 
 		if (necklaceOfPassageInfobox.isPresent()) {
-			configManager.setConfiguration(ChargesImprovedConfig.group, ChargesImprovedConfig.necklace_of_passage + ChargesImprovedConfig.infobox, necklaceOfPassageInfobox.get().equals("true"));
-			configManager.unsetConfiguration(ChargesImprovedConfig.group, "necklage_of_passage_infobox");
+			configManager.setConfiguration(TicTac7xChargesImprovedConfig.group, TicTac7xChargesImprovedConfig.necklace_of_passage + TicTac7xChargesImprovedConfig.infobox, necklaceOfPassageInfobox.get().equals("true"));
+			configManager.unsetConfiguration(TicTac7xChargesImprovedConfig.group, "necklage_of_passage_infobox");
 		}
 	}
 

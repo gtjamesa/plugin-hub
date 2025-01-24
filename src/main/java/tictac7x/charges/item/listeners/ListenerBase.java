@@ -3,8 +3,7 @@ package tictac7x.charges.item.listeners;
 import net.runelite.api.Client;
 import net.runelite.client.Notifier;
 import net.runelite.client.game.ItemManager;
-import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.ChargedItemBase;
 import tictac7x.charges.item.ChargedItemWithStatus;
@@ -20,9 +19,9 @@ public abstract class ListenerBase {
     protected final ItemManager itemManager;
     protected final ChargedItemBase chargedItem;
     protected final Notifier notifier;
-    protected final ChargesImprovedConfig config;
+    protected final TicTac7xChargesImprovedConfig config;
 
-    public ListenerBase(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final ChargesImprovedConfig config) {
+    public ListenerBase(final Client client, final ItemManager itemManager, final ChargedItemBase chargedItem, final Notifier notifier, final TicTac7xChargesImprovedConfig config) {
         this.client = client;
         this.itemManager = itemManager;
         this.chargedItem = chargedItem;
@@ -170,7 +169,7 @@ public abstract class ListenerBase {
                 if (!itemOne.equals(chargedItem.getItemName()) && !itemTwo.equals(chargedItem.getItemName())) {
                     continue;
                 }
-                for (final StorageItem storeableItem : ((ChargedItemWithStorage) chargedItem).storage.getStoreableItems()) {
+                for (final StorageItem storeableItem : ((ChargedItemWithStorage) chargedItem).storage.getStorableItems()) {
                     if (
                         itemOne.equals(itemManager.getItemComposition(storeableItem.itemId).getName()) ||
                         itemTwo.equals(itemManager.getItemComposition(storeableItem.itemId).getName())

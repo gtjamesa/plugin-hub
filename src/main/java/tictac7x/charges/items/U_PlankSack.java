@@ -11,11 +11,12 @@ import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.TicTac7xChargesImprovedPlugin;
+import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemWithStorage;
-import tictac7x.charges.item.storage.StorageItem;
+import tictac7x.charges.item.storage.StorableItem;
 import tictac7x.charges.item.triggers.*;
+import tictac7x.charges.store.ItemWithQuantity;
 import tictac7x.charges.store.Store;
 
 import java.util.HashMap;
@@ -29,25 +30,27 @@ import static tictac7x.charges.store.ItemContainerId.INVENTORY;
 public class U_PlankSack extends ChargedItemWithStorage {
     private final Pattern homeBuildingPlanksPattern = Pattern.compile("(?<type>Plank|Oak plank|Teak plank|Mahogany plank): (?<amount>[0-9]+)");
     private final Map<Integer, Integer> homeBuildingWidgetMaterialsUsed = new HashMap<>();
+    private Optional<Integer> sawmillLogId = Optional.empty();
+    private Optional<Integer> sawmillPlankId = Optional.empty();
 
     public U_PlankSack(
         final Client client,
-        final ClientThread client_thread,
-        final ConfigManager configs,
-        final ItemManager items,
-        final InfoBoxManager infoboxes,
-        final ChatMessageManager chat_messages,
+        final ClientThread clientThread,
+        final ConfigManager configManager,
+        final ItemManager itemManager,
+        final InfoBoxManager infoBoxManager,
+        final ChatMessageManager chatMessageManager,
         final Notifier notifier,
-        final ChargesImprovedConfig config,
+        final TicTac7xChargesImprovedConfig config,
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.plank_sack, ItemID.PLANK_SACK, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
-        storage.setMaximumTotalQuantity(28).emptyIsNegative().storeableItems(
-            new StorageItem(ItemID.PLANK).checkName("Regular plank"),
-            new StorageItem(ItemID.OAK_PLANK).checkName("Oak plank"),
-            new StorageItem(ItemID.TEAK_PLANK).checkName("Teak plank"),
-            new StorageItem(ItemID.MAHOGANY_PLANK).checkName("Mahogany plank")
+        super(TicTac7xChargesImprovedConfig.plank_sack, ItemID.PLANK_SACK, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        storage.setMaximumTotalQuantity(28).emptyIsNegative().storableItems(
+            new StorableItem(ItemID.PLANK).checkName("Regular plank"),
+            new StorableItem(ItemID.OAK_PLANK).checkName("Oak plank"),
+            new StorableItem(ItemID.TEAK_PLANK).checkName("Teak plank"),
+            new StorableItem(ItemID.MAHOGANY_PLANK).checkName("Mahogany plank")
         );
 
         this.items = new TriggerItem[]{
@@ -75,7 +78,7 @@ public class U_PlankSack extends ChargedItemWithStorage {
             new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onMenuOption("Fill"),
 
             // Use plank on sack.
-            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStoreableItems()),
+            new OnItemContainerChanged(INVENTORY).fillStorageFromInventory().onUseStorageItemOnChargedItem(storage.getStorableItems()),
 
             // Hallowed Sepulchre
             new OnXpDrop(Skill.CONSTRUCTION).xpAmountConsumer((xp) -> {
@@ -205,7 +208,7 @@ public class U_PlankSack extends ChargedItemWithStorage {
                 if (keyChar < 48 || keyChar > 57) return;
                 final int nthItemToBuild = keyChar - 48;
 
-                final Optional<Widget> materialsWidget = ChargesImprovedPlugin.getWidget(client, 458, 3 + nthItemToBuild, 3);
+                final Optional<Widget> materialsWidget = TicTac7xChargesImprovedPlugin.getWidget(client, 458, 3 + nthItemToBuild, 3);
                 if (!materialsWidget.isPresent()) return;
 
                 addPlanksToBeUsedFromHomeMaterialsWidgetText(materialsWidget.get().getText());
@@ -219,6 +222,44 @@ public class U_PlankSack extends ChargedItemWithStorage {
                 }
 
                 homeBuildingWidgetMaterialsUsed.clear();
+            }),
+
+            // Sawmill, this script fires multiple times and regardless of the number of crafts
+            new OnScriptPreFired(2053).scriptConsumer(script -> {
+                final Optional<Widget> itemWidget = Optional.ofNullable(script.getScriptEvent().getSource());
+                if (!itemWidget.isPresent()) return;
+
+                final int sawmillLogId = (int) script.getScriptEvent().getArguments()[2];
+                switch (sawmillLogId) {
+                    case ItemID.LOGS:
+                        this.sawmillLogId = Optional.of(ItemID.LOGS);
+                        this.sawmillPlankId = Optional.of(ItemID.PLANK);
+                        break;
+                    case ItemID.OAK_LOGS:
+                        this.sawmillLogId = Optional.of(ItemID.OAK_LOGS);
+                        this.sawmillPlankId = Optional.of(ItemID.OAK_PLANK);
+                        break;
+                    case ItemID.TEAK_LOGS:
+                        this.sawmillLogId = Optional.of(ItemID.TEAK_LOGS);
+                        this.sawmillPlankId = Optional.of(ItemID.TEAK_PLANK);
+                        break;
+                    case ItemID.MAHOGANY_LOGS:
+                        this.sawmillLogId = Optional.of(ItemID.MAHOGANY_LOGS);
+                        this.sawmillPlankId = Optional.of(ItemID.MAHOGANY_PLANK);
+                        break;
+                }
+            }),
+            new OnItemContainerChanged(INVENTORY).onItemContainerDifference(itemsDifference -> {
+                if (!sawmillLogId.isPresent() || !sawmillPlankId.isPresent()) return;
+
+                final int logsDifference = itemsDifference.getItemQuantity(sawmillLogId.get());
+                final int planksDifference = itemsDifference.getItemQuantity(sawmillPlankId.get());
+                final int vouchersDifference = itemsDifference.getItemQuantity(ItemID.SAWMILL_VOUCHER);
+
+                storage.add(this.sawmillPlankId.get(), Math.abs(logsDifference) + Math.abs(vouchersDifference) - Math.abs(planksDifference));
+
+                this.sawmillLogId = Optional.empty();
+                this.sawmillPlankId = Optional.empty();
             }),
         };
     }

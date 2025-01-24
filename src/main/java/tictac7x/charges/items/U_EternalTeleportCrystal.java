@@ -11,14 +11,12 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnGraphicChanged;
-import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
-public class W_IbansStaff extends ChargedItem {
-    public W_IbansStaff(
+public class U_EternalTeleportCrystal extends ChargedItem {
+    public U_EternalTeleportCrystal(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -30,19 +28,10 @@ public class W_IbansStaff extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.ibans_staff, ItemID.IBANS_STAFF, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.eternal_teleport_crystal, ItemID.ETERNAL_TELEPORT_CRYSTAL, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.IBANS_STAFF),
-            new TriggerItem(ItemID.IBANS_STAFF_1410),
-            new TriggerItem(ItemID.IBANS_STAFF_U),
-        };
-
-        this.triggers = new TriggerBase[]{
-            // Check.
-            new OnChatMessage("You have (?<charges>.+) charges left on the staff.").setDynamicallyCharges().onItemClick(),
-            // Attack.
-            new OnGraphicChanged(87).isEquipped().decreaseCharges(1),
+            new TriggerItem(ItemID.ETERNAL_TELEPORT_CRYSTAL).fixedCharges(Charges.UNLIMITED),
         };
     }
 }

@@ -3,21 +3,25 @@ package tictac7x.charges;
 import net.runelite.client.config.*;
 import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.ItemActivity;
+import tictac7x.charges.store.ItemOverlayLocation;
 
 import java.awt.Color;
 
-import static tictac7x.charges.ChargesImprovedConfig.group;
+import static tictac7x.charges.TicTac7xChargesImprovedConfig.group;
 
 @ConfigGroup(group)
-public interface ChargesImprovedConfig extends Config {
+public interface TicTac7xChargesImprovedConfig extends Config {
     String group = "tictac7x-charges";
     String version = "version";
-    String storage = "storage";
+    String storage_bank = "storage_bank";
+    String storage_inventory = "storage_inventory";
+    String storage_equipment = "storage_equipment";
     String date = "date";
     String debug_ids = "debug_ids";
     String infobox = "_infobox";
     String overlay = "_overlay";
 
+    String alchemists_amulet = "alchemists_amulet";
     String arclight = "arclight";
     String ardougne_cloak = "ardougne_cloak";
     String ash_sanctifier = "ash_sanctifier";
@@ -27,7 +31,6 @@ public interface ChargesImprovedConfig extends Config {
     String bonecrusher = "bonecrusher";
     String bonecrusher_status = "bonecrusher_status";
     String bottomless_compost_bucket = "bottomless_compost_bucket";
-    String bottomless_compost_bucket_type = "bottomless_compost_bucket_type";
     String bow_of_faerdhinen = "bow_of_faerdhinen";
     String bracelet_of_clay = "bracelet_of_clay";
     String bracelet_of_expeditious = "bracelet_of_expeditious";
@@ -99,6 +102,7 @@ public interface ChargesImprovedConfig extends Config {
     String strange_old_lockpick = "strange_old_lockpick";
     String tackle_box = "tackle_box";
     String teleport_crystal = "teleport_crystal";
+    String eternal_teleport_crystal = "teleport_crystal";
     String tome_of_fire = "tome_of_fire";
     String tome_of_water = "tome_of_water";
     String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
@@ -157,11 +161,19 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean showOverlaysOnlyInBank() { return false; }
 
         @ConfigItem(
+            keyName = "item_overlay_location",
+            name = "Item overlay location",
+            description = "Location of the charges for item overlays",
+            section = general,
+            position = 5
+        ) default ItemOverlayLocation itemOverlayLocation() { return ItemOverlayLocation.BOTTOM_LEFT; }
+
+        @ConfigItem(
             keyName = "storage_tooltips",
             name = "Show storage tooltips",
             description = "Show tooltips for items with storage",
             section = general,
-            position = 5
+            position = 6
         ) default boolean showStorageTooltips() { return true; }
 
         @ConfigItem(
@@ -169,7 +181,7 @@ public interface ChargesImprovedConfig extends Config {
             name = "Unify menu entries",
             description = "Replace obscure menu entries like \"Reminisce\" and \"Divine\" with \"Teleport\" and \"Check\" and show detailed herb patches names.",
             section = general,
-            position = 6
+            position = 7
         ) default boolean useCommonMenuEntries() { return true; }
 
         @ConfigItem(
@@ -177,7 +189,7 @@ public interface ChargesImprovedConfig extends Config {
             name = "Hide destroy menu entries",
             description = "Hide destroy menu entry from items that make no sense to destroy",
             section = general,
-            position = 7
+            position = 8
         ) default boolean hideDestroy() { return true; }
 
         @ConfigItem(
@@ -185,7 +197,7 @@ public interface ChargesImprovedConfig extends Config {
             name = "Show unlimited charges",
             description = "Show infinity symbol for items with unlimited charges",
             section = general,
-            position = 8
+            position = 9
         ) default boolean showUnlimited() { return true; }
 
     @ConfigSection(
@@ -799,6 +811,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean teleportCrystalInfobox() { return true; }
 
         @ConfigItem(
+            keyName = eternal_teleport_crystal + infobox,
+            name = "Eternal teleport crystal",
+            description = "",
+            section = infoboxes
+        ) default boolean eternalTeleportCrystalInfobox() { return true; }
+
+        @ConfigItem(
             keyName = waterskin + infobox,
             name = "Waterskin",
             description = "",
@@ -895,6 +914,13 @@ public interface ChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean warpedSceptreInfobox() { return true; }
+
+        @ConfigItem(
+                keyName = alchemists_amulet + infobox,
+                name = "Alchemist's Amulet",
+                description = "",
+                section = infoboxes
+        ) default boolean alchemistsAmuletInfobox() { return true; }
 
     @ConfigSection(
         name = "Overlays",
@@ -1415,6 +1441,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default boolean teleportCrystalOverlay() { return true; }
 
         @ConfigItem(
+            keyName = eternal_teleport_crystal + overlay,
+            name = "Eternal teleport crystal",
+            description = "",
+            section = overlays
+        ) default boolean eternalTeleportCrystalOverlay() { return true; }
+
+        @ConfigItem(
             keyName = tome_of_fire + overlay,
             name = "Tome of fire",
             description = "",
@@ -1547,6 +1580,13 @@ public interface ChargesImprovedConfig extends Config {
             section = overlays
         ) default boolean xericsTalismanOverlay() { return true; }
 
+        @ConfigItem(
+                keyName = alchemists_amulet + overlay,
+                name = "Alchemist's Amulet",
+                description = "",
+                section = overlays
+        ) default boolean alchemistsAmuletOverlay() { return true; }
+
     @ConfigSection(
         name = "Debug",
         description = "Values of charges for all items under the hood",
@@ -1571,26 +1611,42 @@ public interface ChargesImprovedConfig extends Config {
         ) default String getResetDate() { return ""; }
 
         @ConfigItem(
-            keyName = storage,
-            name = storage,
-            description = "All player items to check for daily resets",
+            keyName = storage_bank,
+            name = storage_bank,
+            description = "All player bank items to check for daily resets",
             section = debug,
             position = 3
-        ) default String getStorage() { return ""; }
+        ) default String getStorageBank() { return ""; }
+
+        @ConfigItem(
+            keyName = storage_inventory,
+            name = storage_inventory,
+            description = "All player inventory items to check for daily resets",
+            section = debug,
+            position = 4
+        ) default String getStorageInventory() { return ""; }
+
+        @ConfigItem(
+            keyName = storage_equipment,
+            name = storage_equipment,
+            description = "All player equipment items to check for daily resets",
+            section = debug,
+            position = 5
+        ) default String getStorageEquipment() { return ""; }
 
         @ConfigItem(
             keyName = debug_ids,
             name = "Debug IDs",
             description = "Shows animation and graphics ids within ingame messages to add support for new items",
             section = debug,
-            position = 4
+            position = 6
         ) default boolean showDebugIds() { return false; }
 
         @ConfigItem(
-                keyName = ring_of_pursuit,
-                name = ring_of_pursuit,
-                description = ring_of_pursuit,
-                section = debug
+            keyName = ring_of_pursuit,
+            name = ring_of_pursuit,
+            description = ring_of_pursuit,
+            section = debug
         ) default int ringOfPursuitCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
@@ -1615,6 +1671,13 @@ public interface ChargesImprovedConfig extends Config {
         ) default ItemActivity getAshSanctifierStatus() { return ItemActivity.ACTIVATED; }
 
         @ConfigItem(
+            keyName = binding_necklace,
+            name = binding_necklace,
+            description = binding_necklace,
+            section = debug
+        ) default int getBindingNecklaceCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
             keyName = bonecrusher,
             name = bonecrusher,
             description = bonecrusher,
@@ -1636,18 +1699,11 @@ public interface ChargesImprovedConfig extends Config {
         ) default int getKharedstsMemoirsCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
-            keyName = bottomless_compost_bucket,
-            name = bottomless_compost_bucket,
-            description = bottomless_compost_bucket,
+            keyName = bottomless_compost_bucket + "_storage",
+            name = bottomless_compost_bucket + "_storage",
+            description = bottomless_compost_bucket + "_storage",
             section = debug
-        ) default int getBottomlessCompostBucketCharges() { return Charges.UNKNOWN; }
-
-        @ConfigItem(
-            keyName = bottomless_compost_bucket_type,
-            name = bottomless_compost_bucket_type,
-            description = bottomless_compost_bucket_type,
-            section = debug
-        ) default String getBottomlessCompostBucketType() { return ""; }
+        ) default String getBottomlessCompostBucketStorage() { return ""; }
 
         @ConfigItem(
             keyName = bracelet_of_slaughter,
@@ -1823,13 +1879,6 @@ public interface ChargesImprovedConfig extends Config {
             description = coffin,
             section = debug
         ) default int getCoffinCharges() { return Charges.UNKNOWN; }
-
-        @ConfigItem(
-            keyName = log_basket,
-            name = log_basket,
-            description = log_basket,
-            section = debug
-        ) default int getLogBasketCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = huntsmans_kit + "_storage",

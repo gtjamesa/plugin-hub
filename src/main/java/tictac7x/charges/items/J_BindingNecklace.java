@@ -10,13 +10,10 @@ import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.TicTac7xChargesImprovedConfig;
+import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.OnChatMessage;
-import tictac7x.charges.item.triggers.OnMenuOptionClicked;
-import tictac7x.charges.item.triggers.TriggerBase;
-import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Store;
 
 import java.util.Optional;
@@ -24,17 +21,17 @@ import java.util.Optional;
 public class J_BindingNecklace extends ChargedItem {
     public J_BindingNecklace(
         final Client client,
-        final ClientThread client_thread,
-        final ConfigManager configs,
-        final ItemManager items,
-        final InfoBoxManager infoboxes,
-        final ChatMessageManager chat_messages,
+        final ClientThread clientThread,
+        final ConfigManager configManager,
+        final ItemManager itemManager,
+        final InfoBoxManager infoBoxManager,
+        final ChatMessageManager chatMessageManager,
         final Notifier notifier,
-        final ChargesImprovedConfig config,
+        final TicTac7xChargesImprovedConfig config,
         final Store store,
         final Gson gson
     ) {
-        super(ChargesImprovedConfig.binding_necklace, ItemID.BINDING_NECKLACE, client, client_thread, configs, items, infoboxes, chat_messages, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.binding_necklace, ItemID.BINDING_NECKLACE, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
             new TriggerItem(ItemID.BINDING_NECKLACE).needsToBeEquipped(),
@@ -50,14 +47,18 @@ public class J_BindingNecklace extends ChargedItem {
             // Charge used.
             new OnChatMessage("You (partially succeed to )?bind the temple's power into (mud|lava|steam|dust|smoke|mist) runes\\.").decreaseCharges(1),
 
-            // Fully used (set charges to 17, because binding message appears right after disintegrate).
-            new OnChatMessage("Your Binding necklace has disintegrated.").setFixedCharges(17),
+            // Fully used.
+            new OnChatMessage("Your Binding necklace has disintegrated.").runConsumerOnNextGameTick(() -> setCharges(16)),
 
             // Destroy.
-            new OnMenuOptionClicked("Yes").consumer(() -> {
-                final Optional<Widget> destroyWidget = ChargesImprovedPlugin.getWidget(client, 584, 0, 2);
-                if (destroyWidget.isPresent() && destroyWidget.get().getText().equals("Destroy necklace of binding?")) {
-                    setCharges(16);
+            new OnScriptPreFired(1651).scriptConsumer((script) -> {
+                final Optional<Widget> destroyWidget = TicTac7xChargesImprovedPlugin.getWidget(client, 584, 0, 2);
+                if (
+                    destroyWidget.isPresent() && destroyWidget.get().getText().equals("Destroy necklace of binding?") &&
+                    script.getScriptEvent().getArguments().length >= 5 &&
+                    script.getScriptEvent().getArguments()[4].toString().equals("Yes")
+                ) {
+                    store.addConsumerToNextTickQueue(() -> setCharges(16));
                 }
             }),
         };

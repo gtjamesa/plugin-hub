@@ -4,8 +4,8 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import tictac7x.charges.ChargesImprovedConfig;
-import tictac7x.charges.ChargesImprovedPlugin;
+import tictac7x.charges.TicTac7xChargesImprovedPlugin;
+import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItemBase;
 
 import java.awt.Color;
@@ -13,25 +13,25 @@ import java.util.Optional;
 
 public class ChargedItemInfobox extends InfoBox {
     private final ChargedItemBase chargedItem;
-    private final ItemManager items;
-    private final InfoBoxManager infoboxes;
-    private final ChargesImprovedConfig config;
+    private final ItemManager itemManager;
+    private final InfoBoxManager infoBoxManager;
+    private final TicTac7xChargesImprovedConfig config;
     private final ConfigManager configManager;
 
     private int itemId;
 
     public ChargedItemInfobox(
         final ChargedItemBase chargedItem,
-        final ItemManager items,
+        final ItemManager itemManager,
         final InfoBoxManager infoBoxManager,
         final ConfigManager configManager,
-        final ChargesImprovedConfig config,
-        final ChargesImprovedPlugin plugin
+        final TicTac7xChargesImprovedConfig config,
+        final TicTac7xChargesImprovedPlugin plugin
     ) {
-        super(items.getImage(chargedItem.itemId), plugin);
+        super(itemManager.getImage(chargedItem.itemId), plugin);
         this.chargedItem = chargedItem;
-        this.items = items;
-        this.infoboxes = infoBoxManager;
+        this.itemManager = itemManager;
+        this.infoBoxManager = infoBoxManager;
         this.configManager = configManager;
         this.config = config;
         this.itemId = chargedItem.itemId;
@@ -79,13 +79,13 @@ public class ChargedItemInfobox extends InfoBox {
             itemId = chargedItem.itemId;
 
             // Update infobox image.
-            setImage(items.getImage(itemId));
-            infoboxes.updateInfoBoxImage(this);
+            setImage(itemManager.getImage(itemId));
+            infoBoxManager.updateInfoBoxImage(this);
         }
     }
 
     private boolean isChargedItemInfoboxEnabled() {
-        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(ChargesImprovedConfig.group, chargedItem.configKey + "_infobox"));
+        final Optional<String> visible = Optional.ofNullable(configManager.getConfiguration(TicTac7xChargesImprovedConfig.group, chargedItem.configKey + "_infobox"));
 
         if (visible.isPresent() && visible.get().equals("false")) {
             return false;
