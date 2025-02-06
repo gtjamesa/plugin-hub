@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.14
+# Item Charges Improved - v0.5.15
 
 Show charges of various items that are in inventory or equipped
 
@@ -61,6 +61,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 
 ### Jewellery
 
+- Binding necklace
 - Bracelet of clay
 - Bracelet of expeditious
 - Bracelet of flamtaer
@@ -69,7 +70,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Desert amulet
 - Digsite pendant
 - Escape crystal
-- Binding necklace
+- Giantsoul amulet
 - Necklace of passage
 - Necklace of phoenix
 - Necklace of dodgy

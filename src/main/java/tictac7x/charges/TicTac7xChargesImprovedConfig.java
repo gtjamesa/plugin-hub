@@ -68,6 +68,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String fungicide_spray = "fungicide_spray";
     String fur_pouch = "fur_pouch";
     String gem_bag = "gem_bag";
+    String giantsoul_amulet = "giantsoul_amulet";
     String gricollers_can = "gricollers_can";
     String herb_sack = "herb_sack";
     String ibans_staff = "ibans_staff";
@@ -727,6 +728,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean gemBagInfobox() { return true; }
 
         @ConfigItem(
+            keyName = giantsoul_amulet + infobox,
+            name = "Giantsoul amulet",
+            description = "",
+            section = infoboxes
+        ) default boolean giantsoulAmuletInfobox() { return true; }
+
+        @ConfigItem(
             keyName = gricollers_can + infobox,
             name = "Gricoller's can",
             description = "",
@@ -1271,6 +1279,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean gemBagOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = giantsoul_amulet + overlay,
+            name = "Giantsoul amulet",
+            description = "",
+            section = overlays
+        ) default boolean giantsoulAmuletOverlay() { return true; }
 
         @ConfigItem(
             keyName = gricollers_can + overlay,
