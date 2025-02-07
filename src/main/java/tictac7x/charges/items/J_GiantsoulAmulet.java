@@ -43,7 +43,7 @@ public class J_GiantsoulAmulet extends ChargedItem {
             new OnChatMessage("Your Giantsoul amulet has (?<charges>.+) charges? left powering it.").setDynamicallyCharges(),
 
             // Charge.
-            new OnChatMessage("You add .+ charges? to your Giantsoul amulet, giving it total of (?<charges>.+) charges?.").setDynamicallyCharges(),
+            new OnChatMessage("You add .+ charges? to your Giantsoul amulet, giving it a total of (?<charges>.+) charges?.").setDynamicallyCharges(),
 
             // Teleport.
             new OnGraphicChanged(3226).decreaseCharges(1),
