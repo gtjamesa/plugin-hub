@@ -12,11 +12,10 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
-import tictac7x.charges.store.Charges;
 import tictac7x.charges.store.Store;
 
-public class W_WesternBanner extends ChargedItem {
-    public W_WesternBanner(
+public class J_SkillsNecklace extends ChargedItem {
+    public J_SkillsNecklace(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -28,22 +27,21 @@ public class W_WesternBanner extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.western_banner, ItemID.WESTERN_BANNER_3, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.skills_necklace, ItemID.SKILLS_NECKLACE, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.WESTERN_BANNER_3),
-            new TriggerItem(ItemID.WESTERN_BANNER_4).fixedCharges(Charges.UNLIMITED),
+            new TriggerItem(ItemID.SKILLS_NECKLACE).fixedCharges(0),
+            new TriggerItem(ItemID.SKILLS_NECKLACE1).fixedCharges(1),
+            new TriggerItem(ItemID.SKILLS_NECKLACE2).fixedCharges(2),
+            new TriggerItem(ItemID.SKILLS_NECKLACE3).fixedCharges(3),
+            new TriggerItem(ItemID.SKILLS_NECKLACE4).fixedCharges(4),
+            new TriggerItem(ItemID.SKILLS_NECKLACE5).fixedCharges(5),
+            new TriggerItem(ItemID.SKILLS_NECKLACE6).fixedCharges(6),
         };
 
-        this.triggers = new TriggerBase[]{
-            // Teleport.
-            new OnMenuOptionClicked("Teleport").hasItemId(ItemID.WESTERN_BANNER_3).setFixedCharges(0),
-
-            // Teleport already used.
-            new OnChatMessage("You have already used your available teleports for today. Try again tomorrow after the standard has recharged.").onItemClick().setFixedCharges(0),
-
-            // Daily reset.
-            new OnResetDaily().requiredItem(ItemID.WESTERN_BANNER_3).setFixedCharges(1),
+        this.triggers = new TriggerBase[] {
+            // Unified menu entry.
+            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
         };
     }
 }

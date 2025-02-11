@@ -55,6 +55,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String desert_amulet = "desert_amulet";
     String dodgy_necklace = "dodgy_necklace";
     String dragonfire_shield = "dragonfire_shield";
+    String efaritays_aid = "efaritays_aid";
     String enchanted_lyre = "enchanted_lyre";
     String escape_crystal = "escape_crystal";
     String escape_crystal_status = "escape_crystal_status";
@@ -96,6 +97,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String ring_of_endurance = "ring_of_endurance";
     String sanguinesti_staff = "sanguinesti_staff";
     String seed_box = "seed_box";
+    String skills_necklace = "skills_necklace";
     String skull_sceptre = "skull_sceptre";
     String slayer_ring = "slayer_ring";
     String slayer_staff_e = "slayer_staff_e";
@@ -104,6 +106,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String tackle_box = "tackle_box";
     String teleport_crystal = "teleport_crystal";
     String eternal_teleport_crystal = "teleport_crystal";
+    String tome_of_earth = "tome_of_earth";
     String tome_of_fire = "tome_of_fire";
     String tome_of_water = "tome_of_water";
     String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
@@ -178,19 +181,11 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean showStorageTooltips() { return true; }
 
         @ConfigItem(
-            keyName = "menu_replacements",
-            name = "Unify menu entries",
-            description = "Replace obscure menu entries like \"Reminisce\" and \"Divine\" with \"Teleport\" and \"Check\" and show detailed herb patches names.",
-            section = general,
-            position = 7
-        ) default boolean useCommonMenuEntries() { return true; }
-
-        @ConfigItem(
             keyName = "hide_destroy",
             name = "Hide destroy menu entries",
             description = "Hide destroy menu entry from items that make no sense to destroy",
             section = general,
-            position = 8
+            position = 7
         ) default boolean hideDestroy() { return true; }
 
         @ConfigItem(
@@ -198,7 +193,7 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             name = "Show unlimited charges",
             description = "Show infinity symbol for items with unlimited charges",
             section = general,
-            position = 9
+            position = 8
         ) default boolean showUnlimited() { return true; }
 
     @ConfigSection(
@@ -651,6 +646,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean bookOfTheDeadInfobox() { return true; }
 
         @ConfigItem(
+            keyName = tome_of_earth + infobox,
+            name = "Tome of earth",
+            description = "",
+            section = infoboxes
+        ) default boolean tomeOfEarthInfobox() { return true; }
+
+        @ConfigItem(
             keyName = tome_of_fire + infobox,
             name = "Tome of fire",
             description = "",
@@ -791,6 +793,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean seedBoxInfobox() { return true; }
 
         @ConfigItem(
+            keyName = skills_necklace + infobox,
+            name = "Skills necklace",
+            description = "",
+            section = infoboxes
+        ) default boolean skillsNecklaceInfobox() { return true; }
+
+        @ConfigItem(
             keyName = soul_bearer + infobox,
             name = "Soul bearer",
             description = "",
@@ -859,6 +868,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = infoboxes
         ) default boolean crystalHalberdInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = efaritays_aid + infobox,
+            name = "Efaritay's aid",
+            description = "",
+            section = infoboxes
+        ) default boolean efaritaysAidInfobox() { return true; }
 
         @ConfigItem(
             keyName = enchanted_lyre + infobox,
@@ -1421,6 +1437,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean seedBoxOverlay() { return true; }
 
         @ConfigItem(
+            keyName = skills_necklace + overlay,
+            name = "Skills necklace",
+            description = "",
+            section = overlays
+        ) default boolean skillsNecklaceOverlay() { return true; }
+
+        @ConfigItem(
             keyName = slayer_ring + overlay,
             name = "Slayer ring",
             description = "",
@@ -1461,6 +1484,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean eternalTeleportCrystalOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = tome_of_earth + overlay,
+            name = "Tome of earth",
+            description = "",
+            section = overlays
+        ) default boolean tomeOfEarthOverlay() { return true; }
 
         @ConfigItem(
             keyName = tome_of_fire + overlay,
@@ -1517,6 +1547,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean crystalHalberdOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = efaritays_aid + overlay,
+            name = "Efaritay's aid",
+            description = "",
+            section = overlays
+        ) default boolean efaritaysAidOverlay() { return true; }
 
         @ConfigItem(
             keyName = enchanted_lyre + overlay,
@@ -1698,6 +1735,13 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = bonecrusher,
             section = debug
         ) default int getBoneCrusherCharges() { return Charges.UNKNOWN; }
+
+        @ConfigItem(
+            keyName = efaritays_aid,
+            name = efaritays_aid,
+            description = efaritays_aid,
+            section = debug
+        ) default int getEfaritaysAidCharges() { return Charges.UNKNOWN; }
 
         @ConfigItem(
             keyName = bonecrusher_status,

@@ -11,11 +11,14 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
-import tictac7x.charges.item.triggers.*;
+import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnGraphicChanged;
+import tictac7x.charges.item.triggers.TriggerBase;
+import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
-public class J_RingOfElements extends ChargedItem {
-    public J_RingOfElements(
+public class S_TomeOfEarth extends ChargedItem {
+    public S_TomeOfEarth(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -27,19 +30,19 @@ public class J_RingOfElements extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.ring_of_the_elements, ItemID.RING_OF_THE_ELEMENTS, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.tome_of_earth, ItemID.TOME_OF_EARTH, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.RING_OF_THE_ELEMENTS),
-            new TriggerItem(ItemID.RING_OF_THE_ELEMENTS_26818),
+            new TriggerItem(ItemID.TOME_OF_EARTH_EMPTY).fixedCharges(0),
+            new TriggerItem(ItemID.TOME_OF_EARTH).needsToBeEquipped(),
         };
 
         this.triggers = new TriggerBase[] {
-            // Teleport.
-            new OnVarbitChanged(13707).setDynamically(),
+            // Check.
+            new OnChatMessage("Your tome currently holds (?<charges>.+) charges?.").setDynamicallyCharges().onItemClick(),
 
-            // Menu entry.
-            new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
+            // Attack with regular spellbook earth spells.
+            new OnGraphicChanged(96, 123, 138, 164, 1461).isEquipped().decreaseCharges(1)
         };
     }
 }

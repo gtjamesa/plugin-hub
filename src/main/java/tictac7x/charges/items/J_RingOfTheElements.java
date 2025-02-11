@@ -3,7 +3,6 @@ package tictac7x.charges.items;
 import com.google.gson.Gson;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
-import net.runelite.api.widgets.Widget;
 import net.runelite.client.Notifier;
 import net.runelite.client.callback.ClientThread;
 import net.runelite.client.chat.ChatMessageManager;
@@ -11,15 +10,12 @@ import net.runelite.client.config.ConfigManager;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
-import tictac7x.charges.TicTac7xChargesImprovedPlugin;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.*;
 import tictac7x.charges.store.Store;
 
-import java.util.Optional;
-
-public class J_GiantsoulAmulet extends ChargedItem {
-    public J_GiantsoulAmulet(
+public class J_RingOfTheElements extends ChargedItem {
+    public J_RingOfTheElements(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -31,25 +27,25 @@ public class J_GiantsoulAmulet extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.giantsoul_amulet, 30637, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.ring_of_the_elements, ItemID.RING_OF_THE_ELEMENTS, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(30637).fixedCharges(0),
-            new TriggerItem(30638),
+            new TriggerItem(ItemID.RING_OF_THE_ELEMENTS),
+            new TriggerItem(ItemID.RING_OF_THE_ELEMENTS_26818),
         };
 
         this.triggers = new TriggerBase[] {
-            // Check.
-            new OnChatMessage("Your Giantsoul amulet has (?<charges>.+) charges? left powering it.").setDynamicallyCharges(),
-
-            // Charge.
-            new OnChatMessage("You add .+ charges? to your Giantsoul amulet, giving it a total of (?<charges>.+) charges?.").setDynamicallyCharges(),
-
             // Teleport.
-            new OnGraphicChanged(3226).decreaseCharges(1),
+            new OnVarbitChanged(13707).setDynamically(),
 
             // Unified menu entry.
             new OnMenuEntryAdded("Rub").replaceOption("Teleport"),
+
+            // Last destination replaced with actual altar.
+            new OnMenuEntryAdded("Last Destination").replaceOption("Air Altar").replaceTarget("Ring of the elements", "").varbitCheck(13708, 1),
+            new OnMenuEntryAdded("Last Destination").replaceOption("Water Altar").replaceTarget("Ring of the elements", "").varbitCheck(13708, 2),
+            new OnMenuEntryAdded("Last Destination").replaceOption("Earth Altar").replaceTarget("Ring of the elements", "").varbitCheck(13708, 3),
+            new OnMenuEntryAdded("Last Destination").replaceOption("Fire Altar").replaceTarget("Ring of the elements", "").varbitCheck(13708, 4),
         };
     }
 }
