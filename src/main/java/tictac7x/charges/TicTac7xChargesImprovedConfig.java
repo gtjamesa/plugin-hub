@@ -111,6 +111,9 @@ public interface TicTac7xChargesImprovedConfig extends Config {
     String tome_of_water = "tome_of_water";
     String toxic_staff_of_the_dead = "toxic_staff_of_the_dead";
     String trident_of_the_seas = "trident_of_the_seas";
+    String trident_of_the_seas_e = "trident_of_the_seas_e";
+    String trident_of_the_swamp = "trident_of_the_swamp";
+    String trident_of_the_swamp_e = "trident_of_the_swamp_e";
     String venator_bow = "venator_bow";
     String warped_sceptre = "warped_sceptre";
     String waterskin = "waterskin";
@@ -933,6 +936,27 @@ public interface TicTac7xChargesImprovedConfig extends Config {
         ) default boolean tridentOfTheSeasInfobox() { return true; }
 
         @ConfigItem(
+            keyName = trident_of_the_seas_e + infobox,
+            name = "Trident of the seas (e)",
+            description = "",
+            section = infoboxes
+        ) default boolean tridentOfTheSeasEInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = trident_of_the_swamp + infobox,
+            name = "Trident of the swamp",
+            description = "",
+            section = infoboxes
+        ) default boolean tridentOfTheSwampInfobox() { return true; }
+
+        @ConfigItem(
+            keyName = trident_of_the_swamp_e + infobox,
+            name = "Trident of the swamp (e)",
+            description = "",
+            section = infoboxes
+        ) default boolean tridentOfTheSwampEInfobox() { return true; }
+
+        @ConfigItem(
             keyName = warped_sceptre + infobox,
             name = "Warped sceptre",
             description = "",
@@ -1617,6 +1641,27 @@ public interface TicTac7xChargesImprovedConfig extends Config {
             description = "",
             section = overlays
         ) default boolean tridentOfTheSeasOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = trident_of_the_seas_e + overlay,
+            name = "Trident of the seas (e)",
+            description = "",
+            section = overlays
+        ) default boolean tridentOfTheSeasEOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = trident_of_the_swamp + overlay,
+            name = "Trident of the swamp",
+            description = "",
+            section = overlays
+        ) default boolean tridentOfTheSwampOverlay() { return true; }
+
+        @ConfigItem(
+            keyName = trident_of_the_swamp_e + overlay,
+            name = "Trident of the swamp (e)",
+            description = "",
+            section = overlays
+        ) default boolean tridentOfTheSwampEOverlay() { return true; }
 
         @ConfigItem(
             keyName = warped_sceptre + overlay,

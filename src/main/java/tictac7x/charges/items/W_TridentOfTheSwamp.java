@@ -17,8 +17,8 @@ import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
 import tictac7x.charges.store.Store;
 
-public class W_TridentOfTheSeas extends ChargedItem {
-    public W_TridentOfTheSeas(
+public class W_TridentOfTheSwamp extends ChargedItem {
+    public W_TridentOfTheSwamp(
         final Client client,
         final ClientThread clientThread,
         final ConfigManager configManager,
@@ -30,26 +30,25 @@ public class W_TridentOfTheSeas extends ChargedItem {
         final Store store,
         final Gson gson
     ) {
-        super(TicTac7xChargesImprovedConfig.trident_of_the_seas, ItemID.TRIDENT_OF_THE_SEAS, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
+        super(TicTac7xChargesImprovedConfig.trident_of_the_swamp, ItemID.TRIDENT_OF_THE_SWAMP, client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson);
 
         this.items = new TriggerItem[]{
-            new TriggerItem(ItemID.UNCHARGED_TRIDENT).fixedCharges(0),
-            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS),
-            new TriggerItem(ItemID.TRIDENT_OF_THE_SEAS_FULL).fixedCharges(2500),
+            new TriggerItem(ItemID.UNCHARGED_TOXIC_TRIDENT).fixedCharges(0),
+            new TriggerItem(ItemID.TRIDENT_OF_THE_SWAMP),
         };
 
         this.triggers = new TriggerBase[] {
             // Ran out of charges.
-            new OnChatMessage("Your Trident of the seas has run out of charges.").notification().setFixedCharges(0),
+            new OnChatMessage("Your Trident of the swamp has run out of charges.").notification().setFixedCharges(0),
 
             // Check, one charge left.
-            new OnChatMessage("Your Trident of the seas has one charge.").setFixedCharges(1),
+            new OnChatMessage("Your Trident of the swamp has one charge.").setFixedCharges(1),
 
             // Check for charges and warning when low.
-            new OnChatMessage("Your Trident of the seas( only)? has (?<charges>.+) charges( left)?.").setDynamicallyCharges(),
+            new OnChatMessage("Your Trident of the swamp( only)? has (?<charges>.+) charges( left)?.").setDynamicallyCharges(),
 
             // Charge to full.
-            new OnChatMessage("You add .* charges? to the Trident of the seas. New total: (?<charges>.+)").setDynamicallyCharges(),
+            new OnChatMessage("You add .* charges? to the Trident of the swamp. New total: (?<charges>.+)").setDynamicallyCharges(),
 
             // Attack.
             new OnGraphicChanged(1251).isEquipped().decreaseCharges(1)
