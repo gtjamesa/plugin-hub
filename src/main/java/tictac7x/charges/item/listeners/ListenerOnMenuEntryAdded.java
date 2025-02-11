@@ -100,15 +100,13 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
             boolean idCheck = false;
 
             for (final TriggerItem item : chargedItem.items) {
-                if (item.itemId == chargedItem.itemId) {
+                if (item.itemId == event.getMenuEntry().getItemId()) {
                     idCheck = true;
                     break;
                 }
             }
 
-            if (!idCheck) {
-                return false;
-            }
+            if (!idCheck) return false;
         }
 
         // Hide config check.
@@ -145,6 +143,6 @@ public class ListenerOnMenuEntryAdded extends ListenerBase {
             return false;
         }
 
-        return super.isValidTrigger(trigger);
+        return true;
     }
 }
