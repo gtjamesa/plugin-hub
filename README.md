@@ -1,4 +1,4 @@
-# Item Charges Improved - v0.5.19
+# Item Charges Improved - v0.5.20
 
 Show charges of various items that are in inventory or equipped
 
@@ -26,6 +26,7 @@ If you find any dialogs or chat messages that don't seem to affect the charges o
 - Iban's staff
 - Pharaoh's sceptre
 - Sanguinesti staff
+- Scythe of Vitur
 - Skull sceptre
 - Slayer staff (e)
 - Trident of the seas / swamp

@@ -123,11 +123,12 @@ import java.util.*;
 )
 
 public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener, MouseListener, MouseWheelListener {
-	private final String pluginVersion = "v0.5.19";
+	private final String pluginVersion = "v0.5.20";
 	private final String pluginMessage = "" +
 		"<colHIGHLIGHT>Item Charges Improved " + pluginVersion + ":<br>" +
-		"<colHIGHLIGHT>* Partial support for flamtaer bag.<br>" +
-		"<colHIGHLIGHT>* Item prioritization fixes."
+		"<colHIGHLIGHT>* Scythe of Vitur added.<br>" +
+		"<colHIGHLIGHT>* Tackle box now tracks stored items.<br>" +
+		"<colHIGHLIGHT>* Crystal halberd decreases 1 charge per multi-hit."
 	;
 
 	private final int VARBIT_MINUTES = 8354;
@@ -205,6 +206,7 @@ public class TicTac7xChargesImprovedPlugin extends Plugin implements KeyListener
 			new W_IbansStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_PharaohsSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_SanguinestiStaff(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
+			new W_ScytheOfVitur(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_SkullSceptre(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_SlayerStaffE(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),
 			new W_TridentOfTheSeas(client, clientThread, configManager, itemManager, infoBoxManager, chatMessageManager, notifier, config, store, gson),

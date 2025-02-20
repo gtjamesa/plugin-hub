@@ -63,8 +63,11 @@ public class W_CrystalHalberd extends ChargedItem {
             new TriggerItem(ItemID.NEW_CRYSTAL_HALBERD_FULL_I_16892),
         };
         this.triggers = new TriggerBase[]{
+            // Check.
             new OnChatMessage("Your crystal halberd has (?<charges>.+) charges? remaining.").setDynamicallyCharges(),
-            new OnHitsplatApplied(ENEMY).isEquipped().decreaseCharges(1),
+
+            // Attack.
+            new OnHitsplatApplied(ENEMY).oncePerGameTick().isEquipped().decreaseCharges(1),
         };
     }
 }
