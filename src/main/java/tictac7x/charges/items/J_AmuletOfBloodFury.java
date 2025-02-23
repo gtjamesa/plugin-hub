@@ -12,8 +12,11 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.CombatStyle;
+import tictac7x.charges.store.HitsplatTarget;
 import tictac7x.charges.store.Store;
 
 public class J_AmuletOfBloodFury extends ChargedItem {
@@ -40,10 +43,13 @@ public class J_AmuletOfBloodFury extends ChargedItem {
             new OnChatMessage("You have successfully created an Amulet of blood fury.").setFixedCharges(10000),
 
             // Check.
-            new OnChatMessage("Your Amulet of blood fury (will work|can perform) for (?<charges>.+) more hits.").setDynamicallyCharges(),
+            new OnChatMessage("Your Amulet of blood fury (will work|can perform) for (?<charges>.+) more hits?.").setDynamicallyCharges(),
 
             // Charge.
-            new OnChatMessage("You have successfully added .+ hits to your Amulet of blood fury. It will now work for (?<charges>.+) more hits.").setDynamicallyCharges(),
+            new OnChatMessage("You have successfully added .+ hits? to your Amulet of blood fury. It will now work for (?<charges>.+) more hits?.").setDynamicallyCharges(),
+
+            // Take damage.
+            new OnHitsplatApplied(HitsplatTarget.ENEMY).combatStyle(CombatStyle.MELEE).isEquipped().decreaseCharges(1),
         };
     }
 }
