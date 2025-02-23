@@ -63,10 +63,11 @@ public class WeaponAttackStyle {
             // We can look at the first attack style to determine which one is in use
             case DEFENSIVE:
                 AttackStyle firstAttackStyle = getAttackStyle(0);
-
                 log.debug("Defensive, maybe melee or magic: {}", firstAttackStyle);
-                // TODO: Maybe inf loop if idx 0 is "Defensive"?
-                return getWeaponFromAttackStyle(firstAttackStyle);
+
+                return firstAttackStyle != AttackStyle.DEFENSIVE
+                    ? getWeaponFromAttackStyle(firstAttackStyle)
+                    : WeaponStyle.UNKNOWN;
             default:
                 return WeaponStyle.UNKNOWN;
         }
