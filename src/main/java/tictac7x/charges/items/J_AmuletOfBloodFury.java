@@ -12,8 +12,11 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import tictac7x.charges.TicTac7xChargesImprovedConfig;
 import tictac7x.charges.item.ChargedItem;
 import tictac7x.charges.item.triggers.OnChatMessage;
+import tictac7x.charges.item.triggers.OnHitsplatApplied;
 import tictac7x.charges.item.triggers.TriggerBase;
 import tictac7x.charges.item.triggers.TriggerItem;
+import tictac7x.charges.store.WeaponStyle;
+import tictac7x.charges.store.HitsplatTarget;
 import tictac7x.charges.store.Store;
 
 public class J_AmuletOfBloodFury extends ChargedItem {
@@ -44,6 +47,13 @@ public class J_AmuletOfBloodFury extends ChargedItem {
 
             // Charge.
             new OnChatMessage("You have successfully added .+ hits to your Amulet of blood fury. It will now work for (?<charges>.+) more hits.").setDynamicallyCharges(),
+
+            // Take damage.
+            // TODO:
+            //  - Scythe, if ANY hitsplat is >0, a charge is deducted per hitsplat. So a `0, 19` hit on a 2x2 NPC would deduct 2 charges.
+            //  - Weapon styles: https://github.com/runelite/runelite/pull/16256/files
+            //  - Powered staff longrange is "Defensive", shared with melee
+            new OnHitsplatApplied(HitsplatTarget.ENEMY).weaponStyle(WeaponStyle.MELEE).isEquipped().decreaseCharges(1),
         };
     }
 }
